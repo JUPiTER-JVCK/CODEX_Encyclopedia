@@ -82,10 +82,11 @@ the old blank icon. It says so when it reuses one.
 Other modes: `--run` (build, then open it), `--debug` (faster build), or no
 flag to build `./Codex.app` without launching.
 
-The icon is drawn at build time by a short AppKit renderer inside the script —
-the same `books.vertical.fill` mark and gradient the app's own Welcome screen
-uses, so the Dock matches the window. It needs nothing beyond the Swift
-toolchain you already installed to build the app.
+The icon is drawn at build time by `Codex_macOS/Sources/RenderIcon` — the same
+`books.vertical.fill` mark and gradient the app's own Welcome screen uses, so
+the Dock matches the window. It needs nothing beyond the Swift toolchain you
+already installed to build the app, and because it is a real build target
+rather than a script fragment, CI type-checks it on every pull request.
 
 The app finds the codex by checking, in order: the `$CODEX_ROOT` environment
 variable, the `project_path` resource recorded in the bundle at build time,

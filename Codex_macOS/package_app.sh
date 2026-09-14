@@ -68,6 +68,11 @@ echo "$ROOT" > "$APP/Contents/Resources/project_path"
 # twenty lines above. Drawing the icon with what we already require removes a
 # dependency instead of documenting one, and lets the icon be the app's own
 # mark — the same SF Symbol and gradient as the Welcome hero in Welcome.swift.
+#
+# The drawing lives in Sources/RenderIcon/main.swift, a real SwiftPM target,
+# so the compiler sees it on every pull request. As a shell heredoc it would
+# be invisible to CI — which is how the generator it replaced managed to ship
+# a blank icon undetected.
 ICON="$APP/Contents/Resources/AppIcon.icns"
 EXISTING_ICON="$ROOT/Codex.app.icon-backup/AppIcon.icns"
 if [ -f "$EXISTING_ICON" ] && [ "$REBUILD_ICON" = false ]; then
@@ -83,72 +88,20 @@ elif [ ! -f "$ICON" ] || [ "$REBUILD_ICON" = true ]; then
     ICONSET="$BUILD_DIR/AppIcon.iconset"
     mkdir -p "$ICONSET"
     BASE_PNG="$BUILD_DIR/icon_1024.png"
-    RENDERER="$BUILD_DIR/render_icon.swift"
 
-    cat > "$RENDERER" <<'SWIFTEOF'
-import AppKit
-import Foundation
-
-func die(_ message: String) -> Never {
-    FileHandle.standardError.write(Data("icon: \(message)\n".utf8))
-    exit(1)
-}
-
-// Theme.swift: blue #89b4fa, lavender #b4befe, mauve #cba6f7, crust #11111b.
-func c(_ r: Int, _ g: Int, _ b: Int) -> NSColor {
-    NSColor(srgbRed: CGFloat(r)/255, green: CGFloat(g)/255,
-            blue: CGFloat(b)/255, alpha: 1)
-}
-let size: CGFloat = 1024
-let image = NSImage(size: NSSize(width: size, height: size))
-image.lockFocus()
-guard let ctx = NSGraphicsContext.current?.cgContext else { die("no graphics context") }
-
-// macOS app icons sit inset inside their canvas rather than bleeding to the
-// edge, so the rounded square is drawn at ~82% with a squircle-ish radius.
-let inset  = size * 0.09
-let rect   = CGRect(x: inset, y: inset, width: size - inset*2, height: size - inset*2)
-let radius = rect.width * 0.235
-let path   = NSBezierPath(roundedRect: rect, xRadius: radius, yRadius: radius)
-ctx.saveGState()
-path.addClip()
-guard let gradient = NSGradient(colors: [c(0x89,0xb4,0xfa),
-                                         c(0xb4,0xbe,0xfe),
-                                         c(0xcb,0xa6,0xf7)]) else { die("gradient") }
-gradient.draw(in: rect, angle: -45)
-ctx.restoreGState()
-
-// The same symbol the Welcome hero uses, so the Dock matches the app.
-let cfg = NSImage.SymbolConfiguration(pointSize: size * 0.42, weight: .medium)
-guard let symbol = NSImage(systemSymbolName: "books.vertical.fill",
-                           accessibilityDescription: "Codex")?
-        .withSymbolConfiguration(cfg) else { die("books.vertical.fill unavailable") }
-let tinted = NSImage(size: symbol.size)
-tinted.lockFocus()
-c(0x11,0x11,0x1b).set()
-NSRect(origin: .zero, size: symbol.size).fill()
-symbol.draw(at: .zero, from: NSRect(origin: .zero, size: symbol.size),
-            operation: .destinationIn, fraction: 1)
-tinted.unlockFocus()
-tinted.draw(in: CGRect(x: (size - symbol.size.width)/2,
-                       y: (size - symbol.size.height)/2,
-                       width: symbol.size.width, height: symbol.size.height))
-image.unlockFocus()
-
-guard let tiff = image.tiffRepresentation,
-      let rep  = NSBitmapImageRep(data: tiff),
-      let png  = rep.representation(using: .png, properties: [:]) else { die("PNG encode") }
-guard CommandLine.arguments.count > 1 else { die("usage: render_icon.swift <out.png>") }
-do {
-    try png.write(to: URL(fileURLWithPath: CommandLine.arguments[1]))
-} catch {
-    die("write failed: \(error)")
-}
-SWIFTEOF
+    # Same CONFIG as the app, so step 1 has already warmed the toolchain and
+    # this is a cache hit; optimisation level is irrelevant to drawing one PNG.
+    echo "→ swift build -c $CONFIG --product RenderIcon"
+    swift build -c "$CONFIG" --product RenderIcon
+    RENDERER="$PKG_DIR/.build/$CONFIG/RenderIcon"
+    if [ ! -x "$RENDERER" ]; then
+        echo "✘ RenderIcon did not build at $RENDERER" >&2
+        exit 1
+    fi
 
     # No silent fallback. A build that cannot draw its own icon is a build
     # worth stopping for, rather than one that ships a blank square.
-    if ! swift "$RENDERER" "$BASE_PNG"; then
+    if ! "$RENDERER" "$BASE_PNG"; then
         echo "✘ Icon rendering failed — not shipping a blank icon." >&2
         exit 1
     fi

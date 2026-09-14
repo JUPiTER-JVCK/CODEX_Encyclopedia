@@ -58,7 +58,33 @@ Each has an `INDEX.md` as its entry point. Start at
 
 ## Running the macOS reader
 
-Requires macOS 13+ and the Xcode command-line tools.
+**There is no app in the download.** This repository holds source; `Codex.app`
+is a build artifact and is gitignored. Nothing here is double-clickable until
+something builds it. That something is one file:
+
+> **Open `Codex_macOS/` and double-click `Install Codex.command`.**
+
+It compiles the reader, draws the icon, and puts `Codex.app` in
+`/Applications`. After that it is an ordinary Mac app: **double-click it in
+Applications, the Dock or Launchpad.** No terminal, and no rebuild until the
+source changes.
+
+Two things to expect the first time, both of which the installer also warns
+about as it runs:
+
+- **Gatekeeper will probably refuse the first double-click** — "cannot be
+  opened because it is from an unidentified developer" — because macOS
+  quarantines files downloaded from the internet. Right-click the file →
+  **Open** → **Open**. Once, and it is remembered. Avoiding this entirely
+  would need a paid Developer ID and notarization, which this project does
+  not have.
+- **It asks for your password**, because copying into `/Applications` needs
+  `sudo`. That prompt comes from the install step and nothing else.
+
+Requires macOS 13+ and the Xcode command-line tools; the installer stops with
+instructions rather than a cryptic `xcrun` error if the tools are missing.
+
+### From a terminal instead
 
 ```sh
 # One-time
@@ -69,10 +95,10 @@ xcode-select --install
 ./Codex_macOS/package_app.sh --icon --install
 ```
 
-After that it is an ordinary Mac app: **double-click it in Applications, the
-Dock or Launchpad.** No terminal, and no rebuild until the source changes.
-`--install` ad-hoc signs the bundle so Gatekeeper allows it and refreshes
-Launch Services so Spotlight finds it immediately.
+`Install Codex.command` is a Finder-shaped door onto exactly this command, so
+the two routes do the same work. `--install` ad-hoc signs the bundle so
+Gatekeeper allows it and refreshes Launch Services so Spotlight finds it
+immediately.
 
 `--icon` forces a fresh AppIcon. It matters on the first run after upgrading:
 the script will otherwise reuse a cached `Codex.app.icon-backup/AppIcon.icns`

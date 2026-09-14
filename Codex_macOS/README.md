@@ -76,22 +76,22 @@ Codex_macOS/
 ├── Info.plist             ← bundle metadata, copied into the .app
 ├── Install Codex.command  ← double-click this; calls package_app.sh
 ├── package_app.sh         ← build · bundle · sign · install
-└── Sources/Codex/
-    ├── CodexApp.swift     ← @main App, AppState, RootView, menu commands
-    ├── Theme.swift        ← Catppuccin palette, font scale, radii, band tints
-    ├── VisualEffect.swift ← NSVisualEffectView wrapper for vibrancy
-    ├── CodexTree.swift    ← filesystem → CodexNode tree, NodeKind, SF Symbols
-    ├── Markdown.swift     ← block parser + renderer, frontmatter, hero/footer
-    ├── Sidebar.swift      ← band groups, pinned section, context menu
-    ├── Toolbar.swift      ← toolbar, breadcrumb, search trigger
-    ├── TabStrip.swift     ← Safari-style horizontal tabs
-    ├── Inspector.swift    ← Outline / Info / Recents tabs
-    ├── Welcome.swift      ← hero + quick-action / recent / band grids
-    ├── Palette.swift      ← command palette with badges and footer hint
-    └── Util.swift         ← fuzzy match, bookmarks, history, link resolver
-
-Sources/RenderIcon/
-    └── main.swift         ← draws AppIcon.icns at build time
+└── Sources/
+    ├── Codex/             ← the app itself
+    │   ├── CodexApp.swift     ← @main App, AppState, RootView, menu commands
+    │   ├── Theme.swift        ← Catppuccin palette, font scale, radii, tints
+    │   ├── VisualEffect.swift ← NSVisualEffectView wrapper for vibrancy
+    │   ├── CodexTree.swift    ← filesystem → CodexNode tree, kinds, symbols
+    │   ├── Markdown.swift     ← block parser + renderer, frontmatter, hero
+    │   ├── Sidebar.swift      ← band groups, pinned section, context menu
+    │   ├── Toolbar.swift      ← toolbar, breadcrumb, search trigger
+    │   ├── TabStrip.swift     ← Safari-style horizontal tabs
+    │   ├── Inspector.swift    ← Outline / Info / Recents tabs
+    │   ├── Welcome.swift      ← hero + quick-action / recent / band grids
+    │   ├── Palette.swift      ← command palette with badges and footer hint
+    │   └── Util.swift         ← fuzzy match, bookmarks, history, links
+    └── RenderIcon/        ← separate product, built only by package_app.sh
+        └── main.swift         ← draws AppIcon.icns at build time
 ```
 
 ## Keyboard shortcuts

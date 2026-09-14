@@ -29,8 +29,23 @@ pause() {
 fail() {
     echo
     echo "${BOLD}✘ Install did not finish.${OFF}"
-    echo "  The error is above. Nothing was installed, and nothing was changed"
-    echo "  in /Applications."
+    echo "  The error is above."
+    echo
+    # Don't guess at the damage — look. package_app.sh removes any existing
+    # /Applications/Codex.app *before* copying the new one (its step 5), so a
+    # failure after that point can leave nothing there, or half a bundle. Only
+    # the filesystem knows which, so ask it rather than asserting.
+    if [ -x "/Applications/Codex.app/Contents/MacOS/Codex" ]; then
+        echo "  /Applications/Codex.app is there and looks complete. If this"
+        echo "  failed during the build, that is the previous version, still"
+        echo "  working."
+    elif [ -e "/Applications/Codex.app" ]; then
+        echo "  ${BOLD}/Applications/Codex.app is incomplete.${OFF} The install was"
+        echo "  interrupted partway through replacing it. Fix the error above"
+        echo "  and run this installer again to finish the replacement."
+    else
+        echo "  Nothing is installed in /Applications."
+    fi
     pause
     exit 1
 }

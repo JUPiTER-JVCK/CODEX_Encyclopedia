@@ -87,9 +87,22 @@ final class AppState: ObservableObject {
     @Published var openTabs: [URL] = []
     @Published var selectedTab: URL?
     @Published var paletteVisible: Bool = false
+    /// Shared so the toolbar's field and the palette's field are one field.
+    /// The toolbar control used to be a Button dressed as a search box: it
+    /// looked typable, and typing went nowhere.
+    @Published var paletteQuery: String = ""
     @Published var sidebarVisible: Bool = true
     @Published var inspectorVisible: Bool = true
     @Published var bookmarks: Bookmarks
+
+    /// A heading anchor the renderer should scroll to, set by whoever asked.
+    ///
+    /// The outline rows in the inspector and `[text](#anchor)` links in a
+    /// document both reach the same renderer, which is a sibling view rather
+    /// than a child — so the request travels through shared state. The
+    /// renderer clears it once consumed, making this a one-shot signal rather
+    /// than a mode.
+    @Published var pendingAnchor: String? = nil
 
     let projectRoot: URL
     let history = NavigationHistory()
@@ -141,9 +154,19 @@ final class AppState: ObservableObject {
         if forceNew || !openTabs.contains(url) { openTabs.append(url) }
         selectedTab = url
         if pushHistory { history.push(url) }
-        paletteVisible = false
+        dismissPalette()
         bookmarks.touch(url.path)
         objectWillChange.send()
+    }
+
+    /// Close the palette and forget what was typed.
+    ///
+    /// The query lives on AppState now (the toolbar field writes it), so it
+    /// outlives the palette view and has to be cleared deliberately —
+    /// otherwise the next ⌘P opens onto the last search.
+    func dismissPalette() {
+        paletteVisible = false
+        paletteQuery = ""
     }
 
     func closeTab(_ url: URL) {
@@ -180,8 +203,8 @@ final class AppState: ObservableObject {
             openFile(url)
         case .external(let url):
             LinkResolver.openExternal(url)
-        case .anchor:
-            break // anchor scroll handled inside the renderer in a future pass
+        case .anchor(let a):
+            pendingAnchor = a
         case .unsupported:
             NSSound.beep()
         }
@@ -211,7 +234,12 @@ struct RootView: View {
                 }
             }
         }
-        .background(Theme.base)
+        // No blanket background here. `Theme.base` across the whole window is
+        // what made the sidebar's and inspector's `.behindWindow` vibrancy
+        // inert — they had an opaque layer painted over them. Each region now
+        // paints itself: the toolbar its titlebar material, `mainPane` its
+        // base, the two side panes their vibrancy.
+        .background(WindowVibrancyConfigurator().frame(width: 0, height: 0))
         .overlay(paletteOverlay)
     }
 
@@ -243,7 +271,7 @@ struct RootView: View {
             ZStack(alignment: .top) {
                 Color.black.opacity(0.45)
                     .ignoresSafeArea()
-                    .onTapGesture { state.paletteVisible = false }
+                    .onTapGesture { state.dismissPalette() }
                 CommandPaletteView()
                     .padding(.top, 110)
                     .transition(.move(edge: .top).combined(with: .opacity))

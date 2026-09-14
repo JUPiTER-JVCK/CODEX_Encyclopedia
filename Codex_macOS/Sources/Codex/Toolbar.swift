@@ -39,15 +39,18 @@ struct CodexToolbar: View {
             ToolbarSearchField()
 
             HStack(spacing: 2) {
+                // `enabled:` is what dims the glyph; `.disabled()` alone left
+                // it at full opacity, so the button looked live while dead.
                 ToolbarIconButton(systemName: state.selectedTabIsPinned ? "star.fill" : "star",
                                   tint: state.selectedTabIsPinned ? Theme.yellow : nil,
-                                  help: "Pin current file") {
+                                  help: state.selectedTabIsPinned
+                                        ? "Unpin current file (⌘D)" : "Pin current file (⌘D)",
+                                  enabled: state.selectedTab != nil) {
                     if let url = state.selectedTab {
                         state.bookmarks.togglePin(url.path)
                         state.objectWillChange.send()
                     }
                 }
-                .disabled(state.selectedTab == nil)
 
                 ToolbarIconButton(systemName: "sidebar.right",
                                   help: "Toggle inspector (⌘0)") {
@@ -55,7 +58,11 @@ struct CodexToolbar: View {
                 }
             }
         }
-        .padding(.horizontal, 14).padding(.vertical, 9)
+        // `.windowStyle(.hiddenTitleBar)` hides the bar but keeps the close /
+        // minimise / zoom buttons, which float over the top-left of the content
+        // at roughly x=20..72. With a flat 14pt inset the sidebar toggle sat
+        // underneath them. 78 clears the cluster with a little air.
+        .padding(.leading, 78).padding(.trailing, 14).padding(.vertical, 9)
         .frame(height: 50)
         .background(VisualEffectBlur(material: .titlebar, blendingMode: .withinWindow).ignoresSafeArea())
         .overlay(Rectangle().fill(Theme.hairline).frame(height: 1), alignment: .bottom)
@@ -109,10 +116,9 @@ struct BreadcrumbBar: View {
                     Image(systemName: "chevron.right")
                         .font(.system(size: 9, weight: .bold))
                         .foregroundColor(Theme.overlay0.opacity(0.7))
-                    Text(parts[i])
-                        .font(i == parts.count - 1 ? Theme.FontStyle.headline : Theme.FontStyle.subhead)
-                        .foregroundColor(i == parts.count - 1 ? Theme.text : Theme.subtext)
-                        .lineLimit(1)
+                    Crumb(label: parts[i],
+                          isLast: i == parts.count - 1,
+                          target: crumbTarget(url, depth: i))
                 }
             } else {
                 Image(systemName: "books.vertical.fill")
@@ -123,6 +129,28 @@ struct BreadcrumbBar: View {
                 Text("Welcome").font(Theme.FontStyle.headline).foregroundColor(Theme.text)
             }
         }
+    }
+
+    /// The index or README a crumb should open, or nil if there isn't one.
+    ///
+    /// A crumb names a directory; directories are not openable documents, so
+    /// the click resolves to that directory's own entry point the same way an
+    /// in-document link to a folder does. Crumbs with no index stay inert
+    /// rather than beeping — `Crumb` renders those without the affordance, so
+    /// nothing claims to be clickable and isn't.
+    private func crumbTarget(_ url: URL, depth: Int) -> URL? {
+        let prefix = state.projectRoot.path + "/"
+        let rel = url.path.replacingOccurrences(of: prefix, with: "")
+        let raw = rel.split(separator: "/").map(String.init)
+        guard depth < raw.count else { return nil }
+        if depth == raw.count - 1 { return nil }          // the file itself
+        var dir = state.projectRoot
+        for part in raw.prefix(depth + 1) { dir.appendPathComponent(part) }
+        for candidate in ["INDEX.md", "README.md"] {
+            let u = dir.appendingPathComponent(candidate)
+            if FileManager.default.fileExists(atPath: u.path) { return u }
+        }
+        return nil
     }
 
     private func relativeParts(_ url: URL) -> [String] {
@@ -139,36 +167,75 @@ struct BreadcrumbBar: View {
     }
 }
 
-// MARK: - Toolbar search field (mini, opens palette on click)
+// MARK: - One breadcrumb segment
 
-struct ToolbarSearchField: View {
+private struct Crumb: View {
+    let label: String
+    let isLast: Bool
+    let target: URL?
     @EnvironmentObject var state: AppState
     @State private var hovered = false
 
     var body: some View {
-        Button(action: { state.paletteVisible = true }) {
-            HStack(spacing: 6) {
-                Image(systemName: "magnifyingglass")
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundColor(Theme.overlay1)
-                Text("Search Codex")
-                    .font(Theme.FontStyle.subhead)
-                    .foregroundColor(Theme.overlay1)
-                Spacer(minLength: 8)
+        Text(label)
+            .font(isLast ? Theme.FontStyle.headline : Theme.FontStyle.subhead)
+            .foregroundColor(isLast ? Theme.text
+                                    : (hovered && target != nil ? Theme.blue : Theme.subtext))
+            .underline(hovered && target != nil)
+            .lineLimit(1)
+            .contentShape(Rectangle())
+            .onHover { hovered = $0 && target != nil }
+            .onTapGesture { if let t = target { state.openFile(t) } }
+            .help(target != nil ? "Open \(label)" : label)
+    }
+}
+
+// MARK: - Toolbar search field
+
+/// A real text field, not a button wearing one.
+///
+/// This was a `Button` styled to look exactly like a search box. Clicking it
+/// opened the palette, which is fine — but it looked typable, and anyone who
+/// did the obvious thing and started typing got nothing, with no hint as to
+/// why. Now the first keystroke opens the palette carrying what you typed,
+/// and focus follows it there.
+struct ToolbarSearchField: View {
+    @EnvironmentObject var state: AppState
+    @State private var hovered = false
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        HStack(spacing: 6) {
+            Image(systemName: "magnifyingglass")
+                .font(.system(size: 11, weight: .medium))
+                .foregroundColor(Theme.overlay1)
+            TextField("Search Codex", text: $state.paletteQuery)
+                .textFieldStyle(.plain)
+                .font(Theme.FontStyle.subhead)
+                .foregroundColor(Theme.text)
+                .focused($focused)
+                .onSubmit { state.paletteVisible = true }
+                .onChange(of: state.paletteQuery) { text in
+                    // Hand off to the palette as soon as there is something to
+                    // search. It owns the results list and the key handling.
+                    if !text.isEmpty && focused { state.paletteVisible = true }
+                }
+            if state.paletteQuery.isEmpty {
                 Text("⌘P")
                     .font(.system(size: 10, weight: .medium, design: .monospaced))
                     .foregroundColor(Theme.overlay0)
                     .padding(.horizontal, 5).padding(.vertical, 1)
                     .background(RoundedRectangle(cornerRadius: 3).fill(Theme.surface1.opacity(0.6)))
             }
-            .padding(.horizontal, 10).padding(.vertical, 5)
-            .frame(width: 220)
-            .background(RoundedRectangle(cornerRadius: 7, style: .continuous)
-                            .fill(hovered ? Theme.surface0.opacity(0.85) : Theme.surface0.opacity(0.55)))
-            .overlay(RoundedRectangle(cornerRadius: 7).strokeBorder(Theme.hairline, lineWidth: 0.5))
-            .contentShape(Rectangle())
         }
-        .buttonStyle(.plain)
+        .padding(.horizontal, 10).padding(.vertical, 5)
+        .frame(width: 220)
+        .background(RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .fill(hovered || focused ? Theme.surface0.opacity(0.85)
+                                                 : Theme.surface0.opacity(0.55)))
+        .overlay(RoundedRectangle(cornerRadius: 7)
+                    .strokeBorder(focused ? Theme.accent.opacity(0.7) : Theme.hairline,
+                                  lineWidth: focused ? 1 : 0.5))
         .onHover { hovered = $0 }
     }
 }

@@ -5,12 +5,16 @@ import AppKit
 
 struct CommandPaletteView: View {
     @EnvironmentObject var state: AppState
-    @State private var query: String = ""
     @State private var selectedIdx: Int = 0
     @FocusState private var focused: Bool
 
+    /// Bound to AppState so the toolbar field and this field are one field.
+    private var query: Binding<String> { $state.paletteQuery }
+
     private var results: [FuzzyMatch.Ranked] {
-        FuzzyMatch.rank(query: query, files: state.allFiles, projectRoot: state.projectRoot)
+        FuzzyMatch.rank(query: state.paletteQuery,
+                        files: state.allFiles,
+                        projectRoot: state.projectRoot)
     }
 
     var body: some View {
@@ -30,10 +34,14 @@ struct CommandPaletteView: View {
         )
         .shadow(color: .black.opacity(0.5), radius: 28, y: 12)
         .onAppear { focused = true; selectedIdx = 0 }
+        // `min(results.count - 1, …)` yields -1 when nothing matches, which no
+        // row can equal and which `scrollTo` cannot resolve. Clamp to the last
+        // valid row, or stay at 0 when the list is empty.
         .background(KeyHandler(onUp:    { selectedIdx = max(0, selectedIdx - 1) },
-                               onDown:  { selectedIdx = min(results.count - 1, selectedIdx + 1) },
+                               onDown:  { selectedIdx = min(max(0, results.count - 1),
+                                                            selectedIdx + 1) },
                                onEnter: open,
-                               onEsc:   { state.paletteVisible = false }))
+                               onEsc:   state.dismissPalette))
     }
 
     private var searchField: some View {
@@ -41,13 +49,17 @@ struct CommandPaletteView: View {
             Image(systemName: "magnifyingglass")
                 .font(.system(size: 14, weight: .medium))
                 .foregroundColor(Theme.overlay1)
-            TextField("Search files, headings, or paths…", text: $query)
+            // Was "Search files, headings, or paths…" — headings are not
+            // indexed, and promising them made the palette look broken when a
+            // heading search returned nothing. Heading search is worth adding;
+            // until it is, the placeholder says what actually happens.
+            TextField("Search files and paths…", text: query)
                 .textFieldStyle(.plain)
                 .font(.system(size: 15))
                 .foregroundColor(Theme.text)
                 .focused($focused)
                 .onSubmit(open)
-                .onChange(of: query) { _ in selectedIdx = 0 }
+                .onChange(of: state.paletteQuery) { _ in selectedIdx = 0 }
             HStack(spacing: 4) {
                 Text("\(results.count)")
                     .font(.system(size: 10, weight: .semibold, design: .monospaced))
@@ -65,12 +77,12 @@ struct CommandPaletteView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    if results.isEmpty && !query.isEmpty {
+                    if results.isEmpty && !state.paletteQuery.isEmpty {
                         VStack(spacing: 6) {
                             Image(systemName: "doc.text.magnifyingglass")
                                 .font(.system(size: 28, weight: .light))
                                 .foregroundColor(Theme.overlay0)
-                            Text("No matches for \"\(query)\"")
+                            Text("No matches for \"\(state.paletteQuery)\"")
                                 .font(.system(size: 12))
                                 .foregroundColor(Theme.subtext)
                         }

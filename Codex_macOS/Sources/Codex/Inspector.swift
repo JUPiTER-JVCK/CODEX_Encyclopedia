@@ -84,7 +84,10 @@ private struct OutlinePane: View {
                 VStack(alignment: .leading, spacing: 1) {
                     SectionHeader(label: "On This Page")
                     ForEach(0..<headings.count, id: \.self) { i in
-                        OutlineRow(level: headings[i].level, text: headings[i].text)
+                        OutlineRow(level: headings[i].level,
+                                   text: headings[i].text,
+                                   anchor: headings[i].anchor,
+                                   onSelect: { state.pendingAnchor = headings[i].anchor })
                     }
                 }
                 .padding(.horizontal, 12).padding(.vertical, 10)
@@ -95,7 +98,8 @@ private struct OutlinePane: View {
 }
 
 private struct OutlineRow: View {
-    let level: Int; let text: String
+    let level: Int; let text: String; let anchor: String
+    let onSelect: () -> Void
     @State private var hovered = false
 
     var body: some View {
@@ -118,7 +122,12 @@ private struct OutlineRow: View {
                     ? RoundedRectangle(cornerRadius: 5).fill(Theme.surface0.opacity(0.6))
                     : nil)
         .contentShape(Rectangle())
+        .onTapGesture(perform: onSelect)
         .onHover { hovered = $0 }
+        // The row already looked clickable — hover highlight, contentShape,
+        // pointer cursor — while doing nothing at all. The affordance was the
+        // promise; this is the part that keeps it.
+        .help(anchor.isEmpty ? text : "Jump to \(text)")
     }
 }
 
@@ -347,33 +356,66 @@ private struct EmptyPaneView: View {
 struct FlowLayout: Layout {
     var spacing: CGFloat = 6
 
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
-        let maxW = proposal.width ?? .infinity
-        var w: CGFloat = 0, h: CGFloat = 0, lineW: CGFloat = 0, lineH: CGFloat = 0
-        for s in subviews {
+    private typealias Row = [(index: Int, size: CGSize)]
+
+    /// One line-breaking pass, shared by measurement and placement.
+    ///
+    /// These used to be two loops with two different predicates —
+    /// `lineW + width > maxW` when measuring, `x + width > maxX` when placing,
+    /// where `lineW` carried a trailing `spacing` that `x` did not. They could
+    /// therefore disagree about where a row ended, and the height handed to
+    /// SwiftUI came up a row short of the height actually used, clipping the
+    /// last row of tags. One routine cannot disagree with itself.
+    private func rows(maxWidth: CGFloat, subviews: Subviews) -> [Row] {
+        var rows: [Row] = []
+        var line: Row = []
+        var lineW: CGFloat = 0
+        for (i, s) in subviews.enumerated() {
             let sz = s.sizeThatFits(.unspecified)
-            if lineW + sz.width > maxW {
-                w = max(w, lineW); h += lineH + spacing
-                lineW = sz.width + spacing; lineH = sz.height
+            let needed = line.isEmpty ? sz.width : lineW + spacing + sz.width
+            // Never wrap an empty line: a single item wider than the container
+            // has nowhere better to go, and wrapping it would emit a blank row.
+            if !line.isEmpty && needed > maxWidth {
+                rows.append(line)
+                line = [(i, sz)]
+                lineW = sz.width
             } else {
-                lineW += sz.width + spacing
-                lineH = max(lineH, sz.height)
+                line.append((i, sz))
+                lineW = needed
             }
         }
-        return CGSize(width: max(w, lineW), height: h + lineH)
+        if !line.isEmpty { rows.append(line) }
+        return rows
+    }
+
+    private func width(of row: Row) -> CGFloat {
+        row.reduce(0) { $0 + $1.size.width } + spacing * CGFloat(max(0, row.count - 1))
+    }
+
+    private func height(of row: Row) -> CGFloat {
+        row.map(\.size.height).max() ?? 0
+    }
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let rows = rows(maxWidth: proposal.width ?? .infinity, subviews: subviews)
+        guard !rows.isEmpty else { return .zero }
+        return CGSize(
+            width: rows.map(width(of:)).max() ?? 0,
+            height: rows.reduce(0) { $0 + height(of: $1) }
+                  + spacing * CGFloat(rows.count - 1)
+        )
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize,
                        subviews: Subviews, cache: inout ()) {
-        var x = bounds.minX, y = bounds.minY, lineH: CGFloat = 0
-        for s in subviews {
-            let sz = s.sizeThatFits(.unspecified)
-            if x + sz.width > bounds.maxX {
-                x = bounds.minX; y += lineH + spacing; lineH = 0
+        var y = bounds.minY
+        for row in rows(maxWidth: bounds.width, subviews: subviews) {
+            var x = bounds.minX
+            for item in row {
+                subviews[item.index].place(at: CGPoint(x: x, y: y), proposal: .init(item.size))
+                x += item.size.width + spacing
             }
-            s.place(at: CGPoint(x: x, y: y), proposal: .init(sz))
-            x += sz.width + spacing
-            lineH = max(lineH, sz.height)
+            y += height(of: row) + spacing
         }
     }
 }

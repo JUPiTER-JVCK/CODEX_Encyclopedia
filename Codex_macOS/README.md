@@ -33,18 +33,27 @@ SwiftUI rendering the markdown tree straight on the GPU.
 - **Portable bundle** — records the project path at build time, so the `.app`
   keeps working after you move it to `/Applications`
 
-## One-time prerequisites
+## Install it
+
+**Double-click `Install Codex.command`, in this folder.** That is the whole
+procedure. It checks for the Xcode command-line tools, then runs
+`package_app.sh --icon --install`: compile, bundle, draw the icon, ad-hoc
+sign, copy to `/Applications`. Afterwards Codex is an ordinary Mac app.
+
+Expect two things on a fresh download:
+
+- Gatekeeper refuses the first double-click of any file from the internet.
+  Right-click → **Open** → **Open**, once.
+- `/Applications` needs `sudo`, so Terminal asks for your password.
+
+Requires macOS 13 or later.
+
+## Build and run from a terminal
 
 ```sh
 sudo xcodebuild -license accept     # if you haven't accepted Xcode's licence
 xcode-select --install              # if Command Line Tools aren't installed
-```
 
-Requires macOS 13 or later.
-
-## Build and run
-
-```sh
 cd Codex_macOS
 ./package_app.sh --run              # build release, bundle, open
 ./package_app.sh                    # build and bundle, don't open
@@ -52,6 +61,9 @@ cd Codex_macOS
 ./package_app.sh --install          # also copy to /Applications
 ./package_app.sh --icon             # regenerate AppIcon.icns
 ```
+
+`Install Codex.command` is a Finder entry point onto `--icon --install` and
+has no build logic of its own, so neither route can drift from the other.
 
 The bundle lands at `../Codex.app`, at the repository root. It's a build
 artifact and is gitignored — regenerate it rather than committing it.
@@ -62,6 +74,7 @@ artifact and is gitignored — regenerate it rather than committing it.
 Codex_macOS/
 ├── Package.swift          ← SwiftPM manifest (macOS 13+)
 ├── Info.plist             ← bundle metadata, copied into the .app
+├── Install Codex.command  ← double-click this; calls package_app.sh
 ├── package_app.sh         ← build · bundle · sign · install
 └── Sources/Codex/
     ├── CodexApp.swift     ← @main App, AppState, RootView, menu commands
@@ -76,6 +89,9 @@ Codex_macOS/
     ├── Welcome.swift      ← hero + quick-action / recent / band grids
     ├── Palette.swift      ← command palette with badges and footer hint
     └── Util.swift         ← fuzzy match, bookmarks, history, link resolver
+
+Sources/RenderIcon/
+    └── main.swift         ← draws AppIcon.icns at build time
 ```
 
 ## Keyboard shortcuts

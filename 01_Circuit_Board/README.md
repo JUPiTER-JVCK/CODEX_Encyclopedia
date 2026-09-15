@@ -10,13 +10,19 @@
 │  02  CPU                                     │
 └───────────────────────┬──────────────────────┘
                         │  electrical signals, serial & parallel buses
-┏━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━┓
-┃  01  Circuit Board                ◀── here   ┃
-┃      PCB · buses · connectors · power rails  ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-also carries 09 Network Physical — the NIC's PHY sits on this board
+┏━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━┓     ┌────────────────────────┐
+┃  01  Circuit Board                ◀── here   ┃─────┤  09  Network Physical  │
+┃      PCB · buses · connectors · power rails  ┃     └────────────────────────┘
+┗━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━━━━━━━━━━┛
+                        │  Boolean signals on pins and traces
+┌───────────────────────┴──────────────────────┐
+│  00d  Digital Circuits                       │
+└──────────────────────────────────────────────┘
 ```
+
+09 Network Physical is a network layer, but its silicon — the NIC's PHY, the
+magnetics, the SFP cage — is on this board, which is why it hangs off the side
+rather than sitting above or below.
 
 ## At a glance
 
@@ -26,7 +32,7 @@ also carries 09 Network Physical — the NIC's PHY sits on this board
 | Languages | N/A (Hardware Description Languages: Verilog, VHDL, SystemVerilog) |
 | Medium / Interface | Electrical signals, parallel & serial buses |
 | Example | CPU fetches data from RAM via the memory bus |
-| Adjacent layers | ↑ [02_CPU](../02_CPU/), [09_Network_Physical](../Network/09_Network_Physical/) (NIC PHY) |
+| Adjacent layers | ↑ [02_CPU](../02_CPU/), ↓ [00d_Digital_Circuits](../00d_Digital_Circuits/), ↔ [09_Network_Physical](../Network/09_Network_Physical/) (NIC PHY) |
 
 ## What lives here
 

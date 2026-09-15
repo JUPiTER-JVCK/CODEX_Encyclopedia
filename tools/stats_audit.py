@@ -75,7 +75,7 @@ def measure(root: str) -> dict[str, int]:
     notes = sum(1 for path, _ in files
                 if any(path.startswith(d + os.sep) for d in layer_dirs))
 
-    stats, broken, _, _ = link_audit.audit(root)
+    stats, broken, _ = link_audit.audit(root)
 
     indexes = sum(1 for path, _ in files
                   if os.path.basename(path) == "INDEX.md"

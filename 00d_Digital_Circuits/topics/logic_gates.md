@@ -4,25 +4,51 @@ layer: 00d_Digital_Circuits
 section: topics
 tags: [logic-gates, boolean, truth-tables, combinational]
 updated: 2026-05-20
-source_image: ../../_assets/logic_gates_explained.png
 v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (HTML)
 ---
 
 # Logic Gates Explained
 
-> Canonical truth tables for the 8 basic Boolean gates, recreated from the
-> "Logic Gates Explained" reference image. Together with their CMOS
-> implementations these are the atomic units of every digital design above
-> this layer.
+> Truth tables and symbols for the 8 basic Boolean gates. Together with their
+> CMOS implementations these are the atomic units of every digital design
+> above this layer.
+
+## About the symbols
+
+Gates are drawn here in the **IEC 60617-12 rectangular** notation: a box with
+a qualifying symbol inside, and a bubble `○` on the output of a negated gate.
+`1` means "pass through", `&` means AND, `≥1` means "one or more", `=1` means
+"exactly one".
+
+The distinctive ANSI/IEEE 91 shapes — the bullet for AND, the shield for OR —
+are what most readers picture, and they are what an earlier version of this
+file attempted. It drew AND with the buffer's triangle, so AND and YES were
+the same picture; it drew NAND and NOR without their inversion bubbles, so
+they were the same picture as AND and OR; and four of the eight gates had no
+symbol at all. Those shapes turn on curves, which a monospace grid can only
+approximate with a few ambiguous corners. The rectangles differ from each
+other by characters that are either present or not, so they cannot quietly
+collapse into each other the same way.
+
+| Gate | Here | ANSI/IEEE 91 distinctive shape |
+|------|------|--------------------------------|
+| YES  | `1`    | triangle |
+| NO   | `1` ○  | triangle with an output bubble |
+| AND  | `&`    | flat back, semicircular front |
+| NAND | `&` ○  | AND with an output bubble |
+| OR   | `≥1`   | concave back, pointed front |
+| NOR  | `≥1` ○ | OR with an output bubble |
+| XOR  | `=1`   | OR with a second concave line behind the back |
+| XNOR | `=1` ○ | XOR with an output bubble |
 
 ## Unary gates
 
 ### YES (buffer)
 
 ```text
-       ┌─┐
-   A ──│ ▷──── Y
-       └─┘
+        ┌─────┐
+  A ────┤  1  ├──── Y
+        └─────┘
 ```
 
 | A | Y |
@@ -35,9 +61,9 @@ v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (
 ### NO (NOT / inverter)
 
 ```text
-       ┌─┐
-   A ──│ ▷──○── Y
-       └─┘
+        ┌─────┐
+  A ────┤  1  ├○─── Y
+        └─────┘
 ```
 
 | A | Y |
@@ -52,9 +78,11 @@ v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (
 ### AND
 
 ```text
-   A ─┐
-       ▷── Y
-   B ─┘
+        ┌─────┐
+  A ────┤     │
+        │  &  ├──── Y
+  B ────┤     │
+        └─────┘
 ```
 
 | A | B | Y |
@@ -69,9 +97,11 @@ v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (
 ### OR
 
 ```text
-   A ─┐
-       ▷)─ Y
-   B ─┘
+        ┌─────┐
+  A ────┤     │
+        │ ≥1  ├──── Y
+  B ────┤     │
+        └─────┘
 ```
 
 | A | B | Y |
@@ -85,6 +115,14 @@ v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (
 
 ### XOR (exclusive OR)
 
+```text
+        ┌─────┐
+  A ────┤     │
+        │ =1  ├──── Y
+  B ────┤     │
+        └─────┘
+```
+
 | A | B | Y |
 |---|---|---|
 | 0 | 0 | 0 |
@@ -96,6 +134,14 @@ v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (
 bit-add primitive (carry handled separately).
 
 ### NAND
+
+```text
+        ┌─────┐
+  A ────┤     │
+        │  &  ├○─── Y
+  B ────┤     │
+        └─────┘
+```
 
 | A | B | Y |
 |---|---|---|
@@ -109,6 +155,14 @@ from NAND alone. Reason: invert + AND + OR can all be derived from NAND.
 
 ### NOR
 
+```text
+        ┌─────┐
+  A ────┤     │
+        │ ≥1  ├○─── Y
+  B ────┤     │
+        └─────┘
+```
+
 | A | B | Y |
 |---|---|---|
 | 0 | 0 | 1 |
@@ -120,6 +174,14 @@ from NAND alone. Reason: invert + AND + OR can all be derived from NAND.
 
 ### XNOR (equivalence)
 
+```text
+        ┌─────┐
+  A ────┤     │
+        │ =1  ├○─── Y
+  B ────┤     │
+        └─────┘
+```
+
 | A | B | Y |
 |---|---|---|
 | 0 | 0 | 1 |
@@ -128,6 +190,30 @@ from NAND alone. Reason: invert + AND + OR can all be derived from NAND.
 | 1 | 1 | 1 |
 
 `Y = ¬(A ⊕ B)`. Output is 1 if inputs are equal — useful for comparators.
+
+## All eight at a glance
+
+The six binary gates side by side. Read a row as one input combination and
+follow it across — this is the whole of two-input Boolean logic in one table,
+and it is what the never-committed reference image was going to show.
+
+| A | B | AND | NAND | OR | NOR | XOR | XNOR |
+|---|---|-----|------|----|-----|-----|------|
+| 0 | 0 | 0 | 1 | 0 | 1 | 0 | 1 |
+| 0 | 1 | 0 | 1 | 1 | 0 | 1 | 0 |
+| 1 | 0 | 0 | 1 | 1 | 0 | 1 | 0 |
+| 1 | 1 | 1 | 0 | 1 | 0 | 0 | 1 |
+
+Each negated column is the bitwise complement of the one to its left, which is
+the bubble in the symbol. AND and OR agree only on `0 0` and `1 1`; XOR is OR
+with the `1 1` case taken back out.
+
+The two unary gates, for completeness:
+
+| A | YES | NO |
+|---|-----|----|
+| 0 | 0 | 1 |
+| 1 | 1 | 0 |
 
 ## Algebraic identities (Boolean algebra)
 
@@ -175,4 +261,3 @@ That's why NAND/NOR are the most common standard-cell library primitives.
 - Synthesized from HDL → [languages/INDEX.md](../languages/INDEX.md)
 - Migrated from the v1 *Boolean logic gates* HTML reference; the truth
   tables above are the full transcription, so the original is not needed
-- Source image: `_assets/logic_gates_explained.png` (drop the image here)

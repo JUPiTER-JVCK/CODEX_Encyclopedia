@@ -8,9 +8,9 @@
 
 ```text
 ┌──────────────────────────────────────────────┐
-│  02  CPU                                     │
+│  01  Circuit Board                           │
 └───────────────────────┬──────────────────────┘
-                        │  Boolean signals on wires
+                        │  Boolean signals on pins and traces
 ┏━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━━━━━━━━━━┓
 ┃  00d  Digital Circuits            ◀── here   ┃
 ┃      gates · flip-flops · clocked logic      ┃
@@ -21,6 +21,15 @@
 └──────────────────────────────────────────────┘
 ```
 
+**02 CPU is not the rung above.** A CPU is of course built from the gates and
+flip-flops described here, and this diagram used to say so by putting 02
+directly overhead — which skipped 01 Circuit Board, contradicted both
+[LAYERS.md](../LAYERS.md) and the root [README.md](../README.md), and was not
+reciprocated by [02's own diagram](../02_CPU/README.md), which draws 01 below
+itself. The ladder is 02 → 01 → 00d. The relationship to 02 is real but it is
+*composition*, not adjacency: see
+[02_CPU/topics](../02_CPU/topics/INDEX.md).
+
 ## At a glance
 
 | Field | Value |
@@ -29,7 +38,7 @@
 | Languages | Verilog, SystemVerilog, VHDL, Chisel, Amaranth |
 | Medium / Interface | Boolean signals on wires; clocked synchronous design |
 | Example | A 32-bit ALU executes ADD via carry-lookahead in 1 clock cycle |
-| Adjacent | ↓ [00c_Analog_Circuits](../00c_Analog_Circuits/), ↑ [02_CPU](../02_CPU/) |
+| Adjacent | ↓ [00c_Analog_Circuits](../00c_Analog_Circuits/), ↑ [01_Circuit_Board](../01_Circuit_Board/) |
 
 ## What lives here
 

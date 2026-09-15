@@ -7,9 +7,9 @@
 # already finished. Drawing a diagram means deleting its line below and
 # correcting the count on the next line.
 #
-# 173 files remain.
+# 172 files remain.
 
-# Foundations — 00 Physics through 01 Circuit Board (31)
+# Foundations — 00 Physics through 01 Circuit Board (30)
 00_Physics/languages/INDEX.md
 00_Physics/lessons/INDEX.md
 00_Physics/man_pages/INDEX.md
@@ -38,7 +38,6 @@
 01_Circuit_Board/lessons/INDEX.md
 01_Circuit_Board/man_pages/INDEX.md
 01_Circuit_Board/protocols/INDEX.md
-01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md
 01_Circuit_Board/references/INDEX.md
 01_Circuit_Board/topics/INDEX.md
 

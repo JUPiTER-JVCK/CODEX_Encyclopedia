@@ -4,7 +4,6 @@ layer: 01_Circuit_Board
 section: protocols
 tags: [logic-analyzer, decoders, dslogic, sigrok, embedded-bus]
 updated: 2026-05-20
-source_image: ../../_assets/dslogic_decoder_list.png
 ---
 
 # Embedded Bus Protocols — Decoder Catalog
@@ -18,6 +17,31 @@ source_image: ../../_assets/dslogic_decoder_list.png
 > Each entry is mapped to the codex layer that owns its protocol-level entry.
 > Many of these are tiny chip-specific decoders — for those, the spec lives
 > in the chip's datasheet, not in a standards body.
+
+## How the two tables relate
+
+A logic analyzer decodes in two passes. A **base decoder** turns voltage edges
+into bytes; an **upper-layer decoder** takes those bytes and says what they
+mean. Nearly everything in the second table below stacks on one of the eight
+or so protocols in the first.
+
+```text
+  probe pins on the board
+                                │
+                                ▼
+  ┌──────────────────────────────────────────────────────────┐
+  │ BASE DECODER — line level and framing                    │
+  │ spi · i2c · uart · 1-wire · can · jtag · parallel · i2s  │
+  │ "these voltage edges are bytes"                          │
+  └─────────────────────────────┬────────────────────────────┘
+                                │  decoded bytes and frames
+                                ▼
+  ┌──────────────────────────────────────────────────────────┐
+  │ UPPER-LAYER DECODER — meaning                            │
+  │ adxl345 · bmp280 · sdcard_spi · usb_packet · modbus …    │
+  │ "these bytes are a BMP280 pressure reading"              │
+  └──────────────────────────────────────────────────────────┘
+```
 
 ---
 
@@ -226,5 +250,10 @@ source_image: ../../_assets/dslogic_decoder_list.png
   - PulseView GUI → *Decoders* menu
   - Saleae Logic 2 → *Analyzers* dropdown
 
-## Source image
-- `_assets/dslogic_decoder_list.png` (drop the screenshot here)
+## Provenance
+
+Recreated from a DSLogic / sigrok PulseView protocol-decoder listing. The
+screenshot itself is not in this repository and never was — the two tables
+above are the content, and a picture of a scrolling list would be less useful
+than the list. See [`STRUCTURE.md`](../../STRUCTURE.md) on why the codex draws
+rather than photographs.

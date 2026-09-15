@@ -155,7 +155,7 @@ CODEX_Encyclopedia-/
 ├── LICENSE                ← MIT — apps and tooling
 ├── LICENSE-docs           ← CC BY-SA 4.0 — the codex
 ├── THIRD_PARTY.md         ← attribution: colour schemes, PDFs, fonts
-├── _assets/               ← reference images
+├── _assets/               ← images, and why there are none
 │
 ├── 00_Physics/            ─┐
 ├── 00b_Devices/            │  Foundations
@@ -296,7 +296,7 @@ the LMS:
 | Workflow | Runs | Catches |
 |----------|------|---------|
 | `swift.yml` | `swift build` debug + release, on `macos-14` | The macOS app not compiling |
-| `docs.yml` | `link_audit.py`, `table_audit.py`, `title_audit.py`, `diagram_audit.py`, `stats_audit.py`, `palette_audit.py` | Broken links, missing H1s, malformed tables, uncanonical section titles, unfenced or missing diagrams, stale numbers in this file, and colour values the macOS reader's palettes claim came from upstream |
+| `docs.yml` | `link_audit.py`, `table_audit.py`, `title_audit.py`, `diagram_audit.py`, `stats_audit.py`, `palette_audit.py` | Broken links, missing H1s, malformed tables, uncanonical section titles, diagrams that are unfenced, untagged, over-wide or missing, references to images that are not in the repository, stale numbers in this file, and colour values the macOS reader's palettes claim came from upstream |
 | `lms.yml` | `npm ci`, build, `npm audit`, Playwright smoke test | CORE not building, or losing progress on reload |
 
 Running every workflow on every PR is deliberate. A *required* status check
@@ -341,8 +341,11 @@ section turns the build red rather than quietly retiring the check.
 Currently:
 
 - 278 markdown files
-- 1015 internal links, 0 broken
+- 1021 internal links, 0 broken
 - Every file carries an H1, every pipe table well-formed
 - All 138 section indexes titled `<Layer> — <Section>`
-- 102 files carry a diagram, all fenced and within 90 columns; every layer
-  README shows where its layer sits
+- 103 files carry a diagram, all fenced, tagged ` ```text `, and within 90
+  columns; every layer README shows where its layer sits. 272 files are
+  expected to carry one — the 172 that do not are listed in
+  `tools/diagram_backlog.txt`, which the audit checks in both directions so
+  the gap can neither grow unnoticed nor go stale

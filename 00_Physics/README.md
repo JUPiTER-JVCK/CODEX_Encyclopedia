@@ -52,11 +52,32 @@
 - Cryptographic randomness from physical sources → [14_Security/topics](../14_Security/topics/INDEX.md)
 - Quantum crypto (migrated from the v1 encryption notes)
 
-## Layer ladder (per image reference)
+## Layer ladder
 
-This layer is the bottom rung of the *fine-grained* hardware ladder added in v2.1:
+This layer is the bottom rung of the whole codex — every compute layer above
+resolves, eventually, to something happening here:
 
+```text
+  08  User Applications
+  07  Runtime Environment
+  06  System Libraries
+  05  OS Kernel
+  04  Device Drivers
+  03  Firmware / BIOS
+  02  CPU
+  01  Circuit Board          ◀── the board the rest of this ladder sits on
+ 00d  Digital Circuits
+ 00c  Analog Circuits
+ 00b  Devices
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃  00  Physics                      ◀── here   ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
-... Application Software → Operating Systems → Architecture → Microarchitecture
-        → Logic → Digital Circuits → Analog Circuits → Devices → PHYSICS  ← you are here
-```
+
+The prose version of this ladder used to read *Architecture →
+Microarchitecture → Logic → Digital Circuits → Analog Circuits → Devices →
+Physics*, which was the naming of a reference diagram rather than of this
+codex, and which left out **01 Circuit Board** entirely. The rungs above are
+the codex's own, in the order [LAYERS.md](../LAYERS.md) gives them. The five
+network layers (09–13) branch off 01, and the six cross-cutting layers
+(14–19) intersect the ladder rather than sitting on it.

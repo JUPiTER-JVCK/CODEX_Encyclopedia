@@ -7,7 +7,8 @@
 - **Roadmap image** — Meysam Parvizi, *Embedded Systems Engineering Roadmap* v1.2.3 (2023-12-23)
   - GitHub: `https://github.com/m3y54m/Embedded-Engineering-Roadmap`
   - License: CC BY-SA 4.0
-  - Source image: `_assets/embedded_systems_roadmap.png` (drop the image here)
+  - Transcribed in full in [the layer README](../README.md); the poster
+    itself is not vendored here.
 
 ## Books — foundations
 - *Making Embedded Systems* — Elecia White. The starting point.

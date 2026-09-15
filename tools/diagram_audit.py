@@ -53,8 +53,9 @@ The backlog is checked in both directions, the way `palette_audit.py` checks
 its derived-colour counts. A file missing a diagram that is *not* listed
 fails — the gap cannot grow. A listed file that now has one also fails — the
 list cannot go stale and quietly re-exempt work already done. Drawing a
-diagram therefore means deleting its line here, and the count in the
-backlog's own header has to be right too.
+diagram therefore means deleting its line here, and every count in that file
+— the total in its header and the `(N)` on each band heading — has to be
+right too.
 
 Layer READMEs are outside this arrangement: they are required to carry a
 diagram unconditionally and cannot be backlogged.
@@ -285,16 +286,44 @@ def wants_diagram(rel: str) -> bool:
     return parts[0] not in NON_CODEX_TOPS
 
 
-def read_backlog(root: str) -> tuple[set[str], int | None]:
-    """The listed gaps, and the count the file's own header claims.
+class Backlog(NamedTuple):
+    """The listed gaps, the total the header claims, and the band counts."""
 
-    The header count is checked against the entries for the same reason the
-    entries are checked against the tree: a number in prose that nothing
-    verifies is a number that goes stale.
+    entries: set[str]
+    claimed: int | None
+    bands: list[tuple[str, int | None, int]]   # label, claimed, actual
+    unbanded: int                              # entries under no heading
+
+
+# `# 142 files remain.` and `# Compute — 02 CPU through 08 … (65)`.
+TOTAL_RE = re.compile(r"^#\s*(\d+)\s+files? remain")
+BAND_RE = re.compile(r"^#\s*(.+?)\s*\((\d+)\)\s*$")
+
+
+def read_backlog(root: str) -> Backlog:
+    """Parse the backlog, including the per-band counts in its headings.
+
+    Every number in this file is checked against the entries under it, for
+    the same reason the entries are checked against the tree: a number in
+    prose that nothing verifies is a number that goes stale. The band counts
+    were not parsed at first, and a PR description claimed they were — which
+    is precisely the failure this file exists to prevent, one level up.
+
+    **A band is found by position, not by its `(N)`.** The first version of
+    this matched headings on the count itself, so deleting or mistyping a
+    `(65)` made the whole band vanish from the check while its entries still
+    satisfied the total. A rule that can be switched off by breaking it is
+    not a rule. A band heading here is the last comment line before a run of
+    entries, whatever it says; a heading with no usable count is a fault, and
+    so is an entry that belongs to no band at all.
     """
     path = os.path.join(root, BACKLOG_PATH)
     entries: set[str] = set()
     claimed: int | None = None
+    bands: list[tuple[str, int | None, int]] = []
+    unbanded = 0
+    pending: str | None = None      # last comment seen since the last entry
+
     try:
         with open(path, encoding="utf-8") as fh:
             for line in fh:
@@ -302,14 +331,31 @@ def read_backlog(root: str) -> tuple[set[str], int | None]:
                 if not line:
                     continue
                 if line.startswith("#"):
-                    m = re.search(r"^#\s*(\d+)\s+files? remain", line)
-                    if m:
-                        claimed = int(m.group(1))
+                    total = TOTAL_RE.search(line)
+                    if total:
+                        claimed = int(total.group(1))
+                        pending = None
+                    else:
+                        pending = line
                     continue
+
+                if pending is not None:
+                    band = BAND_RE.match(pending)
+                    if band:
+                        bands.append((band.group(1), int(band.group(2)), 0))
+                    else:
+                        bands.append((pending.lstrip("# ").strip(), None, 0))
+                    pending = None
+
                 entries.add(line.replace("/", os.sep))
+                if bands:
+                    label, want, seen = bands[-1]
+                    bands[-1] = (label, want, seen + 1)
+                else:
+                    unbanded += 1
     except FileNotFoundError:
         pass
-    return entries, claimed
+    return Backlog(entries, claimed, bands, unbanded)
 
 
 def coverage_faults(root: str,
@@ -321,7 +367,8 @@ def coverage_faults(root: str,
     parsing — and re-`stat`ing every image reference in — all 278 files a
     second time, for an answer already in hand.
     """
-    backlog, claimed = read_backlog(root)
+    listed = read_backlog(root)
+    backlog, claimed = listed.entries, listed.claimed
     faults: list[tuple[str, int, str, str]] = []
 
     # A layer README is the one file that cannot be backlogged: it is the
@@ -357,6 +404,27 @@ def coverage_faults(root: str,
     elif claimed != real:
         faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
                        f"header claims {claimed} files remain, really {real}"))
+
+    banded = 0
+    for label, want, seen in listed.bands:
+        banded += seen
+        if want is None:
+            faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                           f"band \"{label}\" heading carries no (N) count"))
+        elif want != seen:
+            faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                           f"band \"{label}\" claims {want}, lists {seen}"))
+
+    if listed.unbanded:
+        faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                       f"{listed.unbanded} entries sit under no band heading"))
+
+    # The band counts must also reconcile with the total, or a band could be
+    # internally consistent while the file as a whole is not.
+    if claimed is not None and banded != len(listed.entries):
+        faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                       f"bands account for {banded} of {len(listed.entries)} "
+                       "entries"))
 
     for rel in sorted(layers):
         if not drawn.get(rel):
@@ -501,14 +569,14 @@ COVERAGE_CASES = [
     (
         "a layer README cannot be backlogged out of that",
         {"L/README.md": PLAIN, "L/topics/INDEX.md": DIAGRAM},
-        "# 0 files remain.\nL/README.md\n",
+        "# 0 files remain.\n\n# Band (1)\nL/README.md\n",
         ["BACKLOG STALE | L/README.md is a layer README and cannot be backlogged",
          "NO DIAGRAM | L/README.md a layer overview should show"],
     ),
     (
         "an ordinary file's gap is excused by a backlog line",
         {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
-        "# 1 files remain.\nL/topics/INDEX.md\n",
+        "# 1 files remain.\n\n# Band (1)\nL/topics/INDEX.md\n",
         [],
     ),
     (
@@ -520,15 +588,40 @@ COVERAGE_CASES = [
     (
         "and the header count is checked against it",
         {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
-        "# 0 files remain.\nL/topics/INDEX.md\n",
+        "# 0 files remain.\n\n# Band (1)\nL/topics/INDEX.md\n",
         ["BACKLOG STALE | header claims 0 files remain, really 1"],
     ),
     (
         "a backlog line for a file that has one is stale",
         {"L/README.md": DIAGRAM, "L/topics/INDEX.md": DIAGRAM},
-        "# 1 files remain.\nL/topics/INDEX.md\n",
+        "# 1 files remain.\n\n# Band (1)\nL/topics/INDEX.md\n",
         ["BACKLOG STALE | L/topics/INDEX.md has a diagram now",
          "BACKLOG STALE | header claims 1 files remain, really 0"],
+    ),
+    (
+        "a band heading's own count is checked too",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        "# 1 files remain.\n\n# Band (2)\nL/topics/INDEX.md\n",
+        ["BACKLOG STALE | band \"Band\" claims 2, lists 1"],
+    ),
+    (
+        "and passes when it agrees",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        "# 1 files remain.\n\n# Band (1)\nL/topics/INDEX.md\n",
+        [],
+    ),
+    (
+        "a band heading that lost its count is a fault, not a free pass",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        "# 1 files remain.\n\n# Band\nL/topics/INDEX.md\n",
+        ["BACKLOG STALE | band \"Band\" heading carries no (N) count"],
+    ),
+    (
+        "an entry under no heading at all is a fault too",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        "# 1 files remain.\nL/topics/INDEX.md\n",
+        ["BACKLOG STALE | 1 entries sit under no band heading",
+         "BACKLOG STALE | bands account for 0 of 1 entries"],
     ),
     (
         "an image present under the audited root is found there",
@@ -647,7 +740,7 @@ def main() -> int:
     faults.extend(coverage_faults(args.root, drawn))
     faults.sort()
 
-    backlog, _ = read_backlog(args.root)
+    backlog = read_backlog(args.root).entries
     scoped = sum(1 for rel in drawn if wants_diagram(rel))
 
     print(f"markdown files   {len(drawn)}")

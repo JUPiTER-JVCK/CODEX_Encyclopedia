@@ -2,6 +2,35 @@
 
 Simulation and bench tooling rather than system utilities.
 
+## Four benches
+
+```text
+  Analog work moves left to right across these, and back again whenever the
+  measurement disagrees with the model.
+
+  simulate            lay out             build            measure
+  ─────────           ─────────           ─────            ────────
+  ngspice · xyce      KiCad               iron · hot air   DMM
+  gnucap · qucs-s     kicad-cli           rework station   oscilloscope
+  LTspice             Altium              microscope       function gen
+  Spectre · PSpice    Allegro · Virtuoso                   bench PSU
+                      Eagle (legacy)                       LCR meter
+  MATLAB/Simulink                                          spectrum an.
+  octave                                                   VNA
+  scipy.signal                                             calibrator
+  python-control
+  lcapy (symbolic)
+
+        └──────────────────── disagreement ────────────────────┘
+              which is the useful output of the whole loop
+
+  Mixed-signal spans the first two columns and is its own problem. Cadence
+  AMS Designer runs both halves together; the open route is a co-simulation
+  harness wiring a digital simulator to an analog one. ADMS is not that — it
+  compiles a Verilog-A compact model into simulator source, which is a step
+  in building the analog half rather than a way to run both.
+```
+
 ## Simulation
 | Tool | Purpose |
 |------|---------|

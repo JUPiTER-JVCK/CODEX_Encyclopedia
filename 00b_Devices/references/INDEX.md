@@ -1,5 +1,28 @@
 # Devices — References
 
+## Where to start, by what you need
+
+```text
+  circuits with devices in them
+    Sedra & Smith ──▶ Razavi, Fundamentals ──▶ Razavi, Analog CMOS
+    undergrad workhorse      teaching order       design, IC-level
+
+  the practical side           Horowitz & Hill, The Art of Electronics
+                               (also in 01 Circuit Board's references)
+
+  power                        Mohan, Undeland & Robbins
+  sensors                      Pallás-Areny
+
+  Then the material that is not in books at all, which at this layer is
+  most of it:
+
+  datasheets    TI · ADI · Infineon · ST · NXP · ON · Microchip
+                Nexperia · Diodes Inc · Vishay
+  can I buy it  Octopart · DigiKey · Mouser · LCSC · Arrow
+  what is in it TechInsights die shots · siliconpr0n.org
+  the rules     JEDEC · IPC · AEC-Q100/101/200 ──▶ protocols/INDEX.md
+```
+
 ## Books
 - *Microelectronic Circuits* — Sedra & Smith. The undergrad workhorse.
 - *Design of Analog CMOS Integrated Circuits* — Behzad Razavi.

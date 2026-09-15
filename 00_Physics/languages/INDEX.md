@@ -2,6 +2,27 @@
 
 Mostly math + simulation tooling — physics speaks math first.
 
+## Two kinds of tool
+
+```text
+  you write the maths                         you run the maths
+  ◀──────────────── symbolic ── numerical ────────────────▶
+
+  SymPy · Mathematica      Sage       Julia · Python + NumPy/SciPy
+  Maple · LaTeX                       MATLAB / Octave
+
+  and then the solvers. None is general; each owns one domain:
+
+  ┌────────────┬─────────────┬──────────────┬────────────┬────────────┐
+  │ circuits   │ EM fields   │ multiphysics │ materials  │ quantum    │
+  ├────────────┼─────────────┼──────────────┼────────────┼────────────┤
+  │ SPICE      │ Meep (FDTD) │ COMSOL       │ Quantum    │ Qiskit     │
+  │ ngspice    │ HFSS        │ ANSYS        │ ESPRESSO   │ Cirq       │
+  │ LTspice    │ Maxwell     │ Elmer        │ VASP · ASE │ PennyLane  │
+  │ → 00c, 01  │ → 16 RF     │ (FEM)        │ (DFT)      │ → 15 AI/ML │
+  └────────────┴─────────────┴──────────────┴────────────┴────────────┘
+```
+
 | Language / tool | Use |
 |-----------------|-----|
 | Mathematics (the language) | Vector calc, complex analysis, linear algebra, PDEs |

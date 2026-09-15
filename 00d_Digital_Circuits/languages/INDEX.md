@@ -1,5 +1,35 @@
 # Digital Circuits — Languages
 
+## From text to a bitstream
+
+```text
+  An HDL takes two different routes. Simulation *compiles* it — iverilog is
+  a compiler, Verilator emits C++. Hardware *synthesises* it, into gates and
+  then a placement on real silicon. Below, those two routes branch from one
+  description and never rejoin.
+
+  describe      Verilog · SystemVerilog · VHDL        the industry three
+                Chisel · SpinalHDL (Scala)            embedded in a host
+                Amaranth · Migen · MyHDL (Python)     language, so the
+                Bluespec (rules) · Clash (Haskell)    elaborator is a program
+                   │
+     ┌─────────────┴─────────────┐   two consumers of the same source,
+     ▼                           ▼   not one after the other
+  simulate                    synthesise
+  Icarus (iverilog) · GHDL    Yosys              open, RTL ─▶ netlist
+  Verilator (to C++)          Vivado · Quartus   vendor
+  VCS · Xcelium · ModelSim    Design Compiler    ASIC
+     │                           │
+     ▼                           ▼
+  GTKWave · Surfer · Verdi    place & route
+  waveforms                   nextpnr ──▶ IceStorm · Trellis · Apicula
+                                          iCE40     ECP5      Gowin
+                                      ──▶ bitstream
+
+  Verification is not a stage here — it runs against whichever branch you
+  are on: SystemVerilog/UVM · e · PSL · cocotb · SymbiYosys · JasperGold
+```
+
 ## HDLs (Hardware Description Languages)
 | Language | Notes |
 |----------|-------|

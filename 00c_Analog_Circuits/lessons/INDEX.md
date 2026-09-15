@@ -1,5 +1,38 @@
 # Analog Circuits — Lessons
 
+## The ladder
+
+```text
+  Twelve exercises. The file states no prerequisites; the grouping below is
+  editorial. #1 is the op-amp, and #2 and #3 are built out of it — but much
+  of what follows is not: a passive LC filter, a ring oscillator and an R-2R
+  ladder contain no amplifier at all.
+
+  amplifiers
+     1  Op-amp basics        inverting · non-inverting · buffer · summer
+     2  Sallen-Key filter    2nd-order low-pass at 1 kHz, measure rolloff
+     3  Instrumentation amp  3-op-amp INA from discretes, high CMRR
+
+  power
+     4  Voltage reference    bandgap ─▶ LM385 / LM4040
+     5  LDO                  C_in/C_out, dropout, thermal limits
+     6  Buck converter       L, C_out, duty · CCM vs DCM · loop comp
+
+  frequency and conversion
+     7  PLL fundamentals     detector + LPF + VCO · lock vs capture range
+     8  ADC sampling         Nyquist · aliasing · anti-alias · SAR vs ΣΔ
+     9  DAC reconstruction   sinc roll-off, reconstruction filter
+
+  output stages
+     10  Audio amp           Class A/B/AB/D — THD against efficiency
+     11  RF LNA              noise figure · IP3 · S-parameters  → 16 RF
+
+  12  Mixed-signal layout pitfalls    ground bounce · decoupling · return
+      paths — the one that ruins any of the eleven above  → 01 Circuit Board
+
+  Lab: analog_labs.md covers 1, 2 and 8 (op-amp, active filter, sampling).
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

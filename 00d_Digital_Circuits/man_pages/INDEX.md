@@ -3,6 +3,38 @@
 HDL toolchain commands — simulators, synthesis and place-and-route — rather
 than system utilities.
 
+## The open flow, end to end
+
+```text
+  These commands chain. Running them in order is the whole FPGA toolchain,
+  and every one of them is free:
+
+  design.v ──▶ iverilog ──▶ vvp ──▶ dump.vcd ──▶ gtkwave · surfer
+     │           simulate first: a bug found here costs seconds
+     │
+     ├──▶ verilator ──▶ C++ model        when the testbench is large
+     ├──▶ ghdl                           if the design is VHDL
+     ├──▶ cocotb, via one of the simulators above — cocotb-config only
+     │    reports its install paths and flags, it runs nothing
+     ├──▶ sby (SymbiYosys)               if you want a proof, not a test
+     │
+     └──▶ yosys ──▶ netlist ──▶ nextpnr-ice40 ──▶ icepack     ──▶ .bin
+                                nextpnr-ecp5  ──▶ ecppack     ──▶ .bit
+                                nextpnr-gowin ──▶ gowin_pack  ──▶ .fs
+                                                  (Apicula)
+
+     icetime reads an iCE40 placement and reports its timing; the other two
+     families have their own equivalents rather than sharing this one.
+
+  The proprietary tools cover the same stages and are bought separately:
+  vcs · xrun · vsim simulate, dc_shell and genus synthesise, innovus
+  implements, and vivado and quartus_sh bundle a whole FPGA flow each.
+
+  On the bench, a logic analyzer closes the loop — Saleae, DSLogic or any
+  sigrok device, driven by sigrok-cli or PulseView. The decoder catalog is
+  in 01 Circuit Board's protocols section.
+```
+
 ## Open-source HDL flow
 | Command | Purpose |
 |---------|---------|

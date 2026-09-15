@@ -1,5 +1,41 @@
 # Devices — Topics
 
+## The parts, by what they do
+
+```text
+  Parts grouped by what they do to a signal, then two things that are true
+  of every one of them.
+
+  store and shape      passives      R · C · L · transformers · crystals
+                                     no control terminal, and no power gain
+                                     (a transformer trades volts for amps)
+
+  rectify and clamp    diodes        PN · Schottky · Zener · TVS
+                                     PIN · varactor · LED · laser
+                                     one junction — and Zener, TVS and
+                                     varactor all use the reverse side of it
+
+  amplify and switch   BJT           current-controlled — β, V_BE ≈ 0.7 V
+                       FET           voltage-controlled — g_m, V_T, R_DS(on)
+                       │             JFET · MOSFET · MESFET
+                       └─ power      IGBT · GaN HEMT · SiC ──▶ 00c, 18
+
+  cross domains        optoelectronic  LED · photodiode · APD
+                                       optocoupler — the isolation barrier
+                       MEMS            IMU · microphone · pressure ──▶ 18
+
+  and two things that are true of every part above:
+
+  packaging            through-hole ─── SMD ─── power ─── hi-rel
+                       DIP, TO-220     0201…BGA   DPAK    hermetic
+
+  datasheet literacy   Absolute Max (never exceed)
+                       Recommended Operating (design within)
+                       SOA · derating curves · MTBF, FIT, MSL
+
+  Detail on the MOSFET itself: mosfet_cross_section.md.
+```
+
 ## Dedicated topic files
 
 | Topic | File |

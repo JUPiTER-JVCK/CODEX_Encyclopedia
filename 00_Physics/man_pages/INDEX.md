@@ -3,6 +3,34 @@
 Simulators rather than system utilities — the tooling at this layer is solvers
 you install, not commands the OS ships.
 
+## What solves what
+
+```text
+  Solvers, not system utilities — you install these, the OS does not ship
+  them. Grouped by the equation each one is actually discretising.
+
+  lumped circuits          ngspice · xyce · gnucap · qucs-s
+    modified nodal analysis, time and frequency domain
+
+  fields in space          meep · lumerical
+    FDTD — Maxwell on a grid, stepped in time
+
+  coupled physics          comsol · elmer
+    FEM — needs a mesh                    gmsh ──▶ both of these
+
+  quantum computing        qiskit · cirq · pennylane
+    circuits and algorithms, not atoms — the DFT codes that compute bands
+    (Quantum ESPRESSO, VASP, with ASE orchestrating rather than solving)
+    are in languages/, not in this table
+
+  the maths itself         sympy (symbolic) · octave (numeric)
+
+  and one that is neither  units — `echo "1 eV" | units -t J`
+
+  Numeric values for the constants below are in this file's second table;
+  the laws they appear in are in protocols/INDEX.md.
+```
+
 | Tool | Purpose |
 |------|---------|
 | `ngspice` | Open-source SPICE circuit simulator |

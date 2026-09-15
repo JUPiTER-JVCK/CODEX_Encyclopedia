@@ -4,6 +4,37 @@ Analog deals with *measurements* more than *protocols*. The "specs" here are
 the standardized characterizations and audio/video formats that sit on top of
 analog signals.
 
+## Specifications, not protocols
+
+```text
+  The first half of this section is not negotiated on anything — it is the
+  agreed vocabulary for saying how good a part is, clustered by what it
+  measures. The power-supply rules after it include two that genuinely do
+  negotiate.
+
+  how faithful is the amplifier?      GBW · SR · V_OS · I_B/I_OS
+  │                                   CMRR · PSRR · THD+N · e_n · i_n
+  │
+  how faithful is the conversion?     INL/DNL · SNR · SFDR · ENOB
+  │                                   THD · settling time
+  │   both feed ──▶
+  ├─ audio levels      dBu · dBV · +4 dBu pro vs −10 dBV consumer
+  │                    PCM · DSD (1-bit ΣΔ) · Dolby · THX
+  │                    ──▶ digital transport is 13 Network Application
+  │
+  └─ RF figures        VSWR · return loss · NF · P1dB · IP2/IP3
+                       carried in Touchstone .sNp    ──▶ 16 RF
+
+  Separately, the rules a power supply has to obey — these *are* binding,
+  and two of them genuinely negotiate:
+
+    negotiated    USB-PD (USB-IF) · Qi (WPC)
+    conformance   ATX 12VO / 3.x ──▶ 01 Circuit Board
+    safety        IEC 60950-1 ──▶ 62368-1
+    emissions     EN 55032/55035 · FCC Part 15 Subpart B
+    efficiency    80 PLUS · Energy Star · DOE Level VI
+```
+
 ## Op-amp / amplifier specs (industry-standard parameters)
 | Parameter | Unit | Means |
 |-----------|------|-------|

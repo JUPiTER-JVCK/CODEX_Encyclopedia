@@ -51,6 +51,28 @@ struct Bookmarks: Codable {
     var recents: [String] = []
     static let maxRecents = 30
 
+    init() {}
+
+    /// Decode each key on its own, falling back rather than failing.
+    ///
+    /// Swift's synthesised `init(from:)` calls `decode`, not `decodeIfPresent`,
+    /// so property defaults are *not* applied to a missing key — the whole
+    /// decode throws instead. Paired with `load()`'s `try?`, that turns one
+    /// unknown key into an empty `Bookmarks`: every pin and recent silently
+    /// gone. Adding a field in a later version would have done exactly that to
+    /// every existing `state.json`.
+    ///
+    /// Preferences were moved to their own file partly to avoid this, and the
+    /// commit that did so claimed both files decoded tolerantly. Only one of
+    /// them did. This is the other one.
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        pinned  = (try? c.decode([String].self, forKey: .pinned))  ?? []
+        recents = (try? c.decode([String].self, forKey: .recents)) ?? []
+    }
+
+    private enum CodingKeys: String, CodingKey { case pinned, recents }
+
     private static var storeURL: URL {
         let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
             .appendingPathComponent("Codex", isDirectory: true)
@@ -68,12 +90,30 @@ struct Bookmarks: Codable {
 
     func save() {
         if let data = try? JSONEncoder().encode(self) {
-            try? data.write(to: Bookmarks.storeURL)
+            // Atomic, so a crash mid-write leaves the previous file intact
+            // rather than a truncated one that fails to parse.
+            try? data.write(to: Bookmarks.storeURL, options: .atomic)
         }
     }
 
     mutating func togglePin(_ path: String) {
         if let i = pinned.firstIndex(of: path) { pinned.remove(at: i) } else { pinned.append(path) }
+        save()
+    }
+
+    /// Pin without un-pinning something already pinned.
+    ///
+    /// `togglePin` is wrong for "open this and keep it" — on an already-pinned
+    /// file it would close the tab the user just asked to open.
+    mutating func pin(_ path: String) {
+        guard !pinned.contains(path) else { return }
+        pinned.append(path)
+        save()
+    }
+
+    mutating func unpin(_ path: String) {
+        guard let i = pinned.firstIndex(of: path) else { return }
+        pinned.remove(at: i)
         save()
     }
 

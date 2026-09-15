@@ -61,13 +61,18 @@ struct InspectorView: View {
 private struct OutlinePane: View {
     @EnvironmentObject var state: AppState
 
-    private var headings: [(level: Int, text: String, anchor: String)] {
+    /// The same outline the renderer is using, not a second parse of the file.
+    ///
+    /// This used to read the file from disk and run `MarkdownParser.parse` on
+    /// every redraw, which was both wasteful and wrong: it listed headings the
+    /// renderer had already removed (the first H1, which the hero card shows),
+    /// and it derived scroll ids independently from text that is not unique.
+    /// `DocumentStore` resolves the outline once and both sides read it.
+    private var headings: [OutlineEntry] {
         guard let url = state.selectedTab,
-              let src = try? String(contentsOf: url, encoding: .utf8) else { return [] }
-        return MarkdownParser.parse(src).compactMap {
-            if case .heading(let l, let t, let a) = $0 { return (l, t, a) }
-            return nil
-        }
+              let doc = DocumentStore.document(for: url, root: state.projectRoot)
+        else { return [] }
+        return doc.outline
     }
 
     var body: some View {
@@ -83,11 +88,9 @@ private struct OutlinePane: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 1) {
                     SectionHeader(label: "On This Page")
-                    ForEach(0..<headings.count, id: \.self) { i in
-                        OutlineRow(level: headings[i].level,
-                                   text: headings[i].text,
-                                   anchor: headings[i].anchor,
-                                   onSelect: { state.pendingAnchor = headings[i].anchor })
+                    ForEach(headings) { entry in
+                        OutlineRow(entry: entry,
+                                   onSelect: { state.pendingAnchor = entry.id })
                     }
                 }
                 .padding(.horizontal, 12).padding(.vertical, 10)
@@ -98,11 +101,26 @@ private struct OutlinePane: View {
 }
 
 private struct OutlineRow: View {
-    let level: Int; let text: String; let anchor: String
+    let entry: OutlineEntry
     let onSelect: () -> Void
     @State private var hovered = false
 
+    private var level: Int { entry.level }
+    private var text: String { entry.text }
+
+    // A Button, not an onTapGesture on a plain view. A gesture is not
+    // focusable and does not respond to Return, so the first version of this
+    // control was reachable only with a pointer — the same defect class as the
+    // dead rows it replaced, just one layer down. `.plain` keeps the styling
+    // below entirely under our control.
     var body: some View {
+        Button(action: onSelect) { rowBody }
+            .buttonStyle(.plain)
+            .onHover { hovered = $0 }
+            .help("Jump to \(text)")
+    }
+
+    private var rowBody: some View {
         HStack(spacing: 8) {
             RoundedRectangle(cornerRadius: 1.5)
                 .fill(level == 1 ? Theme.blue : Theme.overlay0.opacity(0.5))
@@ -122,12 +140,6 @@ private struct OutlineRow: View {
                     ? RoundedRectangle(cornerRadius: 5).fill(Theme.surface0.opacity(0.6))
                     : nil)
         .contentShape(Rectangle())
-        .onTapGesture(perform: onSelect)
-        .onHover { hovered = $0 }
-        // The row already looked clickable — hover highlight, contentShape,
-        // pointer cursor — while doing nothing at all. The affordance was the
-        // promise; this is the part that keeps it.
-        .help(anchor.isEmpty ? text : "Jump to \(text)")
     }
 }
 

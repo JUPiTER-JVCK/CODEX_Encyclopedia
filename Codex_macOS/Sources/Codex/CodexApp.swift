@@ -212,8 +212,11 @@ final class AppState: ObservableObject {
     /// Route a markdown link click through the right behavior.
     func handleLink(_ target: LinkResolver.Target) {
         switch target {
-        case .file(let url):
+        case .file(let url, let anchor):
             openFile(url)
+            // Set after the open, so it survives the dismissPalette/reset that
+            // openFile performs and is waiting when the new document renders.
+            if let anchor, !anchor.isEmpty { pendingAnchor = anchor }
         case .external(let url):
             LinkResolver.openExternal(url)
         case .anchor(let a):

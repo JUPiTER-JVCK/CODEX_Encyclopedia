@@ -177,9 +177,43 @@ perfectly and simply does nothing:
 | Palette placeholder | Promised headings, which are not indexed |
 | Palette arrow keys | `min(count - 1, …)` selected index −1 when nothing matched |
 
+And three of the repairs were themselves pointer-only on the first attempt —
+outline rows, breadcrumb crumbs and pinned rows all used `onTapGesture` on a
+plain view, which cannot be focused or activated with Return. In `PinnedRow`
+that was a straight trade: a `Button` was removed to fix the nested-button bug
+and the keyboard went with it. All three are plain-styled `Button`s now,
+siblings rather than nested, matching what the sidebar rows already did.
+
 All eleven are now fixed, along with the vibrancy defeat below. **None of the
 fixes have been seen running.** They are reasoned and they compile; that is
 exactly the standard the eleven defects above also met.
+
+**What fixing them exposed.** Making the outline rows clickable was the first
+time anything in this app consumed a heading anchor — and it immediately
+showed that the anchors were never unique. `MarkdownParser` derives them from
+heading text, and heading text repeats: **48 files carry 469 colliding
+anchors**, worst `06_System_Libraries/man_pages/linker_commands.md` with 26,
+because the man-page notes repeat `Synopsis`, `Description` and `Examples`
+once per documented command. Twenty-six of that file's outline rows would have
+jumped to the wrong heading.
+
+Two related mismatches surfaced with it. `DocumentStore` drops the first H1
+from the body because the hero card renders it, while the outline pane
+re-parsed the raw file and listed it anyway — so the first row addressed an id
+nothing carried. And `LinkResolver` had been parsing the fragment out of
+`file.md#section` and discarding it for as long as it has existed, so every
+cross-file section link opened at the top of its target.
+
+The fix is one thing rather than three: `DocumentStore` resolves the outline
+once, assigning occurrence-suffixed ids (`examples`, `examples-2`, …) the way
+GitHub does, gives the hero the first H1's id, and both the renderer and the
+outline read that one list. The inspector stops being a second, disagreeing
+parse of the same document — which also retires the three-reads-per-redraw
+cost it carried. Verified by mirroring the resolver against all 277 documents:
+469 collisions before, 0 after.
+
+A control that works for the first time is the first real test of everything
+beneath it.
 
 **Vibrancy.** The sidebar and inspector use `.behindWindow` blending, which
 samples what is behind the *window*. `RootView` painted an opaque `Theme.base`

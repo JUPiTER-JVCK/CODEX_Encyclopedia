@@ -39,16 +39,25 @@ struct VisualEffectBlur: NSViewRepresentable {
 /// material, the document pane its own background, the two side panes their
 /// vibrancy), so clearing the window background exposes no gaps.
 struct WindowVibrancyConfigurator: NSViewRepresentable {
-    func makeNSView(context: Context) -> NSView {
-        let probe = NSView()
-        // The view has no window until it is in the hierarchy.
-        DispatchQueue.main.async {
-            guard let window = probe.window else { return }
+
+    /// Applies the configuration from `viewDidMoveToWindow`.
+    ///
+    /// The first version did this from a one-shot `DispatchQueue.main.async`
+    /// in `makeNSView`, which is a guess about timing: if the view was still
+    /// unattached when the closure ran, `window` was nil, nothing retried, and
+    /// the whole vibrancy fix silently did nothing. AppKit already has the
+    /// callback for "you are now in a window" — and it fires again on every
+    /// re-attachment, so a window change cannot strand the configuration.
+    final class ProbeView: NSView {
+        override func viewDidMoveToWindow() {
+            super.viewDidMoveToWindow()
+            guard let window else { return }
             window.isOpaque = false
             window.backgroundColor = .clear
         }
-        return probe
     }
+
+    func makeNSView(context: Context) -> NSView { ProbeView() }
 
     func updateNSView(_ nsView: NSView, context: Context) {}
 }

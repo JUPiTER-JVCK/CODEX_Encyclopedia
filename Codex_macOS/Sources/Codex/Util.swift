@@ -123,7 +123,13 @@ enum LinkResolver {
     /// Resolve a markdown link relative to a source file.
     /// Returns `.file` for in-codex .md/.html, `.external` for http(s)/mailto.
     enum Target {
-        case file(URL)
+        /// A file, plus the fragment to scroll to once it is open.
+        ///
+        /// The fragment used to be parsed and then thrown away — `resolve`
+        /// split `STRUCTURE.md#repository-layout` into path and anchor, used
+        /// the path, and returned `.file(resolved)`. So every cross-file
+        /// section link in the codex opened at the top of its target.
+        case file(URL, anchor: String? = nil)
         case anchor(String)
         case external(URL)
         case unsupported
@@ -156,11 +162,11 @@ enum LinkResolver {
         if path.hasPrefix("/") {
             candidate = projectRoot.appendingPathComponent(String(path.dropFirst())).standardizedFileURL
         }
-        if let resolved = resolveToFile(candidate) { return .file(resolved) }
+        if let resolved = resolveToFile(candidate) { return .file(resolved, anchor: anchor) }
 
         // Fallback: try as relative to project root
         let alt = projectRoot.appendingPathComponent(path).standardizedFileURL
-        if let resolved = resolveToFile(alt) { return .file(resolved) }
+        if let resolved = resolveToFile(alt) { return .file(resolved, anchor: anchor) }
 
         return .unsupported
     }

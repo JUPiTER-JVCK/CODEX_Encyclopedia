@@ -264,10 +264,17 @@ struct MarkdownView: View {
                     if let fm = frontmatter {
                         PageHero(fm: fm)
                             .padding(.bottom, 28)
+                            // The hero renders the first H1 in place of the
+                            // body, so it has to be the thing that H1's
+                            // outline row scrolls to. Without this the first
+                            // row asked for an id nothing carried, and
+                            // clicking it did nothing at all.
+                            .id(heroID ?? "hero")
                     }
+                    let ids = headingIDs
                     VStack(alignment: .leading, spacing: 16) {
                         ForEach(0..<blocks.count, id: \.self) { idx in
-                            blockView(blocks[idx]).id(scrollID(blocks[idx], idx))
+                            blockView(blocks[idx]).id(scrollID(ids, idx))
                         }
                     }
                     if let fm = frontmatter {
@@ -305,15 +312,33 @@ struct MarkdownView: View {
         }
     }
 
-    /// Scroll identity for a block.
+    /// Block index → the scroll id that block answers to.
     ///
-    /// Headings answer to their own anchor so `proxy.scrollTo(anchor)` — from
-    /// an outline row or a `[text](#anchor)` link — lands on them. Everything
-    /// else keeps a positional id, which nothing scrolls to but which keeps
-    /// identities distinct and stable across re-renders.
-    private func scrollID(_ block: MDBlock, _ idx: Int) -> String {
-        if case .heading(_, _, let anchor) = block, !anchor.isEmpty { return anchor }
-        return "block-\(idx)"
+    /// Taken from `document.outline`, which `DocumentStore` resolved once, so
+    /// the renderer and the inspector's outline agree by construction rather
+    /// than by both applying the same rule correctly. They previously derived
+    /// ids independently from heading text, which is not unique — 48 files in
+    /// this codex have colliding heading anchors.
+    private var headingIDs: [Int: String] {
+        var map: [Int: String] = [:]
+        var bodyEntries = document.outline.lazy.filter { !$0.isHero }.makeIterator()
+        for (i, block) in blocks.enumerated() {
+            guard case .heading = block else { continue }
+            guard let entry = bodyEntries.next() else { break }
+            map[i] = entry.id
+        }
+        return map
+    }
+
+    /// The id the hero card answers to, when it is standing in for the first H1.
+    private var heroID: String? {
+        document.outline.first(where: { $0.isHero })?.id
+    }
+
+    /// Scroll identity for a block. Non-headings keep a positional id: nothing
+    /// scrolls to them, but identities stay distinct and stable across renders.
+    private func scrollID(_ ids: [Int: String], _ idx: Int) -> String {
+        ids[idx] ?? "block-\(idx)"
     }
 
     @ViewBuilder

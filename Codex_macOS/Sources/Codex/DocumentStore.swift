@@ -6,6 +6,23 @@ struct CodexDocument {
     let source: String
     let blocks: [MDBlock]
     let frontmatter: PageFrontmatter?
+    /// Every heading in the document with the scroll id it actually answers to.
+    ///
+    /// Resolved once, here, so the renderer and the inspector's outline cannot
+    /// disagree. They used to: the outline re-parsed the raw file itself and
+    /// listed headings the renderer had already removed, while both derived
+    /// ids from heading text that is not unique.
+    let outline: [OutlineEntry]
+}
+
+/// One heading, and the id that scrolls to it.
+struct OutlineEntry: Identifiable {
+    let level: Int
+    let text: String
+    /// Unique within the document. See `DocumentStore.resolveOutline`.
+    let id: String
+    /// True for the first H1 when the hero card renders it instead of the body.
+    let isHero: Bool
 }
 
 /// Reads and parses each markdown file once per revision.
@@ -19,6 +36,48 @@ struct CodexDocument {
 /// Entries are keyed on path plus modification date and size, so editing a
 /// file outside the app invalidates its entry without an explicit reload.
 enum DocumentStore {
+
+    /// Assign each heading a scroll id that is unique within the document.
+    ///
+    /// `MarkdownParser` derives an anchor from the heading text — lowercased,
+    /// spaces to dashes — which is fine for naming and useless for addressing:
+    /// heading text repeats. Measured across this codex, **48 files** have
+    /// colliding anchors, worst being the man-page notes, where `synopsis`,
+    /// `description` and `examples` recur once per documented command —
+    /// `06_System_Libraries/man_pages/linker_commands.md` has nine of each.
+    ///
+    /// Nothing consumed anchors until the outline rows became clickable, so
+    /// the collision had never mattered. Making a thing work for the first
+    /// time is also the first real test of everything under it.
+    ///
+    /// Repeats take an occurrence suffix — `examples`, `examples-2`,
+    /// `examples-3` — which is how GitHub and most renderers disambiguate, so
+    /// a hand-written `[link](#examples-2)` means what its author expects.
+    static func resolveOutline(hero: (level: Int, text: String, anchor: String)?,
+                               blocks: [MDBlock]) -> [OutlineEntry] {
+        var seen: [String: Int] = [:]
+        var entries: [OutlineEntry] = []
+
+        func unique(_ anchor: String, fallback: Int) -> String {
+            let base = anchor.isEmpty ? "heading-\(fallback)" : anchor
+            let count = (seen[base] ?? 0) + 1
+            seen[base] = count
+            return count == 1 ? base : "\(base)-\(count)"
+        }
+
+        if let hero {
+            entries.append(OutlineEntry(level: hero.level, text: hero.text,
+                                        id: unique(hero.anchor, fallback: 0),
+                                        isHero: true))
+        }
+        for (i, block) in blocks.enumerated() {
+            guard case .heading(let level, let text, let anchor) = block else { continue }
+            entries.append(OutlineEntry(level: level, text: text,
+                                        id: unique(anchor, fallback: i + 1),
+                                        isHero: false))
+        }
+        return entries
+    }
 
     private struct Key: Hashable {
         let path: String
@@ -55,14 +114,20 @@ enum DocumentStore {
         let frontmatter = PageFrontmatter.parse(source: source, file: url, root: root)
         var blocks = MarkdownParser.parse(source)
 
-        // The hero card already shows the H1, so drop it from the body.
+        // The hero card already shows the H1, so drop it from the body. Note
+        // which heading that was: it still belongs in the outline, and it
+        // still needs somewhere to scroll to, which is the hero itself.
+        var heroHeading: (level: Int, text: String, anchor: String)? = nil
         if frontmatter.h1Used,
            let first = blocks.firstIndex(where: { if case .heading = $0 { return true } else { return false } }),
-           case .heading(let level, _, _) = blocks[first], level == 1 {
+           case .heading(let level, let text, let anchor) = blocks[first], level == 1 {
+            heroHeading = (level, text, anchor)
             blocks.remove(at: first)
         }
 
-        let document = CodexDocument(source: source, blocks: blocks, frontmatter: frontmatter)
+        let outline = DocumentStore.resolveOutline(hero: heroHeading, blocks: blocks)
+        let document = CodexDocument(source: source, blocks: blocks,
+                                     frontmatter: frontmatter, outline: outline)
 
         lock.lock()
         documents[key] = document

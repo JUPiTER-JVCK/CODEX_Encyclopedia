@@ -267,32 +267,47 @@ private struct PinnedRow: View {
     private var exists: Bool { FileManager.default.fileExists(atPath: url.path) }
 
     var body: some View {
-        // The open action is a tap gesture on the row rather than a Button
-        // wrapping everything, because the unpin control used to be a Button
-        // inside this Button's label. Nested buttons are unreliable on macOS:
-        // the inner one may swallow the click, or both may fire. Now the row
-        // handles taps and the unpin control is the only Button here.
+        // Two sibling Buttons, never nested.
+        //
+        // This was a Button (unpin) inside another Button's label (open),
+        // which is unreliable on macOS — the inner may swallow the click, or
+        // both may fire. The first fix replaced the outer Button with an
+        // onTapGesture, which removed the nesting and the keyboard access at
+        // the same time: a gesture on a plain view cannot be focused or
+        // activated with Return. Siblings solve both at once.
         HStack(spacing: 8) {
-            Spacer().frame(width: 10)
-            Image(systemName: exists ? "doc.text.fill" : "questionmark.square.dashed")
-                .font(.system(size: 11))
-                .foregroundColor(exists ? Theme.yellow : Theme.overlay0)
-                .frame(width: 14)
-            // Every other surface — tabs, palette, recents, inspector — titles
-            // a file with CodexTree.fullTitle. This row rolled its own, so a
-            // pinned INDEX.md read "Index" and matched nothing else on screen.
-            Text(CodexTree.fullTitle(for: url))
-                .font(.system(size: 12))
-                .foregroundColor(exists ? (isSelected ? Theme.text : Theme.subtext)
-                                        : Theme.overlay0)
-                .strikethrough(!exists, color: Theme.overlay0)
-                .lineLimit(1)
-                .truncationMode(.middle)
-            Spacer(minLength: 4)
-            Button(action: {
+            Button {
+                if exists { state.openFile(url) }
+            } label: {
+                HStack(spacing: 8) {
+                    Spacer().frame(width: 10)
+                    Image(systemName: exists ? "doc.text.fill" : "questionmark.square.dashed")
+                        .font(.system(size: 11))
+                        .foregroundColor(exists ? Theme.yellow : Theme.overlay0)
+                        .frame(width: 14)
+                    // Every other surface — tabs, palette, recents, inspector
+                    // — titles a file with CodexTree.fullTitle. This row rolled
+                    // its own, so a pinned INDEX.md read "Index" and matched
+                    // nothing else on screen.
+                    Text(CodexTree.fullTitle(for: url))
+                        .font(.system(size: 12))
+                        .foregroundColor(exists ? (isSelected ? Theme.text : Theme.subtext)
+                                                : Theme.overlay0)
+                        .strikethrough(!exists, color: Theme.overlay0)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                    Spacer(minLength: 4)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .disabled(!exists)
+            .help(exists ? url.path : "Missing: \(url.path)")
+
+            Button {
                 state.bookmarks.togglePin(url.path)
                 state.objectWillChange.send()
-            }) {
+            } label: {
                 Image(systemName: "xmark")
                     .font(.system(size: 9))
                     .foregroundColor(Theme.overlay0)
@@ -308,9 +323,6 @@ private struct PinnedRow: View {
                     ? Theme.yellow.opacity(0.16)
                     : (hovered ? Theme.surface0.opacity(0.5) : Color.clear))
         .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
-        .contentShape(Rectangle())
-        .onTapGesture { if exists { state.openFile(url) } }
         .onHover { hovered = $0 }
-        .help(exists ? url.path : "Missing: \(url.path)")
     }
 }

@@ -17,6 +17,7 @@ struct TabStrip: View {
                         ForEach(state.openTabs, id: \.path) { url in
                             TabPill(url: url,
                                     isActive: state.selectedTab == url,
+                                    isPinned: state.bookmarks.isPinned(url.path),
                                     onSelect: { state.openFile(url, pushHistory: false) },
                                     onClose:  { state.closeTab(url) })
                                 .id(url)
@@ -39,28 +40,36 @@ private struct TabPill: View {
     /// Redraw on a palette or text-scale change — see `Preferences.revision`.
     @ObservedObject private var appearance = Preferences.shared
     let url: URL; let isActive: Bool
+    /// Pinned pills persist; the one unpinned pill is replaced as you browse.
+    /// Shown as a difference in glyph and weight, because a tab that is about
+    /// to be replaced and one that will still be there tomorrow are not the
+    /// same thing and should not look the same.
+    let isPinned: Bool
     let onSelect: () -> Void
     let onClose:  () -> Void
     @State private var hovered = false
 
     var body: some View {
         HStack(spacing: 8) {
-            Image(systemName: "doc.text.fill")
+            Image(systemName: isPinned ? "pin.fill" : "doc.text")
                 .font(.system(size: 10))
-                .foregroundColor(isActive ? Theme.blue : Theme.overlay1)
+                .foregroundColor(isPinned ? Theme.yellow
+                                          : (isActive ? Theme.blue : Theme.overlay1))
             Text(displayName)
                 .font(.system(size: Theme.size(12), weight: isActive ? .semibold : .regular))
                 .foregroundColor(isActive ? Theme.text : Theme.subtext)
+                .italic(!isPinned)
                 .lineLimit(1)
 
             Button(action: onClose) {
-                Image(systemName: "xmark")
+                Image(systemName: isPinned ? "pin.slash" : "xmark")
                     .font(.system(size: 8, weight: .bold))
                     .foregroundColor(Theme.overlay1)
                     .frame(width: 14, height: 14)
                     .background(hovered ? Circle().fill(Theme.surface1) : nil)
             }
             .buttonStyle(.plain)
+            .help(isPinned ? "Unpin" : "Close")
             .opacity(hovered || isActive ? 1 : 0)
         }
         .padding(.horizontal, 12).padding(.vertical, 7)

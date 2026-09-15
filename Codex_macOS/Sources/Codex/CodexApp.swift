@@ -41,7 +41,7 @@ struct CodexApp: App {
                 Divider()
                 Button("Close Tab") { if let t = state.selectedTab { state.closeTab(t) } }
                     .keyboardShortcut("w", modifiers: [.command])
-                Button("Close All Tabs") { state.closeAllTabs() }
+                Button("Unpin All Tabs") { state.unpinAllTabs() }
                     .keyboardShortcut("w", modifiers: [.command, .shift])
             }
             CommandGroup(replacing: .sidebar) {
@@ -82,10 +82,11 @@ struct CodexApp: App {
                 Button("Reload Tree") { state.reloadTree() }
                     .keyboardShortcut("r", modifiers: [.command])
                 Divider()
+                // Pinning is how a tab stops being the transient one, so this
+                // is now the main way to keep a document in the strip.
                 Button("Pin / Unpin Current") {
                     if let u = state.selectedTab {
-                        state.bookmarks.togglePin(u.path)
-                        state.objectWillChange.send()
+                        state.togglePin(u)
                     }
                 }.keyboardShortcut("d", modifiers: [.command])
                 Button("Reveal in Finder") {
@@ -108,8 +109,50 @@ final class AppState: ObservableObject {
     static let shared = AppState()
 
     @Published var root: CodexNode
-    @Published var openTabs: [URL] = []
+    /// The one tab that is *not* pinned — the document you are browsing.
+    ///
+    /// Replaced, not appended to. Everything else in the strip is a pin.
+    @Published private(set) var transientTab: URL?
+
+    /// The document on screen. `nil` shows Welcome.
+    ///
+    /// This kept its name because that is what almost every read site means by
+    /// it — `Inspector`, `Toolbar`, `Sidebar` and `TabStrip` all ask "what am I
+    /// looking at". The plan for this stage called for splitting it into
+    /// "active tab" and "displayed document", on the theory that a transient
+    /// document could be shown while no tab was active.
+    ///
+    /// It doesn't need two properties — a displayed file is either pinned or
+    /// *is* the transient tab, so it is always in the strip. But that only
+    /// holds because `togglePin` and `reconcileSelection` arrange it. The
+    /// first version of this comment stated the invariant and left it to luck:
+    /// unpinning the file you were reading, or reloading after renaming it,
+    /// dropped it out of the strip with `selectedTab` still pointing at it.
+    /// Both routes are closed now. Mutate pins through `togglePin`, not
+    /// through `bookmarks` directly, or they open again.
     @Published var selectedTab: URL?
+
+    /// The tab strip: pinned files in pin order, then the transient tab.
+    ///
+    /// Derived rather than stored, which is the whole change. `openTabs` used
+    /// to be an array appended to on every single open and emptied only by an
+    /// explicit close, so browsing twenty topics left twenty tabs. Pins and
+    /// tabs were two independent lists that no code path connected. Now there
+    /// is one source of truth — `Bookmarks.pinned` — plus a single slot for
+    /// whatever you are reading right now.
+    ///
+    /// Pins whose file no longer exists are filtered out here: a renamed file
+    /// should leave a stale *pin*, visible and clearable in the sidebar's
+    /// pinned section, not a tab that beeps when clicked. (One `stat` per pin
+    /// per render. Pins number in the tens; if that ever shows up in a profile,
+    /// cache it against the tree reload.)
+    var openTabs: [URL] {
+        var tabs = bookmarks.pinned
+            .map { URL(fileURLWithPath: $0) }
+            .filter { FileManager.default.fileExists(atPath: $0.path) }
+        if let t = transientTab, !bookmarks.isPinned(t.path) { tabs.append(t) }
+        return tabs
+    }
     @Published var paletteVisible: Bool = false
     /// Shared so the toolbar's field and the palette's field are one field.
     /// The toolbar control used to be a Button dressed as a search box: it
@@ -175,7 +218,18 @@ final class AppState: ObservableObject {
             NSSound.beep()
             return
         }
-        if forceNew || !openTabs.contains(url) { openTabs.append(url) }
+        // A pinned file is already in the strip and stays where it is.
+        // Anything else takes the single transient slot, replacing whatever
+        // was there — which is the whole point: browsing no longer accumulates.
+        //
+        // `forceNew` is the sidebar's "Open in New Tab". In a preview-tab model
+        // the way to make a tab stick is to pin it, so that is what it now
+        // means.
+        if forceNew {
+            bookmarks.pin(url.path)
+        } else if !bookmarks.isPinned(url.path) {
+            transientTab = url
+        }
         selectedTab = url
         if pushHistory { history.push(url) }
         dismissPalette()
@@ -193,14 +247,75 @@ final class AppState: ObservableObject {
         paletteQuery = ""
     }
 
-    func closeTab(_ url: URL) {
-        openTabs.removeAll { $0 == url }
-        if selectedTab == url { selectedTab = openTabs.last }
+    /// Pin or unpin, keeping the strip and the selection consistent.
+    ///
+    /// **This exists because the invariant does not hold on its own.** Five
+    /// call sites used to reach into `bookmarks.togglePin` directly, and
+    /// unpinning the document you were reading dropped it out of the derived
+    /// strip while `selectedTab` still pointed at it: a file on screen with no
+    /// pill active. The comment on `selectedTab` asserted that could not
+    /// happen. Asserting it is not the same as arranging it.
+    ///
+    /// Unpinning what you are reading hands it to the transient slot — you are
+    /// still reading it, it is just no longer kept. Pinning what is transient
+    /// frees that slot, since the file is in the strip as a pin now.
+    func togglePin(_ url: URL) {
+        let path = url.path
+        if bookmarks.isPinned(path) {
+            bookmarks.unpin(path)
+            if selectedTab == url { transientTab = url }
+        } else {
+            bookmarks.pin(path)
+            if transientTab == url { transientTab = nil }
+        }
+        objectWillChange.send()
     }
 
-    func closeAllTabs() {
-        openTabs.removeAll()
+    /// Drop a selection whose file has gone, and land somewhere sensible.
+    ///
+    /// `openTabs` filters pins whose file no longer exists, so a rename plus
+    /// ⌘R made the tab vanish while `selectedTab` kept pointing at it — the
+    /// same broken invariant by a different route. Reload now reconciles.
+    private func reconcileSelection() {
+        let fm = FileManager.default
+        if let t = transientTab, !fm.fileExists(atPath: t.path) { transientTab = nil }
+        guard let sel = selectedTab, !fm.fileExists(atPath: sel.path) else { return }
+        // A remaining pin beats bouncing to Welcome.
+        selectedTab = openTabs.first
+    }
+
+    /// Remove a tab from the strip: unpin it, or clear the transient slot.
+    func closeTab(_ url: URL) {
+        let indexBefore = openTabs.firstIndex(of: url)
+
+        if bookmarks.isPinned(url.path) { bookmarks.unpin(url.path) }
+        if transientTab == url { transientTab = nil }
+
+        if selectedTab == url {
+            // Land on the adjacent tab, not the last one. Closing the third of
+            // five tabs used to jump you to the fifth; every other tabbed app
+            // moves you next to where you were.
+            let remaining = openTabs
+            if let i = indexBefore, !remaining.isEmpty {
+                selectedTab = remaining[min(i, remaining.count - 1)]
+            } else {
+                selectedTab = nil
+            }
+        }
+        objectWillChange.send()
+    }
+
+    /// Empty the strip, which now means unpinning everything.
+    ///
+    /// Named "Unpin All Tabs" in the menu rather than "Close All Tabs".
+    /// Closing a tab used to be free — tabs were ephemeral — so ⇧⌘W cost
+    /// nothing. Now the strip *is* your pins, and the same keystroke throws
+    /// them away. The menu says so.
+    func unpinAllTabs() {
+        for path in bookmarks.pinned { bookmarks.unpin(path) }
+        transientTab = nil
         selectedTab = nil
+        objectWillChange.send()
     }
 
     /// Return to the Welcome screen without losing the open tabs.
@@ -218,6 +333,7 @@ final class AppState: ObservableObject {
         DocumentStore.invalidateAll()
         root = CodexTree.build(root: projectRoot)
         allFiles = CodexTree.allFiles(under: projectRoot)
+        reconcileSelection()
     }
 
     /// Route a markdown link click through the right behavior.

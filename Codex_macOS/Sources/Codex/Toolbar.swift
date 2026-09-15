@@ -49,8 +49,7 @@ struct CodexToolbar: View {
                                         ? "Unpin current file (⌘D)" : "Pin current file (⌘D)",
                                   enabled: state.selectedTab != nil) {
                     if let url = state.selectedTab {
-                        state.bookmarks.togglePin(url.path)
-                        state.objectWillChange.send()
+                        state.togglePin(url)
                     }
                 }
 

@@ -10,16 +10,19 @@ SwiftUI rendering the markdown tree straight on the GPU.
 - **Top toolbar** — sidebar toggle, browser-style back/forward, clickable
   breadcrumb (`Codex › Layer › Section › File`), palette trigger, pin button,
   inspector toggle
-- **Safari-style tab strip** with hover-close and smart titles (first H1,
-  falling back to the filename)
+- **Preview tabs** — browsing does not accumulate tabs. One transient tab is
+  replaced as you move around; **pinned** files persist, so the strip is your
+  pins plus whatever you are reading. Pinned pills carry a pin glyph, the
+  transient one is italic
 - **Three-tab inspector** — Outline (the document's TOC), Info (size,
   modified, line count, YAML tags, reveal/copy-path/pin actions), Recents
 - **Welcome screen** — hero, stats, quick-action cards, recents, and a
   "browse by band" grid tinted per band
 - **Custom markdown renderer** — headings, fenced code with a language pill
   and hover-to-copy, lists, pipe tables, blockquotes, rules, inline images
-- **Cross-document links** — `[text](path.md)` opens in a new in-app tab;
-  `http(s)` opens in your browser
+- **Cross-document links** — `[text](path.md)` opens in the transient tab,
+  `file.md#section` scrolls to that heading, and `http(s)` opens in your
+  browser
 - **⌘P command palette** — fuzzy file matching across the whole codex
 - **Right-click sidebar menu** — Open / Open in New Tab / Pin / Reveal in
   Finder / Copy Path
@@ -38,9 +41,12 @@ SwiftUI rendering the markdown tree straight on the GPU.
 - **Appearance panel** (⌘,) — theme swatches, OLED, text size, reading width
 - **Bookmarks + recents** persisted to
   `~/Library/Application Support/Codex/state.json`, with appearance
-  preferences in `preferences.json` beside it — deliberately a separate file,
-  since `Bookmarks` decoding is all-or-nothing and a new key in it would wipe
-  existing pins
+  preferences in `preferences.json` beside it. Both decode key by key and
+  write atomically, so a **missing** key costs that one setting rather than the
+  whole file. `Bookmarks` was all-or-nothing until recently: because Swift's
+  synthesised decoder throws on an absent key rather than using the property's
+  default, the first release to add a field would have emptied every existing
+  pin. (Extra keys were never the problem — a keyed decoder ignores those.)
 - **Portable bundle** — records the project path at build time, so the `.app`
   keeps working after you move it to `/Applications`
 
@@ -116,11 +122,11 @@ Codex_macOS/
 | `⌘1` | Toggle sidebar |
 | `⌘0` | Toggle inspector |
 | `⌘W` | Close active tab |
-| `⇧⌘W` | Close all tabs |
+| `⇧⌘W` | Unpin all tabs |
 | `⌘[` / `⌘]` | Back / forward |
 | `⌘H` | Open README |
 | `⌘R` | Reload tree |
-| `⌘D` | Pin / unpin current file |
+| `⌘D` | Pin / unpin current file — how a tab stops being transient |
 | `⇧⌘R` | Reveal current file in Finder |
 | `⌘,` | Appearance — theme, OLED, text size, width |
 | `↑` / `↓` | Move selection in the palette |
@@ -129,8 +135,12 @@ Codex_macOS/
 
 ## Architecture notes
 
-- **`AppState`** is a single `ObservableObject` owning open tabs, selection,
-  panel visibility, bookmarks, and navigation history.
+- **`AppState`** is a single `ObservableObject` owning selection, panel
+  visibility, bookmarks, and navigation history. `openTabs` is **derived**,
+  not stored: pinned files (filtered to those still on disk) plus at most one
+  transient tab. It used to be an array appended to on every open and emptied
+  only by an explicit close, so browsing twenty topics left twenty tabs — and
+  pins were a second, entirely disconnected list.
 
 - **`CodexTree`** turns the filesystem into a `CodexNode` tree. It knows the
   band groupings, the sub-section ordering, and — in `nonContentDirs` — which

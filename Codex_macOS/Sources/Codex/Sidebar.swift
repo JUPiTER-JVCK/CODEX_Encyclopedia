@@ -212,8 +212,7 @@ private struct LayerRow: View {
             Button("Open in New Tab") { state.openFile(url, forceNew: true) }
             Divider()
             Button(state.bookmarks.isPinned(url.path) ? "Unpin" : "Pin to Top") {
-                state.bookmarks.togglePin(url.path)
-                state.objectWillChange.send()
+                state.togglePin(url)
             }
             Divider()
             Button("Reveal in Finder") { LinkResolver.revealInFinder(url) }
@@ -315,8 +314,7 @@ private struct PinnedRow: View {
             .help(exists ? url.path : "Missing: \(url.path)")
 
             Button {
-                state.bookmarks.togglePin(url.path)
-                state.objectWillChange.send()
+                state.togglePin(url)
             } label: {
                 Image(systemName: "xmark")
                     .font(.system(size: 9))

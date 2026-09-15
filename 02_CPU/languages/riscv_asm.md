@@ -14,6 +14,40 @@ updated: 2026-05-20
 > 16-bit insns), `V` (vector), `B` (bitmanip), `H` (hypervisor), etc. A common
 > "general purpose" target is `RV64GC` = `IMAFDC`.
 
+## The register file at a glance
+
+```text
+  Thirty-two registers, x0–x31, each with an ABI name that says what it is
+  for. The roles below are the psABI ones in the table that follows.
+
+   x0        zero        hardwired zero — writes are discarded
+   │
+   ├─ fixed by the platform, not by you
+   │    x3      gp        global pointer, linker-managed
+   │    x4      tp        thread pointer
+   │
+   ├─ caller-saved — assume a call destroys these
+   │    x1      ra        return address
+   │    x5–x7   t0–t2     temporaries
+   │    x10–x17 a0–a7     arguments; a0 and a1 also carry the return
+   │    x28–x31 t3–t6     temporaries
+   │
+   └─ callee-saved — a function must restore these before returning
+        x2      sp        stack pointer
+        x8      s0 / fp   frame pointer
+        x9      s1        saved
+        x18–x27 s2–s11    saved
+
+   pc                    program counter, not a GPR
+   f0–f31                floating point, with the F or D extension
+                         (ft0–ft11, fs0–fs11, fa0–fa7 by ABI name)
+   CSRs                  mstatus · mtvec · mcause · mepc · mhartid · …
+
+  x0 being hardwired to zero is what makes many pseudo-instructions work:
+  a move is an add with zero, and a comparison against nothing needs no
+  immediate.
+```
+
 ## Registers
 
 | ABI name | Reg | Role |

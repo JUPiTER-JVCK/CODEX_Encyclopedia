@@ -1,5 +1,40 @@
 # CPU — References
 
+## What is in this section
+
+```text
+  Four kinds of source, and at this layer the manuals matter more than the
+  books — an ISA is defined by its vendor document, not by a textbook.
+
+  ┌─ books — how to think about it ──────────────────────────────────────┐
+  │  Hennessy & Patterson, Quantitative Approach — the standard          │
+  │  Patterson & Hennessy, Computer Organization — undergrad             │
+  │  Stokes, Inside the Machine — accessible microarch tour              │
+  │  Patterson & Waterman, The RISC-V Reader — concise                   │
+  │  Warren, Hacker's Delight — bit-manipulation idioms                  │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─ the ISA itself — what is actually guaranteed ───────────────────────┐
+  │  Intel SDM (multi-volume) · AMD64 APM (five volumes)                 │
+  │  Arm ARM — A, M and R profiles                                       │
+  │  RISC-V manual — Vol. I unprivileged, Vol. II privileged             │
+  │  Power ISA — OpenPOWER                                               │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─ optimization guides — what is fast, which no ISA manual says ───────┐
+  │  Agner Fog's manuals · uops.info — latency and throughput per        │
+  │  instruction, measured rather than specified                         │
+  │  Intel Optimization Reference Manual                                 │
+  │  Arm Cortex-A Software Optimization Guides                           │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─ papers — what turned out to be wrong ───────────────────────────────┐
+  │  Spectre (Kocher et al.) · Meltdown (Lipp et al.)            → 14    │
+  │  Nagarajan et al., A Primer on Memory Consistency and Cache          │
+  │  Coherence                                                           │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Books
 - *Computer Architecture: A Quantitative Approach* — Hennessy & Patterson. The standard.
 - *Computer Organization and Design (RISC-V Edition)* — Patterson & Hennessy. Undergrad foundation.

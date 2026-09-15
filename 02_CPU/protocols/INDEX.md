@@ -2,6 +2,38 @@
 
 Not wire protocols — these are the *software contracts* the CPU layer enforces.
 
+## What is in this section
+
+```text
+  Four kinds of contract, and the file organises them by what each one
+  fixes. Three of them vary by ISA, so they are shown against the same
+  three columns.
+
+                    x86-64            ARM               RISC-V
+                    ──────            ───               ──────
+  where args go     SysV AMD64        AAPCS64  x0…x7    psABI  a0…a7
+                    MS x64                              
+                    i386 SVR4         AAPCS (32) r0…r3
+                    Win fastcall,
+                    stdcall, cdecl
+
+  how traps work    IDT, vectors      EL0–EL3, VBAR     mtvec / stvec
+                    0–31 reserved     sync vs async     mcause / scause
+                    IST · MCE · NMI                     delegation
+
+  what ordering     TSO — store       weak — dmb,       WMO, or TSO with
+  you may assume    buffers only      dsb, isb          the Ztso extension
+
+  And one that varies by operating system rather than by ISA:
+
+  what a binary     ELF (Linux, BSD) · Mach-O (macOS, iOS) · PE/COFF
+  file looks like   (Windows) · RISC-V psABI tag sections
+
+  None of these is a wire protocol. They are the contracts that let code
+  built by one toolchain run under another's kernel — which is why 06
+  System Libraries targets them and 05 OS Kernel implements the trap side.
+```
+
 ## Application Binary Interfaces (ABIs)
 | ABI | Platforms | Notes |
 |-----|-----------|-------|

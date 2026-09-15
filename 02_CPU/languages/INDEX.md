@@ -1,5 +1,34 @@
 # CPU — Languages
 
+## What is in this section
+
+```text
+  Three ISAs have a profile of their own here; the rest appear only in the
+  comparison table. What the table distinguishes is syntax, toolchain, and
+  where the arguments go.
+
+  profiled here            x86_64_asm.md   Intel + AT&T, SysV + MS ABIs
+                           arm64_asm.md    AArch64, AAPCS64
+                           riscv_asm.md    RV32 / RV64, psABI
+
+  ISA                      assembler            argument registers
+  ─────────────────        ─────────────        ───────────────────────────
+  x86-64  Intel syntax     NASM · MASM          SysV:  rdi rsi rdx rcx r8 r9
+          AT&T syntax      gas · as             MS:    rcx rdx r8 r9 + 32B
+                                                       shadow space
+  AArch64                  as · LLVM            AAPCS64: x0…x7  ─▶ x0
+  ARM 32  Thumb/Thumb-2    arm-none-eabi-as     AAPCS:   r0…r3
+  RISC-V  RV32 / RV64      GNU · LLVM           psABI:   a0…a7  ─▶ a0/a1
+  PowerPC · MIPS           GNU · MARS           listed for legacy and
+                                                teaching use
+
+  Two entries in that table are not assembled by hand at all: machine code,
+  which is what the others produce, and microcode, which arrives as a
+  vendor-signed update.
+
+  C and Rust appear because both can embed assembly — `__asm__` and `asm!`.
+```
+
 ## Per-architecture assembly profiles
 
 | ISA | Profile |

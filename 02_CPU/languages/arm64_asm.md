@@ -12,6 +12,31 @@ updated: 2026-05-20
 > AWS Graviton, Ampere Altra, Raspberry Pi 4/5. Clean RISC ISA with
 > three-operand form.
 
+## The register file at a glance
+
+```text
+  Thirty-one general-purpose registers, numbered x0–x30, each usable as a
+  32-bit w-register. Roles below are AAPCS64, as in the table that follows.
+
+   x0 ─ x7      arguments and return value
+   x8           indirect result location — and the syscall number on Linux
+   x9 ─ x15     caller-saved temporaries
+   x16, x17     ip0, ip1 — intra-procedure-call scratch
+   x18          platform register, reserved on macOS, iOS and Windows
+   x19 ─ x28    callee-saved
+   x29          fp — frame pointer
+   x30          lr — link register, where bl puts the return address
+
+   register 31 is two registers, decided by the instruction:
+        sp   stack pointer        xzr / wzr   the zero register
+
+   pc           program counter, not writable as a GPR
+   v0 ─ v31     SIMD and floating point — NEON, SVE, SVE2
+
+  There is no dedicated return-address stack slot: lr is a register, so a
+  non-leaf function has to save it itself.
+```
+
 ## Registers
 
 | Reg | 64-bit | 32-bit | Role (AAPCS64) |

@@ -1,5 +1,35 @@
 # CPU — Manual Pages
 
+## What is in this section
+
+```text
+  The file's own three words for these are inspection, disassembly and
+  profiling. Sorted that way, plus the two groups that are neither:
+
+  what is this CPU        lscpu · cpuid          model, cache, flags,
+                                                 vulnerability status
+                          rdmsr · wrmsr          model-specific registers
+
+  what is in this binary  objdump · readelf      disassembly, ELF metadata
+                          nm · strings · ar      symbols, text, archives
+                          addr2line              address ─▶ source line
+                          as · ld                the tools that made it
+
+  what is it doing        perf stat              counter snapshot
+                          perf record / report   sampled profile
+                          cachegrind · callgrind simulated, not measured
+                          strace · dtrace        the syscall boundary → 05
+
+  where is it doing it    taskset                pin to cores
+                          numactl                bind memory and CPU
+
+  stepping through it     gdb · lldb             breakpoints and registers
+
+  Reverse engineering (radare2 · rizin · Binary Ninja · IDA · Ghidra) is
+  listed at the end of the file as its own workflow rather than as one of
+  these. Detail on the inspection tools: cpu_inspection.md.
+```
+
 ## Dedicated man page references
 
 | Topic | File |

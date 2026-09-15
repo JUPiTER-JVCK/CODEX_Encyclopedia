@@ -64,7 +64,7 @@ podman history myimage:latest
 
 ### OCI image structure
 
-```
+```text
   OCI Image Layout:
   ├── blobs/
   │   └── sha256/

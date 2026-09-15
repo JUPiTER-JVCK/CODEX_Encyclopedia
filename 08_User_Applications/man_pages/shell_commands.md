@@ -163,7 +163,7 @@ persist after disconnection (essential for remote work over SSH).
 
 ### Architecture
 
-```
+```text
   ┌── tmux server ──────────────────────────┐
   │                                          │
   │  Session "dev"                           │

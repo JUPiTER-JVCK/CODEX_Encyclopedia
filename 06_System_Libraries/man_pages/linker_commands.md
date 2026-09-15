@@ -282,7 +282,7 @@ for examining headers, segments, sections, and dynamic linking metadata.
 
 ### ELF structure overview
 
-```
+```text
   ┌─────────────────────┐
   │ ELF Header          │  Magic, class (32/64), endian, type, entry
   ├─────────────────────┤

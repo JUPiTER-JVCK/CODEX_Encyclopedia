@@ -126,7 +126,7 @@ for name, param in model.named_parameters():
     print(f"{name:30s}: {param.shape}, mean={param.data.mean():.4f}")
 ```
 
-```
+```text
   ConvNet architecture:
   Input [1,28,28]
       │
@@ -238,7 +238,7 @@ ax2.set_title("Causal (decoder)")
 plt.savefig("attention_comparison.png")
 ```
 
-```
+```text
   Attention score computation:
   
   Q · Kᵀ           Scores         Softmax       Weights

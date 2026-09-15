@@ -27,7 +27,7 @@ actual gain, and understand virtual ground and feedback.
 
 ### Circuit
 
-```
+```text
            R_f (10kΩ)
      ┌────/\/\/────┐
      │              │
@@ -90,7 +90,7 @@ response, and identify the -3 dB cutoff frequency.
 
 ### Circuit
 
-```
+```text
            R_f (10kΩ)     C (10nF)
      ┌────/\/\/────┬───||───┐
      │              │         │
@@ -115,7 +115,7 @@ response, and identify the -3 dB cutoff frequency.
 4. Calculate gain in dB: 20 × log₁₀(V_out / V_in)
 5. Plot gain (dB) vs frequency (log scale) — Bode plot
 
-```
+```text
   Gain (dB)
     0 ┬─────────────╲
       │              ╲

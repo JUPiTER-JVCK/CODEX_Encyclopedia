@@ -62,7 +62,7 @@ ss state FILTER
 
 ### TCP state diagram (simplified)
 
-```
+```text
   Client                          Server
   ──────                          ──────
   CLOSED                          LISTEN

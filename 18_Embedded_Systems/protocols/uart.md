@@ -17,7 +17,7 @@ asynchronously over two wires (TX and RX). Both sides agree on baud rate
 (bits/second) in advance — there is no clock signal. Each byte is wrapped
 in a start bit, optional parity, and one or two stop bits.
 
-```
+```text
   UART frame (8N1 — most common):
   
   Idle: ────────────────────────────────────── HIGH (mark)
@@ -65,7 +65,7 @@ in a start bit, optional parity, and one or two stop bits.
 
 ## Hardware Flow Control (RTS/CTS)
 
-```
+```text
   Without flow control: TX can overflow RX buffer
   
   RTS/CTS handshaking:
@@ -88,7 +88,7 @@ in a start bit, optional parity, and one or two stop bits.
 
 UART defines the protocol; the physical layer can vary:
 
-```
+```text
   ┌──────────────┬──────────────┬────────────────┬────────────────────┐
   │ Standard     │ Voltage      │ Topology       │ Max distance/speed │
   ├──────────────┼──────────────┼────────────────┼────────────────────┤
@@ -103,7 +103,7 @@ UART defines the protocol; the physical layer can vary:
 
 ### RS-485 Half-Duplex Bus
 
-```
+```text
   RS-485 network (half-duplex, 2-wire):
   
   Termination     Termination

@@ -42,7 +42,7 @@ seconds. It's the most widely deployed IGP in enterprise networks.
 
 All OSPF packets share a common header:
 
-```
+```text
  ┌──────────┬──────────┬──────────────────────┐
  │ Version  │  Type    │    Packet Length      │
  │  (1 B)   │  (1 B)   │      (2 B)           │
@@ -61,7 +61,7 @@ All OSPF packets share a common header:
 
 ## Neighbor state machine
 
-```
+```text
   Down ──▶ Init ──▶ 2-Way ──▶ ExStart ──▶ Exchange ──▶ Loading ──▶ Full
    │         │        │
    │         │        └── (non-DR/BDR on broadcast: stop at 2-Way)
@@ -79,7 +79,7 @@ All OSPF packets share a common header:
 
 ## Area design
 
-```
+```text
                     ┌──────────────────────┐
                     │     Area 0           │
                     │   (Backbone)         │

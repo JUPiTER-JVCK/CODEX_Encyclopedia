@@ -40,7 +40,7 @@ scripts for vulnerability detection, brute force, and service enumeration.
 
 ### Scan methodology
 
-```
+```text
   1. Host discovery
      nmap -sn 192.168.1.0/24
      └── Which hosts are alive?
@@ -152,7 +152,7 @@ headers, or parameters with wordlists.
 
 ### Comparison
 
-```
+```text
   gobuster               ffuf
   ────────               ────
   Go, fast               Go, fast
@@ -327,7 +327,7 @@ adapter with monitor mode support.
 
 ### Tool chain
 
-```
+```text
   1. airmon-ng start wlan0          Set monitor mode
        └── creates wlan0mon
   

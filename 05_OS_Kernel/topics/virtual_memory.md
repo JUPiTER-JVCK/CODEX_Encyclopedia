@@ -16,7 +16,7 @@ Virtual memory gives each process the illusion of a large, private address
 space. The MMU (Memory Management Unit) translates virtual addresses to
 physical addresses using page tables maintained by the kernel.
 
-```
+```text
   Address space layout (x86-64 Linux, 48-bit VA):
   
   0xFFFFFFFFFFFFFFFF ┐
@@ -39,7 +39,7 @@ physical addresses using page tables maintained by the kernel.
 
 On x86-64, the kernel uses 4-level (or 5-level with LA57) paging:
 
-```
+```text
   Virtual address breakdown (48-bit, 4-level):
   Bits 47-39: PML4 index (512 entries)
   Bits 38-30: PDP  index (512 entries)
@@ -73,7 +73,7 @@ The TLB is a hardware cache of recent VA→PA translations (typically
 64–2048 entries). A TLB miss requires a page table walk (4 memory
 accesses for 4-level paging).
 
-```
+```text
   TLB lookup flow:
   
   VA ──▶ TLB? ──hit──▶ PA ──▶ Cache ──▶ DRAM (if miss)
@@ -138,7 +138,7 @@ munmap(addr, 4096);
 
 ## Copy-on-Write (CoW)
 
-```
+```text
   fork() creates a child sharing parent's pages — all marked read-only:
   
   Parent (PID 100)         Child (PID 101)

@@ -19,7 +19,7 @@ v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (
 
 ### YES (buffer)
 
-```
+```text
        ┌─┐
    A ──│ ▷──── Y
        └─┘
@@ -34,7 +34,7 @@ v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (
 
 ### NO (NOT / inverter)
 
-```
+```text
        ┌─┐
    A ──│ ▷──○── Y
        └─┘
@@ -51,7 +51,7 @@ v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (
 
 ### AND
 
-```
+```text
    A ─┐
        ▷── Y
    B ─┘
@@ -68,7 +68,7 @@ v1_source: v1 collection — Math/Logic/Data › Logic › Boolean logic gates (
 
 ### OR
 
-```
+```text
    A ─┐
        ▷)─ Y
    B ─┘

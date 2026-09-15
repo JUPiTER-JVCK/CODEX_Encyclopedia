@@ -25,7 +25,7 @@ and installable packaging.
 ### Lab Steps
 
 1. Create project structure:
-```
+```text
 mytool/
 ├── pyproject.toml
 ├── src/
@@ -207,7 +207,7 @@ mytool --version
 
 ### Distribution options
 
-```
+```text
   Source distribution (.tar.gz)
   └── Contains source code, built on install
   

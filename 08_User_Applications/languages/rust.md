@@ -169,7 +169,7 @@ updated: 2026-05-20
 
 ## Workspace layout
 
-```
+```text
 my-project/
 ├── Cargo.toml          # [workspace] + [workspace.dependencies]
 ├── Cargo.lock

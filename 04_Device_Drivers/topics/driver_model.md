@@ -16,7 +16,7 @@ The Linux kernel uses a unified device model (introduced in 2.6) where buses,
 devices, and drivers are all represented as kobjects in `sysfs`. A driver
 binds to a device when the bus matches their identifiers.
 
-```
+```text
   Linux driver model hierarchy:
   
   sysfs (/sys)
@@ -37,7 +37,7 @@ binds to a device when the bus matches their identifiers.
 
 ## Bus/Device/Driver Triad
 
-```
+```text
   ┌──────────────────────────────────────────────────────────────┐
   │  Bus                                                         │
   │  ┌────────────────┐   ┌──────────────────────────────────┐  │
@@ -152,7 +152,7 @@ cat /proc/device-tree/i2c@10030000/compatible
 
 ## ACPI — Device Enumeration on x86
 
-```
+```text
   ACPI device identification:
   
   \_SB.PCI0.I2C1.SENS   ← ACPI path

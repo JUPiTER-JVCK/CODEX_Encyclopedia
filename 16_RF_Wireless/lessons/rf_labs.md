@@ -71,7 +71,7 @@ gqrx
 # Observe: FM stations appear as tall peaks ~200 kHz wide
 ```
 
-```
+```text
   FM broadcast signal structure (200 kHz channel):
   
   ─────────────────────────────────────────────────────────
@@ -155,7 +155,7 @@ tshark -r assoc.pcap -T fields -e frame.time_relative \
   -e wlan.fc.type_subtype -e wlan.sa -e wlan.da 2>/dev/null
 ```
 
-```
+```text
   802.11 Association flow:
   Client                    AP (BSSID)
     │                          │
@@ -265,7 +265,7 @@ if data:
 ```
 
 4. LoRa link budget calculation:
-```
+```text
   Link budget example (LoRaWAN Class A):
   ┌──────────────────────────────────────────────────┐
   │ TX power:          +20 dBm  (100 mW)             │

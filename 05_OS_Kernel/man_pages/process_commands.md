@@ -241,7 +241,7 @@ pstree -a deploy
 pstree -c 1
 ```
 
-```
+```text
   systemd─┬─sshd───sshd───bash───pstree
           ├─nginx───4*[nginx]
           ├─postgres───6*[postgres]
@@ -265,7 +265,7 @@ renice [-n priority] [-p pid] [-u user] [-g pgrp]
 niceness of a running process. Niceness ranges from **-20** (highest priority)
 to **19** (lowest). Only root can set negative niceness.
 
-```
+```text
   Priority scale:
   -20 ────────── 0 ────────── 19
   highest        default      lowest

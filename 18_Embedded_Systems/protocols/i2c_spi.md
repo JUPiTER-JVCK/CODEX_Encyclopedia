@@ -18,7 +18,7 @@ I2C is a 2-wire serial bus (SDA + SCL) supporting multiple masters and
 up to 127 devices per bus (7-bit addressing) or 1023 (10-bit). Open-drain
 lines with pull-up resistors — devices can only pull low; high is passive.
 
-```
+```text
   I2C bus topology:
   
   VCC ──┬────────────┬───── (pull-up resistors)
@@ -43,7 +43,7 @@ lines with pull-up resistors — devices can only pull low; high is passive.
 
 ### Addressing and Protocol
 
-```
+```text
   I2C transaction anatomy:
   
   START condition: SDA falls while SCL is high
@@ -94,7 +94,7 @@ SPI is a 4-wire synchronous full-duplex bus: MOSI (Master Out Slave In),
 MISO (Master In Slave Out), SCLK (clock), CS (Chip Select, active low).
 No standard — devices typically run 1–50 MHz.
 
-```
+```text
   SPI bus wiring (multiple slaves):
   
   Master ──MOSI──┬──MOSI──Slave1
@@ -112,7 +112,7 @@ No standard — devices typically run 1–50 MHz.
 
 ### SPI Clock Modes (CPOL / CPHA)
 
-```
+```text
   CPOL=0, CPHA=0 (Mode 0) — most common:
   CLK:  ─┐─┐─┐─┐─ (idle low, sample on rising edge)
   MOSI: ─D7─D6─D5─ (data valid on rising edge)
@@ -133,7 +133,7 @@ No standard — devices typically run 1–50 MHz.
 
 ### SPI vs I2C Comparison
 
-```
+```text
   ┌─────────────────┬────────────────────┬────────────────────┐
   │ Feature         │ I2C                │ SPI                │
   ├─────────────────┼────────────────────┼────────────────────┤

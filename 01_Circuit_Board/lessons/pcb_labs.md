@@ -37,7 +37,7 @@ capture through layout, learning EDA workflow.
    - Run DRC (Design Rules Check)
 4. **Generate Gerbers**: File → Fabrication Outputs → Gerbers
 
-```
+```text
   KiCad workflow:
   Schematic (.kicad_sch)
        │
@@ -84,7 +84,7 @@ Solder through-hole and SMD components, inspect joints, and rework.
 
 ### Good vs bad solder joints
 
-```
+```text
   Good (concave fillet)        Cold joint              Bridge
   ┌───────────┐               ┌───────────┐          ┌───────────┐
   │    ╱╲     │               │   ╱────╲  │          │  ╱────────╲│

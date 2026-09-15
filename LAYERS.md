@@ -59,7 +59,7 @@ the foundational layers beneath the original "Circuit Board" row:
 
 ## Full Layer Adjacencies
 
-```
+```text
 USER WORLD
    ▲
    │  syscall / library call

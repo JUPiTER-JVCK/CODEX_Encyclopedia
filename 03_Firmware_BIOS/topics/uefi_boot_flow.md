@@ -21,7 +21,7 @@ the boot phases.
 
 ## Boot Phases
 
-```
+```text
   Power-on → SEC → PEI → DXE → BDS → TSL → RT → AL
   
   ┌─────────────────────────────────────────────────────────────┐
@@ -94,7 +94,7 @@ UEFI requires GPT (or MBR with protective MBR for compatibility):
 
 ## Secure Boot Chain
 
-```
+```text
   Secure Boot key hierarchy:
   
   Platform Key (PK)          — OEM/platform owner (root of trust)

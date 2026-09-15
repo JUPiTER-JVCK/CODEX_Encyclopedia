@@ -21,7 +21,7 @@ primary management protocol for every Unix/Linux system.
 
 ## Protocol layers
 
-```
+```text
   ┌─────────────────────────────────────────────┐
   │         SSH Connection Protocol              │  RFC 4254
   │  (channels: session, forwarding, subsystem)  │
@@ -41,7 +41,7 @@ primary management protocol for every Unix/Linux system.
 
 ## Key exchange (transport layer)
 
-```
+```text
   Client                                    Server
     │                                          │
     │──── "SSH-2.0-OpenSSH_9.7" ──────────────▶│   Protocol version
@@ -83,7 +83,7 @@ primary management protocol for every Unix/Linux system.
 
 ## Channel multiplexing
 
-```
+```text
   ┌──────────────── SSH Connection ─────────────────┐
   │                                                  │
   │  Channel 0: session (interactive shell)          │
@@ -104,7 +104,7 @@ primary management protocol for every Unix/Linux system.
 
 ### Local forward (`-L`)
 
-```
+```text
   Client:8080 ──▶ SSH Tunnel ──▶ Server ──▶ target:80
 
   ssh -L 8080:target:80 user@server
@@ -113,7 +113,7 @@ primary management protocol for every Unix/Linux system.
 
 ### Remote forward (`-R`)
 
-```
+```text
   Server:9090 ──▶ SSH Tunnel ──▶ Client ──▶ localhost:3000
 
   ssh -R 9090:localhost:3000 user@server
@@ -170,7 +170,7 @@ MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com
 
 ## SSH agent & agent forwarding
 
-```
+```text
   ┌──────────┐  ssh-add   ┌──────────┐  SSH   ┌──────────┐
   │ Private  │───────────▶│ ssh-agent│───────▶│  Server  │
   │ Key file │            │ (memory) │        │          │

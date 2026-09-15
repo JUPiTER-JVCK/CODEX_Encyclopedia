@@ -26,7 +26,7 @@ overlap in subject matter and are deliberately separate in structure.
 23 layers in four bands. [LAYERS.md](LAYERS.md) has the full table with
 languages, interfaces, and example flows per layer.
 
-```
+```text
                                           ┌─ 14 Security
  08 User Applications ◄──── 17 Algorithms │  15 AI / ML
  07 Runtime Environment                   │  16 RF / Wireless
@@ -144,7 +144,7 @@ Details: [`Codex_LMS/README.md`](Codex_LMS/README.md).
 
 ## Repository layout
 
-```
+```text
 CODEX_Encyclopedia-/
 ├── README.md              ← this file
 ├── LAYERS.md              ← master layer table

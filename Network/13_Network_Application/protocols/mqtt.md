@@ -19,7 +19,7 @@ for sensor telemetry, device control, and fleet management.
 
 ## Architecture
 
-```
+```text
   ┌──────────┐         ┌─────────────┐         ┌──────────┐
   │ Publisher │────────▶│   Broker    │────────▶│Subscriber│
   │ (sensor) │  PUBLISH │ (Mosquitto, │ PUBLISH │ (cloud   │
@@ -42,7 +42,7 @@ for sensor telemetry, device control, and fleet management.
 
 ## Connect / Publish / Subscribe flow
 
-```
+```text
   Client                              Broker
     │                                    │
     │── CONNECT ────────────────────────▶│  (client ID, clean start,
@@ -65,7 +65,7 @@ for sensor telemetry, device control, and fleet management.
 
 ## Quality of Service (QoS) levels
 
-```
+```text
   QoS 0: At most once ("fire and forget")
   ┌──────┐  PUBLISH  ┌──────┐
   │Client│──────────▶│Broker│      No ACK. May be lost.
@@ -137,7 +137,7 @@ for sensor telemetry, device control, and fleet management.
 
 ## MQTT packet format
 
-```
+```text
   Fixed Header (2+ bytes):
   ┌──────┬──────┬──────┬──────┬─────┬───────────────────┐
   │ Type │ DUP  │ QoS  │Retain│     Remaining Length    │

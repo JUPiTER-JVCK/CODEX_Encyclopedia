@@ -35,7 +35,7 @@ experimentally and understand linearity in ohmic materials.
 
 ### Data table
 
-```
+```text
   Resistor (Ω)   V_measured (V)   I_measured (mA)   I_calculated (mA)
   ────────────    ──────────────   ───────────────   ─────────────────
        100            5.00              50.0               50.0
@@ -81,7 +81,7 @@ Build an RC circuit, measure the charging curve, and verify τ = RC.
 3. Probe the voltage across the capacitor with the oscilloscope
 4. Measure time to reach 63.2% of 5V (= 3.16V) — this is τ
 
-```
+```text
   Expected τ = R × C = 10kΩ × 1µF = 10 ms
 
   Voltage across capacitor:
@@ -144,7 +144,7 @@ voltage drop, reverse blocking, and the exponential relationship.
 4. At each step, measure V_diode (across diode) and I (current through resistor)
 5. Plot I vs V_diode
 
-```
+```text
   I (mA)
   30 ┤                              ╱
      │                            ╱

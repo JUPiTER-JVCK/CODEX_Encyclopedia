@@ -71,7 +71,7 @@ sudo unshare --pid --fork --mount-proc bash
 
 Control groups limit and account for resource usage:
 
-```
+```text
   cgroup v2 hierarchy (unified):
   
   /sys/fs/cgroup/
@@ -109,7 +109,7 @@ typically kills the main process (PID 1), stopping the container.
 
 Container images are stacked layers. overlayfs merges them at mount time:
 
-```
+```text
   overlayfs layer stack (alpine-based nginx image):
   
   upperdir (writable layer — container-specific)  ← writes go here

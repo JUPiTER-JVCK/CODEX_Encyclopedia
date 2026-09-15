@@ -47,7 +47,7 @@ interfaces up/down, set MTU, change MAC address, create virtual interfaces
 
 ### Interface states
 
-```
+```text
   DOWN ──── ip link set up ────▸ UP
     │                              │
     │  ip link set down  ◂─────────┘
@@ -117,7 +117,7 @@ forwarding database (FDB/MAC table), per-port VLAN filtering, and STP state.
 
 ### Bridge architecture
 
-```
+```text
   Physical ports            Bridge (br0)               Forwarding
   ┌────────┐               ┌──────────────┐
   │  eth0  │──────────────▸│              │
@@ -168,7 +168,7 @@ Controls bandwidth, latency, packet loss, and prioritization.
 
 ### Traffic control pipeline
 
-```
+```text
   Ingress                                              Egress
   ─────────                                            ──────
   Network    ┌─────────┐    Routing     ┌──────────┐   Wire
@@ -236,7 +236,7 @@ directly for debugging.
 
 ### Neighbor states
 
-```
+```text
   INCOMPLETE ──▸ REACHABLE ──▸ STALE ──▸ DELAY ──▸ PROBE ──▸ FAILED
        │              │          │                     │
        │              │          └── used again? ──▸ DELAY

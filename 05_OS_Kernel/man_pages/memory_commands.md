@@ -164,7 +164,7 @@ Reports memory using **PSS** (Proportional Set Size) and **USS** (Unique Set
 Size), which account for shared library pages proportionally. More accurate
 than RSS for multi-process applications.
 
-```
+```text
   ┌─────────────────────────────────────┐
   │ VSZ (virtual)                       │  Full address space (inc. unmapped)
   │  ┌──────────────────────────┐       │

@@ -141,7 +141,7 @@ a Machine Owner Key for third-party kernel modules.
 
 ### Secure Boot chain
 
-```
+```text
   Platform Key (PK)
   └── owned by hardware vendor
       │

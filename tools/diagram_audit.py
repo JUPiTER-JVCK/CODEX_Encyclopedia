@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
-"""Check the ASCII diagrams that carry most of this codex's illustration.
+"""Check the ASCII diagrams that carry all of this codex's illustration.
 
-The codex has no images — `_assets/` is empty — so every diagram is drawn with
-box characters inside a fenced code block. That works everywhere the codex is
-read (GitHub, any markdown viewer, the macOS app's code-block renderer) and
-stays reviewable in a diff, which an image does not.
+The codex has no images — `_assets/` holds no picture files — so every diagram
+is drawn with box characters inside a fenced code block. That works everywhere
+the codex is read (GitHub, any markdown viewer, the macOS app's code-block
+renderer) and stays reviewable in a diff, which an image does not.
 
-It has exactly one failure mode, and it is silent: box characters outside a
-fence render in a proportional font, where the columns no longer line up and
-the drawing collapses into noise. Nothing about the source looks wrong.
-
-Reports three faults:
+Reports six faults:
 
   UNFENCED       box characters in prose, outside any code block
   TOO WIDE       a diagram line past the column limit, which wraps or scrolls
-  NO DIAGRAM     a layer README with no diagram at all
+  UNTAGGED       a diagram fence with no ```text info string
+  MISSING IMAGE  a reference to an image file that is not in the repository
+  NO DIAGRAM     a file that should carry a diagram and does not
+  BACKLOG STALE  a backlog entry that is no longer a real gap
 
 Inline code spans are stripped before the unfenced check: `-3*[worker]` in
 prose is a mention, not a drawing. `link_audit.py` strips the same way.
@@ -22,6 +21,43 @@ prose is a mention, not a drawing. `link_audit.py` strips the same way.
     python3 tools/diagram_audit.py
 
 Exit status is 1 if anything is off, so this works as a CI gate.
+
+## What this checks and what it deliberately does not
+
+**Width is checked per diagram block, not per fence.** An earlier plan for
+this script was to width-check every fenced line. Measured, that rule fires
+on twelve lines and *all twelve are code* — a 111-column JSON object in
+`07_Runtime_Environment/protocols/oci_runtime.md`, a 116-column `tcpdump`
+invocation in `08_User_Applications/man_pages/network_tools.md`. Wrapping
+either would break it, and neither is a drawing. The real gap was narrower
+and is now closed: the old rule measured only lines that *themselves* held a
+box character, so a plain label line inside a diagram escaped. Every line of
+a block that contains a diagram is measured now, because a diagram's columns
+line up across all of its lines, captions included.
+
+**Two drawing styles count.** Box-drawing characters are the house style, but
+the network protocol notes carry RFC-style headers ruled with `+-+-+-+-+`,
+which held no box character at all and so scored as *no diagram* — seven
+files' worth of real drawings, invisible to the check that existed to find
+missing ones.
+
+## The backlog
+
+Requiring a diagram only in the 23 layer READMEs left 254 files unchecked,
+which is how 173 diagram-free files and four wrong drawings accumulated
+without a red build. Scope is now every codex file, and the gap that exists
+today is written down in `tools/diagram_backlog.txt` rather than left
+implicit.
+
+The backlog is checked in both directions, the way `palette_audit.py` checks
+its derived-colour counts. A file missing a diagram that is *not* listed
+fails — the gap cannot grow. A listed file that now has one also fails — the
+list cannot go stale and quietly re-exempt work already done. Drawing a
+diagram therefore means deleting its line here, and the count in the
+backlog's own header has to be right too.
+
+Layer READMEs are outside this arrangement: they are required to carry a
+diagram unconditionally and cannot be backlogged.
 """
 
 from __future__ import annotations
@@ -30,6 +66,7 @@ import argparse
 import os
 import re
 import sys
+from typing import NamedTuple
 
 # Run as a script, sys.path[0] is tools/; imported by stats_audit,
 # tools/ is already on the path. Either way this resolves.
@@ -43,9 +80,23 @@ FENCE_RE = re.compile(r"^\s*(`{3,})")
 # Box drawing, block elements and the arrows the existing diagrams use.
 BOX = set("─│┌┐└┘├┤┬┴┼━┃┏┓┗┛┣┫┳┻╋╔╗╚╝═║╠╣╦╩╬╭╮╰╯▶◀◄►▲▼")
 
+# The other drawing style in the codex: an RFC-style ruled line, as in the
+# TCP and IPv4 header layouts. Anchored and whole-line, so a `+` in prose or
+# in an arithmetic expression cannot be mistaken for a rule.
+ASCII_RULE_RE = re.compile(r"^\s*\+[-+]{2,}\+\s*$")
+
 # Widest existing diagram line is 86 columns; p99 is 77. 90 leaves room
 # without letting a new diagram grow past what a narrow pane can show.
 MAX_WIDTH = 90
+
+# STRUCTURE.md documents ```text for diagram fences. What is enforced is that
+# a diagram fence carries *some* tag, not that it carries that one.
+#
+# The narrower rule would be wrong here, and measurably so:
+# `04_Device_Drivers/man_pages/device_commands.md:198` is a ```bash block of
+# real shell whose comments quote `lsblk` tree output, box characters and
+# all. Retagging it ```text would be a lie about the block. A tag someone
+# chose is a decision; an absent tag is the omission this check is for.
 
 CODE_SPAN_RE = re.compile(r"`[^`\n]*`")
 
@@ -53,45 +104,154 @@ CODE_SPAN_RE = re.compile(r"`[^`\n]*`")
 SUBSECTIONS = {"references", "lessons", "languages", "man_pages", "topics",
                "protocols"}
 
+# Directories that are not the codex: the two applications, the audit scripts
+# themselves, GitHub templates, and the asset folder. Their markdown is
+# authored documentation and every *other* audit checks it — but a diagram in
+# a PR template or in `tools/` would be decoration, not illustration.
+NON_CODEX_TOPS = {".github", "Codex_LMS", "Codex_macOS", "tools", "_assets"}
 
-def classify(lines: list[str]) -> tuple[list[int], list[int]]:
-    """Line numbers (1-based) of fenced diagram lines, and of unfenced ones.
+# Root documents that describe the codex and are expected to draw it.
+# THIRD_PARTY.md is deliberately absent: it is an attribution record.
+ROOT_DOCUMENTS = {"README.md", "LAYERS.md", "STRUCTURE.md", "CHANGELOG.md",
+                  "CONTRIBUTING.md", "SECURITY.md"}
+
+BACKLOG_PATH = os.path.join("tools", "diagram_backlog.txt")
+
+# Frontmatter key naming a picture, and bare references to the asset folder
+# in prose. Both are how this codex actually cited its four never-committed
+# images: no `![](...)` link was ever written, so `link_audit.py` counted
+# zero images and had nothing to check.
+SOURCE_IMAGE_RE = re.compile(r"^\s*source_image:\s*(\S+)\s*$")
+ASSET_REF_RE = re.compile(r"[\w./-]*_assets/[\w./-]+\.(?:png|jpg|jpeg|gif|svg)")
+BARE_ASSET_RE = re.compile(r"`([\w-]+\.(?:png|jpg|jpeg|gif|svg))`")
+
+
+class Block(NamedTuple):
+    """One fenced block: where it opens, its info string, and its lines."""
+
+    start: int
+    info: str
+    body: list[tuple[int, str]]
+
+
+def fenced_blocks(lines: list[str]) -> tuple[list[Block], list[int]]:
+    """Every fenced block, and the line numbers of unfenced box characters.
+
+    One pass answers both questions, because both need the same fence state
+    and a second parse would eventually disagree with this one.
 
     Unfenced detection strips inline code spans first, so a box character
     quoted inside backticks is a mention rather than a broken drawing.
     """
-    fenced_hits, loose_hits = [], []
+    blocks: list[Block] = []
+    loose: list[int] = []
+    current: Block | None = None
     fence_len = 0
+
     for i, raw in enumerate(lines, start=1):
         m = FENCE_RE.match(raw)
         if m:
             run = len(m.group(1))
             if not fence_len:
                 fence_len = run
+                current = Block(i, raw[m.end():].strip(), [])
                 continue
             if run >= fence_len and raw[m.end():].strip() == "":
                 fence_len = 0
+                if current is not None:
+                    blocks.append(current)
+                current = None
                 continue
         if fence_len:
-            if BOX & set(raw):
-                fenced_hits.append(i)
+            if current is not None:
+                current.body.append((i, raw))
         elif BOX & set(CODE_SPAN_RE.sub("", raw)):
-            loose_hits.append(i)
-    return fenced_hits, loose_hits
+            loose.append(i)
+
+    # An unterminated fence still holds real lines; keep them rather than
+    # dropping a whole diagram because someone forgot a closing run.
+    if current is not None:
+        blocks.append(current)
+    return blocks, loose
+
+
+def is_diagram(block: Block) -> bool:
+    """True if this block draws something, in either of the two styles."""
+    return any(BOX & set(text) for _, text in block.body) or \
+        any(ASCII_RULE_RE.match(text) for _, text in block.body)
+
+
+def classify(lines: list[str]) -> tuple[list[int], list[int]]:
+    """Line numbers of fenced diagram lines, and of unfenced ones.
+
+    Kept as the shape the fence self-test asserts against, now expressed in
+    terms of the block parse rather than a second loop of its own.
+    """
+    blocks, loose = fenced_blocks(lines)
+    fenced = [ln for block in blocks for ln, text in block.body
+              if BOX & set(text)]
+    return sorted(fenced), loose
+
+
+def image_faults(path: str, lines: list[str],
+                 blocks: list[Block]) -> list[tuple[int, str, str]]:
+    """References to image files that are not in the repository.
+
+    Scoped to frontmatter and to prose outside fences. A `plt.savefig(...)`
+    call inside a Python block names a file the *reader* will create, not one
+    this repository ships.
+    """
+    root = _common.repo_root()
+    here = os.path.dirname(os.path.abspath(path))
+    fenced = {ln for block in blocks for ln, _ in block.body}
+    faults = []
+
+    def check(lineno: int, ref: str, target: str) -> None:
+        if not os.path.exists(target):
+            faults.append((lineno, "MISSING IMAGE",
+                           f"{ref} is referenced but not in the repository"))
+
+    for i, raw in enumerate(lines, start=1):
+        m = SOURCE_IMAGE_RE.match(raw)
+        if m:
+            check(i, m.group(1), os.path.normpath(os.path.join(here, m.group(1))))
+            continue
+        if i in fenced:
+            continue
+        for ref in ASSET_REF_RE.findall(raw):
+            tail = ref[ref.index("_assets/"):]
+            check(i, ref, os.path.join(root, tail))
+        for name in BARE_ASSET_RE.findall(raw):
+            check(i, name, os.path.join(root, "_assets", name))
+
+    return faults
 
 
 def audit_file(path: str) -> tuple[list[tuple[int, str, str]], bool]:
-    """Faults in one file, and whether it contains a fenced diagram."""
+    """Faults in one file, and whether it contains a diagram."""
     with open(path, encoding="utf-8") as fh:
         lines = fh.read().split("\n")
 
-    fenced, loose = classify(lines)
+    blocks, loose = fenced_blocks(lines)
+    diagrams = [block for block in blocks if is_diagram(block)]
+
     faults = [(ln, "UNFENCED", "box characters outside a code block")
               for ln in loose]
-    faults += [(ln, "TOO WIDE",
-                f"{len(lines[ln - 1])} columns, limit {MAX_WIDTH}")
-               for ln in fenced if len(lines[ln - 1]) > MAX_WIDTH]
-    return faults, bool(fenced)
+
+    # Every line of a diagram block, not only the lines holding a box
+    # character: a caption that wraps moves the drawing under it just as
+    # surely as a rule that wraps.
+    faults += [(ln, "TOO WIDE", f"{len(text)} columns, limit {MAX_WIDTH}")
+               for block in diagrams for ln, text in block.body
+               if len(text) > MAX_WIDTH]
+
+    faults += [(block.start, "UNTAGGED", "diagram fence has no info string, "
+                "expected ```text")
+               for block in diagrams if not block.info]
+
+    faults += image_faults(path, lines, blocks)
+
+    return faults, bool(diagrams)
 
 
 def layer_readmes(root: str) -> list[str]:
@@ -101,6 +261,84 @@ def layer_readmes(root: str) -> list[str]:
         if "README.md" in filenames and SUBSECTIONS & set(dirnames):
             found.append(os.path.join(dirpath, "README.md"))
     return sorted(found)
+
+
+def wants_diagram(rel: str) -> bool:
+    """Whether this file is one the codex expects to illustrate itself."""
+    parts = rel.split(os.sep)
+    if len(parts) == 1:
+        return rel in ROOT_DOCUMENTS
+    return parts[0] not in NON_CODEX_TOPS
+
+
+def read_backlog(root: str) -> tuple[set[str], int | None]:
+    """The listed gaps, and the count the file's own header claims.
+
+    The header count is checked against the entries for the same reason the
+    entries are checked against the tree: a number in prose that nothing
+    verifies is a number that goes stale.
+    """
+    path = os.path.join(root, BACKLOG_PATH)
+    entries: set[str] = set()
+    claimed: int | None = None
+    try:
+        with open(path, encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                if line.startswith("#"):
+                    m = re.search(r"^#\s*(\d+)\s+files? remain", line)
+                    if m:
+                        claimed = int(m.group(1))
+                    continue
+                entries.add(line.replace("/", os.sep))
+    except FileNotFoundError:
+        pass
+    return entries, claimed
+
+
+def coverage_faults(root: str) -> list[tuple[str, int, str, str]]:
+    """NO DIAGRAM and BACKLOG STALE, across the whole codex."""
+    backlog, claimed = read_backlog(root)
+    faults: list[tuple[str, int, str, str]] = []
+    in_scope: set[str] = set()
+    drawn: set[str] = set()
+
+    for path, rel in _common.walk_markdown(root):
+        if not wants_diagram(rel):
+            continue
+        in_scope.add(rel)
+        if audit_file(path)[1]:
+            drawn.add(rel)
+        elif rel not in backlog:
+            faults.append((rel, 1, "NO DIAGRAM",
+                           "no diagram, and not listed in " + BACKLOG_PATH))
+
+    for rel in sorted(backlog):
+        if rel not in in_scope:
+            faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                           f"{rel} is not a file this audit checks"))
+        elif rel in drawn:
+            faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                           f"{rel} has a diagram now — delete its line"))
+
+    real = len(in_scope - drawn)
+    if claimed is None:
+        faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                       "header does not state how many files remain"))
+    elif claimed != real:
+        faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                       f"header claims {claimed} files remain, really {real}"))
+
+    # A layer README is the one file that cannot be backlogged: it is the
+    # overview of a whole layer and the check that has always covered it.
+    for path in layer_readmes(root):
+        if not audit_file(path)[1]:
+            faults.append((os.path.relpath(path, root), 1, "NO DIAGRAM",
+                           "a layer overview should show where the layer sits"))
+
+    return faults
 
 
 # Fence handling has been wrong twice: first by toggling on any run of three
@@ -140,10 +378,81 @@ FENCE_CASES = [
     ),
 ]
 
+# Each case is a small document and the fault kinds it must produce. The
+# point of the pairs is the *negative* half: a rule that fires on everything
+# is no better than one that fires on nothing, and the twelve over-wide code
+# lines this audit deliberately ignores are exactly that distinction.
+FAULT_CASES = [
+    (
+        "an RFC-ruled header is a diagram",
+        ["```text", "+-+-+-+-+", "| Port  |", "+-+-+-+-+", "```"],
+        [],
+    ),
+    (
+        "a plus in prose inside a fence is not a rule",
+        ["```python", "x = a + b + c", "```"],
+        [],
+    ),
+    (
+        "an over-wide code line is not a diagram fault",
+        ["```bash", "tcpdump " + "-" * 120, "```"],
+        [],
+    ),
+    (
+        "an over-wide caption inside a diagram is",
+        ["```text", "┌─┐", "└─┘", "caption " + "x" * 120, "```"],
+        ["TOO WIDE"],
+    ),
+    (
+        "a box line over the limit is still caught",
+        ["```text", "┌" + "─" * 120 + "┐", "```"],
+        ["TOO WIDE"],
+    ),
+    (
+        "an untagged diagram fence is a fault",
+        ["```", "┌─┐", "└─┘", "```"],
+        ["UNTAGGED"],
+    ),
+    (
+        "a tagged diagram fence is not",
+        ["```text", "┌─┐", "└─┘", "```"],
+        [],
+    ),
+    (
+        "an untagged block with no drawing is left alone",
+        ["```", "just some words", "```"],
+        [],
+    ),
+    (
+        "a tag someone chose is left alone, drawing or not",
+        ["```bash", "lsblk", "# └─nvme0n1p3   crypto_LUKS", "```"],
+        [],
+    ),
+    (
+        "a source_image pointing nowhere is a fault",
+        ["---", "source_image: ../../_assets/nothing_here.png", "---"],
+        ["MISSING IMAGE"],
+    ),
+    (
+        "a missing asset named in prose is a fault",
+        ["See `_assets/never_committed.png` for the original."],
+        ["MISSING IMAGE"],
+    ),
+    (
+        "the same name inside a code block is not",
+        ["```python", 'plt.savefig("never_committed.png")', "```"],
+        [],
+    ),
+]
 
-def self_test() -> int:
-    """Assert the fence rules directly. `python3 tools/diagram_audit.py --self-test`."""
+
+def self_test(root: str) -> int:
+    """Assert the rules directly, including that they can fail.
+
+    `python3 tools/diagram_audit.py --self-test`
+    """
     failed = 0
+    print("fence rules")
     for name, doc, want_fenced, want_loose in FENCE_CASES:
         fenced, loose = classify(doc)
         ok = fenced == want_fenced and loose == want_loose
@@ -152,20 +461,37 @@ def self_test() -> int:
             print(f"       fenced {fenced} want {want_fenced}")
             print(f"       loose  {loose} want {want_loose}")
             failed += 1
-    print(f"\n{len(FENCE_CASES) - failed}/{len(FENCE_CASES)} fence cases pass")
+
+    print("\nfault rules")
+    scratch = os.path.join(root, ".diagram_audit_selftest.md")
+    try:
+        for name, doc, want in FAULT_CASES:
+            with open(scratch, "w", encoding="utf-8") as fh:
+                fh.write("\n".join(doc) + "\n")
+            got = sorted({kind for _, kind, _ in audit_file(scratch)[0]})
+            ok = got == sorted(want)
+            print(f"  {'ok  ' if ok else 'FAIL'} {name}")
+            if not ok:
+                print(f"       got {got} want {sorted(want)}")
+                failed += 1
+    finally:
+        if os.path.exists(scratch):
+            os.remove(scratch)
+
+    total = len(FENCE_CASES) + len(FAULT_CASES)
+    print(f"\n{total - failed}/{total} cases pass")
     return 1 if failed else 0
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--root", default=os.path.dirname(os.path.dirname(
-        os.path.abspath(__file__))))
+    parser.add_argument("--root", default=_common.repo_root())
     parser.add_argument("--self-test", action="store_true",
-                        help="check the fence rules against known cases and exit")
+                        help="check the rules against known cases and exit")
     args = parser.parse_args()
 
     if args.self_test:
-        return self_test()
+        return self_test(args.root)
 
     faults: list[tuple[str, int, str, str]] = []
     files = diagrams = 0
@@ -177,19 +503,18 @@ def main() -> int:
         faults.extend((rel, ln, kind, detail)
                       for ln, kind, detail in file_faults)
 
-    layers = layer_readmes(args.root)
-    for path in layers:
-        rel = os.path.relpath(path, args.root)
-        _, has = audit_file(path)
-        if not has:
-            faults.append((rel, 1, "NO DIAGRAM",
-                           "a layer overview should show where the layer sits"))
-
+    faults.extend(coverage_faults(args.root))
     faults.sort()
+
+    backlog, _ = read_backlog(args.root)
+    scoped = sum(1 for _, rel in _common.walk_markdown(args.root)
+                 if wants_diagram(rel))
 
     print(f"markdown files   {files}")
     print(f"with a diagram   {diagrams}")
-    print(f"layer READMEs    {len(layers)}")
+    print(f"needing one      {scoped}")
+    print(f"still to draw    {len(backlog)}")
+    print(f"layer READMEs    {len(layer_readmes(args.root))}")
     print(f"diagram faults   {len(faults)}")
 
     if faults:
@@ -201,10 +526,10 @@ def main() -> int:
             print(f"  {counts[kind]:3d}  {kind}")
         print()
         for rel, line, kind, detail in faults:
-            print(f"  {kind:11s} {rel}:{line}  ({detail})")
+            print(f"  {kind:13s} {rel}:{line}  ({detail})")
         return 1
 
-    print("\nevery diagram fenced, sized, and where it is needed")
+    print("\nevery diagram fenced, tagged, sized, and where it is needed")
     return 0
 
 

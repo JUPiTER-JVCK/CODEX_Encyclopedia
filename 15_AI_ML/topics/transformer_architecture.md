@@ -21,7 +21,7 @@ multimodal systems.
 
 ## Architecture: Encoder-Decoder
 
-```
+```text
   Full Transformer (original, e.g. for translation):
   
   Input tokens                    Output tokens (shifted right)
@@ -64,7 +64,7 @@ no cross-attention, just causal self-attention + FFN.
 
 ## Multi-Head Attention (MHA)
 
-```
+```text
   Multi-Head Attention with h heads:
   
   Input X ──▶ Wq ──▶ Q        (batch, seq_len, d_model)
@@ -179,7 +179,7 @@ Reduce KV cache memory by sharing K,V across multiple query heads:
 Replace the FFN with multiple "expert" networks, activating only a
 subset per token (sparse activation):
 
-```
+```text
   MoE layer:
   
   Token x ──▶ Router (softmax) ──▶ top-k gate scores

@@ -31,7 +31,7 @@ MIPS, and more.
 
 ### Architecture
 
-```
+```text
   GDB / IDE                    OpenOCD              Hardware
   ┌──────────┐               ┌──────────┐         ┌──────────┐
   │ gdb      │──(port 3333)─▸│          │──JTAG──▸│ MCU      │
@@ -111,7 +111,7 @@ embedded development. Also works with C/C++ ELF binaries.
 
 ### Comparison with OpenOCD
 
-```
+```text
   Feature            OpenOCD              probe-rs
   ─────────          ───────              ────────
   Language           C                    Rust
@@ -164,7 +164,7 @@ Also reads chip info, MAC addresses, and flash contents.
 
 ### ESP32 flash memory layout
 
-```
+```text
   0x00000000 ┌────────────────────────┐
              │ Bootloader (2nd stage) │  0x1000
   0x00008000 ├────────────────────────┤

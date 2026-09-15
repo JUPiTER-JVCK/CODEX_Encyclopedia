@@ -20,7 +20,7 @@ access to a **resource server** (API) without sharing credentials. The
 
 ## Roles
 
-```
+```text
   ┌──────────────┐                     ┌────────────────────┐
   │   Resource   │                     │   Authorization    │
   │    Owner     │                     │      Server        │
@@ -40,7 +40,7 @@ access to a **resource server** (API) without sharing credentials. The
 
 The **recommended** flow for web apps, SPAs, mobile, and native clients.
 
-```
+```text
   User          Client (App)           Auth Server           Resource Server
    │                │                       │                      │
    │── click "Login"│                       │                      │
@@ -172,7 +172,7 @@ Standard OIDC scopes: `openid`, `profile`, `email`, `address`, `phone`.
 
 ## Token validation at the Resource Server
 
-```
+```text
   Option A: JWT validation (no network call)
   ┌─────────────────────────────────────────┐
   │ 1. Decode header → get kid              │

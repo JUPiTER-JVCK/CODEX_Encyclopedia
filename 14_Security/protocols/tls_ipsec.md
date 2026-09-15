@@ -19,7 +19,7 @@ network layer — securing IP packets regardless of the application above.
 
 ## Modes
 
-```
+```text
   Transport Mode                       Tunnel Mode
   ──────────────                       ───────────
   ┌──────┬──────┬─────────┐           ┌──────┬──────┬──────┬──────┬─────────┐
@@ -38,7 +38,7 @@ network layer — securing IP packets regardless of the application above.
 
 ## ESP packet format
 
-```
+```text
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ ─┐
@@ -66,7 +66,7 @@ network layer — securing IP packets regardless of the application above.
 
 ## IKEv2 exchange
 
-```
+```text
   Initiator                              Responder
       │                                      │
       │── IKE_SA_INIT (proposals, KE, Ni) ──▶│    Exchange 1

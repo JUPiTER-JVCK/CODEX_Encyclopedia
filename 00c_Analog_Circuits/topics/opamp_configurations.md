@@ -14,7 +14,7 @@ updated: 2026-05-20
 
 ## Ideal op-amp symbol
 
-```
+```text
          V+
           │
      ┌────┴────┐
@@ -35,7 +35,7 @@ updated: 2026-05-20
 
 ## 1. Inverting amplifier
 
-```
+```text
            Rf
      ┌────┤├────┐
      │          │
@@ -56,7 +56,7 @@ updated: 2026-05-20
 
 ## 2. Non-inverting amplifier
 
-```
+```text
                 Rf
           ┌────┤├────┐
           │          │
@@ -80,7 +80,7 @@ updated: 2026-05-20
 
 ## 3. Voltage follower (unity-gain buffer)
 
-```
+```text
            ┌──────────┐
            │   ┌──┐   │
            └───┤- ╲   │
@@ -98,7 +98,7 @@ updated: 2026-05-20
 
 ## 4. Summing amplifier (inverting)
 
-```
+```text
             Rf
       ┌────┤├────┐
       │          │
@@ -121,7 +121,7 @@ If R1 = R2 = R3 = R: `Vout = -(Rf/R) × (V1 + V2 + V3)`
 
 ## 5. Differential amplifier
 
-```
+```text
               Rf
          ┌───┤├───┐
          │         │
@@ -144,7 +144,7 @@ If R1 = R2 = R3 = R: `Vout = -(Rf/R) × (V1 + V2 + V3)`
 
 ## 6. Instrumentation amplifier (3 op-amp)
 
-```
+```text
                R
   V1 ──┤+ A1 ├─┬──R──┤- A3 ├─── Vout
         └─┬──┘ │     │     │
@@ -166,7 +166,7 @@ If R1 = R2 = R3 = R: `Vout = -(Rf/R) × (V1 + V2 + V3)`
 
 ## 7. Integrator
 
-```
+```text
             C
       ┌────┤┤────┐
       │          │
@@ -180,7 +180,7 @@ If R1 = R2 = R3 = R: `Vout = -(Rf/R) × (V1 + V2 + V3)`
 
 ## 8. Differentiator
 
-```
+```text
             R
       ┌────┤├────┐
       │          │
@@ -196,7 +196,7 @@ If R1 = R2 = R3 = R: `Vout = -(Rf/R) × (V1 + V2 + V3)`
 
 ### Low-pass (inverting)
 
-```
+```text
           R2 ── C
       ┌──┤├──┤┤──┐    (R2 ∥ C in feedback)
       │           │
@@ -208,7 +208,7 @@ If R1 = R2 = R3 = R: `Vout = -(Rf/R) × (V1 + V2 + V3)`
 
 ### High-pass (inverting)
 
-```
+```text
            R2
       ┌───┤├───┐
       │         │

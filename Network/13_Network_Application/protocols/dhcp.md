@@ -19,7 +19,7 @@ its address from DHCP.
 
 ## DORA — DHCPv4 lease process
 
-```
+```text
   Client (0.0.0.0)                    Server (e.g., 10.0.0.1)
        │                                    │
    ①   │── DHCPDISCOVER (broadcast) ───────▶│   "Anyone have an IP for me?"
@@ -47,7 +47,7 @@ its address from DHCP.
 
 ## DHCPv4 message format
 
-```
+```text
  ┌───────┬───────┬───────┬──────────────────┐
  │  op   │ htype │ hlen  │     hops         │  (1B each)
  ├───────┴───────┴───────┴──────────────────┤
@@ -99,7 +99,7 @@ its address from DHCP.
 
 ## DHCP relay
 
-```
+```text
   Client (VLAN 10)          Relay Agent (Router)         DHCP Server
        │                          │                          │
        │── DISCOVER (broadcast)──▶│                          │
@@ -135,7 +135,7 @@ DHCPv6 uses **DUID** (DHCP Unique Identifier) instead of MAC for client ID.
 
 ## DHCP snooping (security)
 
-```
+```text
   ┌──────────────────────────────────────────┐
   │              Switch                       │
   │                                           │

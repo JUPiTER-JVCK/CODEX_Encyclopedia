@@ -72,7 +72,7 @@ for host in tree.findall('host'):
 "
 ```
 
-```
+```text
   Scan type selection:
   ┌─────────────┬───────────────────────────────────────────┐
   │ -sS (SYN)   │ Default, fast, stealth — sends SYN only   │
@@ -148,7 +148,7 @@ hashcat -m 0 hash.txt -a 3 ?l?l?l?l?d?d?d?d
 # ?l = lowercase, ?u = uppercase, ?d = digit, ?s = special
 ```
 
-```
+```text
   Hash algorithm strength (time to crack "password123"):
   ┌──────────────┬────────────┬──────────────────────────────┐
   │ Algorithm    │ Time       │ Notes                        │

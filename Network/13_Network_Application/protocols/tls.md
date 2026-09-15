@@ -19,7 +19,7 @@ SMTP, IMAP, LDAP, and everything else that wraps a plaintext protocol.
 
 ## TLS 1.3 handshake (1-RTT)
 
-```
+```text
     Client                                      Server
       │                                            │
       │── ClientHello ────────────────────────────▶│
@@ -53,7 +53,7 @@ SMTP, IMAP, LDAP, and everything else that wraps a plaintext protocol.
 
 ## TLS 1.2 handshake (2-RTT, for comparison)
 
-```
+```text
     Client                                      Server
       │                                            │
       │── ClientHello ────────────────────────────▶│
@@ -76,7 +76,7 @@ SMTP, IMAP, LDAP, and everything else that wraps a plaintext protocol.
 
 ## Record protocol
 
-```
+```text
  +---+---+---+---+---+---+---+---+---+---+---+
  | Content Type | Legacy Version | Length    |
  |    (1 B)     |    (2 B)       |  (2 B)   |
@@ -109,7 +109,7 @@ Signature algorithms specified via the `signature_algorithms` extension.
 
 ## Certificate chain
 
-```
+```text
   ┌────────────────────┐
   │   Root CA          │ ← in trust store (OS / browser)
   │   (self-signed)    │
@@ -179,7 +179,7 @@ Transition: hybrid key exchange (classical + PQC) during migration period.
 
 ## ACME (RFC 8555) — Automated Certificate Management
 
-```
+```text
   Client (certbot)                    ACME Server (Let's Encrypt)
       │                                      │
       │── POST /newOrder ───────────────────▶│

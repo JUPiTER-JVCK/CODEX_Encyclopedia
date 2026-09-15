@@ -17,7 +17,7 @@ It uses LoRa (Chirp Spread Spectrum) as the physical layer. End-devices
 communicate with gateways over LoRa; gateways forward to a Network Server
 over IP.
 
-```
+```text
   LoRaWAN architecture:
   
   [End Device]──LoRa────▶[Gateway 1]──IP──┐
@@ -44,7 +44,7 @@ over IP.
 
 ### Class A Timing
 
-```
+```text
   Class A uplink + 2 receive windows:
   
   ─────[TX]────────────────[RX1]──────────[RX2]──────────────────▶ time
@@ -62,7 +62,7 @@ over IP.
 
 ### OTAA — Over-The-Air Activation (Recommended)
 
-```
+```text
   Device                    Network Server
      │                             │
      │──── Join Request ──────────▸│  (DevEUI, JoinEUI, DevNonce)
@@ -109,7 +109,7 @@ on observed SNR:
 
 ## LoRaWAN Frame Format
 
-```
+```text
   LoRaWAN uplink MAC frame:
   ┌────────┬────────┬──────────┬────────┬──────────┬────────────┐
   │MHDR(1B)│DevAddr │FCtrl(1B) │FCnt(2B)│FOpts(≤15)│FPort + Frm │

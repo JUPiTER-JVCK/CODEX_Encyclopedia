@@ -14,7 +14,7 @@ updated: 2026-05-20
 
 ## Ethernet II frame
 
-```
+```text
  ┌──────────┬──────────┬──────────┬────────┬─────────────┬──────┐
  │ Preamble │   SFD    │  Dst MAC │Src MAC │ EtherType / │ Data │  FCS
  │  (7 B)   │  (1 B)   │  (6 B)  │ (6 B)  │ Length (2B) │(46-  │ (4 B)
@@ -46,7 +46,7 @@ Common EtherTypes:
 
 ## 802.1Q VLAN tagging
 
-```
+```text
  ┌──────────┬────────┬──────────┬──────────┬────────┬─────┬──────┐
  │ Dst MAC  │Src MAC │ 0x8100   │ TCI      │EtherType│Data │ FCS  │
  │  (6 B)   │ (6 B)  │ (TPID)  │PCP|DEI|VID│ (2 B)  │     │(4 B) │
@@ -63,7 +63,7 @@ Common EtherTypes:
 
 ## MAC address format
 
-```
+```text
   XX:XX:XX:XX:XX:XX    (6 bytes = 48 bits)
   ├──────┤├──────┤
     OUI     NIC-specific
@@ -82,7 +82,7 @@ Common EtherTypes:
 
 ## ARP (RFC 826)
 
-```
+```text
   Host A (10.0.0.1)                     Host B (10.0.0.2)
       │                                      │
       │── ARP Request (broadcast) ──────────▶│

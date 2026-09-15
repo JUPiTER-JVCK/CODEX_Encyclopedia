@@ -193,9 +193,18 @@ from NAND alone. Reason: invert + AND + OR can all be derived from NAND.
 
 ## All eight at a glance
 
-The six binary gates side by side. Read a row as one input combination and
-follow it across — this is the whole of two-input Boolean logic in one table,
-and it is what the never-committed reference image was going to show.
+The six standard binary gates side by side. Read a row as one input
+combination and follow it across — this is what the never-committed reference
+image was going to show.
+
+These six are not all of two-input Boolean logic. A function of two variables
+assigns an output to each of four input rows, so there are 2⁴ = **16** of
+them: the six below, their four inputs' projections and negations (`Y = A`,
+`Y = ¬B`), the two constants (`Y = 0`, `Y = 1`), and the four implications and
+inhibitions (`A → B`, `A ∧ ¬B`). The six are standard because they are the
+ones with dedicated gate symbols and standard-cell implementations, not
+because the other ten do not exist — every one of the sixteen is buildable
+from NAND alone.
 
 | A | B | AND | NAND | OR | NOR | XOR | XNOR |
 |---|---|-----|------|----|-----|-----|------|

@@ -16,7 +16,8 @@
   │                  as Sallen-Key · MFB · state-variable · biquad · SC
   │
   ├─▶ references     bandgap · Zener · XFET — TC in ppm/°C
-  │                  everything below needs one to measure against
+  │                  needed by anything that regulates or converts; a
+  │                  passive filter or free-running oscillator needs none
   │
   ├─▶ signal cond.   bridge · current sense · thermocouple · TIA · touch
   │                  = op-amp + reference, pointed at a sensor
@@ -24,7 +25,9 @@
   ├─▶ power mgmt     LDO · buck/boost/SEPIC/flyback/bridge
   │                  CCM vs DCM · voltage vs current mode · Type II/III
   │                  charge pumps · harvesting · battery CC/CV
-  │                  = reference + error amp + a switch        ──▶ 00b
+  │                  a closed-loop switcher is reference + error amp +
+  │                  a switch; an LDO uses a pass element instead, and an
+  │                  open-loop charge pump neither                ──▶ 00b
   │
   ├─▶ oscillators    Pierce · Colpitts · ring · VCO
   │   & PLLs         detector + charge pump + loop filter + divider

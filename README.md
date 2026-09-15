@@ -346,7 +346,8 @@ Currently:
 - All 138 section indexes titled `<Layer> — <Section>`
 - 133 files carry a diagram across the repository, of which
   130 of the 272 the diagram audit holds to it — the other three are the two
-  apps' own READMEs, which the audit does not require to illustrate anything;
+  apps' own documentation (both READMEs and `Codex_LMS/roadmap-draft.md`),
+  which the audit does not require to illustrate anything;
   the remaining 142 are listed in `tools/diagram_backlog.txt`, checked in both
   directions so the gap can neither grow unnoticed nor go stale. Every diagram
   is fenced, tagged and within 90 columns (` ```text ` is the convention; a

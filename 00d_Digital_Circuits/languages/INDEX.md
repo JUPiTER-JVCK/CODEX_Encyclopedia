@@ -5,30 +5,29 @@
 ```text
   An HDL takes two different routes. Simulation *compiles* it — iverilog is
   a compiler, Verilator emits C++. Hardware *synthesises* it, into gates and
-  then a placement on real silicon. The four stages below are those two
-  routes; the verification tools at the end run alongside all four rather
-  than occupying a stage of their own.
+  then a placement on real silicon. Below, those two routes branch from one
+  description and never rejoin.
 
   describe      Verilog · SystemVerilog · VHDL        the industry three
                 Chisel · SpinalHDL (Scala)            embedded in a host
                 Amaranth · Migen · MyHDL (Python)     language, so the
                 Bluespec (rules) · Clash (Haskell)    elaborator is a program
                    │
-                   ▼
-  simulate      Icarus (iverilog) · GHDL              event-driven, free
-                Verilator                             compiles to C++, fast
-                VCS · Xcelium · ModelSim              commercial
-                   │                    └──▶ GTKWave · Surfer · Verdi
-                   ▼
-  synthesise    Yosys                                 open, RTL ─▶ netlist
-                Vivado · Quartus · Design Compiler    vendor / ASIC
-                   │
-                   ▼
-  place & route nextpnr  ──▶ IceStorm · Trellis · Apicula   ──▶ bitstream
-                          iCE40        ECP5       Gowin
+     ┌─────────────┴─────────────┐   two consumers of the same source,
+     ▼                           ▼   not one after the other
+  simulate                    synthesise
+  Icarus (iverilog) · GHDL    Yosys              open, RTL ─▶ netlist
+  Verilator (to C++)          Vivado · Quartus   vendor
+  VCS · Xcelium · ModelSim    Design Compiler    ASIC
+     │                           │
+     ▼                           ▼
+  GTKWave · Surfer · Verdi    place & route
+  waveforms                   nextpnr ──▶ IceStorm · Trellis · Apicula
+                                          iCE40     ECP5      Gowin
+                                      ──▶ bitstream
 
-  Verification runs alongside all four rather than after them:
-  SystemVerilog/UVM · e · PSL · cocotb (Python) · SymbiYosys · JasperGold
+  Verification is not a stage here — it runs against whichever branch you
+  are on: SystemVerilog/UVM · e · PSL · cocotb · SymbiYosys · JasperGold
 ```
 
 ## HDLs (Hardware Description Languages)

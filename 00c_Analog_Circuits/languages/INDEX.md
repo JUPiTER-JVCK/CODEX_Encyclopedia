@@ -3,16 +3,18 @@
 ## One netlist, four descendants
 
 ```text
-  The first group is Berkeley SPICE and its descendants — component-level
-  netlists, solved numerically. The behavioural languages under it are not
-  SPICE children at all; they are a separate family for describing what a
-  block *does* when simulating what it is made of costs too much.
+  The first group is SPICE and the simulators that read its netlists —
+  component-level circuits, solved numerically. Not all are Berkeley
+  descendants: gnucap and Spectre were written independently and are
+  SPICE-*compatible* rather than SPICE-derived. The behavioural languages
+  under them are a separate family again, for describing what a block *does*
+  when simulating what it is made of costs too much.
 
   SPICE (Berkeley, 1973)          netlist + transient / AC / DC
   │
-  ├─ ngspice · gnucap             open-source, CLI
-  ├─ LTspice                      free, GUI, ADI's model library
-  └─ Spectre · PSpice             commercial, production sign-off
+  ├─ ngspice                      open-source, a direct descendant
+  ├─ LTspice · PSpice             free / commercial, SPICE-derived
+  └─ gnucap · Spectre             independent engines, SPICE-compatible
         │
         └─ behaviour instead of components, when the netlist is too slow.
            Three separate languages, not three versions of one:
@@ -26,11 +28,12 @@
     MATLAB / Simulink · Octave          system-level, control loops
     Python — scipy.signal, control      filter design, Bode, root locus
 
-  And two interchange formats that carry measured behaviour rather than a
-  model of it — Touchstone .sNp (S-parameters, → 16 RF) and IBIS (I/O
-  buffers for signal integrity, → 01 Circuit Board).
+  And two interchange formats that carry behaviour rather than topology —
+  Touchstone .sNp (S-parameters, measured or simulated, → 16 RF) and IBIS
+  (a behavioural I/O-buffer model for signal integrity, → 01 Circuit Board).
 
-  Schematic capture — KiCad · Altium · OrCAD — feeds all of the above.
+  Schematic capture — KiCad · Altium · OrCAD — produces the netlist the
+  first group reads. It feeds nothing else here.
 ```
 
 | Tool / language | Use |

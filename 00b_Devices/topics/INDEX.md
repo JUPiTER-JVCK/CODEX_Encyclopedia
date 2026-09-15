@@ -7,7 +7,8 @@
   of every one of them.
 
   store and shape      passives      R · C · L · transformers · crystals
-                                     no gain, no control terminal
+                                     no control terminal, and no power gain
+                                     (a transformer trades volts for amps)
 
   rectify and clamp    diodes        PN · Schottky · Zener · TVS
                                      PIN · varactor · LED · laser

@@ -3,31 +3,31 @@
 ## The ladder
 
 ```text
-  The numbered path below is two independent chains. The first runs from the
-  maths to devices and forks three ways once the field equations are in
-  place; the second, #11–#13, starts over from thermodynamics and owes
-  nothing to it.
+  The file numbers thirteen exercises and states no prerequisites between
+  them, so the grouping below is editorial: three strands, each rooted in
+  the maths rather than in each other.
 
-  1  Math prerequisites          vector calc · complex · ODE/PDE · Fourier
+  1  Math prerequisites       vector calc · complex · ODE/PDE · Fourier
   │
-  └─ 2  Electrostatics & magnetostatics
-     └─ 3  Maxwell's equations   ◀── everything below forks from here
-        │
-        ├─ 4  Plane waves & transmission lines   → 01 PCB · 16 RF · 09 PHY
-        │
-        ├─ 5  Crystals & band theory
-        │  └─ 6  Doping & the p-n junction
-        │     └─ 7  Diode physics
-        │        └─ 8  BJT & MOSFET            → 00b Devices · 00c Analog
-        │
-        ├─ 9  Quantum tunnelling               Zener · subthreshold · flash
-        │     explains behaviour inside 7 and 8 rather than preceding them
-        │
-        └─ 10  Photonics primer                needs 3 and 5 both
-
-  11  Thermal & noise            kT/q · Johnson-Nyquist · shot · 1/f
-  └─ 12  Landauer's principle    kT ln 2 per erased bit — the floor
-     └─ 13  Information theory   entropy · channel capacity → 12 Transport
+  ├─ classical EM
+  │     2  Electrostatics & magnetostatics
+  │     3  Maxwell's equations
+  │     4  Plane waves & transmission lines   → 01 PCB · 16 RF · 09 PHY
+  │
+  ├─ solid state — from quantum mechanics and crystal structure, not
+  │                from the field equations above
+  │     5  Crystals & band theory
+  │     6  Doping & the p-n junction
+  │     7  Diode physics
+  │     8  BJT & MOSFET                       → 00b Devices · 00c Analog
+  │     9  Quantum tunnelling — what is happening inside 7 and 8
+  │
+  ├─ 10  Photonics primer     draws on both strands above
+  │
+  └─ thermodynamics and information — independent of everything above
+        11  Thermal & noise         kT/q · Johnson-Nyquist · shot · 1/f
+        12  Landauer's principle    kT ln 2 per irreversibly erased bit
+        13  Information theory      entropy · capacity → 12 Transport
 
   Lab: physics_labs.md exercises 2, 6 and 7 (Ohm, RC, diode I-V).
 ```

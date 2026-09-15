@@ -26,9 +26,11 @@ Hardware enumeration & inspection tools — mostly Linux, with macOS equivalents
                          spi-tools   talks to /dev/spidev* directly
                          both can wedge a live device — read their warnings
 
-  On an SBC the same job needs board-specific tools, because the pins are
-  not on any standard bus: pinctrl (RPi GPIO, replacing WiringPi's gpio)
-  and vcgencmd (VideoCore temperature, voltage, clocks).
+  On an SBC the same job needs board-specific tools — not because the
+  header lacks standard buses (it multiplexes I²C, SPI and UART onto those
+  pins) but because deciding *which* function a pin carries, and reading the
+  SoC's own firmware, is vendor territory: pinctrl (RPi GPIO, replacing
+  WiringPi's gpio) and vcgencmd (VideoCore temperature, voltage, clocks).
 
   Who is driving each of these devices is 04 Device Drivers.
 ```

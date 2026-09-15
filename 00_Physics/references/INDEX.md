@@ -7,13 +7,13 @@
   cold; the bottom is where the subject stops being introductory.
 
             classical EM        solid state         quantum
-  first     Hayt                Pierret             Griffiths QM
+  first     Hayt                Pierret             Feynman Vol. III
             Engineering E&M     Semiconductor Dev.
               │                   │                   │
-  core      Griffiths           Streetman           Shankar
+  core      Griffiths           Streetman           Griffiths QM
             Electrodynamics     & Banerjee
               │                   │                   │
-  deep      Jackson             Kittel · Sze        Feynman Vol. III
+  deep      Jackson             Kittel · Sze        Shankar
             Ramo/Whinnery       (the device bible)
 
   thermal & noise   Kittel & Kroemer ─▶ Pathria

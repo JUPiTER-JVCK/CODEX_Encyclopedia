@@ -26,11 +26,13 @@
   RTL & synthesis     coding style ─▶ netlist ─▶ place & route ─▶ STA
   │                   clock trees, skew, gating, multi-Vt
   ▼
-  the two hard parts that only appear once it is real:
+  and two that run alongside all of the above rather than after it:
 
     clock domains     metastability · 2-FF synchroniser · async FIFO
+                      a problem from the first asynchronous clock in RTL
     test & debug      sim vs gate-level vs formal · scan · ATPG · BIST
-                      JTAG 1149.1 · coverage                    ──▶ 01
+                      formal and simulation run before any silicon exists;
+                      scan and JTAG 1149.1 are what remain once it does
 
   and the three things you can build all of it on:
     CPLD ── instant-on, small   FPGA ── LUT + FF + DSP + BRAM   ASIC ── NRE

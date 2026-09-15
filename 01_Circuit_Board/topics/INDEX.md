@@ -40,7 +40,8 @@ Concept notes. One file per topic as the codex grows; this index gives the map.
 
 ## Buses & interconnect
 - **Parallel buses** — DDR memory, legacy PCI.
-- **Serial buses** — PCIe, USB, SATA, NVMe, Thunderbolt, SPI, I²C, UART, CAN, JTAG.
+- **Serial buses** — PCIe, USB, SATA, Thunderbolt, SPI, I²C, UART, CAN, JTAG.
+  (NVMe rides on PCIe as a command set rather than being a bus of its own.)
 - **Bus topologies** — point-to-point, multi-drop, bussed, fabric.
 - **Bus arbitration & clocking** — synchronous vs source-synchronous vs embedded clock.
 

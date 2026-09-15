@@ -24,9 +24,11 @@ Simulation and bench tooling rather than system utilities.
         └──────────────────── disagreement ────────────────────┘
               which is the useful output of the whole loop
 
-  Mixed-signal spans the first two columns and is its own problem:
-  Verilator for the digital half, ADMS for Verilog-AMS, or Cadence AMS
-  Designer for both at once.
+  Mixed-signal spans the first two columns and is its own problem. Cadence
+  AMS Designer runs both halves together; the open route is a co-simulation
+  harness wiring a digital simulator to an analog one. ADMS is not that — it
+  compiles a Verilog-A compact model into simulator source, which is a step
+  in building the analog half rather than a way to run both.
 ```
 
 ## Simulation

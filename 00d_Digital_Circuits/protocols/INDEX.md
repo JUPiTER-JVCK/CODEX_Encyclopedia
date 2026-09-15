@@ -39,7 +39,10 @@ HDL toolchain has to implement.
                                                 ├─ .6 AC-coupled
                                                 ├─ .7 cJTAG
                                                 ├─ 1500 core test
-                                                └─ 1687 iJTAG · 1450 STIL
+                                                └─ 1687 iJTAG
+
+                                   1450 STIL is not one of these — it is a
+                                   file format for the patterns they carry
 
   moving data on-chip,             AMBA AXI/AHB/APB/ACE/CHI (Arm)
   to RAM, and to storage           Wishbone · TileLink · OCP · Avalon

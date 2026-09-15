@@ -1064,7 +1064,9 @@ private struct ImageBlock: View {
     private var resolvedURL: URL? {
         guard let src = sourceFile else { return URL(string: href) }
         let r = LinkResolver.resolve(href, sourceFile: src, projectRoot: projectRoot)
-        if case .file(let u) = r { return u }
+        // Two associated values now; the fragment is meaningless for an image
+        // href, so it is discarded explicitly rather than by tuple-matching.
+        if case .file(let u, _) = r { return u }
         if case .external(let u) = r { return u }
         return nil
     }

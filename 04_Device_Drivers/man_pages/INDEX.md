@@ -1,5 +1,26 @@
 # Device Drivers — Manual Pages
 
+## What is in this section
+
+```text
+  Commands in this section, grouped by OS.
+
+  ┌────────────────────────────────── Linux ──────────────────────────────┐
+  │  modules: lsmod · modinfo · modprobe · insmod · rmmod · depmod · dkms │
+  │  events:  udevadm · dmesg  │  config: modules-load.d               │
+  │  hardware: ethtool · nvidia-smi · rocm-smi                           │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌──────── macOS ─────────────────────────┐  ┌──── Windows ──────────────────────┐
+  │  kextstat · kmutil                     │  │  pnputil · driverquery            │
+  │  systemextensionsctl · pluginkit       │  │  sc query type=driver · verifier  │
+  └────────────────────────────────────────┘  └───────────────────────────────────┘
+
+  ┌──────────────────────── cross-platform ───────────────────────────────┐
+  │  libusb (userspace USB access)  │  pyudev (Python udev bindings)     │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

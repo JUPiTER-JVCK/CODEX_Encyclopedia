@@ -1,5 +1,22 @@
 # Device Drivers — Languages
 
+## What is in this section
+
+```text
+  Six languages in this section; split by where the driver code runs.
+
+  ┌────────────────────────── kernel space ──────────────────────────────┐
+  │  C (Linux · BSD · Windows · macOS) — strict subset, no libc         │
+  │  C++ restricted (Windows KMDF, macOS IOKit)                         │
+  │  Rust (Linux · Windows experimental)  │  Obj-C/C++ (macOS IOKit)   │
+  └────────────────────────────────────────────────────────────────────┘
+
+  ┌────────────────────────── user space ────────────────────────────────┐
+  │  Swift (macOS/iOS DriverKit — *.dext bundles)                       │
+  │  Python (libusb · pyudev — prototyping; not production drivers)     │
+  └────────────────────────────────────────────────────────────────────┘
+```
+
 | Language | OS | Notes |
 |----------|----|----|
 | C (kernel dialect) | Linux, BSD, Windows (with KMDF/WDM), macOS (XNU) | The default — strict subset, no libc |

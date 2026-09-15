@@ -1,5 +1,29 @@
 # Device Drivers — References
 
+## What is in this section
+
+```text
+  Three reference types for this layer.
+
+  ┌─── books ────────────────────────────────────────────────────────────┐
+  │  LDD3 (Corbet · Rubini · Kroah-Hartman)  │  Linux Kernel Dev (Love) │
+  │  Understanding the Linux Kernel (Bovet & Cesati)                    │
+  │  Writing Windows WDM Device Drivers (Cant)                          │
+  │  Developing Drivers with WDF (Orwick & Smith)                       │
+  │  macOS and iOS Internals Vol. II — Kernel Mode (Levin)              │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online / official ────────────────────────────────────────────────┐
+  │  Linux: Documentation/driver-api/ · drivers/ source tree            │
+  │  Windows: WDK docs  │  Apple: DriverKit docs  │  FreeBSD Arch HB   │
+  │  Rust for Linux: rust-for-linux.com                                 │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── mailing lists ────────────────────────────────────────────────────┐
+  │  LKML  │  linux-pci  │  linux-usb  │  netdev  (all on vger.kernel)  │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Books
 - *Linux Device Drivers, 3rd ed.* (LDD3) — Corbet, Rubini, Kroah-Hartman. Dated but classic.
 - *Linux Kernel Development* — Robert Love. Companion to LDD3.

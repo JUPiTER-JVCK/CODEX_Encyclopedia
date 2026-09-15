@@ -484,18 +484,26 @@ PLAIN = "# Heading\n\nProse only.\n"
 # checked it — that a layer README is held to its diagram unconditionally and
 # is not part of the backlog arrangement — which is exactly the kind of claim
 # that turns out to be untrue.
+# Each expectation is a `KIND | text the fault must contain` pair, matched
+# against "<path> <detail>". Kinds alone are not enough, and review caught
+# that: under the original defect a backlogged layer README still produced
+# one BACKLOG STALE and one NO DIAGRAM — the header count noticing a gap it
+# should never have counted, and the unconditional check — which is the same
+# pair of kinds the fix produces for entirely different reasons. Comparing
+# categories, the case passed either way. The detail is what separates them.
 COVERAGE_CASES = [
     (
         "a layer README with no diagram faults once, not twice",
         {"L/README.md": PLAIN, "L/topics/INDEX.md": DIAGRAM},
         "# 0 files remain.\n",
-        ["NO DIAGRAM"],
+        ["NO DIAGRAM | L/README.md a layer overview should show"],
     ),
     (
         "a layer README cannot be backlogged out of that",
         {"L/README.md": PLAIN, "L/topics/INDEX.md": DIAGRAM},
         "# 0 files remain.\nL/README.md\n",
-        ["BACKLOG STALE", "NO DIAGRAM"],
+        ["BACKLOG STALE | L/README.md is a layer README and cannot be backlogged",
+         "NO DIAGRAM | L/README.md a layer overview should show"],
     ),
     (
         "an ordinary file's gap is excused by a backlog line",
@@ -504,10 +512,23 @@ COVERAGE_CASES = [
         [],
     ),
     (
+        "an unlisted gap is not",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        "# 1 files remain.\n",
+        ["NO DIAGRAM | L/topics/INDEX.md no diagram, and not listed in"],
+    ),
+    (
         "and the header count is checked against it",
         {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
         "# 0 files remain.\nL/topics/INDEX.md\n",
-        ["BACKLOG STALE"],
+        ["BACKLOG STALE | header claims 0 files remain, really 1"],
+    ),
+    (
+        "a backlog line for a file that has one is stale",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": DIAGRAM},
+        "# 1 files remain.\nL/topics/INDEX.md\n",
+        ["BACKLOG STALE | L/topics/INDEX.md has a diagram now",
+         "BACKLOG STALE | header claims 1 files remain, really 0"],
     ),
     (
         "an image present under the audited root is found there",
@@ -524,8 +545,7 @@ def coverage_self_test() -> int:
     failed = 0
     for name, files, backlog, want in COVERAGE_CASES:
         with tempfile.TemporaryDirectory(prefix="diagram-audit-tree-") as root:
-            for rel, body in {**files,
-                              BACKLOG_PATH: backlog}.items():
+            for rel, body in {**files, BACKLOG_PATH: backlog}.items():
                 dest = os.path.join(root, rel)
                 os.makedirs(os.path.dirname(dest), exist_ok=True)
                 with open(dest, "w", encoding="utf-8") as fh:
@@ -533,14 +553,30 @@ def coverage_self_test() -> int:
 
             drawn = {rel: audit_file(path, root)[1]
                      for path, rel in _common.walk_markdown(root)}
-            kinds = [kind for _, _, kind, _ in coverage_faults(root, drawn)]
-            kinds += [kind for path, rel in _common.walk_markdown(root)
-                      for _, kind, _ in audit_file(path, root)[0]]
+            got = [(kind, f"{rel} {detail}")
+                   for rel, _, kind, detail in coverage_faults(root, drawn)]
+            got += [(kind, f"{rel} {detail}")
+                    for path, rel in _common.walk_markdown(root)
+                    for _, kind, detail in audit_file(path, root)[0]]
 
-        ok = sorted(kinds) == sorted(want)
+        unmatched = list(got)
+        missing = []
+        for expectation in want:
+            kind, _, needle = expectation.partition(" | ")
+            hit = next((g for g in unmatched
+                        if g[0] == kind and needle.strip() in g[1]), None)
+            if hit is None:
+                missing.append(expectation)
+            else:
+                unmatched.remove(hit)
+
+        ok = not missing and not unmatched
         print(f"  {'ok  ' if ok else 'FAIL'} {name}")
         if not ok:
-            print(f"       got {sorted(kinds)} want {sorted(want)}")
+            for expectation in missing:
+                print(f"       missing  {expectation}")
+            for kind, detail in unmatched:
+                print(f"       extra    {kind} | {detail}")
             failed += 1
     return failed
 

@@ -14,7 +14,8 @@ than system utilities.
      │
      ├──▶ verilator ──▶ C++ model        when the testbench is large
      ├──▶ ghdl                           if the design is VHDL
-     ├──▶ cocotb-config                  if the testbench is Python
+     ├──▶ cocotb, via one of the simulators above — cocotb-config only
+     │    reports its install paths and flags, it runs nothing
      ├──▶ sby (SymbiYosys)               if you want a proof, not a test
      │
      └──▶ yosys ──▶ netlist ──▶ nextpnr-ice40 ──▶ icepack     ──▶ .bin

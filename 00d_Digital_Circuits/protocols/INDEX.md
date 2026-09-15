@@ -10,9 +10,11 @@ HDL toolchain has to implement.
   language definitions that let one vendor's tool read another's output. The
   two families after it are, which is why they are kept separate.
 
-  RTL   IEEE 1364 Verilog · 1800 SystemVerilog · 1076 VHDL
-  │     1666 SystemC · 1850 PSL · 1801 UPF (power intent)
-  │     1685 IP-XACT (how an IP block declares itself)
+  RTL   IEEE 1364 Verilog · 1800 SystemVerilog · 1076 VHDL · 1666 SystemC
+  │     and three that travel with it without being it:
+  │       1850 PSL      assertions about the design
+  │       1801 UPF      power intent
+  │       1685 IP-XACT  how an IP block declares itself
   ▼
   synthesis  ◀── Liberty .lib     timing and power, per standard cell
   │
@@ -23,7 +25,9 @@ HDL toolchain has to implement.
   place & route  ◀── LEF          abstract cell geometry
   │
   ▼
-  DEF ──▶ GDSII ──▶ OASIS         what actually goes to the fab
+  DEF ──▶ GDSII  or  OASIS        what actually goes to the fab —
+                                  two alternative stream-out formats,
+                                  OASIS the newer and more compact
 
   Liberty and LEF enter from the side because they are *inputs* to those two
   stages, not output by the stage above — each tool reads both the design
@@ -37,8 +41,8 @@ HDL toolchain has to implement.
                                                 ├─ 1500 core test
                                                 └─ 1687 iJTAG · 1450 STIL
 
-  moving data on-chip and to RAM   AMBA AXI/AHB/APB/ACE/CHI (Arm)
-                                   Wishbone · TileLink · OCP · Avalon
+  moving data on-chip,             AMBA AXI/AHB/APB/ACE/CHI (Arm)
+  to RAM, and to storage           Wishbone · TileLink · OCP · Avalon
                                    JESD79-x DDR · JESD209-x LPDDR
                                    JESD235 HBM · ONFI · eMMC ──▶ 01, 02
 ```

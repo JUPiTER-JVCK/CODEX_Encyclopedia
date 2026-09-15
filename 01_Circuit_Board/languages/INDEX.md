@@ -13,7 +13,8 @@ hardware behavior with HDLs and design tools.
   ┌─ behaviour of the logic ──────────────────────────────────────────┐
   │  Verilog · SystemVerilog · VHDL      the industry three           │
   │  Chisel (Scala) · Amaranth (Python)  generator-based              │
-  │     └──▶ Icarus · Verilator · GHDL ──▶ Vivado · Quartus · yosys   │
+  │     ├──▶ Icarus · Verilator · GHDL   simulate it                 │
+  │     └──▶ Vivado · Quartus · yosys    synthesise it                │
   └───────────────────────────────────────────────────────────────────┘
                               ──▶ runs on the FPGA, → 00d Digital Circuits
 

@@ -12,12 +12,13 @@
   │  └─ 3  Zener regulator   first circuit that does a job
   │
   ├─ 4  BJT operating regions   cutoff · active · saturation
-  ├─ 5  MOSFET as a switch      low-side LED drive, and why it needs a diode
+  ├─ 5  MOSFET as a switch      low-side LED drive — resistive, no flyback
   ├─ 6  MOSFET as an amplifier  common-source small-signal gain
   │  └─ 7  Op-amp from transistors   diff pair ─▶ mirror ─▶ output stage
   │        needs 4, 5 and 6 together — a walkthrough here, built in 00c
   │
-  ├─ 8  Inductors           back-EMF on switch-off — why 5 needed a diode
+  ├─ 8  Inductors           back-EMF on switch-off — why an inductive load,
+  │                         unlike 5's LED, needs a flyback diode
   ├─ 9  Capacitor types     X7R vs C0G vs Y5V, and when the choice bites
   ├─ 10  Optocoupler        current ─▶ photon ─▶ current, across a barrier
   │

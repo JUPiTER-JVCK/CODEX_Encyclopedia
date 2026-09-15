@@ -7,8 +7,10 @@ analog signals.
 ## Specifications, not protocols
 
 ```text
-  Nothing here is negotiated on a wire. These are the agreed ways to say
-  how good a part is — and they cluster by what they measure.
+  The first half of this section is not negotiated on anything — it is the
+  agreed vocabulary for saying how good a part is, clustered by what it
+  measures. The power-supply rules after it include two that genuinely do
+  negotiate.
 
   how faithful is the amplifier?      GBW · SR · V_OS · I_B/I_OS
   │                                   CMRR · PSRR · THD+N · e_n · i_n

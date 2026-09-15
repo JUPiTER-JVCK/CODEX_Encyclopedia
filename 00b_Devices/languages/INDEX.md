@@ -23,8 +23,9 @@
                           reliability — MTBF, FIT, MSL
 
   The first three are all machine-readable; what separates them is which
-  tool consumes them — a simulator, a schematic editor, a fab. Only the
-  datasheet is written for a person, and it is the one that governs.
+  tool consumes them — a simulator, a schematic editor, and PCB CAD, which
+  is what turns a footprint into the Gerbers a fab actually receives. Only
+  the datasheet is written for a person, and it is the one that governs.
 ```
 
 | Language / format | Use |

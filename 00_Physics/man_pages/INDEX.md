@@ -19,8 +19,9 @@ you install, not commands the OS ships.
     FEM — needs a mesh                    gmsh ──▶ both of these
 
   quantum computing        qiskit · cirq · pennylane
-    circuits and algorithms, not atoms — the DFT codes that do bands
-    (Quantum ESPRESSO, VASP, ASE) are in languages/, not in this table
+    circuits and algorithms, not atoms — the DFT codes that compute bands
+    (Quantum ESPRESSO, VASP, with ASE orchestrating rather than solving)
+    are in languages/, not in this table
 
   the maths itself         sympy (symbolic) · octave (numeric)
 

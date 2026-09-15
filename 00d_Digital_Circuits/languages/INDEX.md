@@ -5,8 +5,9 @@
 ```text
   An HDL takes two different routes. Simulation *compiles* it — iverilog is
   a compiler, Verilator emits C++. Hardware *synthesises* it, into gates and
-  then a placement on real silicon. Every tool below sits at one of four
-  stages along those two routes.
+  then a placement on real silicon. The four stages below are those two
+  routes; the verification tools at the end run alongside all four rather
+  than occupying a stage of their own.
 
   describe      Verilog · SystemVerilog · VHDL        the industry three
                 Chisel · SpinalHDL (Scala)            embedded in a host

@@ -3,10 +3,10 @@
 ## The blocks, and what they are made of
 
 ```text
-  Eight groups. The op-amp is the recurring building block rather than a
-  universal one — passive LC filters, ring and LC oscillators and R-2R DACs
-  contain none. Where a block really is assembled from the ones above, the
-  line below it says so.
+  The op-amp is the recurring building block rather than a universal one —
+  passive LC filters, ring and LC oscillators and R-2R DACs contain none.
+  Where a block really is assembled from the ones above, the line below it
+  says so.
 
   op-amps            ideal rules ─▶ real limits (GBW, SR, V_OS, CMRR)
   │                  configurations · stability · INA · chopper
@@ -33,7 +33,9 @@
   ├─▶ data conv.     ADC  flash · SAR · pipeline · ΣΔ · dual-slope
   │                  DAC  R-2R · current-steering · segmented · ΣΔ
   │                  specs INL/DNL · SNR · SFDR · ENOB
-  │                  = reference + comparator, clocked by the PLL ──▶ 00d
+  │                  an ADC is reference + comparator + a clock; a DAC has
+  │                  no comparator, and either may take its clock from
+  │                  outside rather than from the PLL above     ──▶ 00d
   │
   ├─▶ audio          Class A/AB/B/D · THD, IMD · codec ICs
   └─▶ RF analog      LNA · mixer · PA · balun          ──▶ 16 RF

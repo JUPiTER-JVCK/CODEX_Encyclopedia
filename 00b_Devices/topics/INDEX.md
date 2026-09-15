@@ -11,7 +11,8 @@
 
   rectify and clamp    diodes        PN · Schottky · Zener · TVS
                                      PIN · varactor · LED · laser
-                                     one junction, one direction
+                                     one junction — and Zener, TVS and
+                                     varactor all use the reverse side of it
 
   amplify and switch   BJT           current-controlled — β, V_BE ≈ 0.7 V
                        FET           voltage-controlled — g_m, V_T, R_DS(on)

@@ -3,8 +3,10 @@
 ## The ladder
 
 ```text
-  The numbered path below, drawn as what it actually is — one prerequisite
-  chain that forks three ways once the field equations are in place.
+  The numbered path below is two independent chains. The first runs from the
+  maths to devices and forks three ways once the field equations are in
+  place; the second, #11–#13, starts over from thermodynamics and owes
+  nothing to it.
 
   1  Math prerequisites          vector calc · complex · ODE/PDE · Fourier
   │
@@ -17,8 +19,9 @@
         │  └─ 6  Doping & the p-n junction
         │     └─ 7  Diode physics
         │        └─ 8  BJT & MOSFET            → 00b Devices · 00c Analog
-        │           ▲
-        │  9  Quantum tunnelling ──┘           Zener · subthreshold · flash
+        │
+        ├─ 9  Quantum tunnelling               Zener · subthreshold · flash
+        │     explains behaviour inside 7 and 8 rather than preceding them
         │
         └─ 10  Photonics primer                needs 3 and 5 both
 

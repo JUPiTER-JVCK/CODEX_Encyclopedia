@@ -20,7 +20,7 @@ Each topic links to what it *enables* one layer up.
                        └──▶ Holevo bound, QKD                 14 Security
 
   thermo & noise ──────┬──▶ noise floors, phase noise         00c Analog · 16 RF
-                       └──▶ kT ln 2 per erased bit            the limit on 02 CPU
+                       └──▶ kT ln 2 per *irreversibly* erased bit
 
   optics ──────────────┬──▶ total internal reflection ──▶ fibre    09 PHY
                        └──▶ direct vs indirect gap: why Si LEDs fail

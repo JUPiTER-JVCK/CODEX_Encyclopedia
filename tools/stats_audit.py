@@ -82,7 +82,19 @@ def measure(root: str) -> dict[str, int]:
                   and os.path.basename(os.path.dirname(path))
                   in title_audit.CANONICAL)
 
-    diagrams = sum(1 for path, _ in files if diagram_audit.audit_file(path)[1])
+    # Two diagram counts, because there are two scopes and conflating them
+    # was itself a review finding. `diagrams` is every file in the tree that
+    # draws something — including the two apps' own READMEs, which the
+    # diagram audit does not require a diagram of. `drawn` is the subset
+    # inside that audit's scope, and it is the one the backlog subtracts
+    # from: drawn + backlog == scoped.
+    drawn = scoped = diagrams = 0
+    for path, rel in files:
+        has = diagram_audit.audit_file(path)[1]
+        diagrams += has
+        if diagram_audit.wants_diagram(rel):
+            scoped += 1
+            drawn += has
 
     return {
         "files": len(files),
@@ -92,6 +104,9 @@ def measure(root: str) -> dict[str, int]:
         "broken": len(broken),
         "indexes": indexes,
         "diagrams": diagrams,
+        "drawn": drawn,
+        "scoped": scoped,
+        "backlog": scoped - drawn,
     }
 
 
@@ -112,8 +127,14 @@ CLAIMS = [
      r"^- [\d]+ internal links, (\d+) broken$"),
     ("README.md", "indexes", "section indexes",
      r"^- All (\d+) section indexes titled"),
-    ("README.md", "diagrams", "files carrying a diagram",
-     r"^- (\d+) files carry a diagram"),
+    ("README.md", "diagrams", "files carrying a diagram (whole tree)",
+     r"^- (\d+) files carry a diagram across the repository"),
+    ("README.md", "drawn", "files carrying a diagram (audited scope)",
+     r"^  (\d+) of the \d+ the diagram audit holds to it"),
+    ("README.md", "scoped", "files the diagram audit holds to a diagram",
+     r"^  \d+ of the (\d+) the diagram audit holds to it"),
+    ("README.md", "backlog", "files still to draw",
+     r"^  the remaining (\d+) are listed in"),
 ]
 
 

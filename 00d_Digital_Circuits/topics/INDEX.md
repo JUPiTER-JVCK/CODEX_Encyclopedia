@@ -3,9 +3,11 @@
 ## What is built from what
 
 ```text
-  Read downward: each group is assembled out of the one above it. The
-  datapath an ALU and a register file make is where 02 CPU picks up; what
-  remains below is how any of it is made real.
+  Read downward. The first group is a *convention* — what a bit pattern is
+  taken to mean — and the two after it really are assembled from what
+  precedes them. The datapath an ALU and a register file make is where 02
+  CPU picks up. Everything below RTL is not a further assembly but the set
+  of problems that appear once the design has to exist in silicon.
 
   number systems      binary · hex · two's complement · BCD · gray
   │                   IEEE 754 · fixed-point · posits

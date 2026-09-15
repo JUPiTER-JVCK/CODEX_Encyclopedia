@@ -27,8 +27,9 @@ statements you'll cross-reference everywhere.
   │                        └─ T = Wb/m²      flux density
   └─ Hz = 1/s                                frequency
 
-  The laws below are relations among these; BIPM defines them, CODATA
-  measures the constants, NIST publishes them.
+  The laws below are relations among these. BIPM defines the units, CODATA
+  evaluates the world's measurements and recommends a value for each
+  constant, and NIST publishes those recommendations.
 ```
 
 ## SI base units

@@ -20,7 +20,7 @@ commands with a man page.
   └──────────────┬───────────────┘        └───────────────┬──────────────┘
                  │                                        │
                  └──────────────▶  disagree?  ◀───────────┘
-                        the model is wrong, or the part is
+                  the model is wrong, or the part is not what it claims
 
   Octopart sits outside both: it answers "can I still buy this", which no
   simulator and no bench will tell you.

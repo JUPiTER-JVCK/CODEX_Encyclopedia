@@ -3,8 +3,10 @@
 ## One netlist, four descendants
 
 ```text
-  Everything in the first group is Berkeley SPICE or a child of it. The
-  split that matters is what each one can represent.
+  The first group is Berkeley SPICE and its descendants — component-level
+  netlists, solved numerically. The behavioural languages under it are not
+  SPICE children at all; they are a separate family for describing what a
+  block *does* when simulating what it is made of costs too much.
 
   SPICE (Berkeley, 1973)          netlist + transient / AC / DC
   │
@@ -12,9 +14,12 @@
   ├─ LTspice                      free, GUI, ADI's model library
   └─ Spectre · PSpice             commercial, production sign-off
         │
-        └─ behaviour instead of components, when the netlist is too slow:
-           Verilog-A ─── Verilog-AMS ─── VHDL-AMS
-           analog only  mixed signal     VHDL's analog extension
+        └─ behaviour instead of components, when the netlist is too slow.
+           Three separate languages, not three versions of one:
+
+             Verilog-A      analog only, Verilog-derived
+             Verilog-AMS    mixed signal, Verilog-derived
+             VHDL-AMS       VHDL's own analog extension, unrelated lineage
 
   Above the circuit, where you stop drawing parts and start drawing blocks:
 

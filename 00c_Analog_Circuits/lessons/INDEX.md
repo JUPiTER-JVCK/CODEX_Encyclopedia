@@ -3,8 +3,9 @@
 ## The ladder
 
 ```text
-  Twelve exercises. #1 is the op-amp everything else is built on; #2 and #3
-  are the first two things you build out of it.
+  Twelve exercises. #1 is the op-amp, and #2 and #3 are the first two things
+  built out of it — but not everything below uses one: a passive LC filter,
+  a ring oscillator and an R-2R ladder contain no amplifier at all.
 
   1  Op-amp basics           inverting · non-inverting · buffer · summer
   │                          the two golden rules

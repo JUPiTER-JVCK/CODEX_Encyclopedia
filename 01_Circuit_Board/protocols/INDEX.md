@@ -10,7 +10,8 @@ Physical/electrical bus protocols that live on the board.
 
   point-to-point, serial, lanes        the fast ones. A link is two devices
     PCIe 1.0–6.0 ──▶ NVMe (a command set, not a bus)
-    SATA · Thunderbolt (tunnels PCIe + DisplayPort over USB-C)
+    SATA · Thunderbolt 3/4/5 (tunnels PCIe + DisplayPort over USB-C;
+      1 and 2 did the same over Mini DisplayPort)
     HDMI (TMDS/FRL) · DisplayPort (Main Link)
     SGMII ── MAC ◀──▶ PHY, serialised          ──▶ 09 Network Physical
 

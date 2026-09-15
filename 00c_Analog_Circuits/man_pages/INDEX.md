@@ -10,9 +10,9 @@ Simulation and bench tooling rather than system utilities.
 
   simulate            lay out             build            measure
   ─────────           ─────────           ─────            ────────
-  ngspice · xyce      KiCad               the board        DMM
-  gnucap · qucs-s     kicad-cli                            oscilloscope
-  LTspice             Altium                               function gen
+  ngspice · xyce      KiCad               iron · hot air   DMM
+  gnucap · qucs-s     kicad-cli           rework station   oscilloscope
+  LTspice             Altium              microscope       function gen
   Spectre · PSpice    Allegro · Virtuoso                   bench PSU
                       Eagle (legacy)                       LCR meter
   MATLAB/Simulink                                          spectrum an.

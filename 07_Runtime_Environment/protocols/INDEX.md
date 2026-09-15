@@ -1,5 +1,32 @@
 # Runtime Environment — Protocols
 
+## What is in this section
+
+```text
+  Four groups: language/bytecode specs, container/orchestration specs,
+  native-interop ABIs, and RPC/wire protocols.
+
+  ┌─── language & bytecode specs ─────────────────────────────────────────────┐
+  │  JVMS (JVM bytecode)  │  ECMA-335 (CLI/.NET IL)  │  ECMA-262 (JS)       │
+  │  WebAssembly Core  │  WASI 0.2 (component model)  │  PEP 484/561 (Python)│
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── container & orchestration ─────────────────────────────────────────────┐
+  │  OCI Image · OCI Runtime · OCI Distribution  │  OCI Artifacts            │
+  │  CRI (kubelet↔runtime)  │  CNI (network)  │  CSI (storage)  │  SMI      │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── native-interop ABIs ───────────────────────────────────────────────────┐
+  │  JNI / Panama FFM (JVM)  │  P/Invoke (.NET)  │  N-API (Node.js)         │
+  │  ctypes / cffi (Python)  │  cgo (Go)  │  Swift–C / Swift–Obj-C          │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── RPC / wire protocols ──────────────────────────────────────────────────┐
+  │  gRPC (HTTP/2 + protobuf)  │  JSON-RPC · MessagePack-RPC                 │
+  │  Thrift  │  Cap'n Proto  │  GraphQL over HTTP/WS                         │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 > OCI image/runtime/distribution specifications and adjacent runtime standards.
 
 ## Dedicated Protocol References

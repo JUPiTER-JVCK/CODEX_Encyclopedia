@@ -1,5 +1,40 @@
 # Runtime Environment — Languages
 
+## What is in this section
+
+```text
+  Seven runtime ecosystems, grouped by their execution model.
+
+  ┌─── JVM ───────────────────────────────────────────────────────────────────┐
+  │  Java · Kotlin · Scala · Groovy · Clojure · JRuby · Jython               │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── .NET (CLR / CoreCLR / Mono / NativeAOT) ──────────────────────────────┐
+  │  C# · F# · VB.NET · PowerShell                                            │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── JavaScript engines (V8 · SpiderMonkey · JSC · Hermes) ────────────────┐
+  │  JavaScript (ECMAScript) · TypeScript · Dart · ClojureScript · Elm       │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── CPython / PyPy ────────────────────────────────────────────────────────┐
+  │  Python (CPython ref impl, PyPy JIT) · Cython                            │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── native runtimes ───────────────────────────────────────────────────────┐
+  │  Go (concurrent GC, goroutines)  │  Rust (no GC, async-std/Tokio)        │
+  │  Swift (ARC + libdispatch)  │  C / C++ (libc + C++ stdlib)               │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── Erlang / BEAM ─────────────────────────────────────────────────────────┐
+  │  Erlang · Elixir · Gleam · LFE                                            │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── WebAssembly ───────────────────────────────────────────────────────────┐
+  │  Rust · C/C++ (Emscripten) · Go (TinyGo) · AssemblyScript · .NET (Blazor)│
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 The languages that *target* this layer, grouped by runtime model.
 
 ## JVM ecosystem

@@ -8,6 +8,28 @@ updated: 2026-05-21
 
 # Filesystem Commands
 
+## What is in this section
+
+```text
+  Filesystem tools in this file, grouped by what they observe.
+
+  ┌─── attach / detach ──────────────────────────────────────────────────┐
+  │  mount · umount                                                     │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── space accounting ─────────────────────────────────────────────────┐
+  │  df (filesystem-level totals)  │  du (directory / file sizes)      │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── inode & open files ───────────────────────────────────────────────┐
+  │  stat (inode metadata)  │  lsof (open-file list)  │  fuser (who?)  │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── live events ──────────────────────────────────────────────────────┐
+  │  inotifywait (kernel inotify — watch create/modify/delete)          │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > Tools for mounting, inspecting, and monitoring filesystems and open files.
 > Covers man sections 1 (user) and 8 (admin).
 

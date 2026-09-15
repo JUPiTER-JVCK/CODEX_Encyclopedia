@@ -1,5 +1,38 @@
 # OS Kernel — Topics
 
+## What is in this section
+
+```text
+  Six groups: what the kernel manages, and how it is secured.
+
+  ┌─── process & scheduling ─────────────────────────────────────────────┐
+  │  task_struct · fork/exec · CFS/EEVDF · realtime · context switch    │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── memory management ────────────────────────────────────────────────┐
+  │  page tables · TLB · buddy · slab/slub · cgroup OOM · HugePages    │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── filesystems ──────────────────────────────────────────────────────┐
+  │  VFS (superblock·inode·dentry·file)  │  ext4·xfs·btrfs·zfs·apfs   │
+  │  NFS·SMB  │  procfs·sysfs·tmpfs·cgroupfs  │  FUSE                 │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── IPC ──────────────────────────────────────────────────────────────┐
+  │  pipes · UDS · shmem/semaphores · eventfd · futex · Mach ports     │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── network stack ────────────────────────────────────────────────────┐
+  │  socket → protocol → IP/TCP/UDP → netdev → driver                  │
+  │  NAPI · XDP · eBPF/XDP · TC (traffic control)                     │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── security / isolation ─────────────────────────────────────────────┐
+  │  capabilities · ACLs  │  LSMs (SELinux · AppArmor · Landlock)      │
+  │  seccomp-BPF  │  namespaces · cgroups                              │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Topic Deep Dives
 
 | File | Covers |

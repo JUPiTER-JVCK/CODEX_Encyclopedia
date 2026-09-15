@@ -8,6 +8,29 @@ updated: 2026-05-21
 
 # Tracing & Debugging Commands
 
+## What is in this section
+
+```text
+  Tracing tools in this file, grouped by mechanism.
+
+  ┌─── syscall / library tracing ────────────────────────────────────────┐
+  │  strace (syscall trace)  │  ltrace (library-call trace)             │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── eBPF-based ───────────────────────────────────────────────────────┐
+  │  bpftrace (high-level probes)  │  bcc-tools (pre-written programs) │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── hardware counters & profiling ────────────────────────────────────┐
+  │  perf stat · perf record · perf report · perf top · perf trace     │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── kernel internals ─────────────────────────────────────────────────┐
+  │  ftrace (function/event tracing, tracefs)  │  dmesg (ring buffer)  │
+  │  sysctl (runtime tunables via /proc/sys)                            │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > Kernel and userspace tracing, performance counters, and runtime tuning.
 > Essential for understanding what a program or the kernel is actually doing.
 

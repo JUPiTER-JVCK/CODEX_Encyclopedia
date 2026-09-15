@@ -1,5 +1,33 @@
 # Firmware / BIOS — Protocols
 
+## What is in this section
+
+```text
+  Seventeen specs from the table below, grouped by role in the platform stack.
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                        pre-boot environment                            │
+  │  UEFI ── PI (SEC/PEI/DXE)  │  PSCI (ARM)  │  SBI (RISC-V M↔S-mode)  │
+  │  OpenPOWER OPAL / skiboot  │  Capsule Update                          │
+  └────────────────────────────────────────────┬───────────────────────────┘
+                                               │
+  ┌────────────────────────────────────────────▼───────────────────────────┐
+  │               hardware description & inventory                         │
+  │  ACPI (power · config · runtime)  │  SMBIOS/DMI  │  Device Tree       │
+  └────────────────────────────────────────────┬───────────────────────────┘
+                                               │
+  ┌────────────────────────────────────────────▼───────────────────────────┐
+  │                         trust & security                               │
+  │  TPM 2.0  │  TCG D-RTM (TXT/SKINIT)  │  Secure Boot (PK/KEK/db/dbx)  │
+  │  ARM SMC Calling Convention (EL3 secure monitor)                       │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                      out-of-band management                            │
+  │  IPMI 2.0 (legacy) ──▶ Redfish (REST/JSON)  │  MCTP ── PLDM          │
+  └────────────────────────────────────────────────────────────────────────┘
+```
+
 | Protocol / spec | Owner | Purpose | Status |
 |----------------|-------|---------|--------|
 | UEFI | UEFI Forum | Pre-boot environment & runtime services | Active |

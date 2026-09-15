@@ -1,5 +1,43 @@
 # Firmware / BIOS — Manual Pages
 
+## What is in this section
+
+```text
+  Sorted by which part of the boot chain each tool touches, because that is
+  also the order in which they stop being safe to experiment with.
+
+                     ┌──────────────────────────────┐
+                     │  the flash chip              │◀── flashrom
+                     │  BIOS/UEFI image             │    binwalk · UEFITool
+                     └──────────────┬───────────────┘    chipsec
+                                    │  initialises
+                     ┌──────────────▼───────────────┐
+                     │  the firmware's own tables   │◀── acpidump · iasl
+                     │  and variables               │    dtc
+                     └──────────────┬───────────────┘
+                                    │  chooses
+                     ┌──────────────▼───────────────┐
+                     │  what boots                  │◀── efibootmgr
+                     │  entries, order, signatures  │    bootctl · bcdedit
+                     └──────────────┬───────────────┘    bless · nvram
+                                    │  is attested by    csrutil  (macOS)
+                     ┌──────────────▼───────────────┐
+                     │  the TPM                     │◀── tpm2_pcrread
+                     │  PCRs · quotes               │    tpm2_quote
+                     └──────────────────────────────┘    mokutil
+                                                         sbsign · sbverify
+
+  And one group that reaches the machine when none of the above is running:
+
+     ipmitool · redfishtool     the BMC, out of band
+
+  Linux exposes most of the middle two boxes as files rather than commands:
+  /sys/firmware/efi/ · /sys/firmware/acpi/tables/ · /sys/firmware/dmi/ ·
+  and /dev/mem, which is root-only and restricted for good reason.
+
+  Detail on the update and boot-entry tools: firmware_tools.md.
+```
+
 ## Dedicated man page references
 
 | Topic | File |

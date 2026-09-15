@@ -1,5 +1,34 @@
 # Firmware / BIOS — References
 
+## What is in this section
+
+```text
+  Four reference types for this layer.
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                           specifications                               │
+  │  UEFI · PI · Shell  │  ACPI  │  SMBIOS  │  TCG TPM 2.0               │
+  │  Intel Boot Guard / Verified Boot  │  AMD PSP documentation           │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                       open implementations                             │
+  │  coreboot  │  EDK II (TianoCore UEFI)  │  U-Boot (embedded)          │
+  │  LinuxBoot · oreboot · heads (security-focused)  │  OpenBMC · u-bmc   │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                              books                                     │
+  │  Beyond BIOS (Zimmer et al.)  │  Harnessing the UEFI Shell (Zimmer)   │
+  │  Embedded Software for SoC — Jerraya & Wolf                           │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  ┌────────────────────────────────────────────────────────────────────────┐
+  │                              online                                    │
+  │  osdev.org wiki  │  Phoronix (coreboot/UEFI ecosystem coverage)       │
+  └────────────────────────────────────────────────────────────────────────┘
+```
+
 ## Specifications
 - **UEFI Specification** — `https://uefi.org/specifications` (UEFI + PI + Shell)
 - **ACPI Specification** — UEFI Forum

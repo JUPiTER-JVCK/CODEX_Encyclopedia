@@ -344,11 +344,11 @@ Currently:
 - 1022 internal links, 0 broken
 - Every file carries an H1, every pipe table well-formed
 - All 138 section indexes titled `<Layer> — <Section>`
-- 142 files carry a diagram across the repository. The diagram audit
-  requires one of 272 files, and 139 of those carry it; the other three
+- 148 files carry a diagram across the repository. The diagram audit
+  requires one of 272 files, and 145 of those carry it; the other three
   drawings are in the apps' own documentation (both READMEs and
   `Codex_LMS/roadmap-draft.md`), which the audit does not hold to anything;
-  the remaining 133 are listed in `tools/diagram_backlog.txt`, checked in both
+  the remaining 127 are listed in `tools/diagram_backlog.txt`, checked in both
   directions so the gap can neither grow unnoticed nor go stale. Every diagram
   is fenced, tagged and within 90 columns (` ```text ` is the convention; a
   fence carrying some other deliberate tag is left alone), and every layer

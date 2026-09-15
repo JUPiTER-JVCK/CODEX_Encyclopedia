@@ -1,5 +1,27 @@
 # System Libraries — Protocols
 
+## What is in this section
+
+```text
+  Three groups: language/ABI standards, library binary formats, and
+  package/build metadata.
+
+  ┌─── language & ABI standards ──────────────────────────────────────────────┐
+  │  ISO C (C11/17/23)  │  ISO C++ (C++17/20/23)  │  POSIX.1-2017            │
+  │  System V ABI  │  Itanium C++ ABI  │  MSVC C++ ABI  │  DWARF v5         │
+  │  LSB (historical)  │  FHS                                                 │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── library formats ───────────────────────────────────────────────────────┐
+  │  ELF (.so) — Linux/BSD  │  Mach-O (.dylib) — macOS                       │
+  │  PE/COFF (.dll) — Windows  │  static archives (.a / .lib)                │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── package / build metadata ──────────────────────────────────────────────┐
+  │  pkg-config (.pc)  │  CMake config-file packages  │  .la (legacy)        │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 Language, API and ABI standards rather than wire protocols — the contracts a
 library has to keep.
 

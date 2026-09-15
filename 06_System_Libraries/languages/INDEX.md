@@ -1,5 +1,27 @@
 # System Libraries — Languages
 
+## What is in this section
+
+```text
+  Three groups: implementation languages, compilers, and FFI binding generators.
+
+  ┌─── implementation languages ──────────────────────────────────────────────┐
+  │  C (glibc · musl · OpenSSL · zlib · sqlite)                              │
+  │  C++ (libstdc++ · libc++ · Boost · ICU · gRPC)                           │
+  │  Rust (rustls · ring · sled)  │  Assembly (AES-NI fast paths)             │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── compilers / toolchains ────────────────────────────────────────────────┐
+  │  GCC · Clang/LLVM · MSVC · ICC/ICX · TinyCC · Cosmopolitan libc          │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── FFI / binding generators ──────────────────────────────────────────────┐
+  │  SWIG (many targets)  │  bindgen (Rust←C)  │  cgo (Go)                   │
+  │  ctypes / cffi (Python)  │  node-gyp / NAPI (Node.js)                    │
+  │  JNI / JNA (Java)  │  P/Invoke (.NET)                                    │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 The libraries themselves are mostly C / C++. The interesting layer is the
 *binding* tooling that exposes them to everything else.
 

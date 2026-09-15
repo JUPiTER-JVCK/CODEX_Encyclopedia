@@ -8,6 +8,28 @@ updated: 2026-05-21
 
 # System Libraries — Interactive Labs
 
+## What is in this section
+
+```text
+  Three hands-on modules: shared library lifecycle, runtime loading,
+  and symbol visibility with ABI versioning.
+
+  ┌─── Module 1: creating a shared library ───────────────────────────────────┐
+  │  gcc -shared -fPIC  →  libX.so.1.0.0                                     │
+  │  soname symlinks (libX.so.1, libX.so)  │  ldd, readelf, nm -D            │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── Module 2: runtime loading with dlopen ─────────────────────────────────┐
+  │  dlopen → dlsym → call → dlclose                                          │
+  │  RTLD_LAZY vs RTLD_NOW  │  plugin swap pattern                            │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── Module 3: symbol visibility & ABI versioning ──────────────────────────┐
+  │  __attribute__((visibility("default"/"hidden")))                          │
+  │  -fvisibility=hidden  │  nm -D  │  soname major-version bump              │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## Module 1: Creating a Shared Library

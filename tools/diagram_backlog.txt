@@ -12,17 +12,10 @@
 # Every entry must sit under a band heading, every heading must carry a
 # count, and the band counts must sum to the total.
 #
-# 113 files remain.
+# 106 files remain.
 
-# Compute — 02 CPU through 08 User Applications (36)
+# Compute — 02 CPU through 08 User Applications (29)
 03_Firmware_BIOS/man_pages/firmware_tools.md
-06_System_Libraries/languages/INDEX.md
-06_System_Libraries/lessons/INDEX.md
-06_System_Libraries/lessons/library_labs.md
-06_System_Libraries/man_pages/INDEX.md
-06_System_Libraries/protocols/INDEX.md
-06_System_Libraries/references/INDEX.md
-06_System_Libraries/topics/INDEX.md
 07_Runtime_Environment/languages/INDEX.md
 07_Runtime_Environment/lessons/INDEX.md
 07_Runtime_Environment/man_pages/INDEX.md

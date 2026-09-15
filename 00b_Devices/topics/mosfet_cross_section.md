@@ -11,7 +11,7 @@ updated: 2026-05-20
 
 ## N-channel MOSFET (NMOS) cross-section
 
-```
+```text
                           Gate (G)
                             │
                      ┌──────┴──────┐
@@ -44,7 +44,7 @@ updated: 2026-05-20
 
 ## PMOS cross-section (complementary)
 
-```
+```text
                           Gate (G)
                             │
                      ┌──────┴──────┐
@@ -68,7 +68,7 @@ updated: 2026-05-20
 
 ## CMOS Inverter
 
-```
+```text
                     V_DD
                      │
                ┌─────┴─────┐
@@ -101,7 +101,7 @@ updated: 2026-05-20
 
 ## CMOS NAND gate (2-input)
 
-```
+```text
                     V_DD
                  ┌───┴───┐
                  │ PMOS-A │
@@ -148,7 +148,7 @@ updated: 2026-05-20
 
 ## Technology scaling
 
-```
+```text
   Node name:  180nm → 130nm → 90nm → 65nm → 45nm → 28nm → 14nm → 7nm → 5nm → 3nm
   Year:       1999    2001    2004   2006   2008   2011   2014   2018  2020  2023
 

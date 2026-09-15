@@ -59,7 +59,7 @@ the foundational layers beneath the original "Circuit Board" row:
 
 ## Full Layer Adjacencies
 
-```
+```text
 USER WORLD
    ▲
    │  syscall / library call
@@ -95,16 +95,22 @@ Cross-cutting layers (14 Security, 15 AI/ML, 16 RF/Wireless, 17 Algorithms,
 18 Embedded Systems, 19 Industrial Protocols) intersect this stack at the
 points listed in each layer's README.
 
-## Source images (in `_assets/`)
+## Source material, drawn rather than pictured
 
-- `computer_layers_ladder.png` — the 9-layer ladder that drove the 00-series expansion
-- `logic_gates_explained.png` — referenced from [00d/topics/logic_gates.md](00d_Digital_Circuits/topics/logic_gates.md)
-- `dslogic_decoder_list.png` — referenced from [01/protocols/embedded_bus_protocols_lookup.md](01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md)
-- `embedded_systems_roadmap.png` — referenced from [18/README.md](18_Embedded_Systems/README.md)
+Four reference images shaped parts of this codex. None was ever committed,
+and each is now drawn in the text instead — which is what this section used
+to promise was coming and what `_assets/README.md` already claimed was true.
 
-> **These four images are not yet in the repository.** Each has a markdown
-> text equivalent in the codex, so nothing is lost but the pictures. See
-> [`_assets/README.md`](_assets/README.md) for the expected filenames.
+| What it showed | Where it lives now |
+|---|---|
+| A 9-layer hardware ladder | [00_Physics/README.md](00_Physics/README.md) — *Layer ladder*, in this codex's own layer names |
+| The 8 logic gates with truth tables | [00d/topics/logic_gates.md](00d_Digital_Circuits/topics/logic_gates.md) — symbols, per-gate tables, and all eight side by side |
+| A DSLogic/sigrok decoder catalog | [01/protocols/embedded_bus_protocols_lookup.md](01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md) — ~150 decoders in two tables |
+| The Embedded Systems Roadmap v1.2.3 | [18/README.md](18_Embedded_Systems/README.md) — four columns, transcribed in full |
+
+See [`STRUCTURE.md`](STRUCTURE.md) on why a drawing in the source beats a
+picture of one, and [`_assets/README.md`](_assets/README.md) for the folder
+that holds no images.
 
 ## Anchor PDFs
 

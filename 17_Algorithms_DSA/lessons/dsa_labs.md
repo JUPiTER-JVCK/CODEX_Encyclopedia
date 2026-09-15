@@ -88,7 +88,7 @@ for n, t in zip(sizes, sort_times):
 # ratio should be roughly constant (same O class)
 ```
 
-```
+```text
   Big-O complexity chart:
   ┌────────────┬────────────┬──────────────────────────────┐
   │ Class      │ n=1000     │ Example algorithms           │

@@ -1024,15 +1024,15 @@ Modules added based on four reference images and the user-supplied
 | `19_Industrial_Protocols/` | Modbus, PROFINET, EtherCAT, BACnet, DALI, CAN, LIN, FlexRay, UDS, J1939, OPC UA, IEC 61850 — and the OT/ICS security cross-link |
 
 ### Added — supporting structure
-- `_assets/` — top-level folder with placeholders for the four reference images
-  - `computer_layers_ladder.png`, `dslogic_decoder_list.png`,
-    `logic_gates_explained.png`, `embedded_systems_roadmap.png`
-  - See [`_assets/README.md`](_assets/README.md) for naming + reference paths
+- `_assets/` — top-level folder for images, holding a README that named four
+  files as expected. No placeholder and no image was ever committed, and the
+  four were later resolved as drawings instead. See
+  [`_assets/README.md`](_assets/README.md).
 - `01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md` —
   recreated from the DSLogic/sigrok decoder-list screenshot. ~150 base + upper-layer
   decoders, each mapped to its owning codex layer.
 
-### Image sources (recreated as markdown; drop PNGs into `_assets/`)
+### Image sources (recreated as markdown)
 1. **Computer layers ladder** — drove the new `00*` foundational layers.
 2. **DSLogic decoder list** — became `01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md`.
 3. **Logic Gates Explained** — became `00d_Digital_Circuits/topics/logic_gates.md`.

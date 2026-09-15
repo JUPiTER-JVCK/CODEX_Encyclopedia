@@ -155,7 +155,7 @@ understanding how DT describes hardware to the kernel.
 
 ### Device Tree concept
 
-```
+```text
   / (root)
   ├── cpus
   │   └── cpu@0 { compatible = "arm,cortex-a72"; }

@@ -32,7 +32,7 @@ workload monitoring and debugging OOM errors.
 
 ### Default output anatomy
 
-```
+```text
   $ nvidia-smi
   +-----------------------------------------------------------------------+
   | NVIDIA-SMI 560.35.03    Driver Version: 560.35.03   CUDA Version: 12.6|
@@ -124,7 +124,7 @@ with live bar charts. Supports NVIDIA, AMD, Intel, and Apple Silicon GPUs.
 
 ### Display layout
 
-```
+```text
   ┌─GPU 0: RTX 4090──────────────────────────────────┐
   │ GPU [████████████████████░░░░░]  85%  48°C  120W │
   │ MEM [████████████████░░░░░░░░░]  75% 18.0/24.0G  │
@@ -168,7 +168,7 @@ model graphs, embeddings, images, histograms, and profiling data.
 
 ### Log directory structure
 
-```
+```text
   runs/
   ├── experiment_01/
   │   ├── events.out.tfevents.1716307200.hostname
@@ -232,7 +232,7 @@ authentication, inspect the local cache, and upload artifacts.
 
 ### Cache structure
 
-```
+```text
   ~/.cache/huggingface/hub/
   ├── models--meta-llama--Meta-Llama-3-8B/
   │   ├── refs/

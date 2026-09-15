@@ -19,7 +19,7 @@ decision flows through BGP.
 
 ## BGP message types
 
-```
+```text
   ┌──────────────────────────────────────────────┐
   │              BGP Message Header              │
   ├──────────┬───────────┬───────────────────────┤
@@ -37,7 +37,7 @@ decision flows through BGP.
 
 ## Session establishment
 
-```
+```text
     Router A (AS 64500)           Router B (AS 64501)
          │                              │
          │──── TCP SYN (port 179) ─────▶│
@@ -63,7 +63,7 @@ hold time → session torn down.
 
 ## BGP state machine
 
-```
+```text
   ┌────────┐  start   ┌─────────┐  TCP up  ┌───────────┐
   │  Idle  │─────────▶│ Connect │─────────▶│ OpenSent  │
   └────────┘          └─────────┘          └─────┬─────┘
@@ -83,7 +83,7 @@ hold time → session torn down.
 
 ## UPDATE message structure
 
-```
+```text
   ┌──────────────────────────────────────────────┐
   │  Withdrawn Routes Length (2 B)               │
   ├──────────────────────────────────────────────┤

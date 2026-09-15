@@ -11,7 +11,7 @@ updated: 2026-05-20
 
 ## Classic 5-stage RISC pipeline
 
-```
+```text
   Clock cycle:  1    2    3    4    5    6    7    8
   ──────────────────────────────────────────────────
   Instr 1:     IF   ID   EX   MEM  WB
@@ -35,7 +35,7 @@ is full. **Latency** per instruction is still 5 cycles.
 
 ### Data hazards
 
-```
+```text
   ADD  R1, R2, R3       ; R1 = R2 + R3      (WB in cycle 5)
   SUB  R4, R1, R5       ; needs R1           (ID in cycle 3 — R1 not ready!)
 
@@ -56,7 +56,7 @@ is full. **Latency** per instruction is still 5 cycles.
 
 ### Control hazards (branches)
 
-```
+```text
   BEQ  R1, R2, target   ; branch decision in EX (cycle 3)
   ???                    ; what to fetch in cycle 2?
 
@@ -85,7 +85,7 @@ I-cache and D-cache (Harvard architecture at cache level).
 
 ## Modern superscalar pipeline (simplified)
 
-```
+```text
                     ┌─────────────────────────────────────────┐
                     │           Front End                      │
   ┌──────┐  ┌──────┴──────┐  ┌──────────┐  ┌──────────────┐ │
@@ -127,7 +127,7 @@ I-cache and D-cache (Harvard architecture at cache level).
 
 ## Cache hierarchy
 
-```
+```text
   ┌──────────┐   1 cycle     ┌──────────┐   4-5 cycles   ┌──────────┐
   │  CPU     │──────────────▶│  L1      │───────────────▶│  L2      │
   │  Core    │               │  32-64KB │                │ 256KB-1MB│

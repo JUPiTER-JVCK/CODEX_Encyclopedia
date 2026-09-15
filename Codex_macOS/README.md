@@ -87,7 +87,7 @@ artifact and is gitignored — regenerate it rather than committing it.
 
 ## Layout
 
-```
+```text
 Codex_macOS/
 ├── Package.swift          ← SwiftPM manifest (macOS 13+)
 ├── Info.plist             ← bundle metadata, copied into the .app

@@ -31,7 +31,7 @@ USRP, LimeSDR, BladeRF, and many more.
 
 ### Flowgraph architecture
 
-```
+```text
   ┌──────────┐    ┌────────────┐    ┌──────────┐    ┌──────────┐
   │  Source   │───▸│  Filter    │───▸│ Demod    │───▸│  Sink    │
   │ (SDR hw) │    │ (low pass) │    │ (FM/AM/  │    │ (audio/  │
@@ -209,7 +209,7 @@ with a web UI.
 
 ### Architecture
 
-```
+```text
   Capture sources              Kismet server          Web UI
   ┌────────────────┐          ┌──────────────┐       ┌───────────┐
   │ wlan0 (monitor)│─────────▸│              │       │ Browser   │
@@ -271,7 +271,7 @@ adapters, scans for devices, pairs, connects, and queries GATT services.
 
 ### Bluetooth discovery flow
 
-```
+```text
   bluetoothctl
     │
     ├── power on         Activate adapter

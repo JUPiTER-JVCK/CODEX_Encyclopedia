@@ -23,7 +23,7 @@ trade-offs between size, performance, standards compliance, and portability.
 
 The default on most Linux distributions (Debian, Ubuntu, Fedora, Arch).
 
-```
+```text
   Key characteristics:
   ┌──────────────────┬──────────────────────────────────────────┐
   │ Standards        │ Full POSIX, ISO C17, many GNU extensions  │
@@ -55,7 +55,7 @@ objdump -p /bin/ls | grep GLIBC
 
 Used in Alpine Linux, static-linked binaries, containers.
 
-```
+```text
   Key characteristics:
   ┌──────────────────┬──────────────────────────────────────────┐
   │ Standards        │ POSIX, ISO C11 (no GNU extensions)       │
@@ -91,7 +91,7 @@ ldd hello  # → not a dynamic executable (fully static)
 
 Google's libc for Android, derived from BSD libc:
 
-```
+```text
   Key characteristics:
   ┌──────────────────┬──────────────────────────────────────────┐
   │ Standards        │ POSIX + Android extensions               │
@@ -112,7 +112,7 @@ Google's libc for Android, derived from BSD libc:
 
 Embedded Linux systems with tight size budgets:
 
-```
+```text
   Key characteristics:
   ┌──────────────────┬──────────────────────────────────────────┐
   │ Standards        │ POSIX (most), C99                        │
@@ -129,7 +129,7 @@ Embedded Linux systems with tight size budgets:
 
 Used with MCU toolchains (ARM Cortex-M, RISC-V bare-metal):
 
-```
+```text
   Key characteristics:
   ┌──────────────────┬──────────────────────────────────────────┐
   │ Standards        │ Partial POSIX, C99                       │
@@ -156,7 +156,7 @@ int _write(int fd, char *ptr, int len) {
 
 ## Comparison Table
 
-```
+```text
   ┌─────────────────┬────────┬────────┬─────────┬────────┬──────────┐
   │ Feature         │ glibc  │ musl   │ Bionic  │ uClibc │ Newlib   │
   ├─────────────────┼────────┼────────┼─────────┼────────┼──────────┤

@@ -17,7 +17,7 @@ It is a master/slave (client/server in later terminology) request-response
 protocol with no authentication or encryption. Despite its age, it remains
 the most widely deployed industrial protocol.
 
-```
+```text
   Modbus variants:
   ┌────────────────┬────────────────────────────────────────────────┐
   │ Variant        │ Physical / Transport                           │
@@ -35,7 +35,7 @@ the most widely deployed industrial protocol.
 
 Modbus organizes device data into four tables:
 
-```
+```text
   ┌──────────────────────┬────────────┬──────────────────────────────┐
   │ Table                │ Read FC    │ Write FC                     │
   ├──────────────────────┼────────────┼──────────────────────────────┤
@@ -88,7 +88,7 @@ function code ORed with 0x80 and one exception code byte:
 
 ## Modbus TCP Frame
 
-```
+```text
   Modbus TCP Application Data Unit (ADU):
   
   ┌──────────┬──────────┬────────┬──────┬────────────────────────┐
@@ -110,7 +110,7 @@ function code ORed with 0x80 and one exception code byte:
 
 ## Modbus RTU Frame
 
-```
+```text
   Modbus RTU ADU (RS-485):
   
   ┌──────────┬──────────┬──────────────────────┬─────────┐

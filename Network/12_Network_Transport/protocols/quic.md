@@ -21,7 +21,7 @@ migration across network changes.
 
 ## Why QUIC over TCP?
 
-```
+```text
   TCP + TLS 1.3                        QUIC
   ─────────────                        ────
   1 RTT  TCP handshake                 1 RTT  QUIC handshake
@@ -40,7 +40,7 @@ migration across network changes.
 
 ### Long header (handshake / 0-RTT)
 
-```
+```text
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+
@@ -58,7 +58,7 @@ migration across network changes.
 
 ### Short header (post-handshake, 1-RTT data)
 
-```
+```text
 +-+-+-+-+-+-+-+-+
 |0|1|S|R|R|K|P P|  Fixed Bit = 1, Short Header = 0
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -80,7 +80,7 @@ migration across network changes.
 
 ## Handshake timeline
 
-```
+```text
     Client                                     Server
       │                                           │
       │─── Initial[0]: CRYPTO(ClientHello) ──────▶│
@@ -103,7 +103,7 @@ previous session. Server may reject (replay risk).
 
 ## Stream multiplexing
 
-```
+```text
   ┌────────────────────────────────────────────┐
   │              QUIC Connection               │
   │  ┌──────────┐ ┌──────────┐ ┌──────────┐   │
@@ -151,7 +151,7 @@ No window scaling hacks — credit-based from the start.
 
 ## Connection migration
 
-```
+```text
     Client (Wi-Fi: 10.0.0.5)              Server
       │                                      │
       │─── [CID=0xAB12] data ──────────────▶│

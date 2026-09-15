@@ -76,7 +76,7 @@ policy routing, ECMP, and source-based routing.
 
 ### Routing decision flow
 
-```
+```text
   Packet arrives
        │
        ▼

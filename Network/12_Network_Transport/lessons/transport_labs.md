@@ -37,7 +37,7 @@ tcpdump -r handshake.pcap -nn
 # 10:00:00.011 IP client.54321 > server.80: Flags [.], ack 2001, win 65535
 ```
 
-```
+```text
   3-Way Handshake:
   Client                        Server
     │                              │
@@ -91,7 +91,7 @@ watch -n 0.5 "ss -ti dst server | grep -oP 'cwnd:\K[0-9]+'"
 ```
 
 3. Observe slow start:
-```
+```text
   cwnd (segments)
   100 ┤                        ┌────────── congestion avoidance
       │                       ╱            (linear growth)

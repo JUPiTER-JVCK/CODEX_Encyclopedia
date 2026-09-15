@@ -109,7 +109,7 @@ openocd -f interface/stlink.cfg -f target/stm32f4x.cfg \
     -c "program blink.bin 0x08000000 verify reset exit"
 ```
 
-```
+```text
   Bare-metal GPIO setup sequence:
   
   1. Enable clock to peripheral
@@ -214,7 +214,7 @@ void vMonitorTask(void *pvParam) {
 // Output shows: task name, state (R/B/S), priority, stack watermark, ID
 ```
 
-```
+```text
   FreeRTOS scheduler (preemptive, priority-based):
   
   Priority 3 (HP): ████░░░░░░░░░░░░░░░░░░░░████░░  (runs when semaphore given)
@@ -293,7 +293,7 @@ int32_t bme280_read_temperature(void) {
 ```
 
 3. Logic analyzer protocol decode:
-```
+```text
   I2C transaction (BME280 read, 7-bit address):
 
   SDA: ─┐S┌─0─0─1─1─0─1─1─0┐A┌─1─1─1─1─1─0─1─0┐A┌─data─┐A P─

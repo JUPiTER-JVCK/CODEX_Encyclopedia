@@ -17,7 +17,7 @@ userspace processes can request privileged kernel services. On x86-64 Linux,
 a syscall is invoked via the `syscall` instruction; the kernel identifies
 the requested service by a number in `rax`.
 
-```
+```text
   User/Kernel boundary:
   
   ┌───────────────────────────────────────────────────────┐

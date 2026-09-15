@@ -29,7 +29,7 @@ and derive a combinational function.
 2. Connect output through LED + resistor to GND
 3. Test all input combinations, record in truth table:
 
-```
+```text
   AND gate (74HC08)        OR gate (74HC32)        NAND (74HC00)
   A  B  │  Y               A  B  │  Y              A  B  │  Y
   ──────┼────              ──────┼────             ──────┼────
@@ -71,7 +71,7 @@ toggle flip-flop (T-FF) from a D-FF.
 
 ### D Flip-Flop timing
 
-```
+```text
   CLK  ──┐  ┌──┐  ┌──┐  ┌──┐  ┌──
          └──┘  └──┘  └──┘  └──┘
                 ↑      ↑      ↑
@@ -127,7 +127,7 @@ and decode specific states.
 
 ### Counter operation
 
-```
+```text
   CLK  ─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─┐┌─
         └┘ └┘ └┘ └┘ └┘ └┘ └┘ └┘ └┘ └┘ └┘ └┘ └┘ └┘ └┘ └┘
   
@@ -183,7 +183,7 @@ the synthesis-place-route flow.
 
 ### FPGA design flow
 
-```
+```text
   1. Write HDL
      └── blink.v (Verilog) or blink.vhdl
 

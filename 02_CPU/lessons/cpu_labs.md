@@ -62,7 +62,7 @@ readelf -h hello     # ELF header
 
 ### x86-64 register map
 
-```
+```text
   64-bit    32-bit    16-bit   8-bit     Purpose
   ────────  ────────  ──────   ─────     ───────
   rax       eax       ax       al        Return value / syscall #

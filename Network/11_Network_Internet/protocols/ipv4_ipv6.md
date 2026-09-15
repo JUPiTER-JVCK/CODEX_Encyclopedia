@@ -18,7 +18,7 @@ and next-hop routing.
 
 ## IPv4 header
 
-```
+```text
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -50,7 +50,7 @@ and next-hop routing.
 
 ## IPv6 header
 
-```
+```text
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -96,7 +96,7 @@ Key differences from IPv4:
 
 ## IPv6 extension headers
 
-```
+```text
   IPv6 Header           Ext Header 1        Ext Header 2        Payload
   ┌──────────┐          ┌──────────┐        ┌──────────┐       ┌────────┐
   │Next=43   │─────────▶│Next=44   │───────▶│Next=6    │──────▶│  TCP   │
@@ -165,7 +165,7 @@ Solicitation / Advertisement), **MLD** (multicast listener).
 
 ## Path MTU Discovery
 
-```
+```text
   Sender                Router              Destination
     │                     │                     │
     │── 1500 B, DF=1 ───▶│                     │

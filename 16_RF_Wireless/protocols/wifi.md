@@ -16,7 +16,7 @@ IEEE 802.11 is the family of standards for Wireless LAN (WLAN). Devices
 communicate over the 2.4 GHz, 5 GHz, or 6 GHz ISM bands using OFDM
 (Orthogonal Frequency-Division Multiplexing) modulation.
 
-```
+```text
   802.11 Evolution:
   ┌──────────┬──────┬───────────┬────────────┬────────────────────────┐
   │ Standard │ Year │ Bands     │ Max rate   │ Key features           │
@@ -60,7 +60,7 @@ RTS/CTS, ACK, Block ACK — coordinate medium access.
 
 ## OFDM and Channel Structure
 
-```
+```text
   2.4 GHz channel layout (20 MHz channels):
   
   Ch 1    Ch 2    Ch 3    Ch 4    Ch 5    Ch 6  ...  Ch 11
@@ -81,7 +81,7 @@ RTS/CTS, ACK, Block ACK — coordinate medium access.
 
 ### WPA2-Personal (PSK)
 
-```
+```text
   PMK derivation from passphrase:
   PMK = PBKDF2(passphrase, SSID, 4096 iterations, 256-bit output)
   
@@ -122,7 +122,7 @@ RTS/CTS, ACK, Block ACK — coordinate medium access.
 | 802.11k | Neighbor reports — AP tells client about nearby APs |
 | 802.11v | BSS Transition Management — AP can suggest roaming |
 
-```
+```text
   Without FT (802.11r):         With 802.11r:
   Disassociate old AP           Pre-auth with target AP
   Scan/Probe new AP             ─────────────────────────
@@ -156,7 +156,7 @@ extends battery life.
 
 ## Mesh Networking (802.11s)
 
-```
+```text
   Wi-Fi Mesh topology:
   
   Internet

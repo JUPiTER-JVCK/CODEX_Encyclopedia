@@ -24,15 +24,15 @@ import urllib.parse
 # tools/ is already on the path. Either way this resolves.
 import _common
 
-# Images the codex references but does not ship. Documented in
-# _assets/README.md; listed here so the audit reports them separately
-# instead of failing the build over a known, deliberate gap.
-KNOWN_MISSING_IMAGES = {
-    "computer_layers_ladder.png",
-    "dslogic_decoder_list.png",
-    "logic_gates_explained.png",
-    "embedded_systems_roadmap.png",
-}
+# There was a tolerance list here: four image filenames the codex referenced
+# but did not ship, excused so the build would not fail over "a known,
+# deliberate gap". It was dead code — the codex contains zero `![](...)`
+# links, so `stats["images"]` is 0 and the branch reading this never ran. The
+# four references were in prose and frontmatter, where this audit could not
+# see them at all, and they outlived the tolerance by a year.
+#
+# `diagram_audit.py` checks those forms now, and the four are drawn rather
+# than promised. A broken image link is simply broken here.
 
 # GitHub templates are fragments pasted into a pull request or issue body,
 # not documents. An H1 in one renders as a full-width heading on every PR
@@ -102,9 +102,9 @@ def markdown_files(root: str) -> list[str]:
     return sorted(path for path, _ in _common.walk_markdown(root))
 
 
-def audit(root: str) -> tuple[dict, list, list, list]:
+def audit(root: str) -> tuple[dict, list, list]:
     stats = {"files": 0, "links": 0, "images": 0, "external": 0, "anchors": 0}
-    broken, missing_images, no_h1 = [], [], []
+    broken, no_h1 = [], []
 
     for path in markdown_files(root):
         stats["files"] += 1
@@ -136,13 +136,9 @@ def audit(root: str) -> tuple[dict, list, list, list]:
                 if os.path.exists(resolved):
                     continue
 
-                entry = (os.path.relpath(path, root), href)
-                if is_image and os.path.basename(target) in KNOWN_MISSING_IMAGES:
-                    missing_images.append(entry)
-                else:
-                    broken.append(entry)
+                broken.append((os.path.relpath(path, root), href))
 
-    return stats, broken, missing_images, no_h1
+    return stats, broken, no_h1
 
 
 def main() -> int:
@@ -157,7 +153,7 @@ def main() -> int:
     if args.self_test:
         return self_test()
 
-    stats, broken, missing_images, no_h1 = audit(args.root)
+    stats, broken, no_h1 = audit(args.root)
 
     print(f"markdown files   {stats['files']}")
     print(f"internal links   {stats['links']}")
@@ -165,13 +161,6 @@ def main() -> int:
     print(f"external links   {stats['external']}")
     print(f"anchor links     {stats['anchors']}")
     print(f"files without H1 {len(no_h1)}")
-
-    if missing_images:
-        print(f"\nknown-missing images ({len(missing_images)}) "
-              f"— see _assets/README.md")
-        if args.verbose:
-            for src, href in missing_images:
-                print(f"  {src}  ->  {href}")
 
     if no_h1:
         print(f"\nmissing an H1 heading ({len(no_h1)}):")

@@ -134,7 +134,7 @@ watch -n 1 'iw dev wlan0 link'
 
 3. Identify channel congestion — look for overlapping channels in 2.4 GHz:
 
-```
+```text
   2.4 GHz channels (20 MHz width):
   Ch 1   Ch 6   Ch 11     ← non-overlapping
   ╔═══╗  ╔═══╗  ╔═══╗

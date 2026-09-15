@@ -19,7 +19,7 @@ database.
 
 ## Resolution flow
 
-```
+```text
   Application          Stub Resolver        Recursive Resolver      Authoritative
   (browser)            (OS / libc)          (ISP / 8.8.8.8)        Name Servers
       │                    │                      │                      │
@@ -46,7 +46,7 @@ aggressively (typical: 5 min – 24 hr).
 
 ## Message format
 
-```
+```text
   +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
   |                      ID                         |   Transaction ID
   +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
@@ -99,7 +99,7 @@ aggressively (typical: 5 min – 24 hr).
 
 ## DNSSEC (RFC 4033–4035)
 
-```
+```text
   Root Zone (signed)
     │  DS record for .com
     ▼
@@ -136,7 +136,7 @@ easier for network operators to identify; DoQ offers lowest latency.
 
 ## DNS hierarchy
 
-```
+```text
                      . (root)
                    ╱    │    ╲
                  com   org   net   uk   ...

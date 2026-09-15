@@ -26,7 +26,7 @@ from a microcontroller GPIO pin, understanding V_GS threshold.
 
 ### Circuit
 
-```
+```text
   VCC (5V) ───────┬───────────────┐
                   │               │
                  LED            Load
@@ -103,7 +103,7 @@ understanding base current, collector current, and β (hFE).
 
 ### Circuit
 
-```
+```text
   VCC (5V) ──── 220Ω ──── LED ──── Collector
                                        │
   GPIO ──── 1kΩ ──── Base         2N2222 (NPN)

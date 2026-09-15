@@ -23,7 +23,7 @@ fully locked, no need to restate it each round.
 
 ## The complete build order
 
-```
+```text
 CORE — Learning Path/
 │
 ├── PHASE 0 · Logic ..................................... 🆕 standalone now

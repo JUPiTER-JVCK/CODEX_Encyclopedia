@@ -1,36 +1,56 @@
-# `_assets/` — Reference Images
+# `_assets/` — and why it is empty
 
-Drop image files here that are referenced from the codex markdown. The files
-listed below are referenced but not yet present — when you have the original
-files, place them here with these exact filenames (or update the links).
+**This folder holds no images, and that is the convention rather than an
+oversight.** Every illustration in the codex is drawn in the markdown itself,
+with box characters inside a ` ```text ` fence. A drawing in the source is
+reviewable in a diff, searchable, correctable by editing a line, renderable
+in any markdown viewer, and copy-pasteable into a terminal. A PNG of the same
+drawing is none of those.
 
-## Expected files
+## The four that were promised
 
-| Filename | What it shows | Referenced from |
-|----------|---------------|-----------------|
-| `computer_layers_ladder.png` | The 9-layer ladder (App → OS → Architecture → Microarch → Logic → Digital → Analog → Devices → Physics) | [00_Physics/README.md](../00_Physics/README.md), [LAYERS.md](../LAYERS.md) |
-| `dslogic_decoder_list.png` | DSLogic/sigrok protocol decoder catalog (base + upper-layer tables) | [01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md](../01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md) |
-| `logic_gates_explained.png` | The 8 logic gates with truth tables (YES, NO, AND, OR, XOR, NAND, NOR, XNOR) | [00d_Digital_Circuits/topics/logic_gates.md](../00d_Digital_Circuits/topics/logic_gates.md) |
-| `embedded_systems_roadmap.png` | Embedded Systems Engineering Roadmap v1.2.3 (Meysam Parvizi, CC BY-SA 4.0) | [18_Embedded_Systems/README.md](../18_Embedded_Systems/README.md), [LAYERS.md](../LAYERS.md) |
+For over a year this file listed four images as *expected*, and four notes
+across the codex each carried a *"drop the image here"* line for a file
+nobody was going to drop. The last section of this file simultaneously
+asserted that "the codex's markdown content already includes text
+equivalents of each image". That was the honest half, and it is now the
+whole of it: each of the four is drawn.
 
-## Optional — additional images
+| What it showed | Where it lives now |
+|---|---|
+| A 9-layer hardware ladder | [`00_Physics/README.md`](../00_Physics/README.md) — *Layer ladder* |
+| The 8 logic gates with truth tables | [`00d_Digital_Circuits/topics/logic_gates.md`](../00d_Digital_Circuits/topics/logic_gates.md) |
+| A DSLogic/sigrok decoder catalog | [`01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md`](../01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md) |
+| The Embedded Systems Roadmap v1.2.3 | [`18_Embedded_Systems/README.md`](../18_Embedded_Systems/README.md) |
 
-Any other images you want to reference from the codex live here, ideally with
-the naming convention `lowercase_with_underscores.ext`. PNG, JPG, and SVG are
-all fine.
+Two of the four were third-party works in any case — the roadmap poster is
+Meysam Parvizi's, CC BY-SA 4.0, and the decoder list was a screenshot of
+somebody's application window. Transcribing their content and crediting the
+source is both more useful here and cleaner than vendoring a copy.
 
-## How to add images
+## If you do need an image
 
-1. Save the file here under one of the names above (or your own).
-2. Reference from any markdown file with a relative path:
-   - From layer root: `![Logic gates](logic_gates_explained.png)`
-   - From a sub-section: `![Logic gates](../../_assets/logic_gates_explained.png)`
-3. If you rename, update [README.md](../README.md), [LAYERS.md](../LAYERS.md),
-   and the cross-link from any topic that references the image.
+Some things genuinely cannot be drawn in text: a photograph of a board, a die
+shot, an oscilloscope capture. Those belong here.
 
-## Notes
-- The codex's markdown content already includes text equivalents of each image
-  (ASCII / markdown tables) — the actual image files are decorative
-  reinforcements, not the source of truth.
-- For PDFs (LeetCode list, Embedded Systems Roadmap book) the files live in
-  the relevant layer's `references/` folder, not here.
+1. Save the file here as `lowercase_with_underscores.ext`. PNG, JPG and SVG
+   are all fine.
+2. Reference it relatively, from a sub-section note:
+
+   ```markdown
+   ![Alt text](../../_assets/your_file.png)
+   ```
+
+3. Pair it with a text equivalent — an ASCII diagram or a markdown table —
+   so the note stands on its own.
+
+`tools/diagram_audit.py` fails the build on a reference to an image file that
+is not in the repository, in prose or in `source_image:` frontmatter. The
+four above went unnoticed for a year because nothing checked; a fifth cannot.
+
+## Not here
+
+PDFs live in the relevant layer's `references/` folder, not in this one —
+`17_Algorithms_DSA/references/100_leetcode_problems.pdf` and
+`18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf`. See
+[`THIRD_PARTY.md`](../THIRD_PARTY.md) for their terms.

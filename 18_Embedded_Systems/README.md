@@ -3,7 +3,8 @@
 > The discipline of building **constrained, deterministic, hardware-bound
 > compute**. Spans layers 00 (physics) through 08 (apps) — embedded systems
 > engineers wear every hat in the codex. Mirrors the *Embedded Systems
-> Engineering Roadmap v1.2.3* (Meysam Parvizi) supplied as image 4.
+> Engineering Roadmap v1.2.3* by Meysam Parvizi (CC BY-SA 4.0), transcribed
+> in full below.
 
 ## Across the stack
 
@@ -31,15 +32,46 @@ one engineer owns the whole column, from silicon to cloud
 | Languages | **C, C++, Python, Rust, Assembly** (user emphasized Python & Rust) |
 | Industries | Automotive, aerospace, consumer electronics, telecom, healthcare, robotics, agriculture |
 
+## The roadmap, in four columns
+
+Parvizi's roadmap is a single large poster. The sections below transcribe it
+in full; this is its shape.
+
+```text
+  ┌───────────────────────┐ ┌───────────────────────┐ ┌───────────────────────┐
+  │ SOFTWARE              │ │ INTERFACES            │ │ HARDWARE              │
+  ├───────────────────────┤ ├───────────────────────┤ ├───────────────────────┤
+  │ C · C++ · Assembly    │ │ UART · I²C · SPI      │ │ electronics · math    │
+  │ Python · Rust         │ │ Ethernet · USB · PCIe │ │ digital design        │
+  │ algorithms · patterns │ │ BT · Wi-Fi · LoRa     │ │ test equipment        │
+  │ Embedded Linux        │ │ Modbus · Profinet     │ │ breadboard · solder   │
+  │ RTOS · MCU periph.    │ │ CAN · LIN · FlexRay   │ │ PCB design · EMC      │
+  │ build · debug · test  │ │ TCP/IP · cellular     │ │ FPGA development      │
+  └───────────────────────┘ └───────────────────────┘ └───────────────────────┘
+
+  ┌───────────────────────────────────────────────────────────────────────────┐
+  │ SOFT SKILLS — the fourth column, and the one that                         │
+  │ decides whether the other three ship                                      │
+  │ communication · problem solving · teamwork ·                              │
+  │ organization · self-driven · adaptable · patient                          │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
+The original is at
+[github.com/m3y54m/Embedded-Engineering-Roadmap](https://github.com/m3y54m/Embedded-Engineering-Roadmap).
+Earlier revisions of this file located its sections by pointing at a
+numbered picture that was never in the repository, which told a reader here
+nothing. The column names above are what they meant.
+
 ## What lives here
 
-### Hardware (image 4 right column)
+### Hardware
 - **Electronics** — math/calc, circuits, electronics fundamentals, digital design, computer architecture
 - **Test equipment** — multimeter, logic / protocol analyzer, oscilloscope
 - **Prototyping skills** — breadboarding, hardware design, PCB design + EMC, soldering / rework
 - **FPGA development**
 
-### Software (image 4 left column)
+### Software
 - **Programming languages** — **C** (required), **C++**, **Assembly** (required), **Python**, **Rust** *(user-circled)*
 - **Programming fundamentals** — algorithms & DS, design patterns, state machines, memory management
 - **Operating systems**:
@@ -53,7 +85,7 @@ one engineer owns the whole column, from silicon to cloud
 - **Testing** — TDD/unit, CI/CD, SIL/HIL, standards/certs
 - **Embedded security**, **Embedded GUI**, **IoT**, **Edge AI**, **AUTOSAR**
 
-### Interfaces & protocols (image 4 middle column)
+### Interfaces & protocols
 - **Basic** — UART (req), I2C (req), SPI (req)
 - **High-speed** — Ethernet (req), USB, PCIe
 - **Wireless** — Bluetooth (req), Wi-Fi (req), LoRa, Zigbee, Thread, Matter, UWB
@@ -66,7 +98,7 @@ one engineer owns the whole column, from silicon to cloud
 - **Memory technologies & file systems**, **hardware simulation/emulation**
 - **Sensors & actuators**, **DSP**, **control theory**
 
-### Soft skills (image 4 green box)
+### Soft skills
 - Communication, problem solving & critical thinking, teamwork, organization, self-driven, adaptable & patient
 
 ## Sub-sections
@@ -92,5 +124,6 @@ one engineer owns the whole column, from silicon to cloud
 - `references/embedded_systems_full_roadmap_book.pdf` — placeholder for the
   Embedded Systems Roadmap book. Original by Meysam Parvizi (CC BY-SA 4.0)
   at [github.com/m3y54m/Embedded-Engineering-Roadmap](https://github.com/m3y54m/Embedded-Engineering-Roadmap)
-- Image source: roadmap by Meysam Parvizi, CC BY-SA 4.0
-  (`https://github.com/m3y54m/Embedded-Engineering-Roadmap`)
+- The roadmap poster itself is not vendored here. It is CC BY-SA 4.0 and
+  freely available upstream, and the four-column transcription above plus the
+  sections that follow carry its content.

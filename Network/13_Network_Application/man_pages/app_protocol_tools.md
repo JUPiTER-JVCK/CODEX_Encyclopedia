@@ -122,7 +122,7 @@ chains, testing cipher suites, and debugging handshake problems.
 
 ### TLS handshake visualization
 
-```
+```text
   Client                                 Server
   ──────                                 ──────
   ClientHello ──────────────────────────▸
@@ -200,7 +200,7 @@ The standard tool for DNS debugging.
 
 ### DNS query flow
 
-```
+```text
   dig example.com A
        │
        ▼
@@ -300,7 +300,7 @@ IoT prototyping and debugging.
 
 ### MQTT publish/subscribe model
 
-```
+```text
   Publisher                    Broker                   Subscriber
   ─────────                   ──────                   ──────────
   mosquitto_pub               mosquitto                mosquitto_sub

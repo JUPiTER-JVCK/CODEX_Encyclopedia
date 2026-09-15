@@ -19,7 +19,7 @@ APIs, microservices, gRPC, and real-time streaming.
 
 ## Version evolution
 
-```
+```text
   HTTP/1.0 (1996)     HTTP/1.1 (1997→2022)    HTTP/2 (2015→2022)    HTTP/3 (2022)
   ────────────────    ────────────────────    ──────────────────    ──────────────
   One request per     Persistent connections  Binary framing        Over QUIC (UDP)
@@ -46,7 +46,7 @@ APIs, microservices, gRPC, and real-time streaming.
 
 ## HTTP/2 binary framing
 
-```
+```text
   ┌─────────────────────────────┐
   │   TCP Connection            │
   │  ┌───────────────────────┐  │
@@ -64,7 +64,7 @@ APIs, microservices, gRPC, and real-time streaming.
 ```
 
 **Frame format:**
-```
+```text
  +-----------------------------------------------+
  |                 Length (24)                     |
  +---------------+---------------+---------------+
@@ -86,7 +86,7 @@ Huffman encoding. Eliminates repeated header overhead.
 
 ## HTTP/3 over QUIC
 
-```
+```text
   ┌─────────────────────────────┐
   │   QUIC Connection (UDP)     │
   │  ┌───────────────────────┐  │
@@ -136,7 +136,7 @@ Huffman encoding. Eliminates repeated header overhead.
 
 ## Caching (RFC 9111)
 
-```
+```text
   Client ──▶ Cache ──▶ Origin Server
               │
               │ Cache-Control: max-age=3600

@@ -16,7 +16,7 @@ Bluetooth operates in the 2.4 GHz ISM band. Classic Bluetooth (BR/EDR)
 targets high-throughput audio and data links. Bluetooth Low Energy (BLE)
 is optimized for battery-powered sensors with infrequent data transfers.
 
-```
+```text
   Bluetooth stack:
   ┌─────────────────────────────────────────────────────────┐
   │                   Application                           │
@@ -61,7 +61,7 @@ BLE devices advertise on three primary channels: 37 (2402 MHz),
 
 ## GATT — Generic Attribute Profile
 
-```
+```text
   GATT hierarchy:
   
   Server (peripheral)
@@ -116,7 +116,7 @@ without full pairing ceremony (encrypted channel re-established in 1 RTT).
 
 ## BLE 5.x / LE Audio
 
-```
+```text
   LE Audio vs Classic Audio:
   ┌────────────────────┬──────────────────┬───────────────────┐
   │ Feature            │ Classic (A2DP)   │ LE Audio          │
@@ -139,7 +139,7 @@ no pairing — just tune to the broadcast channel.
 
 ## Bluetooth Mesh (BT Mesh 1.0)
 
-```
+```text
   Mesh network topology:
   
   [Provisioner] ─── provisions ──▶ [Node A]

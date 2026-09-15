@@ -53,7 +53,7 @@ examination, reverse debugging, and Python scripting.
 
 ### TUI mode
 
-```
+```text
   ┌──────────────────────────────────────────┐
   │ (gdb) layout src                         │
   ├──────────────────────────────────────────┤

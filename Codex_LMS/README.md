@@ -64,7 +64,7 @@ of that are enforced by `test/smoke.mjs`; see *Testing*.
 
 ## Layout
 
-```
+```text
 Codex_LMS/
 ├── index.html              ← Vite entry, fonts, pre-paint background
 ├── vite.config.js

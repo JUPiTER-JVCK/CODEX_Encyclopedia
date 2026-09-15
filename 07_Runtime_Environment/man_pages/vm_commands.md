@@ -33,7 +33,7 @@ emulates a complete machine for that architecture.
 
 ### Virtualization stack
 
-```
+```text
   Guest OS (Linux, Windows, etc.)
   ─────────────────────────────────
   Virtual hardware (QEMU)
@@ -151,7 +151,7 @@ API. Manages domains (VMs), storage pools, networks, and snapshots.
 
 ### libvirt architecture
 
-```
+```text
   Management tools
   ┌──────────┐  ┌──────────┐  ┌──────────────┐
   │  virsh   │  │ virt-mgr │  │ Cockpit/oVirt│
@@ -189,7 +189,7 @@ API. Manages domains (VMs), storage pools, networks, and snapshots.
 
 ### Domain lifecycle
 
-```
+```text
   XML definition
        │
        ▼
@@ -275,7 +275,7 @@ attach storage, and control running VMs. Works on Linux, macOS, and Windows.
 
 ### VirtualBox architecture
 
-```
+```text
   VBoxManage / VirtualBox GUI
          │
          ▼
@@ -309,7 +309,7 @@ attach storage, and control running VMs. Works on Linux, macOS, and Windows.
 
 ### Network modes
 
-```
+```text
   NAT (default)
     Guest ──NAT──▸ Host ──▸ Internet
     Guest gets 10.0.2.x, host unreachable from guest

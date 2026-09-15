@@ -17,7 +17,7 @@ oriented IIoT communication standard from the OPC Foundation (2008+).
 Unlike classic OPC (COM/DCOM Windows-only), OPC UA runs on any OS and
 natively includes security.
 
-```
+```text
   OPC UA stack:
   ┌──────────────────────────────────────────────────────────┐
   │           Application (client / server / publisher)      │
@@ -54,7 +54,7 @@ by **references**. Every item in the address space is a node.
 
 ### Address Space Hierarchy
 
-```
+```text
   Root (ns=0, id=84)
   └─ Objects (ns=0, id=85)
      ├─ Server (ns=0, id=2253)   ← mandatory server info node
@@ -87,7 +87,7 @@ by **references**. Every item in the address space is a node.
 
 ### Session Lifecycle
 
-```
+```text
   Client                          Server
     │                                │
     │──── GetEndpoints ─────────────▸│
@@ -161,7 +161,7 @@ OPC UA security has three dimensions:
 For high-throughput, many-to-many scenarios, OPC UA PubSub avoids
 the overhead of individual sessions:
 
-```
+```text
   Publisher ──▶ MQTT/AMQP/UDP broker ──▶ Subscriber(s)
   
   DataSetWriter → MessageBus → DataSetReader

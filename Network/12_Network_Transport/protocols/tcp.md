@@ -18,7 +18,7 @@ most application protocols ride on TCP.
 
 ## Segment header layout
 
-```
+```text
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -90,7 +90,7 @@ most application protocols ride on TCP.
 
 ## TCP state machine
 
-```
+```text
                               ┌──────────┐
                     (passive) │  LISTEN   │
                     open      └────┬─────┘
@@ -128,7 +128,7 @@ most application protocols ride on TCP.
 
 ## Congestion control
 
-```
+```text
    cwnd
     ^
     │         ╱╲          Slow-start          Congestion avoidance

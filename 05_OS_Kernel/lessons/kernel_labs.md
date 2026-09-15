@@ -57,7 +57,7 @@ dmesg | head -20
 
 ### Kernel build artifacts
 
-```
+```text
   linux-6.9/
   ├── .config                 ← kernel configuration
   ├── vmlinux                 ← uncompressed kernel (debug)

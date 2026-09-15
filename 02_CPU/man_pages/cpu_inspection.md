@@ -65,7 +65,7 @@ Flags:                  fpu vme ... avx2 avx512f ... tme
 
 ### Topology diagram
 
-```
+```text
   Socket 0
   ┌──────────────────────────────────────────┐
   │  Core 0          Core 1         ...      │

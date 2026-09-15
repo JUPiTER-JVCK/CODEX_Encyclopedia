@@ -114,7 +114,7 @@ sentence moved down rather than being dropped.
 The codex has no images — `_assets/` is empty — so every illustration is drawn
 with box characters **inside a fenced code block**:
 
-````
+````markdown
 ```text
 ┌──────────────────────────────┐
 │  06  System Libraries        │
@@ -126,14 +126,27 @@ with box characters **inside a fenced code block**:
 ```
 ````
 
-Two rules, both enforced by `tools/diagram_audit.py`:
+Three rules, all enforced by `tools/diagram_audit.py`:
 
 - **Always fenced.** Box characters in prose render in a proportional font,
   the columns stop lining up, and the drawing turns to noise — with nothing
   in the source looking wrong. A box character quoted in an inline code span
   (`` `─3*[worker]` ``) is a mention, not a drawing, and is fine.
-- **At most 90 columns.** The widest existing diagram is 86; past that a
-  drawing wraps or scrolls in a narrow pane.
+- **Always tagged.** ` ```text ` on the opening fence. A fence that carries
+  some other tag is left alone — `04_Device_Drivers/man_pages/device_commands.md`
+  has a ` ```bash ` block of real shell whose comments quote `lsblk` tree
+  output, and retagging that would be a lie about the block. What the audit
+  refuses is the *absent* tag.
+- **At most 90 columns**, measured across every line of the block, captions
+  included. The widest existing diagram is 86; past that a drawing wraps or
+  scrolls in a narrow pane. Lines in a block that draws nothing are not
+  measured: a 116-column `tcpdump` invocation is not a broken diagram, and
+  wrapping it would break the command.
+
+A second style counts as a drawing: the RFC-style header layouts in
+`Network/*/protocols/`, ruled with `+-+-+-+-+`. They contain no box character
+at all, and until the audit learned to see them, seven files of real diagrams
+scored as having none.
 
 `diagram_audit.py` implements a **subset** of CommonMark's fence rules — the
 part these diagrams depend on: a fence opens on three or more backticks and
@@ -146,6 +159,16 @@ Every layer `README.md` carries one, between the opening blockquote and
 *At a glance*, showing where the layer sits and what crosses its boundaries —
 `## In the stack` for a layer with neighbours above and below, `## Across the
 stack` for a cross-cutting one that intersects many at once.
+
+### The backlog
+
+Every codex file is expected to illustrate itself, not only the 23 layer
+READMEs. Most do not yet: `tools/diagram_backlog.txt` lists the ones still to
+draw, and the audit reads it as a contract in both directions. A file missing
+a diagram that is not on the list fails the build, so the gap cannot grow. A
+listed file that has gained one fails it too, so the list cannot go stale and
+quietly re-exempt work already done. Drawing a diagram means deleting its line
+there and correcting the count in that file's header.
 
 ## Sub-sections
 
@@ -196,11 +219,22 @@ ISO 8601 dates in `updated:` (`YYYY-MM-DD`), UTC.
 
 ## Images
 
-- Live in `_assets/`, named `lowercase_with_underscores.ext`. PNG, JPG, SVG.
-- Referenced relatively: `![Logic gates](../../_assets/logic_gates_explained.png)`.
-- Always pair an image with a text equivalent — an ASCII diagram or a
-  markdown table — so the note stands on its own if the image is missing.
-  The codex is readable today precisely because this rule was followed.
+**The codex ships none, and this is the convention rather than an omission.**
+A drawing in the source is reviewable in a diff, searchable, renderable in
+any markdown viewer, and copy-pasteable into a terminal. A PNG of the same
+drawing is none of those, and cannot be corrected without redrawing it.
+
+Four images were once promised here — a layer ladder, a logic-gate chart, a
+logic-analyzer decoder list, and an embedded-systems roadmap. None was ever
+committed, and for over a year every note citing one carried a *"drop the
+image here"* line for a file nobody was going to drop. Each is now drawn in
+the text, which is what `_assets/README.md` had claimed all along.
+
+If an image genuinely cannot be drawn in text — a photograph, a die shot —
+put it in `_assets/` named `lowercase_with_underscores.ext`, reference it
+relatively, and pair it with a text equivalent so the note stands on its own.
+`tools/diagram_audit.py` fails on a reference to a file that is not there, so
+a promise like the last four cannot be made again.
 
 ## Repository files that are not the codex
 

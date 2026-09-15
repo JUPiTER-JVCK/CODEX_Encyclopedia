@@ -32,7 +32,7 @@ and volumes, push/pull from registries.
 
 ### Architecture
 
-```
+```text
   docker CLI  ──(REST API)──▸  dockerd (daemon)
                                   │
                                   ├── containerd (image + container mgmt)
@@ -165,7 +165,7 @@ with Docker.
 
 ### Podman pod architecture
 
-```
+```text
   Pod (shared network namespace)
   ┌──────────────────────────────────────┐
   │  Infra container (pause)             │
@@ -223,7 +223,7 @@ init/systemd inside) rather than application containers. Part of systemd.
 
 ### Comparison
 
-```
+```text
   chroot          systemd-nspawn       Docker/Podman
   ────────        ──────────────       ─────────────
   Filesystem      Filesystem +         Filesystem +
@@ -290,7 +290,7 @@ troubleshoot Kubernetes node-level container state without kubectl.
 
 ### CRI architecture
 
-```
+```text
   kubelet
     │
     └── CRI gRPC ──▸ containerd (or CRI-O)

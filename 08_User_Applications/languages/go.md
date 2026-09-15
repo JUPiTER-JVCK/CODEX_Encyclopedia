@@ -132,7 +132,7 @@ GOOS=windows GOARCH=amd64 go build -o app.exe .
 
 ## Project layout (common convention)
 
-```
+```text
 .
 ├── go.mod
 ├── go.sum

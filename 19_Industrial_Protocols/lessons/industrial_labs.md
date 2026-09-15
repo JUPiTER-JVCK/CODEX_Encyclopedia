@@ -79,7 +79,7 @@ client.close()
 ```
 
 4. Inspect raw Modbus PDU:
-```
+```text
   Modbus TCP Application Data Unit (ADU):
   ┌────────────────────────────────────────────────────────┐
   │ MBAP Header (7 bytes)              │ PDU               │
@@ -324,7 +324,7 @@ for i in range(5):
 client.loop_stop()
 ```
 
-```
+```text
   MQTT topic hierarchy:
   
   factory/

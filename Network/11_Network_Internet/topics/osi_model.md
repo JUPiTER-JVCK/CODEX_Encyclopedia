@@ -15,7 +15,7 @@ updated: 2026-05-20
 
 ## OSI vs. TCP/IP mapping
 
-```
+```text
   OSI Model                          TCP/IP Model           Codex Layer
   ─────────                          ────────────           ──────────
   ┌─────────────────────┐
@@ -40,7 +40,7 @@ updated: 2026-05-20
 
 ## Layer-by-layer summary
 
-```
+```text
   Layer 7 — Application
   ┌──────────────────────────────────────────────────────────┐
   │  HTTP, DNS, SMTP, FTP, SSH, MQTT, gRPC, LDAP            │
@@ -98,7 +98,7 @@ updated: 2026-05-20
 
 ## Encapsulation (packet nesting)
 
-```
+```text
   Application data
        │
        ▼

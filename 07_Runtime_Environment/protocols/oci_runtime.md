@@ -16,7 +16,7 @@ The Open Container Initiative (OCI) publishes three interoperability
 specifications that define how container images, runtimes, and registries
 work — independently of any specific vendor.
 
-```
+```text
   OCI specification family:
   
   ┌─────────────────────────────────────────────────────────────┐
@@ -41,7 +41,7 @@ work — independently of any specific vendor.
 
 ### Image Layout
 
-```
+```text
   OCI image layout (on disk or in tarball):
   
   image/
@@ -127,7 +127,7 @@ the layer diff chain:
 
 ### Container Lifecycle
 
-```
+```text
   create  → start  → (running) → stop → delete
      │                               │
      │          kill signal ─────────┘

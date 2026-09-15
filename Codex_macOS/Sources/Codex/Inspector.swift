@@ -3,6 +3,8 @@ import SwiftUI
 // MARK: - Right inspector (Outline · Info · Recents)
 
 struct InspectorView: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
     @State private var tab: InspectorTab = .outline
 
@@ -29,7 +31,7 @@ struct InspectorView: View {
                             Image(systemName: t.systemImage)
                                 .font(.system(size: 13, weight: .medium))
                             Text(t.rawValue)
-                                .font(.system(size: 9, weight: .medium))
+                                .font(.system(size: Theme.size(9), weight: .medium))
                         }
                         .foregroundColor(tab == t ? Theme.accent : Theme.overlay1)
                         .frame(maxWidth: .infinity)
@@ -101,6 +103,8 @@ private struct OutlinePane: View {
 }
 
 private struct OutlineRow: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let entry: OutlineEntry
     let onSelect: () -> Void
     @State private var hovered = false
@@ -146,6 +150,8 @@ private struct OutlineRow: View {
 // MARK: - Info pane
 
 private struct InfoPane: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
 
     var body: some View {
@@ -256,6 +262,8 @@ private struct RecentsPane: View {
 }
 
 private struct RecentRow: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let url: URL
     @EnvironmentObject var state: AppState
     @State private var hovered = false
@@ -292,6 +300,8 @@ private struct RecentRow: View {
 // MARK: - Shared pieces
 
 struct SectionHeader: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let label: String
     var body: some View {
         Text(label.uppercased())
@@ -303,6 +313,8 @@ struct SectionHeader: View {
 }
 
 private struct InfoRow: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let icon: String; let label: String; let value: String
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
@@ -323,6 +335,8 @@ private struct InfoRow: View {
 }
 
 private struct ActionRow: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let icon: String; let label: String; let action: () -> Void
     @State private var hovered = false
     var body: some View {
@@ -330,7 +344,7 @@ private struct ActionRow: View {
             HStack(spacing: 8) {
                 Image(systemName: icon).font(.system(size: 11)).foregroundColor(Theme.accent)
                     .frame(width: 14)
-                Text(label).font(.system(size: 12))
+                Text(label).font(.system(size: Theme.size(12)))
                     .foregroundColor(Theme.text)
                 Spacer()
             }
@@ -346,13 +360,15 @@ private struct ActionRow: View {
 }
 
 private struct EmptyPaneView: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let systemImage: String; let title: String; let subtitle: String
     var body: some View {
         VStack(spacing: 8) {
             Image(systemName: systemImage)
                 .font(.system(size: 28, weight: .light))
                 .foregroundColor(Theme.overlay0)
-            Text(title).font(.system(size: 13, weight: .semibold))
+            Text(title).font(.system(size: Theme.size(13), weight: .semibold))
                 .foregroundColor(Theme.subtext)
             Text(subtitle).font(.system(size: Theme.size(11)))
                 .foregroundColor(Theme.overlay1)

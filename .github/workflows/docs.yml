@@ -70,3 +70,16 @@ jobs:
       # README turns the build red instead of quietly retiring the check.
       - name: Stats audit
         run: python3 tools/stats_audit.py
+
+      # THIRD_PARTY.md claims the macOS reader's fourteen palettes reproduce
+      # published colour values. The first version of that claim was false —
+      # five Nord greys were interpolated to fill a nine-step ramp the scheme
+      # does not publish — and only prose was guarding it. Each palette now
+      # declares how many values it may derive; this fails if the real number
+      # drifts either way. The self-test plants an invented colour and checks
+      # it is caught, so the check cannot quietly stop checking.
+      - name: Palette audit self-test
+        run: python3 tools/palette_audit.py --self-test
+
+      - name: Palette audit
+        run: python3 tools/palette_audit.py

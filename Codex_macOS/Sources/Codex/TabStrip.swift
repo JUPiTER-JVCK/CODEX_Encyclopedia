@@ -3,6 +3,8 @@ import SwiftUI
 // MARK: - Safari-style tab strip
 
 struct TabStrip: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
 
     var body: some View {
@@ -34,6 +36,8 @@ struct TabStrip: View {
 }
 
 private struct TabPill: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let url: URL; let isActive: Bool
     let onSelect: () -> Void
     let onClose:  () -> Void

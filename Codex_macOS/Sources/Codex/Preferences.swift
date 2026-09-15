@@ -63,9 +63,11 @@ final class Preferences: ObservableObject {
 
     /// True-black backgrounds on whichever dark scheme is active.
     ///
-    /// A modifier rather than a scheme of its own, so it composes with all
-    /// eleven dark palettes instead of doubling the list. No effect on a light
-    /// palette, where true black is not what anyone means by OLED.
+    /// A modifier rather than a scheme of its own, so it composes with every
+    /// dark palette instead of doubling the list. (Ten of the fourteen are
+    /// dark; the count is not repeated in prose anywhere, because the last
+    /// time it was it went stale.) No effect on a light palette, where true
+    /// black is not what anyone means by OLED.
     @Published var oled: Bool = false {
         didSet { apply(); bump(); save() }
     }
@@ -79,11 +81,24 @@ final class Preferences: ObservableObject {
     static let fontScaleRange: ClosedRange<Double> = 0.85...1.40
     static let fontScaleStep: Double = 0.05
 
-    /// Changes whenever the appearance changes, so views can key `.id()` on it.
+    /// Bumped on every appearance change.
     ///
-    /// `Theme.base` is a plain computed property, not a `@Published` one, so
-    /// SwiftUI has no reason to believe a view depending on it is stale. This
-    /// counter is the signal that forces the rebuild.
+    /// **Why any of this is needed.** `Theme.base` is a plain computed
+    /// property, not a `@Published` one, so SwiftUI has no dependency on it
+    /// and no reason to believe a view reading it is stale when the palette
+    /// changes. Something has to tell it.
+    ///
+    /// The first attempt keyed `.id()` on this counter at `RootView`, which
+    /// did force the redraw — by discarding the identity of every descendant,
+    /// and with it the sidebar's expanded rows, the inspector's selected tab
+    /// and every scroll position. Correct colours, reset app.
+    ///
+    /// So instead each of the 40 views that reads `Theme.*` observes this
+    /// object directly. Their bodies re-evaluate and re-read the tokens;
+    /// their identities, and therefore their `@State`, survive untouched.
+    /// The counter remains because a change to `themeID` alone would not
+    /// notify observers when the *resolved* palette is what moved (an OLED
+    /// toggle, for instance).
     @Published private(set) var revision: Int = 0
 
     /// The palette in effect, OLED applied.

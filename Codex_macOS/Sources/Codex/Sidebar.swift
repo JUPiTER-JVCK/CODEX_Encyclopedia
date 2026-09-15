@@ -3,6 +3,8 @@ import SwiftUI
 // MARK: - Sidebar (translucent, grouped, modern)
 
 struct SidebarView: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
     @State private var hoveredId: UUID? = nil
 
@@ -62,6 +64,8 @@ struct SidebarView: View {
 // MARK: - Band section (collapsible group)
 
 private struct BandSection: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let band: CodexNode
     @Binding var hoveredId: UUID?
     @State private var expanded: Bool = true
@@ -102,6 +106,8 @@ private struct BandSection: View {
 // MARK: - Recursive row
 
 private struct LayerRow: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let node: CodexNode
     let depth: Int
     let accent: Color
@@ -224,6 +230,8 @@ private struct LayerRow: View {
 // MARK: - Pinned section
 
 private struct PinnedSection: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
 
     var body: some View {
@@ -252,6 +260,8 @@ private struct PinnedSection: View {
 }
 
 private struct PinnedRow: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let url: URL
     @EnvironmentObject var state: AppState
     @State private var hovered = false

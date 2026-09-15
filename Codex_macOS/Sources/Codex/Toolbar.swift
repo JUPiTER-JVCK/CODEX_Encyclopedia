@@ -3,6 +3,8 @@ import SwiftUI
 // MARK: - Top toolbar (sidebar toggle, history, breadcrumb, search, inspector)
 
 struct CodexToolbar: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
 
     var body: some View {
@@ -72,6 +74,8 @@ struct CodexToolbar: View {
 // MARK: - Toolbar icon button
 
 struct ToolbarIconButton: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let systemName: String
     var tint: Color? = nil
     var help: String? = nil
@@ -100,6 +104,8 @@ struct ToolbarIconButton: View {
 // MARK: - Breadcrumb (clickable path crumbs)
 
 struct BreadcrumbBar: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
 
     var body: some View {
@@ -180,6 +186,8 @@ struct BreadcrumbBar: View {
 // MARK: - One breadcrumb segment
 
 private struct Crumb: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let label: String
     let isLast: Bool
     let target: URL?
@@ -222,6 +230,8 @@ private struct Crumb: View {
 /// why. Now the first keystroke opens the palette carrying what you typed,
 /// and focus follows it there.
 struct ToolbarSearchField: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
     @State private var hovered = false
     @FocusState private var focused: Bool

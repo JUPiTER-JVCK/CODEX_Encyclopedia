@@ -269,14 +269,6 @@ struct RootView: View {
         // base, the two side panes their vibrancy.
         .background(WindowVibrancyConfigurator().frame(width: 0, height: 0))
         .overlay(paletteOverlay)
-        // Every colour in this subtree comes from `Theme.base` and friends,
-        // which are plain computed properties — SwiftUI has no dependency on
-        // them and no reason to think anything is stale when the palette
-        // changes. Keying on the revision counter discards the subtree and
-        // rebuilds it, which is the blunt instrument that actually works.
-        // Cost is one full re-render per theme change, which is a thing the
-        // user just asked for and is watching.
-        .id(prefs.revision)
     }
 
     private var mainPane: some View {
@@ -318,6 +310,8 @@ struct RootView: View {
 }
 
 private struct ErrorView: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let message: String
     var body: some View {
         VStack(spacing: 8) {

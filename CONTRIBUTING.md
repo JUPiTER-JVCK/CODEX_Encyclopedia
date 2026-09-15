@@ -24,6 +24,7 @@ python3 tools/table_audit.py     # pipe tables well-formed
 python3 tools/title_audit.py     # section indexes titled "<Layer> — <Section>"
 python3 tools/diagram_audit.py --self-test && python3 tools/diagram_audit.py
 python3 tools/stats_audit.py     # README's own numbers still true
+python3 tools/palette_audit.py   # palettes match the schemes they name
 ```
 
 Each exits non-zero and names the file at fault. Where the fault has a line —
@@ -43,6 +44,14 @@ Three need a word of explanation:
   audit's fence parsing has been wrong twice. The self-test asserts the
   CommonMark fence rules directly, so a regression there fails loudly instead
   of quietly mis-reporting every diagram in the repo.
+- **`palette_audit.py`** checks the macOS reader's colour schemes against what
+  each project actually publishes. Codex needs 26 tokens per scheme and most
+  schemes publish fewer, so some surface steps are interpolated — that is fine,
+  and each palette declares how many. Adding a value the upstream scheme does
+  not publish, without raising that number, fails the build. `THIRD_PARTY.md`
+  once claimed *none* were derived, which was false; that is why it is now a
+  script and not a sentence.
+
 - **`stats_audit.py`** checks the counts README quotes about itself. If you
   add a file, a link, or a diagram, this will tell you which number to
   update. It also fails if you *reword* a claim past its pattern — that is

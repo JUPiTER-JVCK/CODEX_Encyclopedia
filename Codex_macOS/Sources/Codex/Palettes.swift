@@ -26,12 +26,20 @@ extension Color {
 /// scheme here is *mapped* onto those names rather than renaming anything —
 /// which is the only reason a palette swap costs no call-site changes at all.
 ///
-/// The mapping is a judgement call where a scheme has fewer accents than
-/// Catppuccin's fourteen. Nord has nine usable accents, Gruvbox seven,
-/// Solarized eight; in those schemes some tokens necessarily share a colour
-/// (`red`/`maroon`, `mauve`/`pink`). That is a deliberate approximation, not
-/// an oversight — the alternative is inventing colours the scheme's authors
-/// never chose, which would look worse than a repeat.
+/// Two consequences, both deliberate and both audited.
+///
+/// **Accents repeat** where a scheme publishes fewer than fourteen — Nord has
+/// nine, Solarized eight, Gruvbox seven, Rosé Pine six — so `maroon` may equal
+/// `red`, `pink` may equal `mauve`. Better a repeat than a colour its authors
+/// never chose.
+///
+/// **Some surface steps are interpolated.** The ramp needs nine values and
+/// Nord publishes four polar-night shades, so five of its greys here are
+/// derived rather than published. 41 of the 364 values across all fourteen
+/// palettes are derived this way. `tools/palette_audit.py` counts them against
+/// each scheme's published set and fails if the number drifts — an earlier
+/// version of this file claimed *no* values were derived, which was false, and
+/// only prose was guarding it.
 struct Palette: Identifiable, Equatable {
     let id: String
     let name: String
@@ -89,9 +97,10 @@ extension Palette {
 
 // MARK: - The schemes
 //
-// Licences are recorded in THIRD_PARTY.md at the repository root. All are
-// permissive; every one is reproduced here as colour values only, which is
-// the whole of what these projects publish.
+// Licences are recorded in THIRD_PARTY.md at the repository root; all are MIT,
+// and what is reproduced is colour values only. Where a value is not one the
+// scheme publishes it is an interpolated surface step — tools/palette_audit.py
+// knows which, and how many each palette is allowed.
 
 extension Palette {
 
@@ -144,8 +153,11 @@ extension Palette {
 
     // ── Nord ───────────────────────────────────────────────────────────
     // https://github.com/nordtheme/nord — MIT
-    // Nine accents (frost ×4, aurora ×5), so maroon repeats red and
-    // pink/flamingo/rosewater fall back to the snow-storm greys.
+    // Nine accents (frost ×4, aurora ×5). `maroon` repeats `red`, and `pink`
+    // repeats `mauve` — both nord15; only `flamingo` and `rosewater` fall back
+    // to the snow-storm greys. The nine-step surface ramp needs more values
+    // than Nord's four polar-night shades provide, so five are interpolated:
+    // see THIRD_PARTY.md and tools/palette_audit.py, which counts them.
 
     static let nord = Palette(
         id: "nord", name: "Nord", isDark: true,

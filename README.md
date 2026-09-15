@@ -187,7 +187,7 @@ CODEX_Encyclopedia-/
 │                          ─┘
 ├── Codex_macOS/            ← SwiftUI reader source
 ├── Codex_LMS/              ← React curriculum source
-└── tools/                  ← audits: link, table, title, diagram, stats
+└── tools/                  ← audits: link, table, title, diagram, stats, palette
 ```
 
 Anything added at the root that isn't a layer must also be registered in
@@ -296,7 +296,7 @@ the LMS:
 | Workflow | Runs | Catches |
 |----------|------|---------|
 | `swift.yml` | `swift build` debug + release, on `macos-14` | The macOS app not compiling |
-| `docs.yml` | `link_audit.py`, `table_audit.py`, `title_audit.py`, `diagram_audit.py`, `stats_audit.py` | Broken links, missing H1s, malformed tables, uncanonical section titles, unfenced or missing diagrams, and stale numbers in this file |
+| `docs.yml` | `link_audit.py`, `table_audit.py`, `title_audit.py`, `diagram_audit.py`, `stats_audit.py`, `palette_audit.py` | Broken links, missing H1s, malformed tables, uncanonical section titles, unfenced or missing diagrams, stale numbers in this file, and colour values the macOS reader's palettes claim came from upstream |
 | `lms.yml` | `npm ci`, build, `npm audit`, Playwright smoke test | CORE not building, or losing progress on reload |
 
 Running every workflow on every PR is deliberate. A *required* status check
@@ -312,6 +312,7 @@ python3 tools/table_audit.py
 python3 tools/title_audit.py
 python3 tools/diagram_audit.py --self-test && python3 tools/diagram_audit.py
 python3 tools/stats_audit.py
+python3 tools/palette_audit.py
 
 # LMS — build, then smoke-test. `smoke:local` starts the preview server,
 # waits (bounded) for it to actually listen, runs the test, and cleans up.

@@ -7,11 +7,10 @@ else.
 ## Colour schemes
 
 `Codex_macOS/Sources/Codex/Palettes.swift` ships fourteen palettes drawn from
-six open-source colour schemes. What is reproduced is **colour values only** —
-a set of hex triples per scheme — which is the whole of what these projects
-publish. No code, assets, or configuration from any of them is included.
+seven open-source colour schemes. What is reproduced is **colour values only**
+— hex triples — and no code, assets, or configuration from any of them.
 
-All six are MIT-licensed.
+All seven are MIT-licensed.
 
 | Scheme | Palettes here | Upstream |
 |---|---|---|
@@ -23,21 +22,49 @@ All six are MIT-licensed.
 | Rosé Pine | Dawn, Moon, Main | <https://github.com/rose-pine/rose-pine-theme> |
 | Dracula | Dracula | <https://github.com/dracula/dracula-theme> |
 
-**A note on fidelity.** Codex's design tokens are named after Catppuccin's,
-because that is the scheme the app was built against. Every other scheme is
-*mapped* onto those names, and the mapping is a judgement call wherever a
-scheme publishes fewer accents than Catppuccin's fourteen — Nord has nine,
-Solarized eight, Gruvbox seven, Rosé Pine six. In those schemes some tokens
-necessarily share a colour (`red` and `maroon`, `mauve` and `pink`).
+### Fidelity: 41 of 364 values are derived, not published
 
-That is deliberate. The alternative is inventing colours the scheme's authors
-never chose, which would misrepresent their work more than a repeat does. If
-a mapping reads wrong to you against the upstream scheme, it is a bug in this
-repository and not in theirs.
+Codex needs **26 tokens** per scheme — a nine-step surface/overlay ramp, three
+text tones, and fourteen accents — named after Catppuccin's, because that is
+what the app was built against. Every other scheme is *mapped* onto those
+names.
+
+Two things follow, and both are worth stating rather than glossing.
+
+**Accents repeat where a scheme has fewer than fourteen.** Nord publishes nine
+usable accents, Solarized eight, Gruvbox seven, Rosé Pine six. In those schemes
+some tokens necessarily share a colour — in Nord, `maroon` repeats `red` and
+`pink` repeats `mauve`. That is better than the alternative.
+
+**Some surface steps are interpolated.** Nord publishes four polar-night
+shades; the ramp needs nine. So five Nord greys here were derived by
+interpolating between published steps — they are *not* Nord colours, and an
+earlier version of this file claimed otherwise. Review caught it. The honest
+count, per scheme:
+
+| Scheme | Derived | Scheme | Derived |
+|---|---|---|---|
+| Catppuccin ×4 | **0** | Solarized Dark | 4 |
+| Gruvbox Light | **0** | Rosé Pine ×3 | 5–6 |
+| Gruvbox Dark | 1 | Nord | 5 |
+| Tokyo Night | 3 | Dracula | 9 |
+| Solarized Light | 3 | | |
+
+**41 of 364 values — 11%.** Catppuccin and Gruvbox Light are exact.
+
+`tools/palette_audit.py` enforces this. Each palette declares how many values
+it may derive, and the audit fails if the real count differs in either
+direction — too many means a new invention slipped in, too few means the
+declaration went stale. It runs in CI, and `--self-test` proves it can fail by
+planting an invented colour and checking it is caught. Prose cannot enforce
+itself; that is the whole reason this section has a tool behind it.
+
+If a mapping reads wrong against the upstream scheme, it is a bug here and not
+in theirs.
 
 ## MIT licence text
 
-All six schemes above are distributed under the MIT licence, whose terms are:
+All seven schemes above are distributed under the MIT licence, whose terms are:
 
 ```
 Permission is hereby granted, free of charge, to any person obtaining a copy

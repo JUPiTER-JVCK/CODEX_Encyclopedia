@@ -91,13 +91,17 @@ enum Theme {
 
     /// Scale a text size by the user's font preference.
     ///
-    /// **Text only.** Of this app's 84 inline `.system(size:)` calls, exactly
-    /// half set the size of an SF Symbol rather than of type — and those
-    /// glyphs sit inside fixed frames (`.frame(width: 14, height: 14)` around
-    /// a 9pt `xmark`, for instance). Scaling them would push the icon against
-    /// a box that did not grow with it. "Adjust the font" means the text you
-    /// read, so the chrome iconography keeps its literal sizes and only type
-    /// moves.
+    /// **Text only.** Roughly half of this app's inline `.system(size:)` calls
+    /// size an SF Symbol rather than type, and those glyphs sit inside fixed
+    /// frames — `.frame(width: 14, height: 14)` around a 9pt `xmark`, for
+    /// instance. Scaling them would push the icon against a box that did not
+    /// grow with it. "Adjust the font" means the text you read, so the chrome
+    /// iconography keeps its literal sizes and only type moves.
+    ///
+    /// No count here on purpose: the first version of this comment quoted an
+    /// exact one, which was stale as soon as the next file was added. If you
+    /// want the current split, classify the call sites by the constructor that
+    /// opens each modifier chain — `Text`/`Label` is type, `Image` is a glyph.
     static func size(_ points: CGFloat) -> CGFloat { points * fontScale }
 
     /// Typography (SF Pro via `.system`, monospaced via `.monospaced`).

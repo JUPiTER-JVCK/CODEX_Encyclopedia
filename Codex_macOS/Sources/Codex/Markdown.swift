@@ -367,6 +367,8 @@ struct MarkdownView: View {
 // MARK: - Heading
 
 private struct HeadingBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let level: Int; let text: String; let anchor: String
 
     var body: some View {
@@ -411,6 +413,8 @@ private struct HeadingBlock: View {
 // MARK: - Paragraph (with link routing)
 
 private struct ParagraphBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let text: String
     let sourceFile: URL?
     let projectRoot: URL
@@ -439,6 +443,8 @@ private struct ParagraphBlock: View {
 // MARK: - List
 
 private struct ListBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let items: [MDListItem]
     let ordered: Bool
     let sourceFile: URL?
@@ -519,6 +525,8 @@ private struct ListBlock: View {
 // MARK: - Code block (with hover copy)
 
 private struct CodeBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let language: String?; let code: String
     @State private var hovered = false
     @State private var copied = false
@@ -540,11 +548,17 @@ private struct CodeBlock: View {
                 }
                 Spacer()
                 Button(action: copy) {
-                    Label(copied ? "Copied" : "Copy",
-                          systemImage: copied ? "checkmark" : "doc.on.doc")
-                        .labelStyle(.titleAndIcon)
-                        .font(.system(size: Theme.size(11), weight: .medium))
-                        .foregroundColor(copied ? Theme.green : Theme.subtext)
+                    // Split rather than a `Label`: a font on a `.titleAndIcon`
+                    // Label sizes the SF Symbol as well as the title, so the
+                    // scaled font would have grown this glyph too — which is
+                    // exactly what `Theme.size` is documented not to do.
+                    HStack(spacing: 4) {
+                        Image(systemName: copied ? "checkmark" : "doc.on.doc")
+                            .font(.system(size: 11, weight: .medium))
+                        Text(copied ? "Copied" : "Copy")
+                            .font(.system(size: Theme.size(11), weight: .medium))
+                    }
+                    .foregroundColor(copied ? Theme.green : Theme.subtext)
                 }
                 .buttonStyle(.plain)
                 .opacity(hovered ? 1 : 0)
@@ -590,6 +604,8 @@ private struct CodeBlock: View {
 // MARK: - Table
 
 private struct TableBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let headers: [String]; let rows: [[String]]
     let sourceFile: URL?; let projectRoot: URL
     let onLink: (LinkResolver.Target) -> Void
@@ -635,6 +651,8 @@ private struct TableBlock: View {
 // MARK: - Blockquote
 
 private struct QuoteBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let text: String
     let sourceFile: URL?; let projectRoot: URL
     let onLink: (LinkResolver.Target) -> Void
@@ -833,6 +851,8 @@ struct PageFrontmatter {
 // MARK: - Page hero
 
 struct PageHero: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let fm: PageFrontmatter
 
     private var pathParts: [String] {
@@ -882,7 +902,7 @@ struct PageHero: View {
                         Image(systemName: "clock").font(.system(size: 10))
                             .foregroundColor(Theme.overlay1)
                         Text("Updated \(updated)")
-                            .font(.system(size: 11))
+                            .font(.system(size: Theme.size(11)))
                             .foregroundColor(Theme.overlay1)
                     }
                 }
@@ -927,6 +947,8 @@ struct PageHero: View {
 // MARK: - Page footer (adjacent docs, actions)
 
 struct PageFooter: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let fm: PageFrontmatter
     let onLink: (LinkResolver.Target) -> Void
     let openExternal: (URL) -> Void
@@ -983,6 +1005,8 @@ struct PageFooter: View {
 enum AdjacentDirection { case prev, next }
 
 private struct AdjacentCard: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let direction: AdjacentDirection
     let url: URL?
     let onLink: (LinkResolver.Target) -> Void
@@ -1037,13 +1061,15 @@ private struct AdjacentCard: View {
 }
 
 private struct FooterChip: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let icon: String; let label: String; let action: () -> Void
     @State private var hovered = false
     var body: some View {
         Button(action: action) {
             HStack(spacing: 5) {
                 Image(systemName: icon).font(.system(size: 11))
-                Text(label).font(.system(size: 11, weight: .medium))
+                Text(label).font(.system(size: Theme.size(11), weight: .medium))
             }
             .foregroundColor(hovered ? Theme.text : Theme.subtext)
             .padding(.horizontal, 10).padding(.vertical, 5)
@@ -1058,6 +1084,8 @@ private struct FooterChip: View {
 // MARK: - Image (file-relative or external)
 
 private struct ImageBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let alt: String; let href: String
     let sourceFile: URL?; let projectRoot: URL
 

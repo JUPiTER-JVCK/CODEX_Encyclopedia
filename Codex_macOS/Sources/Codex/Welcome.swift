@@ -148,6 +148,8 @@ struct WelcomeView: View {
 // MARK: - Components
 
 private struct SectionTitle: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let label: String
     init(_ label: String) { self.label = label }
     var body: some View {
@@ -160,6 +162,8 @@ private struct SectionTitle: View {
 }
 
 private struct StatBubble: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let value: String; let label: String; let tint: Color
     var body: some View {
         VStack(spacing: 2) {
@@ -171,6 +175,8 @@ private struct StatBubble: View {
 }
 
 private struct QuickCard: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let icon: String; let tint: Color; let title: String; let subtitle: String
     let action: () -> Void
     @State private var hovered = false
@@ -214,6 +220,8 @@ private struct QuickCard: View {
 }
 
 private struct RecentCard: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let url: URL
     @EnvironmentObject var state: AppState
     @State private var hovered = false
@@ -254,6 +262,8 @@ private struct RecentCard: View {
 }
 
 private struct BandCard: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let band: CodexNode
     @EnvironmentObject var state: AppState
     @State private var hovered = false

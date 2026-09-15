@@ -4,6 +4,8 @@ import AppKit
 // MARK: - Modern command palette (⌘P)
 
 struct CommandPaletteView: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
     @State private var selectedIdx: Int = 0
     @FocusState private var focused: Bool
@@ -126,6 +128,8 @@ struct CommandPaletteView: View {
 }
 
 private struct ResultRow: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let rank: FuzzyMatch.Ranked
     let isSelected: Bool
 
@@ -164,6 +168,8 @@ private struct ResultRow: View {
 }
 
 private struct HintKey: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let key: String; let label: String
     init(_ k: String, _ l: String) { key = k; label = l }
     var body: some View {

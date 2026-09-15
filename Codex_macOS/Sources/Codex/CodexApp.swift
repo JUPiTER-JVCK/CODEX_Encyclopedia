@@ -86,8 +86,7 @@ struct CodexApp: App {
                 // is now the main way to keep a document in the strip.
                 Button("Pin / Unpin Current") {
                     if let u = state.selectedTab {
-                        state.bookmarks.togglePin(u.path)
-                        state.objectWillChange.send()
+                        state.togglePin(u)
                     }
                 }.keyboardShortcut("d", modifiers: [.command])
                 Button("Reveal in Finder") {
@@ -121,9 +120,16 @@ final class AppState: ObservableObject {
     /// it — `Inspector`, `Toolbar`, `Sidebar` and `TabStrip` all ask "what am I
     /// looking at". The plan for this stage called for splitting it into
     /// "active tab" and "displayed document", on the theory that a transient
-    /// document could be shown while no tab was active. In this model it
-    /// cannot: a displayed file is either pinned or *is* the transient tab, so
-    /// it is always in the strip. One meaning, so one property.
+    /// document could be shown while no tab was active.
+    ///
+    /// It doesn't need two properties — a displayed file is either pinned or
+    /// *is* the transient tab, so it is always in the strip. But that only
+    /// holds because `togglePin` and `reconcileSelection` arrange it. The
+    /// first version of this comment stated the invariant and left it to luck:
+    /// unpinning the file you were reading, or reloading after renaming it,
+    /// dropped it out of the strip with `selectedTab` still pointing at it.
+    /// Both routes are closed now. Mutate pins through `togglePin`, not
+    /// through `bookmarks` directly, or they open again.
     @Published var selectedTab: URL?
 
     /// The tab strip: pinned files in pin order, then the transient tab.
@@ -241,6 +247,43 @@ final class AppState: ObservableObject {
         paletteQuery = ""
     }
 
+    /// Pin or unpin, keeping the strip and the selection consistent.
+    ///
+    /// **This exists because the invariant does not hold on its own.** Five
+    /// call sites used to reach into `bookmarks.togglePin` directly, and
+    /// unpinning the document you were reading dropped it out of the derived
+    /// strip while `selectedTab` still pointed at it: a file on screen with no
+    /// pill active. The comment on `selectedTab` asserted that could not
+    /// happen. Asserting it is not the same as arranging it.
+    ///
+    /// Unpinning what you are reading hands it to the transient slot — you are
+    /// still reading it, it is just no longer kept. Pinning what is transient
+    /// frees that slot, since the file is in the strip as a pin now.
+    func togglePin(_ url: URL) {
+        let path = url.path
+        if bookmarks.isPinned(path) {
+            bookmarks.unpin(path)
+            if selectedTab == url { transientTab = url }
+        } else {
+            bookmarks.pin(path)
+            if transientTab == url { transientTab = nil }
+        }
+        objectWillChange.send()
+    }
+
+    /// Drop a selection whose file has gone, and land somewhere sensible.
+    ///
+    /// `openTabs` filters pins whose file no longer exists, so a rename plus
+    /// ⌘R made the tab vanish while `selectedTab` kept pointing at it — the
+    /// same broken invariant by a different route. Reload now reconciles.
+    private func reconcileSelection() {
+        let fm = FileManager.default
+        if let t = transientTab, !fm.fileExists(atPath: t.path) { transientTab = nil }
+        guard let sel = selectedTab, !fm.fileExists(atPath: sel.path) else { return }
+        // A remaining pin beats bouncing to Welcome.
+        selectedTab = openTabs.first
+    }
+
     /// Remove a tab from the strip: unpin it, or clear the transient slot.
     func closeTab(_ url: URL) {
         let indexBefore = openTabs.firstIndex(of: url)
@@ -290,6 +333,7 @@ final class AppState: ObservableObject {
         DocumentStore.invalidateAll()
         root = CodexTree.build(root: projectRoot)
         allFiles = CodexTree.allFiles(under: projectRoot)
+        reconcileSelection()
     }
 
     /// Route a markdown link click through the right behavior.

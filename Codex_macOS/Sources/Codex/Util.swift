@@ -56,11 +56,16 @@ struct Bookmarks: Codable {
     /// Decode each key on its own, falling back rather than failing.
     ///
     /// Swift's synthesised `init(from:)` calls `decode`, not `decodeIfPresent`,
-    /// so property defaults are *not* applied to a missing key — the whole
-    /// decode throws instead. Paired with `load()`'s `try?`, that turns one
-    /// unknown key into an empty `Bookmarks`: every pin and recent silently
-    /// gone. Adding a field in a later version would have done exactly that to
-    /// every existing `state.json`.
+    /// so property defaults are *not* applied to a **missing** key — the whole
+    /// decode throws `keyNotFound` instead. Paired with `load()`'s `try?`, that
+    /// turns one absent key into an empty `Bookmarks`: every pin and recent
+    /// silently gone. Adding a field in a later version would have done exactly
+    /// that to every `state.json` written before it, since none of them carry
+    /// the new key. A malformed value for a key that *is* present fails the
+    /// same way.
+    ///
+    /// (An *unknown* key is the harmless case — a keyed container simply never
+    /// looks at it. An earlier version of this comment had that backwards.)
     ///
     /// Preferences were moved to their own file partly to avoid this, and the
     /// commit that did so claimed both files decoded tolerantly. Only one of

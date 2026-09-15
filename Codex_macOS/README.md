@@ -42,9 +42,11 @@ SwiftUI rendering the markdown tree straight on the GPU.
 - **Bookmarks + recents** persisted to
   `~/Library/Application Support/Codex/state.json`, with appearance
   preferences in `preferences.json` beside it. Both decode key by key and
-  write atomically, so an unknown key costs that one setting rather than the
-  whole file — `Bookmarks` was all-or-nothing until recently, which would have
-  silently emptied every pin the first time a field was added to it
+  write atomically, so a **missing** key costs that one setting rather than the
+  whole file. `Bookmarks` was all-or-nothing until recently: because Swift's
+  synthesised decoder throws on an absent key rather than using the property's
+  default, the first release to add a field would have emptied every existing
+  pin. (Extra keys were never the problem — a keyed decoder ignores those.)
 - **Portable bundle** — records the project path at build time, so the `.app`
   keeps working after you move it to `/Applications`
 

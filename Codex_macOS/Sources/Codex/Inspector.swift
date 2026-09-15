@@ -197,8 +197,7 @@ private struct InfoPane: View {
                     }
                     ActionRow(icon: state.bookmarks.isPinned(url.path) ? "star.slash" : "star",
                               label: state.bookmarks.isPinned(url.path) ? "Unpin" : "Pin to Top") {
-                        state.bookmarks.togglePin(url.path)
-                        state.objectWillChange.send()
+                        state.togglePin(url)
                     }
                 }
                 .padding(.horizontal, 14).padding(.vertical, 12)

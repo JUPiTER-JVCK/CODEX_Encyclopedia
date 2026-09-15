@@ -341,7 +341,7 @@ section turns the build red rather than quietly retiring the check.
 Currently:
 
 - 278 markdown files
-- 1021 internal links, 0 broken
+- 1022 internal links, 0 broken
 - Every file carries an H1, every pipe table well-formed
 - All 138 section indexes titled `<Layer> — <Section>`
 - 103 files carry a diagram, all fenced, tagged ` ```text `, and within 90

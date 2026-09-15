@@ -126,8 +126,8 @@ private struct OutlineRow: View {
                 .fill(level == 1 ? Theme.blue : Theme.overlay0.opacity(0.5))
                 .frame(width: 2, height: level == 1 ? 14 : 10)
             Text(text)
-                .font(level == 1 ? .system(size: 12, weight: .semibold)
-                                 : .system(size: 11, weight: level == 2 ? .medium : .regular))
+                .font(level == 1 ? .system(size: Theme.size(12), weight: .semibold)
+                                 : .system(size: Theme.size(11), weight: level == 2 ? .medium : .regular))
                 .foregroundColor(level == 1 ? Theme.text : Theme.subtext)
                 .lineLimit(1)
                 .truncationMode(.tail)
@@ -173,7 +173,7 @@ private struct InfoPane: View {
                         FlowLayout(spacing: 6) {
                             ForEach(tags, id: \.self) { tag in
                                 Text(tag)
-                                    .font(.system(size: 11, weight: .medium))
+                                    .font(.system(size: Theme.size(11), weight: .medium))
                                     .foregroundColor(Theme.accent)
                                     .padding(.horizontal, 8).padding(.vertical, 3)
                                     .background(Capsule().fill(Theme.accent.opacity(0.15)))
@@ -268,11 +268,11 @@ private struct RecentRow: View {
                     .foregroundColor(Theme.overlay1)
                 VStack(alignment: .leading, spacing: 1) {
                     Text(CodexTree.fullTitle(for: url))
-                        .font(.system(size: 12, weight: .medium))
+                        .font(.system(size: Theme.size(12), weight: .medium))
                         .foregroundColor(Theme.text)
                         .lineLimit(1)
                     Text(url.deletingLastPathComponent().lastPathComponent)
-                        .font(.system(size: 10))
+                        .font(.system(size: Theme.size(10)))
                         .foregroundColor(Theme.overlay1)
                         .lineLimit(1)
                 }
@@ -295,7 +295,7 @@ struct SectionHeader: View {
     let label: String
     var body: some View {
         Text(label.uppercased())
-            .font(.system(size: 9, weight: .semibold))
+            .font(.system(size: Theme.size(9), weight: .semibold))
             .tracking(0.8)
             .foregroundColor(Theme.overlay1)
             .padding(.horizontal, 6).padding(.bottom, 4)
@@ -309,9 +309,9 @@ private struct InfoRow: View {
             Image(systemName: icon).font(.system(size: 11))
                 .foregroundColor(Theme.overlay1).frame(width: 14)
             VStack(alignment: .leading, spacing: 1) {
-                Text(label).font(.system(size: 10, weight: .medium))
+                Text(label).font(.system(size: Theme.size(10), weight: .medium))
                     .foregroundColor(Theme.overlay1)
-                Text(value).font(.system(size: 12, design: .monospaced))
+                Text(value).font(.system(size: Theme.size(12), design: .monospaced))
                     .foregroundColor(Theme.text)
                     .textSelection(.enabled)
                     .lineLimit(2)
@@ -354,7 +354,7 @@ private struct EmptyPaneView: View {
                 .foregroundColor(Theme.overlay0)
             Text(title).font(.system(size: 13, weight: .semibold))
                 .foregroundColor(Theme.subtext)
-            Text(subtitle).font(.system(size: 11))
+            Text(subtitle).font(.system(size: Theme.size(11)))
                 .foregroundColor(Theme.overlay1)
                 .multilineTextAlignment(.center)
         }

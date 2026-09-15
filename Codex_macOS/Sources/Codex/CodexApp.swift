@@ -25,7 +25,12 @@ struct CodexApp: App {
             RootView()
                 .environmentObject(state)
                 .frame(minWidth: 1180, minHeight: 740)
-                .preferredColorScheme(.dark)
+                // Was a hardcoded `.dark`. With Latte, Solarized Light,
+                // Gruvbox Light and Rosé Pine Dawn in the picker, the window
+                // has to follow the palette — otherwise macOS renders its own
+                // controls and the vibrancy materials dark against a light
+                // page.
+                .preferredColorScheme(prefs.palette.isDark ? .dark : .light)
         }
         .windowStyle(.hiddenTitleBar)
         .windowToolbarStyle(.unified(showsTitle: false))
@@ -88,6 +93,12 @@ struct CodexApp: App {
                 }.keyboardShortcut("r", modifiers: [.command, .shift])
             }
         }
+
+        // A sibling scene, not a modifier on the one above — `.commands` has
+        // to stay attached to the WindowGroup or the menu items register
+        // against the settings window instead of the app. `Settings` is what
+        // wires ⌘, on macOS and places the item under the app menu.
+        Settings { AppearanceSettings() }
     }
 }
 
@@ -231,6 +242,7 @@ final class AppState: ObservableObject {
 
 struct RootView: View {
     @EnvironmentObject var state: AppState
+    @ObservedObject private var prefs = Preferences.shared
 
     var body: some View {
         VStack(spacing: 0) {
@@ -257,6 +269,14 @@ struct RootView: View {
         // base, the two side panes their vibrancy.
         .background(WindowVibrancyConfigurator().frame(width: 0, height: 0))
         .overlay(paletteOverlay)
+        // Every colour in this subtree comes from `Theme.base` and friends,
+        // which are plain computed properties — SwiftUI has no dependency on
+        // them and no reason to think anything is stale when the palette
+        // changes. Keying on the revision counter discards the subtree and
+        // rebuilds it, which is the blunt instrument that actually works.
+        // Cost is one full re-render per theme change, which is a thing the
+        // user just asked for and is watching.
+        .id(prefs.revision)
     }
 
     private var mainPane: some View {

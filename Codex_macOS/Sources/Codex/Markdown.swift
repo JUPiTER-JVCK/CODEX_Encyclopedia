@@ -477,7 +477,7 @@ private struct ListBlock: View {
                     Group {
                         if items[idx].ordered {
                             Text("\(numbering[idx]).")
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                .font(.system(size: Theme.size(13), weight: .semibold, design: .rounded))
                                 .foregroundColor(Theme.peach)
                                 .frame(minWidth: 22, alignment: .trailing)
                         } else {
@@ -531,7 +531,7 @@ private struct CodeBlock: View {
                 Circle().fill(Theme.green.opacity(0.85)).frame(width: 10, height: 10)
                 if let lang = language, !lang.isEmpty {
                     Text(lang.lowercased())
-                        .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                        .font(.system(size: Theme.size(10), weight: .semibold, design: .monospaced))
                         .foregroundColor(Theme.subtext)
                         .padding(.horizontal, 8).padding(.vertical, 2)
                         .background(Theme.surface1.opacity(0.6))
@@ -543,7 +543,7 @@ private struct CodeBlock: View {
                     Label(copied ? "Copied" : "Copy",
                           systemImage: copied ? "checkmark" : "doc.on.doc")
                         .labelStyle(.titleAndIcon)
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.system(size: Theme.size(11), weight: .medium))
                         .foregroundColor(copied ? Theme.green : Theme.subtext)
                 }
                 .buttonStyle(.plain)
@@ -668,7 +668,7 @@ private struct QuoteBlock: View {
                     .padding(.top, 2)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(kind.label)
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(.system(size: Theme.size(11), weight: .semibold))
                         .tracking(0.5)
                         .foregroundColor(kind.tint)
                     ParagraphBlock(text: body, sourceFile: sourceFile, projectRoot: projectRoot, onLink: onLink)
@@ -847,14 +847,14 @@ struct PageHero: View {
                     .font(.system(size: 10))
                     .foregroundColor(Theme.lavender)
                 Text("Codex")
-                    .font(.system(size: 11, weight: .semibold))
+                    .font(.system(size: Theme.size(11), weight: .semibold))
                     .foregroundColor(Theme.subtext)
                 ForEach(Array(pathParts.dropLast().enumerated()), id: \.offset) { _, part in
                     Image(systemName: "chevron.right")
                         .font(.system(size: 8, weight: .bold))
                         .foregroundColor(Theme.overlay0)
                     Text(prettifyCrumb(part))
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.system(size: Theme.size(11), weight: .medium))
                         .foregroundColor(Theme.subtext)
                 }
             }
@@ -870,7 +870,7 @@ struct PageHero: View {
             if let summary = fm.summary, !summary.isEmpty {
                 Text(InlineRenderer.attributedString(summary,
                                                      baseColor: Theme.subtext,
-                                                     baseFont: .system(size: 16, weight: .regular)))
+                                                     baseFont: .system(size: Theme.size(16), weight: .regular)))
                     .lineSpacing(4)
                     .padding(.bottom, 2)
             }
@@ -891,7 +891,7 @@ struct PageHero: View {
                         Image(systemName: "doc.badge.clock").font(.system(size: 10))
                             .foregroundColor(Theme.overlay1)
                         Text(HumanDate.describe(modified))
-                            .font(.system(size: 11))
+                            .font(.system(size: Theme.size(11)))
                             .foregroundColor(Theme.overlay1)
                     }
                 }
@@ -900,7 +900,7 @@ struct PageHero: View {
                     FlowLayout(spacing: 5) {
                         ForEach(fm.tags.prefix(8), id: \.self) { tag in
                             Text(tag)
-                                .font(.system(size: 10, weight: .medium))
+                                .font(.system(size: Theme.size(10), weight: .medium))
                                 .foregroundColor(Theme.accent)
                                 .padding(.horizontal, 7).padding(.vertical, 2)
                                 .background(Capsule().fill(Theme.accent.opacity(0.14)))
@@ -973,7 +973,7 @@ struct PageFooter: View {
                 }
                 Spacer()
                 Text(fm.path)
-                    .font(.system(size: 10, design: .monospaced))
+                    .font(.system(size: Theme.size(10), design: .monospaced))
                     .foregroundColor(Theme.overlay1)
             }
         }
@@ -1000,11 +1000,11 @@ private struct AdjacentCard: View {
                         }
                         VStack(alignment: direction == .prev ? .leading : .trailing, spacing: 2) {
                             Text(direction == .prev ? "Previous" : "Next")
-                                .font(.system(size: 10, weight: .semibold))
+                                .font(.system(size: Theme.size(10), weight: .semibold))
                                 .tracking(0.6)
                                 .foregroundColor(Theme.overlay1)
                             Text(CodexTree.fullTitle(for: url))
-                                .font(.system(size: 13, weight: .semibold))
+                                .font(.system(size: Theme.size(13), weight: .semibold))
                                 .foregroundColor(Theme.text)
                                 .lineLimit(1)
                         }

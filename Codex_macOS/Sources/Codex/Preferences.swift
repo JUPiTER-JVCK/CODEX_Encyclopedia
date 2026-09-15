@@ -54,10 +54,65 @@ final class Preferences: ObservableObject {
 
     @Published var columnWidth: ColumnWidth = .comfortable { didSet { save() } }
 
+    // MARK: Appearance
+
+    /// Which colour scheme, by `Palette.id`.
+    @Published var themeID: String = Palette.mocha.id {
+        didSet { apply(); bump(); save() }
+    }
+
+    /// True-black backgrounds on whichever dark scheme is active.
+    ///
+    /// A modifier rather than a scheme of its own, so it composes with all
+    /// eleven dark palettes instead of doubling the list. No effect on a light
+    /// palette, where true black is not what anyone means by OLED.
+    @Published var oled: Bool = false {
+        didSet { apply(); bump(); save() }
+    }
+
+    /// Text size multiplier. Icon glyphs deliberately do not follow it — see
+    /// `Theme.size(_:)`.
+    @Published var fontScale: Double = 1.0 {
+        didSet { apply(); bump(); save() }
+    }
+
+    static let fontScaleRange: ClosedRange<Double> = 0.85...1.40
+    static let fontScaleStep: Double = 0.05
+
+    /// Changes whenever the appearance changes, so views can key `.id()` on it.
+    ///
+    /// `Theme.base` is a plain computed property, not a `@Published` one, so
+    /// SwiftUI has no reason to believe a view depending on it is stale. This
+    /// counter is the signal that forces the rebuild.
+    @Published private(set) var revision: Int = 0
+
+    /// The palette in effect, OLED applied.
+    var palette: Palette {
+        let scheme = Palette.named(themeID) ?? .mocha
+        return oled ? scheme.oled : scheme
+    }
+
+    /// Push the current choices into `Theme`, which is where every view reads.
+    private func apply() {
+        Theme.palette = palette
+        Theme.fontScale = CGFloat(fontScale)
+    }
+
+    private func bump() { revision &+= 1 }
+
+    func nudgeFontScale(by delta: Double) {
+        let next = (fontScale + delta)
+        fontScale = min(max(next, Preferences.fontScaleRange.lowerBound),
+                        Preferences.fontScaleRange.upperBound)
+    }
+
     // MARK: Persistence
 
     private struct Stored: Codable {
         var columnWidth: String?
+        var themeID: String?
+        var oled: Bool?
+        var fontScale: Double?
     }
 
     private static var storeURL: URL {
@@ -69,18 +124,26 @@ final class Preferences: ObservableObject {
     }
 
     private init() {
+        defer { apply() }
         guard let data = try? Data(contentsOf: Preferences.storeURL),
               let stored = try? JSONDecoder().decode(Stored.self, from: data) else { return }
-        // Unknown values fall back rather than failing the whole load — a
-        // preferences file from a newer build naming a width this version does
-        // not have should cost that one setting, not all of them.
-        if let raw = stored.columnWidth, let w = ColumnWidth(rawValue: raw) {
-            columnWidth = w
+        // Each key falls back on its own. A preferences file from a newer build
+        // naming a width or a scheme this version does not have should cost
+        // that one setting, not all of them — and never the whole file.
+        if let raw = stored.columnWidth, let w = ColumnWidth(rawValue: raw) { columnWidth = w }
+        if let raw = stored.themeID, Palette.named(raw) != nil { themeID = raw }
+        if let flag = stored.oled { oled = flag }
+        if let scale = stored.fontScale {
+            fontScale = min(max(scale, Preferences.fontScaleRange.lowerBound),
+                            Preferences.fontScaleRange.upperBound)
         }
     }
 
     private func save() {
-        let stored = Stored(columnWidth: columnWidth.rawValue)
+        let stored = Stored(columnWidth: columnWidth.rawValue,
+                            themeID: themeID,
+                            oled: oled,
+                            fontScale: fontScale)
         guard let data = try? JSONEncoder().encode(stored) else { return }
         // Atomic: a crash mid-write leaves the previous file intact rather
         // than a truncated one that fails to parse.

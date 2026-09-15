@@ -152,7 +152,7 @@ private struct SectionTitle: View {
     init(_ label: String) { self.label = label }
     var body: some View {
         Text(label.uppercased())
-            .font(.system(size: 11, weight: .semibold))
+            .font(.system(size: Theme.size(11), weight: .semibold))
             .tracking(1.4)
             .foregroundColor(Theme.overlay1)
             .padding(.bottom, 4)
@@ -163,8 +163,8 @@ private struct StatBubble: View {
     let value: String; let label: String; let tint: Color
     var body: some View {
         VStack(spacing: 2) {
-            Text(value).font(.system(size: 22, weight: .bold, design: .rounded)).foregroundColor(tint)
-            Text(label).font(.system(size: 11, weight: .medium)).foregroundColor(Theme.overlay1)
+            Text(value).font(.system(size: Theme.size(22), weight: .bold, design: .rounded)).foregroundColor(tint)
+            Text(label).font(.system(size: Theme.size(11), weight: .medium)).foregroundColor(Theme.overlay1)
         }
         .frame(minWidth: 70)
     }
@@ -283,12 +283,12 @@ private struct BandCard: View {
                 VStack(alignment: .leading, spacing: 3) {
                     ForEach(band.children.prefix(4)) { layer in
                         Text("• " + layer.label)
-                            .font(.system(size: 11)).foregroundColor(Theme.subtext)
+                            .font(.system(size: Theme.size(11))).foregroundColor(Theme.subtext)
                             .lineLimit(1)
                     }
                     if band.children.count > 4 {
                         Text("… and \(band.children.count - 4) more")
-                            .font(.system(size: 10)).foregroundColor(Theme.overlay1)
+                            .font(.system(size: Theme.size(10))).foregroundColor(Theme.overlay1)
                     }
                 }
             }

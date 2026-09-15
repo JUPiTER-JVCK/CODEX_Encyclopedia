@@ -45,7 +45,7 @@ private struct TabPill: View {
                 .font(.system(size: 10))
                 .foregroundColor(isActive ? Theme.blue : Theme.overlay1)
             Text(displayName)
-                .font(.system(size: 12, weight: isActive ? .semibold : .regular))
+                .font(.system(size: Theme.size(12), weight: isActive ? .semibold : .regular))
                 .foregroundColor(isActive ? Theme.text : Theme.subtext)
                 .lineLimit(1)
 

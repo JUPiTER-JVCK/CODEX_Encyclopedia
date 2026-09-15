@@ -154,6 +154,7 @@ CODEX_Encyclopedia-/
 ├── SECURITY.md            ← reporting a vulnerability
 ├── LICENSE                ← MIT — apps and tooling
 ├── LICENSE-docs           ← CC BY-SA 4.0 — the codex
+├── THIRD_PARTY.md         ← attribution: colour schemes, PDFs, fonts
 ├── _assets/               ← reference images
 │
 ├── 00_Physics/            ─┐
@@ -338,7 +339,7 @@ section turns the build red rather than quietly retiring the check.
 
 Currently:
 
-- 277 markdown files
+- 278 markdown files
 - 1015 internal links, 0 broken
 - Every file carries an H1, every pipe table well-formed
 - All 138 section indexes titled `<Layer> — <Section>`

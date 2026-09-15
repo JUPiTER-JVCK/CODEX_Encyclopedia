@@ -55,17 +55,17 @@ struct CommandPaletteView: View {
             // until it is, the placeholder says what actually happens.
             TextField("Search files and paths…", text: query)
                 .textFieldStyle(.plain)
-                .font(.system(size: 15))
+                .font(.system(size: Theme.size(15)))
                 .foregroundColor(Theme.text)
                 .focused($focused)
                 .onSubmit(open)
                 .onChange(of: state.paletteQuery) { _ in selectedIdx = 0 }
             HStack(spacing: 4) {
                 Text("\(results.count)")
-                    .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                    .font(.system(size: Theme.size(10), weight: .semibold, design: .monospaced))
                     .foregroundColor(Theme.overlay1)
                 Text(results.count == 1 ? "result" : "results")
-                    .font(.system(size: 10)).foregroundColor(Theme.overlay1)
+                    .font(.system(size: Theme.size(10))).foregroundColor(Theme.overlay1)
             }
             .padding(.horizontal, 8).padding(.vertical, 3)
             .background(Capsule().fill(Theme.surface0))
@@ -83,7 +83,7 @@ struct CommandPaletteView: View {
                                 .font(.system(size: 28, weight: .light))
                                 .foregroundColor(Theme.overlay0)
                             Text("No matches for \"\(state.paletteQuery)\"")
-                                .font(.system(size: 12))
+                                .font(.system(size: Theme.size(12)))
                                 .foregroundColor(Theme.subtext)
                         }
                         .padding(40)
@@ -141,11 +141,11 @@ private struct ResultRow: View {
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text(CodexTree.fullTitle(for: rank.url))
-                    .font(.system(size: 13, weight: isSelected ? .semibold : .medium))
+                    .font(.system(size: Theme.size(13), weight: isSelected ? .semibold : .medium))
                     .foregroundColor(isSelected ? Theme.text : Theme.subtext)
                 if !rank.parent.isEmpty {
                     Text(rank.parent)
-                        .font(.system(size: 10, design: .monospaced))
+                        .font(.system(size: Theme.size(10), design: .monospaced))
                         .foregroundColor(Theme.overlay1)
                         .lineLimit(1).truncationMode(.middle)
                 }
@@ -169,11 +169,11 @@ private struct HintKey: View {
     var body: some View {
         HStack(spacing: 4) {
             Text(key)
-                .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                .font(.system(size: Theme.size(10), weight: .semibold, design: .monospaced))
                 .foregroundColor(Theme.subtext)
                 .padding(.horizontal, 5).padding(.vertical, 1)
                 .background(RoundedRectangle(cornerRadius: 3).fill(Theme.surface0))
-            Text(label).font(.system(size: 10)).foregroundColor(Theme.overlay1)
+            Text(label).font(.system(size: Theme.size(10))).foregroundColor(Theme.overlay1)
         }
     }
 }

@@ -244,7 +244,7 @@ struct ToolbarSearchField: View {
                 }
             if state.paletteQuery.isEmpty {
                 Text("⌘P")
-                    .font(.system(size: 10, weight: .medium, design: .monospaced))
+                    .font(.system(size: Theme.size(10), weight: .medium, design: .monospaced))
                     .foregroundColor(Theme.overlay0)
                     .padding(.horizontal, 5).padding(.vertical, 1)
                     .background(RoundedRectangle(cornerRadius: 3).fill(Theme.surface1.opacity(0.6)))

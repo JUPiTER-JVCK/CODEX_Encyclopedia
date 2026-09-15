@@ -75,7 +75,7 @@ private struct BandSection: View {
                         .foregroundColor(Theme.overlay0)
                         .frame(width: 10)
                     Text(band.label.uppercased())
-                        .font(.system(size: 10, weight: .semibold))
+                        .font(.system(size: Theme.size(10), weight: .semibold))
                         .tracking(0.8)
                         .foregroundColor(Theme.overlay1)
                     Spacer()
@@ -175,9 +175,9 @@ private struct LayerRow: View {
     }
 
     private var rowFont: Font {
-        if node.kind == .layer  { return .system(size: 12.5, weight: .semibold) }
-        if node.kind == .section { return .system(size: 12, weight: .medium) }
-        return .system(size: 12)
+        if node.kind == .layer  { return .system(size: Theme.size(12.5), weight: .semibold) }
+        if node.kind == .section { return .system(size: Theme.size(12), weight: .medium) }
+        return .system(size: Theme.size(12))
     }
     private var rowColor: Color {
         if isSelected { return Theme.text }
@@ -234,7 +234,7 @@ private struct PinnedSection: View {
                     .foregroundColor(Theme.yellow)
                     .frame(width: 10)
                 Text("PINNED")
-                    .font(.system(size: 10, weight: .semibold))
+                    .font(.system(size: Theme.size(10), weight: .semibold))
                     .tracking(0.8)
                     .foregroundColor(Theme.overlay1)
                 Spacer()
@@ -290,7 +290,7 @@ private struct PinnedRow: View {
                     // its own, so a pinned INDEX.md read "Index" and matched
                     // nothing else on screen.
                     Text(CodexTree.fullTitle(for: url))
-                        .font(.system(size: 12))
+                        .font(.system(size: Theme.size(12)))
                         .foregroundColor(exists ? (isSelected ? Theme.text : Theme.subtext)
                                                 : Theme.overlay0)
                         .strikethrough(!exists, color: Theme.overlay0)

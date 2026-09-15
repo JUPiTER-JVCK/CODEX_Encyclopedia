@@ -66,6 +66,7 @@ import argparse
 import os
 import re
 import sys
+import tempfile
 from typing import NamedTuple
 
 # Run as a script, sys.path[0] is tools/; imported by stats_audit,
@@ -193,15 +194,21 @@ def classify(lines: list[str]) -> tuple[list[int], list[int]]:
     return sorted(fenced), loose
 
 
-def image_faults(path: str, lines: list[str],
+def image_faults(root: str, path: str, lines: list[str],
                  blocks: list[Block]) -> list[tuple[int, str, str]]:
-    """References to image files that are not in the repository.
+    """References to image files that are not under `root`.
 
     Scoped to frontmatter and to prose outside fences. A `plt.savefig(...)`
     call inside a Python block names a file the *reader* will create, not one
-    this repository ships.
+    this repository ships — and neither does a ` ```yaml ` block showing what
+    a `source_image:` key looks like. The fence check comes first for exactly
+    that reason; frontmatter is never fenced, so nothing real is skipped.
+
+    `root` is the tree being audited, not the tree this script lives in. They
+    are the same for every real run and differ under `--root`, where resolving
+    `_assets/…` against the script's own checkout would pass a missing image
+    or fail a present one.
     """
-    root = _common.repo_root()
     here = os.path.dirname(os.path.abspath(path))
     fenced = {ln for block in blocks for ln, _ in block.body}
     faults = []
@@ -212,11 +219,11 @@ def image_faults(path: str, lines: list[str],
                            f"{ref} is referenced but not in the repository"))
 
     for i, raw in enumerate(lines, start=1):
+        if i in fenced:
+            continue
         m = SOURCE_IMAGE_RE.match(raw)
         if m:
             check(i, m.group(1), os.path.normpath(os.path.join(here, m.group(1))))
-            continue
-        if i in fenced:
             continue
         for ref in ASSET_REF_RE.findall(raw):
             tail = ref[ref.index("_assets/"):]
@@ -227,8 +234,15 @@ def image_faults(path: str, lines: list[str],
     return faults
 
 
-def audit_file(path: str) -> tuple[list[tuple[int, str, str]], bool]:
-    """Faults in one file, and whether it contains a diagram."""
+def audit_file(path: str,
+               root: str | None = None) -> tuple[list[tuple[int, str, str]], bool]:
+    """Faults in one file, and whether it contains a diagram.
+
+    `root` defaults to this script's own repository, which is what every
+    caller outside `--root` means.
+    """
+    if root is None:
+        root = _common.repo_root()
     with open(path, encoding="utf-8") as fh:
         lines = fh.read().split("\n")
 
@@ -249,7 +263,7 @@ def audit_file(path: str) -> tuple[list[tuple[int, str, str]], bool]:
                 "expected ```text")
                for block in diagrams if not block.info]
 
-    faults += image_faults(path, lines, blocks)
+    faults += image_faults(root, path, lines, blocks)
 
     return faults, bool(diagrams)
 
@@ -298,32 +312,45 @@ def read_backlog(root: str) -> tuple[set[str], int | None]:
     return entries, claimed
 
 
-def coverage_faults(root: str) -> list[tuple[str, int, str, str]]:
-    """NO DIAGRAM and BACKLOG STALE, across the whole codex."""
+def coverage_faults(root: str,
+                    drawn: dict[str, bool]) -> list[tuple[str, int, str, str]]:
+    """NO DIAGRAM and BACKLOG STALE, across the whole codex.
+
+    `drawn` maps every relative path to whether it holds a diagram, taken
+    from the caller's pass over the tree. Re-deriving it here would mean
+    parsing — and re-`stat`ing every image reference in — all 278 files a
+    second time, for an answer already in hand.
+    """
     backlog, claimed = read_backlog(root)
     faults: list[tuple[str, int, str, str]] = []
-    in_scope: set[str] = set()
-    drawn: set[str] = set()
 
-    for path, rel in _common.walk_markdown(root):
-        if not wants_diagram(rel):
-            continue
-        in_scope.add(rel)
-        if audit_file(path)[1]:
-            drawn.add(rel)
-        elif rel not in backlog:
+    # A layer README is the one file that cannot be backlogged: it is the
+    # overview of a whole layer, and requiring one is the check this audit
+    # has always made. It is held to that unconditionally below, so it is
+    # excluded here — covered by both passes it would report NO DIAGRAM
+    # twice and count against the backlog header it may not appear in.
+    layers = {os.path.relpath(p, root) for p in layer_readmes(root)}
+
+    in_scope = {rel for rel in drawn if wants_diagram(rel)} - layers
+    has = {rel for rel in in_scope if drawn[rel]}
+
+    for rel in sorted(in_scope - has):
+        if rel not in backlog:
             faults.append((rel, 1, "NO DIAGRAM",
                            "no diagram, and not listed in " + BACKLOG_PATH))
 
     for rel in sorted(backlog):
-        if rel not in in_scope:
+        if rel in layers:
+            faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                           f"{rel} is a layer README and cannot be backlogged"))
+        elif rel not in in_scope:
             faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
                            f"{rel} is not a file this audit checks"))
-        elif rel in drawn:
+        elif rel in has:
             faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
                            f"{rel} has a diagram now — delete its line"))
 
-    real = len(in_scope - drawn)
+    real = len(in_scope - has)
     if claimed is None:
         faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
                        "header does not state how many files remain"))
@@ -331,11 +358,9 @@ def coverage_faults(root: str) -> list[tuple[str, int, str, str]]:
         faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
                        f"header claims {claimed} files remain, really {real}"))
 
-    # A layer README is the one file that cannot be backlogged: it is the
-    # overview of a whole layer and the check that has always covered it.
-    for path in layer_readmes(root):
-        if not audit_file(path)[1]:
-            faults.append((os.path.relpath(path, root), 1, "NO DIAGRAM",
+    for rel in sorted(layers):
+        if not drawn.get(rel):
+            faults.append((rel, 1, "NO DIAGRAM",
                            "a layer overview should show where the layer sits"))
 
     return faults
@@ -443,7 +468,81 @@ FAULT_CASES = [
         ["```python", 'plt.savefig("never_committed.png")', "```"],
         [],
     ),
+    (
+        "a source_image line shown as an example is not",
+        ["```yaml", "source_image: ../../_assets/example.png", "```"],
+        [],
+    ),
 ]
+
+
+DIAGRAM = "```text\n┌───┐\n│ x │\n└───┘\n```\n"
+PLAIN = "# Heading\n\nProse only.\n"
+
+# Coverage rules need a tree, not a document, so these build one. Both of the
+# first two assert something this file's prose claimed before anything
+# checked it — that a layer README is held to its diagram unconditionally and
+# is not part of the backlog arrangement — which is exactly the kind of claim
+# that turns out to be untrue.
+COVERAGE_CASES = [
+    (
+        "a layer README with no diagram faults once, not twice",
+        {"L/README.md": PLAIN, "L/topics/INDEX.md": DIAGRAM},
+        "# 0 files remain.\n",
+        ["NO DIAGRAM"],
+    ),
+    (
+        "a layer README cannot be backlogged out of that",
+        {"L/README.md": PLAIN, "L/topics/INDEX.md": DIAGRAM},
+        "# 0 files remain.\nL/README.md\n",
+        ["BACKLOG STALE", "NO DIAGRAM"],
+    ),
+    (
+        "an ordinary file's gap is excused by a backlog line",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        "# 1 files remain.\nL/topics/INDEX.md\n",
+        [],
+    ),
+    (
+        "and the header count is checked against it",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        "# 0 files remain.\nL/topics/INDEX.md\n",
+        ["BACKLOG STALE"],
+    ),
+    (
+        "an image present under the audited root is found there",
+        {"L/README.md": DIAGRAM + "\nSee `_assets/present.png`.\n",
+         "L/topics/INDEX.md": DIAGRAM, "_assets/present.png": "not really a png"},
+        "# 0 files remain.\n",
+        [],
+    ),
+]
+
+
+def coverage_self_test() -> int:
+    """Assert the coverage and backlog rules against small built trees."""
+    failed = 0
+    for name, files, backlog, want in COVERAGE_CASES:
+        with tempfile.TemporaryDirectory(prefix="diagram-audit-tree-") as root:
+            for rel, body in {**files,
+                              BACKLOG_PATH: backlog}.items():
+                dest = os.path.join(root, rel)
+                os.makedirs(os.path.dirname(dest), exist_ok=True)
+                with open(dest, "w", encoding="utf-8") as fh:
+                    fh.write(body)
+
+            drawn = {rel: audit_file(path, root)[1]
+                     for path, rel in _common.walk_markdown(root)}
+            kinds = [kind for _, _, kind, _ in coverage_faults(root, drawn)]
+            kinds += [kind for path, rel in _common.walk_markdown(root)
+                      for _, kind, _ in audit_file(path, root)[0]]
+
+        ok = sorted(kinds) == sorted(want)
+        print(f"  {'ok  ' if ok else 'FAIL'} {name}")
+        if not ok:
+            print(f"       got {sorted(kinds)} want {sorted(want)}")
+            failed += 1
+    return failed
 
 
 def self_test(root: str) -> int:
@@ -463,22 +562,27 @@ def self_test(root: str) -> int:
             failed += 1
 
     print("\nfault rules")
-    scratch = os.path.join(root, ".diagram_audit_selftest.md")
-    try:
+    # A private directory rather than a fixed name in the repository: the
+    # first version of this wrote `.diagram_audit_selftest.md` at the root
+    # and deleted it afterwards, which would have destroyed a real file of
+    # that name. `root` is still passed as the audit root so `_assets/…`
+    # references resolve against the tree under test, not the scratch dir.
+    with tempfile.TemporaryDirectory(prefix="diagram-audit-") as tmp:
+        scratch = os.path.join(tmp, "case.md")
         for name, doc, want in FAULT_CASES:
             with open(scratch, "w", encoding="utf-8") as fh:
                 fh.write("\n".join(doc) + "\n")
-            got = sorted({kind for _, kind, _ in audit_file(scratch)[0]})
+            got = sorted({kind for _, kind, _ in audit_file(scratch, root)[0]})
             ok = got == sorted(want)
             print(f"  {'ok  ' if ok else 'FAIL'} {name}")
             if not ok:
                 print(f"       got {got} want {sorted(want)}")
                 failed += 1
-    finally:
-        if os.path.exists(scratch):
-            os.remove(scratch)
 
-    total = len(FENCE_CASES) + len(FAULT_CASES)
+    print("\ncoverage rules")
+    failed += coverage_self_test()
+
+    total = len(FENCE_CASES) + len(FAULT_CASES) + len(COVERAGE_CASES)
     print(f"\n{total - failed}/{total} cases pass")
     return 1 if failed else 0
 
@@ -494,24 +598,24 @@ def main() -> int:
         return self_test(args.root)
 
     faults: list[tuple[str, int, str, str]] = []
-    files = diagrams = 0
+    drawn: dict[str, bool] = {}
 
+    # One parse per file. `coverage_faults` reads the result rather than
+    # walking the tree again.
     for path, rel in _common.walk_markdown(args.root):
-        files += 1
-        file_faults, has = audit_file(path)
-        diagrams += has
+        file_faults, has = audit_file(path, args.root)
+        drawn[rel] = has
         faults.extend((rel, ln, kind, detail)
                       for ln, kind, detail in file_faults)
 
-    faults.extend(coverage_faults(args.root))
+    faults.extend(coverage_faults(args.root, drawn))
     faults.sort()
 
     backlog, _ = read_backlog(args.root)
-    scoped = sum(1 for _, rel in _common.walk_markdown(args.root)
-                 if wants_diagram(rel))
+    scoped = sum(1 for rel in drawn if wants_diagram(rel))
 
-    print(f"markdown files   {files}")
-    print(f"with a diagram   {diagrams}")
+    print(f"markdown files   {len(drawn)}")
+    print(f"with a diagram   {sum(drawn.values())}")
     print(f"needing one      {scoped}")
     print(f"still to draw    {len(backlog)}")
     print(f"layer READMEs    {len(layer_readmes(args.root))}")

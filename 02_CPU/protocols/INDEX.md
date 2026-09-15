@@ -5,33 +5,45 @@ Not wire protocols — these are the *software contracts* the CPU layer enforces
 ## What is in this section
 
 ```text
-  Four kinds of contract, and the file organises them by what each one
-  fixes. Three of them vary by ISA, so they are shown against the same
-  three columns.
+  Nothing here is a wire protocol. These are the four contracts that let a
+  binary built by one toolchain run under another's kernel, on silicon
+  neither of them chose.
 
-                    x86-64            ARM               RISC-V
-                    ──────            ───               ──────
-  where args go     SysV AMD64        AAPCS64  x0…x7    psABI  a0…a7
-                    MS x64                              
-                    i386 SVR4         AAPCS (32) r0…r3
-                    Win fastcall,
-                    stdcall, cdecl
-
-  how traps work    IDT, vectors      EL0–EL3, VBAR     mtvec / stvec
-                    0–31 reserved     sync vs async     mcause / scause
-                    IST · MCE · NMI                     delegation
-
-  what ordering     TSO — store       weak — dmb,       WMO, or TSO with
-  you may assume    buffers only      dsb, isb          the Ztso extension
-
-  And one that varies by operating system rather than by ISA:
-
-  what a binary     ELF (Linux, BSD) · Mach-O (macOS, iOS) · PE/COFF
-  file looks like   (Windows) · RISC-V psABI tag sections
-
-  None of these is a wire protocol. They are the contracts that let code
-  built by one toolchain run under another's kernel — which is why 06
-  System Libraries targets them and 05 OS Kernel implements the trap side.
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │  your code, compiled                                                 │
+  └─────────────────────────────────┬────────────────────────────────────┘
+                                    │
+      ┌─────────────────────────────┴──────────────────────────────┐
+      │  what a binary file looks like                             │
+      │  ELF · Mach-O · PE/COFF · RISC-V psABI tag sections        │
+      │  — the one contract set by the OS, not by the ISA          │
+      └─────────────────────────────┬──────────────────────────────┘
+                                    │
+      ┌─────────────────────────────┴──────────────────────────────┐
+      │  where a call puts its arguments                           │
+      │  x86-64  SysV AMD64 · MS x64 · i386 SVR4 · fastcall,       │
+      │          stdcall, cdecl                                    │
+      │  ARM     AAPCS64  x0…x7    ·  AAPCS (32)  r0…r3            │
+      │  RISC-V  psABI    a0…a7                        ──▶ 06      │
+      └─────────────────────────────┬──────────────────────────────┘
+                                    │
+      ┌─────────────────────────────┴──────────────────────────────┐
+      │  what happens on a trap                                    │
+      │  x86-64  IDT, vectors 0–31 reserved · IST · MCE · NMI      │
+      │  ARM     EL0–EL3 · VBAR · synchronous vs asynchronous      │
+      │  RISC-V  mtvec / stvec · mcause / scause · delegation      │
+      │                                                ──▶ 05      │
+      └─────────────────────────────┬──────────────────────────────┘
+                                    │
+      ┌─────────────────────────────┴──────────────────────────────┐
+      │  what ordering you may assume                              │
+      │  x86-64  TSO — store buffers only                          │
+      │  ARM     weak — dmb, dsb, isb                              │
+      │  RISC-V  WMO, or TSO with the Ztso extension               │
+      └────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                              the hardware
 ```
 
 ## Application Binary Interfaces (ABIs)

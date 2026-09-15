@@ -4,25 +4,37 @@
 
 ```text
   Ten exercises. The file states no prerequisites between them, so the
-  grouping below is editorial — by what you are working on, not by order.
+  grouping is editorial — by what you are working on, not by order.
 
-  reading what is already there
-     1  Number systems & bit-twiddling   two's complement · masks · shifts
-     2  Hello, assembly                  "exit 42" in x86-64 and AArch64
-     3  Calling conventions              SysV · MS x64 · AAPCS
-     4  Disassembly literacy             objdump -d, prologue and epilogue
-
-  measuring the microarchitecture
-     5  Caches & locality                stride-access microbenchmarks
-     6  Branch prediction                defeat the predictor, read counters
-     7  SIMD intro                       SSE/AVX or NEON — vectorise a dot
-                                         product
-     8  Memory model                     atomics · fences · a lock from CAS
-
-  building and breaking one
-     9  Implement a tiny RISC-V core     single-cycle ─▶ pipelined  → 00d
-     10  Microarch attack & defence      Spectre v1 PoC, then mitigations
-                                                                  → 14
+  ┌─────────────────────────────────────────────────────────────────────┐
+  │  reading what is already there                                      │
+  │                                                                     │
+  │   1  Number systems & bit-twiddling   two's complement · masks      │
+  │   2  Hello, assembly                  "exit 42", x86-64 and AArch64 │
+  │   3  Calling conventions              SysV · MS x64 · AAPCS         │
+  │   4  Disassembly literacy             objdump -d, prologue/epilogue │
+  └──────────────────────────────────┬──────────────────────────────────┘
+                                     │
+  ┌──────────────────────────────────┴──────────────────────────────────┐
+  │  measuring the microarchitecture — the part no manual tells you      │
+  │                                                                     │
+  │   5  Caches & locality                stride-access benchmarks      │
+  │   6  Branch prediction                defeat it, then read counters │
+  │   7  SIMD intro                       SSE/AVX or NEON — a dot       │
+  │                                       product, vectorised           │
+  │   8  Memory model                     atomics · fences · CAS lock   │
+  └──────────────────────────────────┬──────────────────────────────────┘
+                                     │
+                 ┌───────────────────┴───────────────────┐
+                 ▼                                       ▼
+  ┌──────────────────────────────┐      ┌──────────────────────────────┐
+  │  build one                   │      │  break one                   │
+  │                              │      │                              │
+  │   9  A tiny RISC-V core      │      │  10  Microarch attack and    │
+  │      single-cycle ─▶         │      │      defence — Spectre v1    │
+  │      pipelined     ──▶ 00d   │      │      PoC, then mitigations   │
+  │                              │      │                     ──▶ 14   │
+  └──────────────────────────────┘      └──────────────────────────────┘
 
   Lab: cpu_labs.md — three modules: an assembly hello world, register
   inspection under GDB, and a pipeline hazard demo.

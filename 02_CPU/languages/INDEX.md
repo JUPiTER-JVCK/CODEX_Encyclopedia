@@ -3,30 +3,33 @@
 ## What is in this section
 
 ```text
-  Three ISAs have a profile of their own here; the rest appear only in the
-  comparison table. What the table distinguishes is syntax, toolchain, and
-  where the arguments go.
+  Three ISAs have a profile of their own in this folder. Each box is one of
+  them: the syntaxes it is written in, and where a call puts its arguments.
 
-  profiled here            x86_64_asm.md   Intel + AT&T, SysV + MS ABIs
-                           arm64_asm.md    AArch64, AAPCS64
-                           riscv_asm.md    RV32 / RV64, psABI
+  ┌──────────────────────────┐ ┌────────────────────┐ ┌───────────────────┐
+  │  x86-64                  │ │  AArch64           │ │  RISC-V           │
+  │  x86_64_asm.md           │ │  arm64_asm.md      │ │  riscv_asm.md     │
+  ├──────────────────────────┤ ├────────────────────┤ ├───────────────────┤
+  │  Intel syntax            │ │  as · LLVM         │ │  GNU · LLVM       │
+  │    NASM · MASM           │ │                    │ │  RV32 / RV64      │
+  │  AT&T syntax             │ │                    │ │                   │
+  │    gas · as              │ │                    │ │                   │
+  ├──────────────────────────┤ ├────────────────────┤ ├───────────────────┤
+  │  SysV AMD64              │ │  AAPCS64           │ │  psABI            │
+  │    rdi rsi rdx rcx r8 r9 │ │    x0 … x7         │ │    a0 … a7        │
+  │    ──▶ rax               │ │    ──▶ x0          │ │    ──▶ a0 / a1    │
+  │  Microsoft x64           │ │                    │ │                   │
+  │    rcx rdx r8 r9         │ │                    │ │                   │
+  │    + 32B shadow space    │ │                    │ │                   │
+  └──────────────────────────┘ └────────────────────┘ └───────────────────┘
 
-  ISA                      assembler            argument registers
-  ─────────────────        ─────────────        ───────────────────────────
-  x86-64  Intel syntax     NASM · MASM          SysV:  rdi rsi rdx rcx r8 r9
-          AT&T syntax      gas · as             MS:    rcx rdx r8 r9 + 32B
-                                                       shadow space
-  AArch64                  as · LLVM            AAPCS64: x0…x7  ─▶ x0
-  ARM 32  Thumb/Thumb-2    arm-none-eabi-as     AAPCS:   r0…r3
-  RISC-V  RV32 / RV64      GNU · LLVM           psABI:   a0…a7  ─▶ a0/a1
-  PowerPC · MIPS           GNU · MARS           listed for legacy and
-                                                teaching use
+  The comparison table below adds the ones with no profile here: 32-bit ARM
+  (Thumb/Thumb-2, AAPCS r0…r3), PowerPC, MIPS — and two rows that nobody
+  writes by hand. Machine code is what the assemblers above produce, and
+  microcode arrives as a vendor-signed update.
 
-  Two entries in that table are not assembled by hand at all: machine code,
-  which is what the others produce, and microcode, which arrives as a
-  vendor-signed update.
-
-  C and Rust appear because both can embed assembly — `__asm__` and `asm!`.
+  C and Rust are in that table because both can embed assembly rather than
+  replace it — `__asm__` and `asm!`.
 ```
 
 ## Per-architecture assembly profiles

@@ -18,34 +18,38 @@ updated: 2026-05-20
 
 ```text
   Thirty-two registers, x0–x31, each with an ABI name that says what it is
-  for. The roles below are the psABI ones in the table that follows.
+  for. The split below is the psABI's, and it is the thing to memorise:
+  whose job it is to preserve each one across a call.
 
-   x0        zero        hardwired zero — writes are discarded
-   │
-   ├─ fixed by the platform, not by you
-   │    x3      gp        global pointer, linker-managed
-   │    x4      tp        thread pointer
-   │
-   ├─ caller-saved — assume a call destroys these
-   │    x1      ra        return address
-   │    x5–x7   t0–t2     temporaries
-   │    x10–x17 a0–a7     arguments; a0 and a1 also carry the return
-   │    x28–x31 t3–t6     temporaries
-   │
-   └─ callee-saved — a function must restore these before returning
-        x2      sp        stack pointer
-        x8      s0 / fp   frame pointer
-        x9      s1        saved
-        x18–x27 s2–s11    saved
+  ┌─ neither side's job — fixed by the platform ───────────────────────────┐
+  │   x0   zero   hardwired zero: reads 0, discards writes                 │
+  │   x3   gp     global pointer, set up by the linker                     │
+  │   x4   tp     thread pointer                                           │
+  └────────────────────────────────────────────────────────────────────────┘
 
-   pc                    program counter, not a GPR
-   f0–f31                floating point, with the F or D extension
-                         (ft0–ft11, fs0–fs11, fa0–fa7 by ABI name)
-   CSRs                  mstatus · mtvec · mcause · mepc · mhartid · …
+  ┌─ caller-saved — a call may destroy these ──────────────────────────────┐
+  │   x1        ra        return address                                   │
+  │   x10–x17   a0–a7     arguments; a0 and a1 also carry the return       │
+  │   x5–x7     t0–t2     temporaries                                      │
+  │   x28–x31   t3–t6     temporaries                                      │
+  └────────────────────────────────────────────────────────────────────────┘
 
-  x0 being hardwired to zero is what makes many pseudo-instructions work:
-  a move is an add with zero, and a comparison against nothing needs no
-  immediate.
+  ┌─ callee-saved — a function must restore these before returning ────────┐
+  │   x2        sp        stack pointer                                    │
+  │   x8        s0 / fp   frame pointer                                    │
+  │   x9        s1        saved                                            │
+  │   x18–x27   s2–s11    saved                                            │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  ┌─ not general-purpose ──────────────────────────────────────────────────┐
+  │   pc          program counter                                          │
+  │   f0–f31      floating point, with the F or D extension                │
+  │               (ft0–ft11 · fs0–fs11 · fa0–fa7 by ABI name)              │
+  │   CSRs        mstatus · mtvec · mcause · mepc · mhartid · …            │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  x0 being hardwired is what lets the pseudo-instructions work: a move is an
+  add of zero, and a branch-if-zero needs no immediate to compare against.
 ```
 
 ## Registers

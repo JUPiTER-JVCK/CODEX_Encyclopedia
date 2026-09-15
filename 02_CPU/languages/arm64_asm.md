@@ -15,26 +15,42 @@ updated: 2026-05-20
 ## The register file at a glance
 
 ```text
-  Thirty-one general-purpose registers, numbered x0–x30, each usable as a
-  32-bit w-register. Roles below are AAPCS64, as in the table that follows.
+  Thirty-one general-purpose registers, x0–x30, each also usable as a 32-bit
+  w-register. Roles below are AAPCS64.
 
-   x0 ─ x7      arguments and return value
-   x8           indirect result location — and the syscall number on Linux
-   x9 ─ x15     caller-saved temporaries
-   x16, x17     ip0, ip1 — intra-procedure-call scratch
-   x18          platform register, reserved on macOS, iOS and Windows
-   x19 ─ x28    callee-saved
-   x29          fp — frame pointer
-   x30          lr — link register, where bl puts the return address
+  ┌─ arguments and return ─────────────────────────────────────────────────┐
+  │   x0   x1   x2   x3   x4   x5   x6   x7        ──▶ x0 carries the      │
+  │                                                    return value        │
+  └────────────────────────────────────────────────────────────────────────┘
 
-   register 31 is two registers, decided by the instruction:
-        sp   stack pointer        xzr / wzr   the zero register
+  ┌─ caller-saved ────────────────────┐ ┌─ callee-saved ───────────────────┐
+  │   x9 … x15   temporaries          │ │   x19 … x28                      │
+  │   x16 (ip0)  intra-procedure      │ │   x29  fp   frame pointer        │
+  │   x17 (ip1)  call scratch         │ │   x30  lr   return address       │
+  └───────────────────────────────────┘ └──────────────────────────────────┘
 
-   pc           program counter, not writable as a GPR
-   v0 ─ v31     SIMD and floating point — NEON, SVE, SVE2
+  ┌─ special ──────────────────────────────────────────────────────────────┐
+  │   x8    indirect result location — and the syscall number on Linux     │
+  │   x18   platform register, reserved on macOS, iOS and Windows          │
+  │   pc    program counter, not writable as a GPR                         │
+  │   v0 … v31   SIMD and floating point — NEON, SVE, SVE2                 │
+  └────────────────────────────────────────────────────────────────────────┘
 
-  There is no dedicated return-address stack slot: lr is a register, so a
-  non-leaf function has to save it itself.
+  Register 31 is two registers, and which one you get is decided by the
+  instruction, not by a mode bit:
+
+                        ┌──────────────────────┐
+              encoding  │   register number 31 │
+                31      └───────────┬──────────┘
+                            ┌───────┴────────┐
+                            ▼                ▼
+                     sp  (wsp)        xzr  (wzr)
+                     stack pointer    reads as zero,
+                     in the address   discards writes,
+                     forms            in most data ops
+
+  There is no dedicated slot for the return address: lr is an ordinary
+  register, so any non-leaf function has to save it itself.
 ```
 
 ## Registers

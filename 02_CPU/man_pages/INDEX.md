@@ -3,31 +3,37 @@
 ## What is in this section
 
 ```text
-  The file's own three words for these are inspection, disassembly and
-  profiling. Sorted that way, plus the two groups that are neither:
+  Every tool here points at one of three things. The file's own words for
+  what they do are inspection, disassembly and profiling — which is this,
+  read top to bottom.
 
-  what is this CPU        lscpu · cpuid          model, cache, flags,
-                                                 vulnerability status
-                          rdmsr · wrmsr          model-specific registers
+                      ┌────────────────────────────┐
+                      │  the machine               │◀── lscpu · cpuid
+                      │  model · cache · flags     │    rdmsr · wrmsr
+                      └─────────────┬──────────────┘
+                                    │  executes
+                      ┌─────────────▼──────────────┐
+                      │  the binary on disk        │◀── objdump · readelf
+                      │  sections · symbols · ELF  │    nm · strings · ar
+                      └─────────────┬──────────────┘    addr2line · as · ld
+                                    │  becomes
+                      ┌─────────────▼──────────────┐
+                      │  the running process       │◀── perf stat
+                      │  cycles · misses · stalls  │    perf record/report
+                      └─────────────┬──────────────┘    cachegrind (simulated
+                                    │                   rather than measured)
+                    ┌───────────────┴───────────────┐
+                    ▼                               ▼
+              gdb · lldb                   strace · dtrace
+              stop it and look             watch it cross into the
+              at the registers             kernel            ──▶ 05
 
-  what is in this binary  objdump · readelf      disassembly, ELF metadata
-                          nm · strings · ar      symbols, text, archives
-                          addr2line              address ─▶ source line
-                          as · ld                the tools that made it
+  taskset and numactl are the exception: they do not observe anything, they
+  decide which core and which memory the process gets.
 
-  what is it doing        perf stat              counter snapshot
-                          perf record / report   sampled profile
-                          cachegrind · callgrind simulated, not measured
-                          strace · dtrace        the syscall boundary → 05
-
-  where is it doing it    taskset                pin to cores
-                          numactl                bind memory and CPU
-
-  stepping through it     gdb · lldb             breakpoints and registers
-
-  Reverse engineering (radare2 · rizin · Binary Ninja · IDA · Ghidra) is
-  listed at the end of the file as its own workflow rather than as one of
-  these. Detail on the inspection tools: cpu_inspection.md.
+  Reverse engineering — radare2 · rizin · Binary Ninja · IDA · Ghidra — sits
+  at the end of the file as its own workflow. Detail on the inspection
+  tools: cpu_inspection.md.
 ```
 
 ## Dedicated man page references

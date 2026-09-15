@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # Ruby — language profile
 
+## What is in this section
+
+```text
+  Ruby profile — MRI + YJIT, Rails ecosystem, toolchain, and idioms.
+
+  ┌─── implementations ───────────────────────────────────────────────────┐
+  │  MRI (CRuby) 3.x + YJIT (default 3.3+)  │  JRuby  │  TruffleRuby   │
+  │  Version managers: rbenv · chruby · rvm · asdf · mise                 │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Toolchain (ruby · irb · pry · gem · bundle · rake · rubocop)         │
+  │  Frameworks (Rails · Sinatra · Hanami · Sidekiq · Hotwire)            │
+  │  Stdlib (Enumerable · IO · Process · JSON · Thread · Ractor)          │
+  │  Rails quick map  │  Idioms  │  Gotchas (GVL, dup vs clone, etc.)    │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > Friendly, dynamic, object-oriented. Most prominent in web (Rails), DevOps
 > (Chef/Puppet legacy, Fastlane), scripting. Ruby 3.x added Ractors and YJIT.
 

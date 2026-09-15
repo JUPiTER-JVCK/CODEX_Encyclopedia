@@ -8,6 +8,23 @@ updated: 2026-05-20
 
 # C# — language profile
 
+## What is in this section
+
+```text
+  C# / .NET profile — single dotnet SDK for all targets (cross-platform since .NET 6).
+
+  ┌─── toolchain ─────────────────────────────────────────────────────────┐
+  │  dotnet CLI: new · build · test · publish · run · watch · ef          │
+  │  Target runtimes: .NET 6/8/10 LTS  │  Self-contained AOT binaries     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Tooling (Roslyn analyzers · BenchmarkDotNet · diagnostic tools)       │
+  │  Frameworks (ASP.NET Core · EF Core · MAUI · Blazor · Avalonia)       │
+  │  BCL namespaces  │  Modern features (C# 5–13)  │  Idioms  │  Gotchas  │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > Microsoft's primary language for .NET. Modern .NET (≥ 6, LTS 8/10) is
 > cross-platform — runs on macOS, Linux, Windows. Single SDK (`dotnet`)
 > handles everything.

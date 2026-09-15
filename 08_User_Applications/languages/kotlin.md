@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # Kotlin — language profile
 
+## What is in this section
+
+```text
+  Kotlin profile — JVM · Android · Native · Multiplatform.
+
+  ┌─── compile targets ───────────────────────────────────────────────────┐
+  │  Kotlin/JVM (primary)  │  Kotlin/Android  │  Kotlin/Native            │
+  │  Kotlin/JS  │  Kotlin Multiplatform (shared business logic)            │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Toolchain (kotlinc · gradle · Kotlin script)                          │
+  │  Coroutines (launch · async · Flow · Channel · Dispatcher)             │
+  │  Stdlib (scope fns · collections · sequences · Result)                 │
+  │  Android (Compose · Hilt · Room · WorkManager)  │  Idioms  │  Gotchas │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > JetBrains' multi-platform language. Primary use: Android (first-class) and
 > JVM server. Other targets: Kotlin/JS, Kotlin/Native, Kotlin Multiplatform.
 

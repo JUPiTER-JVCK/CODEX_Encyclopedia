@@ -12,32 +12,10 @@
 # Every entry must sit under a band heading, every heading must carry a
 # count, and the band counts must sum to the total.
 #
-# 100 files remain.
+# 78 files remain.
 
-# Compute — 02 CPU through 08 User Applications (23)
+# Compute — 02 CPU through 08 User Applications (1)
 03_Firmware_BIOS/man_pages/firmware_tools.md
-08_User_Applications/languages/INDEX.md
-08_User_Applications/languages/bash.md
-08_User_Applications/languages/c.md
-08_User_Applications/languages/cpp.md
-08_User_Applications/languages/csharp.md
-08_User_Applications/languages/java.md
-08_User_Applications/languages/javascript.md
-08_User_Applications/languages/kotlin.md
-08_User_Applications/languages/lua.md
-08_User_Applications/languages/python.md
-08_User_Applications/languages/ruby.md
-08_User_Applications/languages/sql.md
-08_User_Applications/languages/swift.md
-08_User_Applications/languages/typescript.md
-08_User_Applications/lessons/INDEX.md
-08_User_Applications/man_pages/INDEX.md
-08_User_Applications/man_pages/network_tools.md
-08_User_Applications/man_pages/package_managers.md
-08_User_Applications/man_pages/text_processing.md
-08_User_Applications/protocols/INDEX.md
-08_User_Applications/references/INDEX.md
-08_User_Applications/topics/INDEX.md
 
 # Network — 09 Physical through 13 Application (33)
 Network/09_Network_Physical/languages/INDEX.md

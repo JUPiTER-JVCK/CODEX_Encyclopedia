@@ -1,5 +1,27 @@
 # User Applications — Languages
 
+## What is in this section
+
+```text
+  Fifteen language profiles, grouped by paradigm.
+
+  ┌─── systems & native ──────────────────────────────────────────────────┐
+  │  C · C++ · Rust · Go  │  Swift (Apple)  │  Kotlin (Android / JVM)    │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── managed / cross-platform ──────────────────────────────────────────┐
+  │  Java · C# (.NET)  │  Dart (Flutter)  │  Kotlin (JVM server)          │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── web ───────────────────────────────────────────────────────────────┐
+  │  JavaScript · TypeScript  │  Node.js · Deno · Bun runtimes            │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── dynamic / scripting ───────────────────────────────────────────────┐
+  │  Python · Ruby · Lua · Bash  │  SQL (relational query language)        │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 The widest layer; everything compiles or transpiles down to lower layers eventually.
 
 ## Per-language profiles (man-page-style)

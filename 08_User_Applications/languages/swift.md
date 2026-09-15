@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # Swift — language profile
 
+## What is in this section
+
+```text
+  Swift profile — Apple platforms + server-side; Swift 6 strict concurrency.
+
+  ┌─── platforms & targets ───────────────────────────────────────────────┐
+  │  iOS · iPadOS · macOS · watchOS · tvOS · visionOS (via Xcode)         │
+  │  Linux · Windows (server-side)  │  SwiftPM (package manager)          │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Toolchain (swift build · test · run · xcodebuild · xcrun)             │
+  │  SwiftPM Package.swift  │  Tooling (Xcode · SwiftLint · swift-format) │
+  │  Stdlib (Optional · Result · Codable · URLSession · Task · Combine)   │
+  │  Frameworks (SwiftUI · UIKit · SwiftData · Vapor)  │  Idioms  │  Swift 6 │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > Apple's primary language for iOS / macOS / iPadOS / watchOS / tvOS / visionOS.
 > Also available on Linux + Windows (server-side). Swift 6 added strict
 > concurrency by default.

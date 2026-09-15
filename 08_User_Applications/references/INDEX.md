@@ -1,5 +1,29 @@
 # User Applications — References
 
+## What is in this section
+
+```text
+  Five reference groups: platform HIGs, UX books, accessibility, app dev books, online.
+
+  ┌─── platform HIGs ─────────────────────────────────────────────────────┐
+  │  Apple HIG  │  Material Design 3 (Google)  │  Microsoft Fluent UI     │
+  │  GNOME HIG  │  KDE HIG                                                 │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── UX & design books ─────────────────────────────────────────────────┐
+  │  Design of Everyday Things · Don't Make Me Think · About Face          │
+  │  Refactoring UI · Designing Interfaces                                 │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── accessibility ─────────────────────────────────────────────────────┐
+  │  WCAG 2.2  │  ARIA Authoring Practices  │  Inclusive Design Patterns  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── app development books ─────────────────────────────────────────────┐
+  │  Programming Windows · Cocoa Programming  │  iOS & Android Big Nerd    │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Platform HIGs (Human Interface Guidelines)
 - **Apple HIG** — `https://developer.apple.com/design/human-interface-guidelines/`
 - **Material Design 3** (Google) — `https://m3.material.io/`

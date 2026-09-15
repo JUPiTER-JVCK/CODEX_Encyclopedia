@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # Lua — language profile
 
+## What is in this section
+
+```text
+  Lua profile — small embeddable language used in editors, servers, and game engines.
+
+  ┌─── implementations ───────────────────────────────────────────────────┐
+  │  Reference Lua 5.1 / 5.2 / 5.3 / 5.4  │  LuaJIT (tracing JIT, 5.1) │
+  │  Luau (Roblox, typed)  │  Moonscript  │  Fennel (Lisp→Lua)           │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Toolchain (lua · luarocks · busted · stylua · luacheck)              │
+  │  Syntax tour (tables, metatables, closures, coroutines, pcall)         │
+  │  Stdlib (string · table · math · io · os · coroutine)                 │
+  │  Embedding contexts: Neovim · OpenResty · Redis · Wireshark · Roblox  │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > Tiny, embeddable, fast. Lives inside: Neovim, Wireshark, Nginx (OpenResty),
 > Redis (scripts), World of Warcraft, Roblox, many game engines, FreeBSD's
 > `pkg`. The whole stdlib fits on a page.

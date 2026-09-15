@@ -8,6 +8,22 @@ updated: 2026-05-20
 
 # C++ — language profile
 
+## What is in this section
+
+```text
+  C++ profile — modern C++11–26, build tools, package managers, stdlib, libraries.
+
+  ┌─── compilers ─────────────────────────────────────────────────────────┐
+  │  g++ (GCC)  │  clang++ (LLVM/libc++)  │  MSVC (cl.exe)  │  ICC/ICX  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Build (cmake + ninja · meson · bazel)  │  Package managers (vcpkg · conan) │
+  │  Standard library (C++17/20/23 headers)  │  Common libraries           │
+  │  Tooling (clang-format · clang-tidy · IWYU)  │  Idioms  │  Gotchas    │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > The big multi-paradigm language. Modern C++ (11/14/17/20/23/26) feels almost
 > like a different language than C++98 — embrace it. For systems work pair with
 > the [C profile](c.md); compilers/toolchain are the same family.

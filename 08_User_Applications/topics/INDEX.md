@@ -1,5 +1,33 @@
 # User Applications — Topics
 
+## What is in this section
+
+```text
+  Seven topic groups across UI, IPC, packaging, settings, accessibility, and lifecycle.
+
+  ┌─── UI paradigms & toolkits ───────────────────────────────────────────┐
+  │  CLI · TUI · GUI (retained / immediate-mode)  │  Voice / conversational │
+  │  Native: Win32/WinUI · AppKit/SwiftUI · GTK · Qt                      │
+  │  Web: DOM+CSS · React/Vue/Svelte  │  Game-engine UI  │  Dear ImGui    │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── IPC between apps ──────────────────────────────────────────────────┐
+  │  D-Bus (Linux) · XPC (macOS) · COM/RPC (Windows)                      │
+  │  Clipboard · Drag-and-drop · URL schemes · Universal/App Links         │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── packaging & distribution ──────────────────────────────────────────┐
+  │  macOS: .app · codesign · notarize · App Store                        │
+  │  Windows: MSI · MSIX · Authenticode  │  Linux: deb/rpm · Flatpak      │
+  │  Mobile: .ipa / AAB · TestFlight · Play internal track                 │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── settings · state · accessibility ─────────────────────────────────┐
+  │  defaults (macOS) · Registry (Win) · XDG ~/.config                    │
+  │  VoiceOver · NVDA · JAWS · TalkBack  │  AX · ARIA · UI Automation     │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## UI paradigms
 - **CLI** — argv, exit codes, pipes, idempotent commands, structured output.
 - **TUI** — terminal UI with input handling, escape sequences, mouse.

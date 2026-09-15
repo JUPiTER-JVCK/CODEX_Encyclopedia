@@ -1,5 +1,34 @@
 # Circuit Board — Lessons
 
+## The ladder
+
+```text
+  Ten tracks, and the prerequisites are the file's own. Two independent
+  roots — theory and hands — converge at the first real board.
+
+  1  Basic electronics        Ohm · Kirchhoff · RC · op-amps    → 00c
+  │
+  └─ 2  Digital logic         gates · flip-flops · FSMs         → 00d
+        │
+        └─ 6  FPGA on Verilog/VHDL    blink ─▶ UART echo ─▶ a CPU
+
+  3  Soldering & rework       through-hole ─▶ SMD ─▶ hot air ─▶ BGA
+  │
+  4  Reading schematics & PCBs   symbols · nets · layers · gerbers · BOM
+  │
+  └─ 5  KiCad project         design ─▶ export gerbers ─▶ send to a fab
+        │
+        ├─ 7  Signal integrity & EMC   transmission lines · termination
+        │                              crosstalk · ground planes
+        ├─ 8  Bus bring-up debug       logic analyzer + scope on I²C/SPI/UART
+        └─ 9  JTAG & boundary scan     chain detection · fault isolation
+
+  10  SBC project             boot Linux on a Pi or BeagleBone, attach a
+                              sensor, write the driver    ──▶ 04, 05
+
+  Lab: pcb_labs.md covers 5, 3 and 7.
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

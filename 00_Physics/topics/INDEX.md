@@ -2,6 +2,33 @@
 
 Each topic links to what it *enables* one layer up.
 
+## What each group enables
+
+```text
+  This section is organised by what a topic lets you build one layer up,
+  so here is that mapping rather than a list of the groups again.
+
+  classical EM ────────┬──▶ capacitors, inductors             00b Devices
+                       ├──▶ transmission lines, integrity     01 Circuit Board
+                       └──▶ propagation in air and fibre      09 PHY · 16 RF
+
+  solid state ─────────┬──▶ the p-n junction                  00b Devices
+                       └──▶ the MOS capacitor ──▶ MOSFET      00b → 00d gates
+
+  quantum ─────────────┬──▶ tunnelling: Zener, subthreshold   00b Devices
+                       ├──▶ confinement ──▶ optoelectronics   09 PHY
+                       └──▶ Holevo bound, QKD                 14 Security
+
+  thermo & noise ──────┬──▶ noise floors, phase noise         00c Analog · 16 RF
+                       └──▶ kT ln 2 per erased bit            the limit on 02 CPU
+
+  optics ──────────────┬──▶ total internal reflection ──▶ fibre    09 PHY
+                       └──▶ direct vs indirect gap: why Si LEDs fail
+
+  information ─────────┬──▶ C = B log₂(1 + S/N)               12 Transport
+                       └──▶ reversible computing (Bennett)
+```
+
 ## Classical EM
 - **Coulomb / Gauss** → capacitor design ([00b_Devices](../../00b_Devices/))
 - **Ampère / Faraday** → inductors, transformers

@@ -1,5 +1,33 @@
 # Digital Circuits — Languages
 
+## From text to a bitstream
+
+```text
+  An HDL is not compiled, it is *synthesised* — turned into gates, then into
+  a placement on real silicon. Every tool below sits at one of four stages.
+
+  describe      Verilog · SystemVerilog · VHDL        the industry three
+                Chisel · SpinalHDL (Scala)            embedded in a host
+                Amaranth · Migen · MyHDL (Python)     language, so the
+                Bluespec (rules) · Clash (Haskell)    elaborator is a program
+                   │
+                   ▼
+  simulate      Icarus (iverilog) · GHDL              event-driven, free
+                Verilator                             compiles to C++, fast
+                VCS · Xcelium · ModelSim              commercial
+                   │                    └──▶ GTKWave · Surfer · Verdi
+                   ▼
+  synthesise    Yosys                                 open, RTL ─▶ netlist
+                Vivado · Quartus · Design Compiler    vendor / ASIC
+                   │
+                   ▼
+  place & route nextpnr  ──▶ IceStorm · Trellis · Apicula   ──▶ bitstream
+                          iCE40        ECP5       Gowin
+
+  Verification runs alongside all four rather than after them:
+  SystemVerilog/UVM · e · PSL · cocotb (Python) · SymbiYosys · JasperGold
+```
+
 ## HDLs (Hardware Description Languages)
 | Language | Notes |
 |----------|-------|

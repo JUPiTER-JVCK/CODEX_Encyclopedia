@@ -1,5 +1,38 @@
 # Digital Circuits — Topics
 
+## What is built from what
+
+```text
+  Read downward: each group is assembled out of the one above it, and the
+  bottom of the column is a CPU.
+
+  number systems      binary · hex · two's complement · BCD · gray
+  │                   IEEE 754 · fixed-point · posits
+  │                   — the meaning assigned to a bit pattern
+  ▼
+  combinational       gates ──▶ adders (ripple ─▶ lookahead ─▶ Kogge-Stone)
+  │                   multipliers (array ─▶ Wallace ─▶ Booth)
+  │                   mux · decoder · comparator · barrel shifter
+  │                   └──▶ ALU = adder + logic + shifter + control
+  ▼  add a clock
+  sequential          latches ─▶ flip-flops (D, T, JK, SR)
+  │                   registers · counters · shift registers · LFSR
+  │                   ├──▶ memory cells   SRAM 6T · DRAM 1T1C · NVM · CAM
+  │                   └──▶ state machines Moore vs Mealy · one-hot encoding
+  ▼
+  RTL & synthesis     coding style ─▶ netlist ─▶ place & route ─▶ STA
+  │                   clock trees, skew, gating, multi-Vt
+  ▼
+  the two hard parts that only appear once it is real:
+
+    clock domains     metastability · 2-FF synchroniser · async FIFO
+    test & debug      sim vs gate-level vs formal · scan · ATPG · BIST
+                      JTAG 1149.1 · coverage                    ──▶ 01
+
+  and the three things you can build all of it on:
+    CPLD ── instant-on, small   FPGA ── LUT + FF + DSP + BRAM   ASIC ── NRE
+```
+
 ## Number systems
 - **Binary, octal, decimal, hexadecimal** — base conversions; migrated from
   the v1 number-systems notes

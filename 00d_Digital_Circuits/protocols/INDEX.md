@@ -3,6 +3,37 @@
 Language and exchange-format standards rather than wire protocols — what an
 HDL toolchain has to implement.
 
+## Standards, by what they hand to the next tool
+
+```text
+  None of these is a wire protocol. They are the file formats and language
+  definitions that let one vendor's tool read another's output.
+
+  the language        IEEE 1364 Verilog · 1800 SystemVerilog · 1076 VHDL
+  │                   1666 SystemC · 1850 PSL · 1801 UPF (power intent)
+  │                   1685 IP-XACT (how an IP block declares itself)
+  ▼
+  the cell library    Liberty .lib        timing and power per cell
+  │                   LEF                 abstract cell geometry
+  ▼
+  the design          DEF                 placed, routed design
+  ▼
+  the mask            GDSII ──▶ OASIS     what actually goes to the fab
+
+  Two more families sit beside that chain rather than in it:
+
+  getting inside a finished chip   1149.1 JTAG ─┬─ .4 mixed-signal
+                                                ├─ .6 AC-coupled
+                                                ├─ .7 cJTAG
+                                                ├─ 1500 core test
+                                                └─ 1687 iJTAG · 1450 STIL
+
+  moving data on-chip and to RAM   AMBA AXI/AHB/APB/ACE/CHI (Arm)
+                                   Wishbone · TileLink · OCP · Avalon
+                                   JESD79-x DDR · JESD209-x LPDDR
+                                   JESD235 HBM · ONFI · eMMC ──▶ 01, 02
+```
+
 ## HDL & exchange formats
 | Standard | Body | Scope |
 |----------|------|-------|

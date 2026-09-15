@@ -1,5 +1,34 @@
 # Physics — Lessons
 
+## The ladder
+
+```text
+  The numbered path below, drawn as what it actually is — one prerequisite
+  chain that forks three ways once the field equations are in place.
+
+  1  Math prerequisites          vector calc · complex · ODE/PDE · Fourier
+  │
+  └─ 2  Electrostatics & magnetostatics
+     └─ 3  Maxwell's equations   ◀── everything below forks from here
+        │
+        ├─ 4  Plane waves & transmission lines   → 01 PCB · 16 RF · 09 PHY
+        │
+        ├─ 5  Crystals & band theory
+        │  └─ 6  Doping & the p-n junction
+        │     └─ 7  Diode physics
+        │        └─ 8  BJT & MOSFET            → 00b Devices · 00c Analog
+        │           ▲
+        │  9  Quantum tunnelling ──┘           Zener · subthreshold · flash
+        │
+        └─ 10  Photonics primer                needs 3 and 5 both
+
+  11  Thermal & noise            kT/q · Johnson-Nyquist · shot · 1/f
+  └─ 12  Landauer's principle    kT ln 2 per erased bit — the floor
+     └─ 13  Information theory   entropy · channel capacity → 12 Transport
+
+  Lab: physics_labs.md exercises 2, 6 and 7 (Ohm, RC, diode I-V).
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

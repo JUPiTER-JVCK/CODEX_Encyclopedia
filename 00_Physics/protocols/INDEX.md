@@ -3,6 +3,34 @@
 Physics has *laws*, not protocols. This section collects the standard formal
 statements you'll cross-reference everywhere.
 
+## How the units derive
+
+```text
+  Seven base units are defined. Everything else is built from them, which
+  is why a volt is energy per unit charge rather than a primitive.
+
+  s · m · kg · A · K · mol · cd              ◀── the seven
+  │
+  ├─ N  = kg·m/s²                            force
+  │   └─ J = N·m                             energy
+  │       ├─ W = J/s                         power
+  │       └────────────┐
+  ├─ C  = A·s          │                     charge
+  │   └────────────────┤
+  │                    ▼
+  │               V = J/C                    voltage
+  │                    │
+  │                    ├─ Ω  = V/A           resistance
+  │                    ├─ F  = C/V           capacitance
+  │                    ├─ H  = V·s/A         inductance
+  │                    └─ Wb = V·s           magnetic flux
+  │                        └─ T = Wb/m²      flux density
+  └─ Hz = 1/s                                frequency
+
+  The laws below are relations among these; BIPM defines them, CODATA
+  measures the constants, NIST publishes them.
+```
+
 ## SI base units
 | Quantity | Unit | Symbol |
 |----------|------|--------|

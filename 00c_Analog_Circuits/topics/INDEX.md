@@ -1,5 +1,42 @@
 # Analog Circuits — Topics
 
+## The blocks, and what they are made of
+
+```text
+  Eight groups, and the arrows are real dependencies: the lower blocks are
+  built out of the upper ones.
+
+  op-amps            ideal rules ─▶ real limits (GBW, SR, V_OS, CMRR)
+  │                  configurations · stability · INA · chopper
+  │                  detail: opamp_configurations.md
+  │
+  ├─▶ filters        Butterworth · Chebyshev · Bessel · elliptic
+  │                  as Sallen-Key · MFB · state-variable · biquad · SC
+  │
+  ├─▶ references     bandgap · Zener · XFET — TC in ppm/°C
+  │                  everything below needs one to measure against
+  │
+  ├─▶ signal cond.   bridge · current sense · thermocouple · TIA · touch
+  │                  = op-amp + reference, pointed at a sensor
+  │
+  ├─▶ power mgmt     LDO · buck/boost/SEPIC/flyback/bridge
+  │                  CCM vs DCM · voltage vs current mode · Type II/III
+  │                  charge pumps · harvesting · battery CC/CV
+  │                  = reference + error amp + a switch        ──▶ 00b
+  │
+  ├─▶ oscillators    Pierce · Colpitts · ring · VCO
+  │   & PLLs         detector + charge pump + loop filter + divider
+  │                  integer-N · fractional-N · jitter & phase noise
+  │
+  ├─▶ data conv.     ADC  flash · SAR · pipeline · ΣΔ · dual-slope
+  │                  DAC  R-2R · current-steering · segmented · ΣΔ
+  │                  specs INL/DNL · SNR · SFDR · ENOB
+  │                  = reference + comparator, clocked by the PLL ──▶ 00d
+  │
+  ├─▶ audio          Class A/AB/B/D · THD, IMD · codec ICs
+  └─▶ RF analog      LNA · mixer · PA · balun          ──▶ 16 RF
+```
+
 ## Dedicated topic files
 
 | Topic | File |

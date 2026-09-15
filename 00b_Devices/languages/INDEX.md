@@ -1,5 +1,31 @@
 # Devices — Languages
 
+## Nothing here is a programming language
+
+```text
+  A device is described, not programmed. Four kinds of description, each
+  answering a different question about the same part:
+
+  how does it behave?     SPICE .MODEL / .SUBCKT      → the simulator
+  │                       Verilog-A / -AMS
+  │                       BSIM4 · BSIM-CMG · PSP · EKV
+  │                       Touchstone .sNp (RF S-params)
+  │                       IBIS (I/O buffers, signal integrity)
+  │
+  how does it connect?    SPICE deck .cir / .sp / .net
+  │                       KiCad symbol · LTspice .asy       → the schematic
+  │
+  how big is it?          KiCad footprint · IPC-7351 land   → the board, 01
+  │
+  what will it survive?   datasheet tables — V, I, t, C, R with min/typ/max
+                          curves — I-V, C-V, S-parameters
+                          thermal — R_θJA, R_θJC, P_D, SOA
+                          reliability — MTBF, FIT, MSL
+
+  Only the first group is machine-readable, and it is the one the
+  simulators in man_pages/ consume.
+```
+
 | Language / format | Use |
 |-------------------|-----|
 | SPICE model cards | `.MODEL`, `.SUBCKT` describing device IV behavior |

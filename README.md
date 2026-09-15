@@ -344,9 +344,9 @@ Currently:
 - 1022 internal links, 0 broken
 - Every file carries an H1, every pipe table well-formed
 - All 138 section indexes titled `<Layer> — <Section>`
-- 103 files carry a diagram, every one fenced, tagged, and within 90 columns
+- 133 files carry a diagram, every one fenced, tagged, and within 90 columns
   (` ```text ` is the convention; a fence carrying some other deliberate tag
   is left alone); every layer README shows where its layer sits. 272 files are
-  expected to carry one — the 172 that do not are listed in
+  expected to carry one — the 142 that do not are listed in
   `tools/diagram_backlog.txt`, which the audit checks in both directions so
   the gap can neither grow unnoticed nor go stale

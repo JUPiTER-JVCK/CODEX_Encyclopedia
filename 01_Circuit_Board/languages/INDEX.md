@@ -3,6 +3,32 @@
 No "programming" languages in the conventional sense at this layer — you describe
 hardware behavior with HDLs and design tools.
 
+## Three things a board is described in
+
+```text
+  Nothing at this layer is a programming language. Each column below is a
+  different description of the same board, and only the first is executed.
+
+  ┌─ behaviour of the logic ──────────────────────────────────────────┐
+  │  Verilog · SystemVerilog · VHDL      the industry three           │
+  │  Chisel (Scala) · Amaranth (Python)  generator-based              │
+  │     └──▶ Icarus · Verilator · GHDL ──▶ Vivado · Quartus · yosys   │
+  └───────────────────────────────────────────────────────────────────┘
+                              ──▶ runs on the FPGA, → 00d Digital Circuits
+
+  ┌─ behaviour of the analog ─────────────────────────────────────────┐
+  │  SPICE netlists ──▶ ngspice · LTspice        → 00c Analog         │
+  └───────────────────────────────────────────────────────────────────┘
+
+  ┌─ the board as an object ──────────────────────────────────────────┐
+  │  KiCad S-expressions   schematic and layout, rarely hand-written  │
+  │     └──▶ Gerber RS-274X   what the fab actually receives          │
+  └───────────────────────────────────────────────────────────────────┘
+
+  The instruction set that runs on the chip this board carries is one
+  layer up, in 02 CPU; the C that boots it is in 03 Firmware.
+```
+
 | Language | Type | Use at this layer | Toolchain |
 |----------|------|-------------------|-----------|
 | Verilog | HDL | RTL design for FPGAs/ASICs | Icarus, Verilator, Vivado, Quartus |

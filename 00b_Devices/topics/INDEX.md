@@ -1,5 +1,39 @@
 # Devices — Topics
 
+## The parts, by what they do
+
+```text
+  Eight groups. The first three store or shape energy; the next three
+  switch it; the last two convert between domains.
+
+  store and shape      passives      R · C · L · transformers · crystals
+                                     no gain, no control terminal
+
+  rectify and clamp    diodes        PN · Schottky · Zener · TVS
+                                     PIN · varactor · LED · laser
+                                     one junction, one direction
+
+  amplify and switch   BJT           current-controlled — β, V_BE ≈ 0.7 V
+                       FET           voltage-controlled — g_m, V_T, R_DS(on)
+                       │             JFET · MOSFET · MESFET
+                       └─ power      IGBT · GaN HEMT · SiC ──▶ 00c, 18
+
+  cross domains        optoelectronic  LED · photodiode · APD
+                                       optocoupler — the isolation barrier
+                       MEMS            IMU · microphone · pressure ──▶ 18
+
+  and two things that are true of every part above:
+
+  packaging            through-hole ─── SMD ─── power ─── hi-rel
+                       DIP, TO-220     0201…BGA   DPAK    hermetic
+
+  datasheet literacy   Absolute Max (never exceed)
+                       Recommended Operating (design within)
+                       SOA · derating curves · MTBF, FIT, MSL
+
+  Detail on the MOSFET itself: mosfet_cross_section.md.
+```
+
 ## Dedicated topic files
 
 | Topic | File |

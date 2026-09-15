@@ -1,5 +1,26 @@
 # Physics — References
 
+## Where to start, by depth
+
+```text
+  Each column is one subject, read downward. The top row is where to start
+  cold; the bottom is where the subject stops being introductory.
+
+            classical EM        solid state         quantum
+  first     Hayt                Pierret             Griffiths QM
+            Engineering E&M     Semiconductor Dev.
+              │                   │                   │
+  core      Griffiths           Streetman           Shankar
+            Electrodynamics     & Banerjee
+              │                   │                   │
+  deep      Jackson             Kittel · Sze        Feynman Vol. III
+            Ramo/Whinnery       (the device bible)
+
+  thermal & noise   Kittel & Kroemer ─▶ Pathria
+  optics/photonics  Hecht ─▶ Saleh & Teich          (needs classical EM)
+  physical limits   Shannon ─▶ Landauer             → 12 Transport, 14 Security
+```
+
 ## Classical EM
 - *Introduction to Electrodynamics* — David J. Griffiths. The canonical undergrad text.
 - *Classical Electrodynamics* — J. D. Jackson. Graduate level.

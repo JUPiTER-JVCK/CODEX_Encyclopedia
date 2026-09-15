@@ -1,5 +1,32 @@
 # Devices — Lessons
 
+## The ladder
+
+```text
+  Twelve exercises, and almost all of them are bench work. The order is not
+  arbitrary — each one assumes the measurement skill of the last.
+
+  1  Read a datasheet        1N4148 · BC547 — before touching anything
+  │
+  ├─ 2  Diode I-V            first measurement: V_f against I_f
+  │  └─ 3  Zener regulator   first circuit that does a job
+  │
+  ├─ 4  BJT operating regions   cutoff · active · saturation
+  ├─ 5  MOSFET as a switch      low-side LED drive, and why it needs a diode
+  ├─ 6  MOSFET as an amplifier  common-source small-signal gain
+  │  └─ 7  Op-amp from transistors   diff pair ─▶ mirror ─▶ output stage
+  │        needs 4, 5 and 6 together — a walkthrough here, built in 00c
+  │
+  ├─ 8  Inductors           back-EMF on switch-off — why 5 needed a diode
+  ├─ 9  Capacitor types     X7R vs C0G vs Y5V, and when the choice bites
+  ├─ 10  Optocoupler        current ─▶ photon ─▶ current, across a barrier
+  │
+  ├─ 11  SPICE a circuit    half-wave rectifier in ngspice — bench to model
+  └─ 12  Power MOSFET thermal   R_θJA, R_θJC ─▶ junction temp ─▶ heatsink
+
+  Lab: device_labs.md covers 5, 6 and 12 (switching, biasing, LED drive).
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

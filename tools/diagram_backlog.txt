@@ -7,39 +7,7 @@
 # already finished. Drawing a diagram means deleting its line below and
 # correcting the count on the next line.
 #
-# 172 files remain.
-
-# Foundations — 00 Physics through 01 Circuit Board (30)
-00_Physics/languages/INDEX.md
-00_Physics/lessons/INDEX.md
-00_Physics/man_pages/INDEX.md
-00_Physics/protocols/INDEX.md
-00_Physics/references/INDEX.md
-00_Physics/topics/INDEX.md
-00b_Devices/languages/INDEX.md
-00b_Devices/lessons/INDEX.md
-00b_Devices/man_pages/INDEX.md
-00b_Devices/protocols/INDEX.md
-00b_Devices/references/INDEX.md
-00b_Devices/topics/INDEX.md
-00c_Analog_Circuits/languages/INDEX.md
-00c_Analog_Circuits/lessons/INDEX.md
-00c_Analog_Circuits/man_pages/INDEX.md
-00c_Analog_Circuits/protocols/INDEX.md
-00c_Analog_Circuits/references/INDEX.md
-00c_Analog_Circuits/topics/INDEX.md
-00d_Digital_Circuits/languages/INDEX.md
-00d_Digital_Circuits/lessons/INDEX.md
-00d_Digital_Circuits/man_pages/INDEX.md
-00d_Digital_Circuits/protocols/INDEX.md
-00d_Digital_Circuits/references/INDEX.md
-00d_Digital_Circuits/topics/INDEX.md
-01_Circuit_Board/languages/INDEX.md
-01_Circuit_Board/lessons/INDEX.md
-01_Circuit_Board/man_pages/INDEX.md
-01_Circuit_Board/protocols/INDEX.md
-01_Circuit_Board/references/INDEX.md
-01_Circuit_Board/topics/INDEX.md
+# 142 files remain.
 
 # Compute — 02 CPU through 08 User Applications (65)
 02_CPU/languages/INDEX.md

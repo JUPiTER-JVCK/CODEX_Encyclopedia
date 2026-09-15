@@ -1,5 +1,36 @@
 # Digital Circuits — Lessons
 
+## The ladder
+
+```text
+  Fifteen exercises that end in a working CPU. The first ten are gates and
+  a breadboard; the last five are an HDL and an FPGA.
+
+  1  Truth tables ─▶ K-maps ─▶ minimal SOP/POS
+  │
+  ├─ 2  Gates on a breadboard    74HC00 · 74HC02 · 74HC04
+  │  └─ 3  Any gate from NAND    functional completeness, measured
+  │
+  ├─ 4  Mux · demux · decoder    4:1 mux from gates
+  ├─ 5  Ripple-carry adder       1-bit full ─▶ 4-bit; watch the carry delay
+  │  └─ 6  Carry-lookahead       the same sum, faster, for more area
+  │
+  ├─ 7  Latches vs flip-flops    level- vs edge-triggered ─ the clock arrives
+  │  ├─ 8  Counters & shifters   synchronous 4-bit, serial-to-parallel
+  │  ├─ 9  FSM design            sequence detector, Moore and Mealy
+  │  └─ 10  Memory cells         SRAM 6T · DRAM 1T1C
+  │
+  ├─ 11  Verilog hello           counter in Icarus + GTKWave
+  │  └─ 12  FPGA blink           iCE40 / Tang Nano via yosys + nextpnr
+  │     ├─ 13  Pipelined datapath   3 stages for one ALU op
+  │     └─ 14  Clock domain crossing   2-FF synchroniser, async FIFO
+  │
+  └─ 15  Mini-CPU                single-cycle ─▶ pipelined ─▶ hazards and
+                                 forwarding          ──▶ 02 CPU starts here
+
+  Lab: digital_labs.md covers 1, 7, 8 and 12.
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

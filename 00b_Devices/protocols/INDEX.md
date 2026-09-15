@@ -3,6 +3,33 @@
 Packaging, reliability and handling standards rather than wire protocols —
 what a physical device must conform to.
 
+## Who owns which rule
+
+```text
+  No wire protocols at this layer. These are the standards a physical part
+  must satisfy, and they divide cleanly by who writes them.
+
+  JEDEC ── the part itself
+  │  JEP95      package outlines — TO, SOIC, QFN, BGA
+  │  JESD22     reliability methods ──▶ MTBF · FIT · HALT/HASS
+  │  JESD625    ESD handling
+  │  JEP30      part marking
+  │
+  ├─ IPC ── the part on a board
+  │  7351       land patterns ──▶ the footprint in languages/
+  │  J-STD-001  soldering
+  │  J-STD-020  moisture sensitivity ──▶ MSL 1 (unlimited) … 6 (bake first)
+  │  A-610      assembly acceptability
+  │
+  └─ AEC ── the part in a car
+     Q100 (IC) · Q101 (discrete) · Q200 (passive)
+     Grade 0 (−40…+150 °C) ─── Grade 3 (−40…+85 °C)
+
+  Compact models (BSIM4 · BSIM-CMG · PSP · EKV · VBIC · HICUM · MEXTRAM)
+  are a separate standards family — they describe behaviour, not the
+  object, and they are what languages/ feeds to a simulator.
+```
+
 ## Packaging
 | Standard | Owner | Scope |
 |----------|-------|-------|

@@ -4,6 +4,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     @EnvironmentObject var state: AppState
+    @ObservedObject private var prefs = Preferences.shared
 
     private var stats: (layers: Int, files: Int) {
         // Count layer folders only. The "Top-level" band holds the four root
@@ -27,8 +28,13 @@ struct WelcomeView: View {
                 bands
                 Spacer(minLength: 40)
             }
-            .padding(.horizontal, 40).padding(.vertical, 32)
-            .frame(maxWidth: 980)
+            .padding(.horizontal, Theme.Layout.gutter)
+            .padding(.vertical, Theme.Layout.vertical)
+            // Follows the same width preference as the document pane. Welcome
+            // was already centred; it just used different numbers (980/40
+            // against the document's 920/48), so switching between the two
+            // shifted the content sideways for no reason.
+            .frame(maxWidth: prefs.columnWidth.points ?? .infinity)
             .frame(maxWidth: .infinity)
         }
         .background(Theme.base)

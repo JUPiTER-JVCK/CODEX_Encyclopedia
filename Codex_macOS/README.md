@@ -28,8 +28,13 @@ SwiftUI rendering the markdown tree straight on the GPU.
 - **Parsed once per revision** — `DocumentStore` caches read-and-parsed
   documents on path + modification date, so scrolling, switching tabs, and
   toggling panels don't re-read or re-parse anything
+- **Adjustable reading width** — Narrow / Comfortable / Wide / Full Width,
+  centred, shared by the document pane and the Welcome screen
 - **Bookmarks + recents** persisted to
-  `~/Library/Application Support/Codex/state.json`
+  `~/Library/Application Support/Codex/state.json`, with appearance
+  preferences in `preferences.json` beside it — deliberately a separate file,
+  since `Bookmarks` decoding is all-or-nothing and a new key in it would wipe
+  existing pins
 - **Portable bundle** — records the project path at build time, so the `.app`
   keeps working after you move it to `/Applications`
 
@@ -89,6 +94,7 @@ Codex_macOS/
     │   ├── Inspector.swift    ← Outline / Info / Recents tabs
     │   ├── Welcome.swift      ← hero + quick-action / recent / band grids
     │   ├── Palette.swift      ← command palette with badges and footer hint
+    │   ├── Preferences.swift  ← reading width, persisted to preferences.json
     │   └── Util.swift         ← fuzzy match, bookmarks, history, links
     └── RenderIcon/        ← separate product, built only by package_app.sh
         └── main.swift         ← draws AppIcon.icns at build time
@@ -189,6 +195,17 @@ first H1 in the command palette, tab strip, recents and inspector, and read
 like `Industrial & Automotive Protocols — Protocols` does not overflow a 200pt
 tab — has only been reasoned about, not seen.
 
+**Reading column.** It was capped at 920pt and pinned to the leading edge by
+`.frame(maxWidth: .infinity, alignment: .topLeading)`, so every spare pixel
+collected in one dead gap on the right — while the Welcome screen, which
+passes no alignment and therefore centres, used different numbers again (980pt
+with 40pt gutters against 920/48). Both now share `Theme.Layout` and one width
+preference, and both centre. Code blocks use `.fixedSize(horizontal: true)`
+rather than resolving `.infinity` against an unbounded proposal, so a wide
+fenced line scrolls instead of maybe-wrapping; the widest in the codex is 116
+characters, in `08_User_Applications/man_pages/network_tools.md`. Unverified on
+a Mac, like everything else here.
+
 **Still open.**
 
 - `closeTab` selects `openTabs.last` rather than the adjacent tab.
@@ -208,12 +225,5 @@ tab — has only been reasoned about, not seen.
 - A `Tools` band tint survives in `Theme.swift` with no corresponding
   directory.
 - The palette does not search headings, only file paths.
-- Code blocks put `.frame(maxWidth: .infinity)` on `Text` inside a horizontal
-  `ScrollView`. Whether that wraps or scrolls depends on how SwiftUI resolves
-  `.infinity` against a nil width proposal. The widest fenced line in the
-  codex is 116 characters, in
-  `08_User_Applications/man_pages/network_tools.md` — check there first.
-- The reading column is capped at 920pt but pinned to the leading edge, so the
-  slack collects on the right rather than as even margins.
 - The last shipped binary was host-arch-only, with no universal slice, so it
   ran under Rosetta on Apple Silicon.

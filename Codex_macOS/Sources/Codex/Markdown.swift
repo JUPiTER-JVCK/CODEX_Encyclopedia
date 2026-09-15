@@ -252,6 +252,7 @@ struct MarkdownView: View {
     let projectRoot: URL
     let onLink: (LinkResolver.Target) -> Void
     @EnvironmentObject private var state: AppState
+    @ObservedObject private var prefs = Preferences.shared
 
     private var frontmatter: PageFrontmatter? { document.frontmatter }
     private var blocks: [MDBlock] { document.blocks }
@@ -274,10 +275,21 @@ struct MarkdownView: View {
                             .padding(.top, 36)
                     }
                 }
-                .padding(.horizontal, 48)
-                .padding(.vertical, 32)
-                .frame(maxWidth: 920, alignment: .topLeading)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .padding(.horizontal, Theme.Layout.gutter)
+                .padding(.vertical, Theme.Layout.vertical)
+                // Inner frame caps the measure; text stays left-aligned inside
+                // it. Outer frame takes the rest of the pane and — with no
+                // alignment argument, so it defaults to centre — puts the
+                // surplus on *both* sides.
+                //
+                // This used to read `.frame(maxWidth: .infinity, alignment:
+                // .topLeading)`, which pinned the capped column against the
+                // left edge and collected every spare pixel into one dead gap
+                // on the right. The Welcome screen has always centred; the two
+                // panes simply disagreed.
+                .frame(maxWidth: prefs.columnWidth.points ?? .infinity,
+                       alignment: .topLeading)
+                .frame(maxWidth: .infinity)
             }
             .background(Theme.base)
             .onChange(of: state.pendingAnchor) { requested in
@@ -522,8 +534,18 @@ private struct CodeBlock: View {
                     .foregroundColor(Theme.text)
                     .textSelection(.enabled)
                     .padding(14)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    // `.frame(maxWidth: .infinity)` inside a horizontal
+                    // ScrollView asks SwiftUI to resolve .infinity against an
+                    // unbounded width proposal, and whether that wraps the
+                    // text or lets it run was never settled. `fixedSize` says
+                    // it outright: take the ideal width, never wrap — so a
+                    // long line scrolls, which is the point of the ScrollView.
+                    //
+                    // The crust background sits on the ScrollView rather than
+                    // the Text, so short blocks still fill the column width.
+                    .fixedSize(horizontal: true, vertical: false)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .background(Theme.crust)
         }
         .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.medium, style: .continuous))

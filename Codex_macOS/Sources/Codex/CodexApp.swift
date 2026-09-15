@@ -25,7 +25,12 @@ struct CodexApp: App {
             RootView()
                 .environmentObject(state)
                 .frame(minWidth: 1180, minHeight: 740)
-                .preferredColorScheme(.dark)
+                // Was a hardcoded `.dark`. With Latte, Solarized Light,
+                // Gruvbox Light and Rosé Pine Dawn in the picker, the window
+                // has to follow the palette — otherwise macOS renders its own
+                // controls and the vibrancy materials dark against a light
+                // page.
+                .preferredColorScheme(prefs.palette.isDark ? .dark : .light)
         }
         .windowStyle(.hiddenTitleBar)
         .windowToolbarStyle(.unified(showsTitle: false))
@@ -88,6 +93,12 @@ struct CodexApp: App {
                 }.keyboardShortcut("r", modifiers: [.command, .shift])
             }
         }
+
+        // A sibling scene, not a modifier on the one above — `.commands` has
+        // to stay attached to the WindowGroup or the menu items register
+        // against the settings window instead of the app. `Settings` is what
+        // wires ⌘, on macOS and places the item under the app menu.
+        Settings { AppearanceSettings() }
     }
 }
 
@@ -231,6 +242,7 @@ final class AppState: ObservableObject {
 
 struct RootView: View {
     @EnvironmentObject var state: AppState
+    @ObservedObject private var prefs = Preferences.shared
 
     var body: some View {
         VStack(spacing: 0) {
@@ -298,6 +310,8 @@ struct RootView: View {
 }
 
 private struct ErrorView: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let message: String
     var body: some View {
         VStack(spacing: 8) {

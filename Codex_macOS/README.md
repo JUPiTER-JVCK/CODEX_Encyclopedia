@@ -28,8 +28,14 @@ SwiftUI rendering the markdown tree straight on the GPU.
 - **Parsed once per revision** — `DocumentStore` caches read-and-parsed
   documents on path + modification date, so scrolling, switching tabs, and
   toggling panels don't re-read or re-parse anything
+- **Fourteen colour schemes** — Catppuccin (Latte / Frappé / Macchiato /
+  Mocha), Nord, Tokyo Night, Dracula, Gruvbox, Solarized and Rosé Pine, with a
+  **true-black OLED** toggle that composes with any of the dark ones
+- **Adjustable text size** — 85%–140%, applied to type only; icon glyphs keep
+  their size so they cannot outgrow the frames they sit in
 - **Adjustable reading width** — Narrow / Comfortable / Wide / Full Width,
   centred, shared by the document pane and the Welcome screen
+- **Appearance panel** (⌘,) — theme swatches, OLED, text size, reading width
 - **Bookmarks + recents** persisted to
   `~/Library/Application Support/Codex/state.json`, with appearance
   preferences in `preferences.json` beside it — deliberately a separate file,
@@ -84,7 +90,9 @@ Codex_macOS/
 └── Sources/
     ├── Codex/             ← the app itself
     │   ├── CodexApp.swift     ← @main App, AppState, RootView, menu commands
-    │   ├── Theme.swift        ← Catppuccin palette, font scale, radii, tints
+    │   ├── Theme.swift        ← design tokens, resolved against the palette
+    │   ├── Palettes.swift     ← the fourteen colour schemes + OLED modifier
+    │   ├── Appearance.swift   ← the ⌘, settings panel
     │   ├── VisualEffect.swift ← NSVisualEffectView wrapper for vibrancy
     │   ├── CodexTree.swift    ← filesystem → CodexNode tree, kinds, symbols
     │   ├── Markdown.swift     ← block parser + renderer, frontmatter, hero
@@ -114,6 +122,7 @@ Codex_macOS/
 | `⌘R` | Reload tree |
 | `⌘D` | Pin / unpin current file |
 | `⇧⌘R` | Reveal current file in Finder |
+| `⌘,` | Appearance — theme, OLED, text size, width |
 | `↑` / `↓` | Move selection in the palette |
 | `⏎` | Open the selected palette result |
 | `⎋` | Dismiss the palette |

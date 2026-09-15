@@ -14,6 +14,7 @@ did not run is worse than leaving it blank.
 - [ ] `python3 tools/title_audit.py`
 - [ ] `python3 tools/diagram_audit.py --self-test && python3 tools/diagram_audit.py`
 - [ ] `python3 tools/stats_audit.py`
+- [ ] `python3 tools/palette_audit.py --self-test && python3 tools/palette_audit.py`
 
 **The LMS** (`Codex_LMS/`)
 

@@ -3,6 +3,8 @@ import SwiftUI
 // MARK: - Sidebar (translucent, grouped, modern)
 
 struct SidebarView: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
     @State private var hoveredId: UUID? = nil
 
@@ -62,6 +64,8 @@ struct SidebarView: View {
 // MARK: - Band section (collapsible group)
 
 private struct BandSection: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let band: CodexNode
     @Binding var hoveredId: UUID?
     @State private var expanded: Bool = true
@@ -75,7 +79,7 @@ private struct BandSection: View {
                         .foregroundColor(Theme.overlay0)
                         .frame(width: 10)
                     Text(band.label.uppercased())
-                        .font(.system(size: 10, weight: .semibold))
+                        .font(.system(size: Theme.size(10), weight: .semibold))
                         .tracking(0.8)
                         .foregroundColor(Theme.overlay1)
                     Spacer()
@@ -102,6 +106,8 @@ private struct BandSection: View {
 // MARK: - Recursive row
 
 private struct LayerRow: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let node: CodexNode
     let depth: Int
     let accent: Color
@@ -175,9 +181,9 @@ private struct LayerRow: View {
     }
 
     private var rowFont: Font {
-        if node.kind == .layer  { return .system(size: 12.5, weight: .semibold) }
-        if node.kind == .section { return .system(size: 12, weight: .medium) }
-        return .system(size: 12)
+        if node.kind == .layer  { return .system(size: Theme.size(12.5), weight: .semibold) }
+        if node.kind == .section { return .system(size: Theme.size(12), weight: .medium) }
+        return .system(size: Theme.size(12))
     }
     private var rowColor: Color {
         if isSelected { return Theme.text }
@@ -224,6 +230,8 @@ private struct LayerRow: View {
 // MARK: - Pinned section
 
 private struct PinnedSection: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
 
     var body: some View {
@@ -234,7 +242,7 @@ private struct PinnedSection: View {
                     .foregroundColor(Theme.yellow)
                     .frame(width: 10)
                 Text("PINNED")
-                    .font(.system(size: 10, weight: .semibold))
+                    .font(.system(size: Theme.size(10), weight: .semibold))
                     .tracking(0.8)
                     .foregroundColor(Theme.overlay1)
                 Spacer()
@@ -252,6 +260,8 @@ private struct PinnedSection: View {
 }
 
 private struct PinnedRow: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let url: URL
     @EnvironmentObject var state: AppState
     @State private var hovered = false
@@ -290,7 +300,7 @@ private struct PinnedRow: View {
                     // its own, so a pinned INDEX.md read "Index" and matched
                     // nothing else on screen.
                     Text(CodexTree.fullTitle(for: url))
-                        .font(.system(size: 12))
+                        .font(.system(size: Theme.size(12)))
                         .foregroundColor(exists ? (isSelected ? Theme.text : Theme.subtext)
                                                 : Theme.overlay0)
                         .strikethrough(!exists, color: Theme.overlay0)

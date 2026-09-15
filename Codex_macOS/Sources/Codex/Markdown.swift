@@ -367,6 +367,8 @@ struct MarkdownView: View {
 // MARK: - Heading
 
 private struct HeadingBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let level: Int; let text: String; let anchor: String
 
     var body: some View {
@@ -411,6 +413,8 @@ private struct HeadingBlock: View {
 // MARK: - Paragraph (with link routing)
 
 private struct ParagraphBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let text: String
     let sourceFile: URL?
     let projectRoot: URL
@@ -439,6 +443,8 @@ private struct ParagraphBlock: View {
 // MARK: - List
 
 private struct ListBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let items: [MDListItem]
     let ordered: Bool
     let sourceFile: URL?
@@ -477,7 +483,7 @@ private struct ListBlock: View {
                     Group {
                         if items[idx].ordered {
                             Text("\(numbering[idx]).")
-                                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                                .font(.system(size: Theme.size(13), weight: .semibold, design: .rounded))
                                 .foregroundColor(Theme.peach)
                                 .frame(minWidth: 22, alignment: .trailing)
                         } else {
@@ -519,6 +525,8 @@ private struct ListBlock: View {
 // MARK: - Code block (with hover copy)
 
 private struct CodeBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let language: String?; let code: String
     @State private var hovered = false
     @State private var copied = false
@@ -531,7 +539,7 @@ private struct CodeBlock: View {
                 Circle().fill(Theme.green.opacity(0.85)).frame(width: 10, height: 10)
                 if let lang = language, !lang.isEmpty {
                     Text(lang.lowercased())
-                        .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                        .font(.system(size: Theme.size(10), weight: .semibold, design: .monospaced))
                         .foregroundColor(Theme.subtext)
                         .padding(.horizontal, 8).padding(.vertical, 2)
                         .background(Theme.surface1.opacity(0.6))
@@ -540,11 +548,17 @@ private struct CodeBlock: View {
                 }
                 Spacer()
                 Button(action: copy) {
-                    Label(copied ? "Copied" : "Copy",
-                          systemImage: copied ? "checkmark" : "doc.on.doc")
-                        .labelStyle(.titleAndIcon)
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(copied ? Theme.green : Theme.subtext)
+                    // Split rather than a `Label`: a font on a `.titleAndIcon`
+                    // Label sizes the SF Symbol as well as the title, so the
+                    // scaled font would have grown this glyph too — which is
+                    // exactly what `Theme.size` is documented not to do.
+                    HStack(spacing: 4) {
+                        Image(systemName: copied ? "checkmark" : "doc.on.doc")
+                            .font(.system(size: 11, weight: .medium))
+                        Text(copied ? "Copied" : "Copy")
+                            .font(.system(size: Theme.size(11), weight: .medium))
+                    }
+                    .foregroundColor(copied ? Theme.green : Theme.subtext)
                 }
                 .buttonStyle(.plain)
                 .opacity(hovered ? 1 : 0)
@@ -590,6 +604,8 @@ private struct CodeBlock: View {
 // MARK: - Table
 
 private struct TableBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let headers: [String]; let rows: [[String]]
     let sourceFile: URL?; let projectRoot: URL
     let onLink: (LinkResolver.Target) -> Void
@@ -635,6 +651,8 @@ private struct TableBlock: View {
 // MARK: - Blockquote
 
 private struct QuoteBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let text: String
     let sourceFile: URL?; let projectRoot: URL
     let onLink: (LinkResolver.Target) -> Void
@@ -668,7 +686,7 @@ private struct QuoteBlock: View {
                     .padding(.top, 2)
                 VStack(alignment: .leading, spacing: 4) {
                     Text(kind.label)
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(.system(size: Theme.size(11), weight: .semibold))
                         .tracking(0.5)
                         .foregroundColor(kind.tint)
                     ParagraphBlock(text: body, sourceFile: sourceFile, projectRoot: projectRoot, onLink: onLink)
@@ -833,6 +851,8 @@ struct PageFrontmatter {
 // MARK: - Page hero
 
 struct PageHero: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let fm: PageFrontmatter
 
     private var pathParts: [String] {
@@ -847,14 +867,14 @@ struct PageHero: View {
                     .font(.system(size: 10))
                     .foregroundColor(Theme.lavender)
                 Text("Codex")
-                    .font(.system(size: 11, weight: .semibold))
+                    .font(.system(size: Theme.size(11), weight: .semibold))
                     .foregroundColor(Theme.subtext)
                 ForEach(Array(pathParts.dropLast().enumerated()), id: \.offset) { _, part in
                     Image(systemName: "chevron.right")
                         .font(.system(size: 8, weight: .bold))
                         .foregroundColor(Theme.overlay0)
                     Text(prettifyCrumb(part))
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.system(size: Theme.size(11), weight: .medium))
                         .foregroundColor(Theme.subtext)
                 }
             }
@@ -870,7 +890,7 @@ struct PageHero: View {
             if let summary = fm.summary, !summary.isEmpty {
                 Text(InlineRenderer.attributedString(summary,
                                                      baseColor: Theme.subtext,
-                                                     baseFont: .system(size: 16, weight: .regular)))
+                                                     baseFont: .system(size: Theme.size(16), weight: .regular)))
                     .lineSpacing(4)
                     .padding(.bottom, 2)
             }
@@ -882,7 +902,7 @@ struct PageHero: View {
                         Image(systemName: "clock").font(.system(size: 10))
                             .foregroundColor(Theme.overlay1)
                         Text("Updated \(updated)")
-                            .font(.system(size: 11))
+                            .font(.system(size: Theme.size(11)))
                             .foregroundColor(Theme.overlay1)
                     }
                 }
@@ -891,7 +911,7 @@ struct PageHero: View {
                         Image(systemName: "doc.badge.clock").font(.system(size: 10))
                             .foregroundColor(Theme.overlay1)
                         Text(HumanDate.describe(modified))
-                            .font(.system(size: 11))
+                            .font(.system(size: Theme.size(11)))
                             .foregroundColor(Theme.overlay1)
                     }
                 }
@@ -900,7 +920,7 @@ struct PageHero: View {
                     FlowLayout(spacing: 5) {
                         ForEach(fm.tags.prefix(8), id: \.self) { tag in
                             Text(tag)
-                                .font(.system(size: 10, weight: .medium))
+                                .font(.system(size: Theme.size(10), weight: .medium))
                                 .foregroundColor(Theme.accent)
                                 .padding(.horizontal, 7).padding(.vertical, 2)
                                 .background(Capsule().fill(Theme.accent.opacity(0.14)))
@@ -927,6 +947,8 @@ struct PageHero: View {
 // MARK: - Page footer (adjacent docs, actions)
 
 struct PageFooter: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let fm: PageFrontmatter
     let onLink: (LinkResolver.Target) -> Void
     let openExternal: (URL) -> Void
@@ -973,7 +995,7 @@ struct PageFooter: View {
                 }
                 Spacer()
                 Text(fm.path)
-                    .font(.system(size: 10, design: .monospaced))
+                    .font(.system(size: Theme.size(10), design: .monospaced))
                     .foregroundColor(Theme.overlay1)
             }
         }
@@ -983,6 +1005,8 @@ struct PageFooter: View {
 enum AdjacentDirection { case prev, next }
 
 private struct AdjacentCard: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let direction: AdjacentDirection
     let url: URL?
     let onLink: (LinkResolver.Target) -> Void
@@ -1000,11 +1024,11 @@ private struct AdjacentCard: View {
                         }
                         VStack(alignment: direction == .prev ? .leading : .trailing, spacing: 2) {
                             Text(direction == .prev ? "Previous" : "Next")
-                                .font(.system(size: 10, weight: .semibold))
+                                .font(.system(size: Theme.size(10), weight: .semibold))
                                 .tracking(0.6)
                                 .foregroundColor(Theme.overlay1)
                             Text(CodexTree.fullTitle(for: url))
-                                .font(.system(size: 13, weight: .semibold))
+                                .font(.system(size: Theme.size(13), weight: .semibold))
                                 .foregroundColor(Theme.text)
                                 .lineLimit(1)
                         }
@@ -1037,13 +1061,15 @@ private struct AdjacentCard: View {
 }
 
 private struct FooterChip: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let icon: String; let label: String; let action: () -> Void
     @State private var hovered = false
     var body: some View {
         Button(action: action) {
             HStack(spacing: 5) {
                 Image(systemName: icon).font(.system(size: 11))
-                Text(label).font(.system(size: 11, weight: .medium))
+                Text(label).font(.system(size: Theme.size(11), weight: .medium))
             }
             .foregroundColor(hovered ? Theme.text : Theme.subtext)
             .padding(.horizontal, 10).padding(.vertical, 5)
@@ -1058,6 +1084,8 @@ private struct FooterChip: View {
 // MARK: - Image (file-relative or external)
 
 private struct ImageBlock: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let alt: String; let href: String
     let sourceFile: URL?; let projectRoot: URL
 

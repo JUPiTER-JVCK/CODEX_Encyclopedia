@@ -148,11 +148,13 @@ struct WelcomeView: View {
 // MARK: - Components
 
 private struct SectionTitle: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let label: String
     init(_ label: String) { self.label = label }
     var body: some View {
         Text(label.uppercased())
-            .font(.system(size: 11, weight: .semibold))
+            .font(.system(size: Theme.size(11), weight: .semibold))
             .tracking(1.4)
             .foregroundColor(Theme.overlay1)
             .padding(.bottom, 4)
@@ -160,17 +162,21 @@ private struct SectionTitle: View {
 }
 
 private struct StatBubble: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let value: String; let label: String; let tint: Color
     var body: some View {
         VStack(spacing: 2) {
-            Text(value).font(.system(size: 22, weight: .bold, design: .rounded)).foregroundColor(tint)
-            Text(label).font(.system(size: 11, weight: .medium)).foregroundColor(Theme.overlay1)
+            Text(value).font(.system(size: Theme.size(22), weight: .bold, design: .rounded)).foregroundColor(tint)
+            Text(label).font(.system(size: Theme.size(11), weight: .medium)).foregroundColor(Theme.overlay1)
         }
         .frame(minWidth: 70)
     }
 }
 
 private struct QuickCard: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let icon: String; let tint: Color; let title: String; let subtitle: String
     let action: () -> Void
     @State private var hovered = false
@@ -214,6 +220,8 @@ private struct QuickCard: View {
 }
 
 private struct RecentCard: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let url: URL
     @EnvironmentObject var state: AppState
     @State private var hovered = false
@@ -254,6 +262,8 @@ private struct RecentCard: View {
 }
 
 private struct BandCard: View {
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
     let band: CodexNode
     @EnvironmentObject var state: AppState
     @State private var hovered = false
@@ -283,12 +293,12 @@ private struct BandCard: View {
                 VStack(alignment: .leading, spacing: 3) {
                     ForEach(band.children.prefix(4)) { layer in
                         Text("• " + layer.label)
-                            .font(.system(size: 11)).foregroundColor(Theme.subtext)
+                            .font(.system(size: Theme.size(11))).foregroundColor(Theme.subtext)
                             .lineLimit(1)
                     }
                     if band.children.count > 4 {
                         Text("… and \(band.children.count - 4) more")
-                            .font(.system(size: 10)).foregroundColor(Theme.overlay1)
+                            .font(.system(size: Theme.size(10))).foregroundColor(Theme.overlay1)
                     }
                 }
             }

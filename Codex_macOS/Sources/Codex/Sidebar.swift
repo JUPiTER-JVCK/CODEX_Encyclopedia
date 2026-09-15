@@ -258,40 +258,59 @@ private struct PinnedRow: View {
 
     private var isSelected: Bool { url == state.selectedTab }
 
+    /// Whether the pinned file is still on disk.
+    ///
+    /// Pins are persisted as absolute paths and never revalidated, so renaming
+    /// or deleting a file leaves a row that beeps when clicked. Showing it as
+    /// missing beats silently failing, and keeps the unpin button reachable so
+    /// the stale pin can be cleared.
+    private var exists: Bool { FileManager.default.fileExists(atPath: url.path) }
+
     var body: some View {
-        Button(action: { state.openFile(url) }) {
-            HStack(spacing: 8) {
-                Spacer().frame(width: 10)
-                Image(systemName: "doc.text.fill")
-                    .font(.system(size: 11))
-                    .foregroundColor(Theme.yellow)
-                    .frame(width: 14)
-                Text(url.deletingPathExtension().lastPathComponent
-                    .replacingOccurrences(of: "_", with: " ")
-                    .capitalized)
-                    .font(.system(size: 12))
-                    .foregroundColor(isSelected ? Theme.text : Theme.subtext)
-                    .lineLimit(1)
-                Spacer()
-                Button(action: {
-                    state.bookmarks.togglePin(url.path)
-                    state.objectWillChange.send()
-                }) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 9))
-                        .foregroundColor(Theme.overlay0)
-                }
-                .buttonStyle(.plain)
-                .opacity(hovered ? 1 : 0)
+        // The open action is a tap gesture on the row rather than a Button
+        // wrapping everything, because the unpin control used to be a Button
+        // inside this Button's label. Nested buttons are unreliable on macOS:
+        // the inner one may swallow the click, or both may fire. Now the row
+        // handles taps and the unpin control is the only Button here.
+        HStack(spacing: 8) {
+            Spacer().frame(width: 10)
+            Image(systemName: exists ? "doc.text.fill" : "questionmark.square.dashed")
+                .font(.system(size: 11))
+                .foregroundColor(exists ? Theme.yellow : Theme.overlay0)
+                .frame(width: 14)
+            // Every other surface — tabs, palette, recents, inspector — titles
+            // a file with CodexTree.fullTitle. This row rolled its own, so a
+            // pinned INDEX.md read "Index" and matched nothing else on screen.
+            Text(CodexTree.fullTitle(for: url))
+                .font(.system(size: 12))
+                .foregroundColor(exists ? (isSelected ? Theme.text : Theme.subtext)
+                                        : Theme.overlay0)
+                .strikethrough(!exists, color: Theme.overlay0)
+                .lineLimit(1)
+                .truncationMode(.middle)
+            Spacer(minLength: 4)
+            Button(action: {
+                state.bookmarks.togglePin(url.path)
+                state.objectWillChange.send()
+            }) {
+                Image(systemName: "xmark")
+                    .font(.system(size: 9))
+                    .foregroundColor(Theme.overlay0)
+                    .frame(width: 14, height: 14)
+                    .contentShape(Rectangle())
             }
-            .padding(.vertical, 4).padding(.horizontal, 8)
-            .background(isSelected
-                        ? Theme.yellow.opacity(0.16)
-                        : (hovered ? Theme.surface0.opacity(0.5) : Color.clear))
-            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
-            .contentShape(Rectangle())
+            .buttonStyle(.plain)
+            .help("Unpin")
+            .opacity(hovered || !exists ? 1 : 0)
         }
-        .buttonStyle(.plain)
+        .padding(.vertical, 4).padding(.horizontal, 8)
+        .background(isSelected
+                    ? Theme.yellow.opacity(0.16)
+                    : (hovered ? Theme.surface0.opacity(0.5) : Color.clear))
+        .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+        .contentShape(Rectangle())
+        .onTapGesture { if exists { state.openFile(url) } }
         .onHover { hovered = $0 }
+        .help(exists ? url.path : "Missing: \(url.path)")
     }
 }

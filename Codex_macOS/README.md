@@ -143,60 +143,77 @@ Codex_macOS/
 ## Known issues
 
 `swift.yml` answers "does it compile" on every PR, but nothing automated
-exercises the UI, so anything about how a thing *looks* is unverified until
-someone opens that screen.
+exercises the UI, so anything about how a thing *looks* or whether a control
+*responds* is unverified until someone opens that screen.
 
-**What one launch found.** The Welcome screen has now been seen on a Mac. In
+**What one launch found.** The Welcome screen has been seen on a Mac once. In
 a single screenshot it turned up a Quick Start card offering "14 standalone
-network & security utilities" from a `Tools/` directory that does not exist
-(the card did nothing when clicked, and the stat beside it correctly read 0),
-a layer count of 27 against the 23 that `LAYERS.md` states and
-`tools/stats_audit.py` enforces, a subtitle naming a `Codex_v2` directory,
-and a version string three point-releases behind. Every one had survived
-review, CI and a release. They are fixed; the lesson is the ratio — one look
-at one screen, four defects.
+network & security utilities" from a `Tools/` directory that does not exist, a
+layer count of 27 against the 23 that `LAYERS.md` states, a subtitle naming a
+`Codex_v2` directory, and a version string three point-releases behind. Every
+one had survived review, CI and a release.
 
-The screens below have not had that look yet.
+**What one survey found.** Reading the UI layer against that lesson turned up
+eleven more controls that a compiler cannot see, since each one compiles
+perfectly and simply does nothing:
 
-**Not verified on a Mac.** Section indexes now take their name from the
-file's first H1 in the command palette, tab strip, recents and inspector, and
-read `Overview` in the sidebar, where the layer and section above the row
-already give the context. That the result reads well — and that a long title
-like `Industrial & Automotive Protocols — Protocols` does not overflow a
-200pt tab — has only been reasoned about, not seen.
+| Control | Was |
+|---|---|
+| Inspector outline rows | Hover highlight and a `contentShape`, no tap action |
+| Anchor navigation | Parsed, carried through two views, then dropped — headings never carried their anchor as a scroll id |
+| Breadcrumb | Plain text, though this README called it "clickable" |
+| Toolbar search field | A `Button` styled as a text field; typing went nowhere |
+| Traffic lights | No leading inset reserved under `.hiddenTitleBar`, so they sat over the sidebar toggle |
+| Pin button | `.disabled()` without `enabled:`, so it rendered at full opacity while dead |
+| Unpin `x` | A `Button` nested inside another `Button`'s label — unreliable on macOS |
+| Pinned row titles | Rolled its own naming, so a pinned `INDEX.md` read "Index" and matched nothing else on screen |
+| Inspector tag layout | `sizeThatFits` and `placeSubviews` used different wrap conditions, clipping the last row |
+| Palette placeholder | Promised headings, which are not indexed |
+| Palette arrow keys | `min(count - 1, …)` selected index −1 when nothing matched |
 
-**Smaller.**
+All eleven are now fixed, along with the vibrancy defeat below. **None of the
+fixes have been seen running.** They are reasoned and they compile; that is
+exactly the standard the eleven defects above also met.
+
+**Vibrancy.** The sidebar and inspector use `.behindWindow` blending, which
+samples what is behind the *window*. `RootView` painted an opaque `Theme.base`
+across the whole window and the window itself was opaque by default, so both
+surfaces rendered flat. The blanket background is gone and the window is now
+non-opaque with a clear background. This is the change most likely to look
+wrong in practice — if any region reads as transparent onto the desktop, that
+is why.
+
+**Not verified on a Mac.** Section indexes take their name from the file's
+first H1 in the command palette, tab strip, recents and inspector, and read
+`Overview` in the sidebar. That the result reads well — and that a long title
+like `Industrial & Automotive Protocols — Protocols` does not overflow a 200pt
+tab — has only been reasoned about, not seen.
+
+**Still open.**
 
 - `closeTab` selects `openTabs.last` rather than the adjacent tab.
-- `allFiles` is a plain `lazy var`, not `@Published`, so `⌘R` reloads the
-  tree without refreshing the palette index in the UI.
+- `allFiles` is a plain `lazy var`, not `@Published`, so `⌘R` reloads the tree
+  without refreshing the palette index in the UI.
+- `Palette.results` is a computed property read six times per `body`
+  evaluation, so the full ranking runs several times per keystroke.
+- The inspector reads and re-parses the current file three times per redraw,
+  bypassing `DocumentStore`.
+- Sidebar hover threads one `hoveredId` binding through every row, so every
+  row redraws on every hover; expansion state is `@State` and lost on reload.
 - `Bookmarks.touch()` writes `state.json` synchronously on every file open.
 - `NavigationHistory` grows without a cap.
 - `String(contentsOf:)` is called without an encoding argument in
   `findProjectRoot()` — deprecated on recent SDKs.
-- `prettifyLayer` renders `00  Physics` with two spaces but `00b Devices`
-  with one; `prettyFilename`'s `"Ip"→"IP"` rule also turns `Ipc` into `IPc`.
-- A `Tools` band is declared in `bands` with no corresponding directory.
-
-**Fixed, pending a compile.**
-
-The markdown pipeline used to re-read and re-parse a document on every
-render — `blocks` was computed, the render loop touched it per index, and a
-synchronous `String(contentsOf:)` sat in `body`. `DocumentStore` now holds
-both, keyed on path plus modification date and size. The list parser matched
-bullets only at column 0, so indented sub-items rendered as loose paragraphs;
-`listMarker` and `depth(of:in:)` derive nesting from the observed indent
-widths instead.
-
-**Unverified — needs a run on real hardware.**
-
-- The sidebar's vibrancy uses `.behindWindow` blending, but `RootView` paints
-  an opaque `Theme.base` across the whole window. If the sidebar reads as
-  flat rather than translucent, that's the likely cause.
+- `prettyFilename`'s `"Ip"→"IP"` rule also turns `Ipc` into `IPc`.
+- A `Tools` band tint survives in `Theme.swift` with no corresponding
+  directory.
+- The palette does not search headings, only file paths.
 - Code blocks put `.frame(maxWidth: .infinity)` on `Text` inside a horizontal
   `ScrollView`. Whether that wraps or scrolls depends on how SwiftUI resolves
   `.infinity` against a nil width proposal. The widest fenced line in the
   codex is 116 characters, in
   `08_User_Applications/man_pages/network_tools.md` — check there first.
-- The last shipped binary was x86_64-only, with no arm64 slice, so it ran
-  under Rosetta on Apple Silicon.
+- The reading column is capped at 920pt but pinned to the leading edge, so the
+  slack collects on the right rather than as even margins.
+- The last shipped binary was host-arch-only, with no universal slice, so it
+  ran under Rosetta on Apple Silicon.

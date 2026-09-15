@@ -251,7 +251,7 @@ struct MarkdownView: View {
     let sourceFile: URL?
     let projectRoot: URL
     let onLink: (LinkResolver.Target) -> Void
-    @State private var scrollAnchor: String? = nil
+    @EnvironmentObject private var state: AppState
 
     private var frontmatter: PageFrontmatter? { document.frontmatter }
     private var blocks: [MDBlock] { document.blocks }
@@ -266,7 +266,7 @@ struct MarkdownView: View {
                     }
                     VStack(alignment: .leading, spacing: 16) {
                         ForEach(0..<blocks.count, id: \.self) { idx in
-                            blockView(blocks[idx]).id(idx)
+                            blockView(blocks[idx]).id(scrollID(blocks[idx], idx))
                         }
                     }
                     if let fm = frontmatter {
@@ -280,7 +280,28 @@ struct MarkdownView: View {
                 .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .background(Theme.base)
+            .onChange(of: state.pendingAnchor) { requested in
+                guard let requested, !requested.isEmpty else { return }
+                withAnimation(.easeOut(duration: 0.25)) {
+                    proxy.scrollTo(requested, anchor: .top)
+                }
+                // One-shot: clearing it here means re-clicking the same
+                // outline row scrolls again, rather than the second click
+                // being a no-op because the value never changed.
+                state.pendingAnchor = nil
+            }
         }
+    }
+
+    /// Scroll identity for a block.
+    ///
+    /// Headings answer to their own anchor so `proxy.scrollTo(anchor)` — from
+    /// an outline row or a `[text](#anchor)` link — lands on them. Everything
+    /// else keeps a positional id, which nothing scrolls to but which keeps
+    /// identities distinct and stable across re-renders.
+    private func scrollID(_ block: MDBlock, _ idx: Int) -> String {
+        if case .heading(_, _, let anchor) = block, !anchor.isEmpty { return anchor }
+        return "block-\(idx)"
     }
 
     @ViewBuilder

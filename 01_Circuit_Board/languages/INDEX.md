@@ -6,8 +6,9 @@ hardware behavior with HDLs and design tools.
 ## Three things a board is described in
 
 ```text
-  Nothing at this layer is a programming language. Each column below is a
-  different description of the same board, and only the first is executed.
+  Nothing at this layer is a programming language. Each box below is a
+  different description of the same board. The first two are run — one on
+  hardware, one in a simulator — and the third is manufactured.
 
   ┌─ behaviour of the logic ──────────────────────────────────────────┐
   │  Verilog · SystemVerilog · VHDL      the industry three           │

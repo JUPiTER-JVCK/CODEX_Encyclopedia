@@ -53,8 +53,9 @@ The backlog is checked in both directions, the way `palette_audit.py` checks
 its derived-colour counts. A file missing a diagram that is *not* listed
 fails — the gap cannot grow. A listed file that now has one also fails — the
 list cannot go stale and quietly re-exempt work already done. Drawing a
-diagram therefore means deleting its line here, and the count in the
-backlog's own header has to be right too.
+diagram therefore means deleting its line here, and every count in that file
+— the total in its header and the `(N)` on each band heading — has to be
+right too.
 
 Layer READMEs are outside this arrangement: they are required to carry a
 diagram unconditionally and cannot be backlogged.
@@ -285,16 +286,32 @@ def wants_diagram(rel: str) -> bool:
     return parts[0] not in NON_CODEX_TOPS
 
 
-def read_backlog(root: str) -> tuple[set[str], int | None]:
-    """The listed gaps, and the count the file's own header claims.
+class Backlog(NamedTuple):
+    """The listed gaps, the total the header claims, and the band counts."""
 
-    The header count is checked against the entries for the same reason the
-    entries are checked against the tree: a number in prose that nothing
-    verifies is a number that goes stale.
+    entries: set[str]
+    claimed: int | None
+    bands: list[tuple[str, int, int]]      # label, claimed, actual
+
+
+# `# 142 files remain.` and `# Compute — 02 CPU through 08 … (65)`.
+TOTAL_RE = re.compile(r"^#\s*(\d+)\s+files? remain")
+BAND_RE = re.compile(r"^#\s*(.+?)\s*\((\d+)\)\s*$")
+
+
+def read_backlog(root: str) -> Backlog:
+    """Parse the backlog, including the per-band counts in its headings.
+
+    Every number in this file is checked against the entries under it, for
+    the same reason the entries are checked against the tree: a number in
+    prose that nothing verifies is a number that goes stale. The band counts
+    were not parsed at first, and a PR description claimed they were — which
+    is precisely the failure this file exists to prevent, one level up.
     """
     path = os.path.join(root, BACKLOG_PATH)
     entries: set[str] = set()
     claimed: int | None = None
+    bands: list[tuple[str, int, int]] = []
     try:
         with open(path, encoding="utf-8") as fh:
             for line in fh:
@@ -302,14 +319,21 @@ def read_backlog(root: str) -> tuple[set[str], int | None]:
                 if not line:
                     continue
                 if line.startswith("#"):
-                    m = re.search(r"^#\s*(\d+)\s+files? remain", line)
-                    if m:
-                        claimed = int(m.group(1))
+                    total = TOTAL_RE.search(line)
+                    if total:
+                        claimed = int(total.group(1))
+                        continue
+                    band = BAND_RE.match(line)
+                    if band:
+                        bands.append((band.group(1), int(band.group(2)), 0))
                     continue
                 entries.add(line.replace("/", os.sep))
+                if bands:
+                    label, want, seen = bands[-1]
+                    bands[-1] = (label, want, seen + 1)
     except FileNotFoundError:
         pass
-    return entries, claimed
+    return Backlog(entries, claimed, bands)
 
 
 def coverage_faults(root: str,
@@ -321,7 +345,8 @@ def coverage_faults(root: str,
     parsing — and re-`stat`ing every image reference in — all 278 files a
     second time, for an answer already in hand.
     """
-    backlog, claimed = read_backlog(root)
+    listed = read_backlog(root)
+    backlog, claimed = listed.entries, listed.claimed
     faults: list[tuple[str, int, str, str]] = []
 
     # A layer README is the one file that cannot be backlogged: it is the
@@ -357,6 +382,11 @@ def coverage_faults(root: str,
     elif claimed != real:
         faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
                        f"header claims {claimed} files remain, really {real}"))
+
+    for label, want, seen in listed.bands:
+        if want != seen:
+            faults.append((BACKLOG_PATH, 1, "BACKLOG STALE",
+                           f"band \"{label}\" claims {want}, lists {seen}"))
 
     for rel in sorted(layers):
         if not drawn.get(rel):
@@ -531,6 +561,18 @@ COVERAGE_CASES = [
          "BACKLOG STALE | header claims 1 files remain, really 0"],
     ),
     (
+        "a band heading's own count is checked too",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        "# 1 files remain.\n\n# Band (2)\nL/topics/INDEX.md\n",
+        ["BACKLOG STALE | band \"Band\" claims 2, lists 1"],
+    ),
+    (
+        "and passes when it agrees",
+        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        "# 1 files remain.\n\n# Band (1)\nL/topics/INDEX.md\n",
+        [],
+    ),
+    (
         "an image present under the audited root is found there",
         {"L/README.md": DIAGRAM + "\nSee `_assets/present.png`.\n",
          "L/topics/INDEX.md": DIAGRAM, "_assets/present.png": "not really a png"},
@@ -647,7 +689,7 @@ def main() -> int:
     faults.extend(coverage_faults(args.root, drawn))
     faults.sort()
 
-    backlog, _ = read_backlog(args.root)
+    backlog = read_backlog(args.root).entries
     scoped = sum(1 for rel in drawn if wants_diagram(rel))
 
     print(f"markdown files   {len(drawn)}")

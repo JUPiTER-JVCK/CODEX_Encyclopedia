@@ -14,9 +14,10 @@ Concept notes. One file per topic as the codex grows; this index gives the map.
   │                   SBCs — Raspberry Pi · BeagleBone · Jetson · Pine64
   ▼
   how it talks        parallel — DDR, legacy PCI
-  │                   serial — PCIe · USB · SATA · NVMe · SPI · I²C · CAN
+  │                   serial — PCIe · USB · SATA · SPI · I²C · CAN
   │                   topology — point-to-point · multi-drop · fabric
   │                   clocking — synchronous · source-sync · embedded clock
+  │                   NVMe is a command set carried over PCIe, not a bus
   ▼                                          detail: protocols/INDEX.md
   what keeps it up    memory — DIMMs · ECC · channels · ranks · SPD · XMP
   │                   power — multi-phase VRM · PMIC · sequencing   → 00c

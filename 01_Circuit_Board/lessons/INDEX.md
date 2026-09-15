@@ -3,8 +3,9 @@
 ## The ladder
 
 ```text
-  Ten tracks, and the prerequisites are the file's own. Two independent
-  roots — theory and hands — converge at the first real board.
+  Ten tracks. The file states three prerequisites — #1→#2, #2→#6, #4→#5 —
+  and those are the only edges drawn as such below. Everything else is listed
+  in its own order, not claimed to depend on what precedes it.
 
   1  Basic electronics        Ohm · Kirchhoff · RC · op-amps    → 00c
   │
@@ -17,14 +18,13 @@
   4  Reading schematics & PCBs   symbols · nets · layers · gerbers · BOM
   │
   └─ 5  KiCad project         design ─▶ export gerbers ─▶ send to a fab
-        │
-        ├─ 7  Signal integrity & EMC   transmission lines · termination
-        │                              crosstalk · ground planes
-        ├─ 8  Bus bring-up debug       logic analyzer + scope on I²C/SPI/UART
-        └─ 9  JTAG & boundary scan     chain detection · fault isolation
 
-  10  SBC project             boot Linux on a Pi or BeagleBone, attach a
-                              sensor, write the driver    ──▶ 04, 05
+  7  Signal integrity & EMC     transmission lines · termination
+                                crosstalk · ground planes
+  8  Bus bring-up debug         logic analyzer + scope on I²C/SPI/UART
+  9  JTAG & boundary scan       chain detection · fault isolation
+  10  SBC project               boot Linux on a Pi or BeagleBone, attach a
+                                sensor, write the driver    ──▶ 04, 05
 
   Lab: pcb_labs.md covers 5, 3 and 7.
 ```

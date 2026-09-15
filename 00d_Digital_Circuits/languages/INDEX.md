@@ -3,8 +3,10 @@
 ## From text to a bitstream
 
 ```text
-  An HDL is not compiled, it is *synthesised* — turned into gates, then into
-  a placement on real silicon. Every tool below sits at one of four stages.
+  An HDL takes two different routes. Simulation *compiles* it — iverilog is
+  a compiler, Verilator emits C++. Hardware *synthesises* it, into gates and
+  then a placement on real silicon. Every tool below sits at one of four
+  stages along those two routes.
 
   describe      Verilog · SystemVerilog · VHDL        the industry three
                 Chisel · SpinalHDL (Scala)            embedded in a host

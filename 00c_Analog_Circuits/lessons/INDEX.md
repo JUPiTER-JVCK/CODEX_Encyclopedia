@@ -3,8 +3,8 @@
 ## The ladder
 
 ```text
-  Twelve exercises. The first three build the amplifier you then use as a
-  component in everything after it.
+  Twelve exercises. #1 is the op-amp everything else is built on; #2 and #3
+  are the first two things you build out of it.
 
   1  Op-amp basics           inverting · non-inverting · buffer · summer
   │                          the two golden rules

@@ -5,25 +5,28 @@ Physical/electrical bus protocols that live on the board.
 ## The buses, by shape
 
 ```text
-  What distinguishes these is topology and clocking, not speed. Four shapes
-  cover every row in the table below.
+  What distinguishes these is topology and clocking, not speed — and the
+  slow ones at the bottom differ from each other as much as from the rest.
 
   point-to-point, serial, lanes        the fast ones. A link is two devices
     PCIe 1.0–6.0 ──▶ NVMe (a command set, not a bus)
     SATA · Thunderbolt (tunnels PCIe + DisplayPort over USB-C)
     HDMI (TMDS/FRL) · DisplayPort (Main Link)
-    MII / RGMII / SGMII ── MAC ◀──▶ PHY        ──▶ 09 Network Physical
+    SGMII ── MAC ◀──▶ PHY, serialised          ──▶ 09 Network Physical
 
-  parallel, clocked, wide              memory, and nothing else any more
+  parallel, clocked, wide              memory, and the MAC-to-PHY link
     DDR4 · DDR5 (JESD79-4/5) · LPDDR4/5 (JESD209-4/5)
+    MII · RGMII — four or eight data lines plus a clock, not lanes
 
   a tree with one host                 enumeration, addresses handed out
     USB 2.0 / 3.x / 4
 
-  multi-drop, shared wires             slow, cheap, everywhere on the board
-    I²C ──▶ SMBus (system management)
-    SPI (4-wire, one select per device) · UART / RS-232 (no clock at all)
-    CAN (ISO 11898, multi-master) · JTAG (IEEE 1149.1, a chain not a bus)
+  the slow ones, everywhere on the board — and no two share a topology:
+    I²C ──▶ SMBus     truly multi-drop: two wires, addresses on the bus
+    CAN (ISO 11898)   multi-drop and multi-master, with arbitration
+    SPI               a shared clock and data, one chip-select per device
+    UART / RS-232     point-to-point, and no clock at all
+    JTAG (1149.1)     a daisy chain — out of one device, into the next
 
   The decoder catalog for all of these, as a logic analyzer sees them, is
   in embedded_bus_protocols_lookup.md in this folder.

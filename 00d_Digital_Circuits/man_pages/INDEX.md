@@ -17,13 +17,17 @@ than system utilities.
      ├──▶ cocotb-config                  if the testbench is Python
      ├──▶ sby (SymbiYosys)               if you want a proof, not a test
      │
-     └──▶ yosys ──▶ netlist ──▶ nextpnr-ice40 ──▶ icepack ──▶ .bin
-                                nextpnr-ecp5  ──▶ ecppack
-                                nextpnr-gowin
-                                    └──▶ icetime      timing report
+     └──▶ yosys ──▶ netlist ──▶ nextpnr-ice40 ──▶ icepack     ──▶ .bin
+                                nextpnr-ecp5  ──▶ ecppack     ──▶ .bit
+                                nextpnr-gowin ──▶ gowin_pack  ──▶ .fs
+                                                  (Apicula)
 
-  The vendor flows (vivado · quartus_sh · vcs · xrun · vsim · dc_shell ·
-  genus · innovus) collapse those stages into one tool and one licence.
+     icetime reads an iCE40 placement and reports its timing; the other two
+     families have their own equivalents rather than sharing this one.
+
+  The proprietary tools cover the same stages and are bought separately:
+  vcs · xrun · vsim simulate, dc_shell and genus synthesise, innovus
+  implements, and vivado and quartus_sh bundle a whole FPGA flow each.
 
   On the bench, a logic analyzer closes the loop — Saleae, DSLogic or any
   sigrok device, driven by sigrok-cli or PulseView. The decoder catalog is

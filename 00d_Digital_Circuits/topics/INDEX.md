@@ -3,8 +3,9 @@
 ## What is built from what
 
 ```text
-  Read downward: each group is assembled out of the one above it, and the
-  bottom of the column is a CPU.
+  Read downward: each group is assembled out of the one above it. The
+  datapath an ALU and a register file make is where 02 CPU picks up; what
+  remains below is how any of it is made real.
 
   number systems      binary · hex · two's complement · BCD · gray
   │                   IEEE 754 · fixed-point · posits

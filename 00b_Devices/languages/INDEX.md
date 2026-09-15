@@ -22,8 +22,9 @@
                           thermal — R_θJA, R_θJC, P_D, SOA
                           reliability — MTBF, FIT, MSL
 
-  Only the first group is machine-readable, and it is the one the
-  simulators in man_pages/ consume.
+  The first three are all machine-readable; what separates them is which
+  tool consumes them — a simulator, a schematic editor, a fab. Only the
+  datasheet is written for a person, and it is the one that governs.
 ```
 
 | Language / format | Use |

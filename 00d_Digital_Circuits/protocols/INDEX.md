@@ -6,21 +6,30 @@ HDL toolchain has to implement.
 ## Standards, by what they hand to the next tool
 
 ```text
-  None of these is a wire protocol. They are the file formats and language
-  definitions that let one vendor's tool read another's output.
+  The chain below is not wire protocols at all — it is the file formats and
+  language definitions that let one vendor's tool read another's output. The
+  two families after it are, which is why they are kept separate.
 
-  the language        IEEE 1364 Verilog · 1800 SystemVerilog · 1076 VHDL
-  │                   1666 SystemC · 1850 PSL · 1801 UPF (power intent)
-  │                   1685 IP-XACT (how an IP block declares itself)
+  RTL   IEEE 1364 Verilog · 1800 SystemVerilog · 1076 VHDL
+  │     1666 SystemC · 1850 PSL · 1801 UPF (power intent)
+  │     1685 IP-XACT (how an IP block declares itself)
   ▼
-  the cell library    Liberty .lib        timing and power per cell
-  │                   LEF                 abstract cell geometry
+  synthesis  ◀── Liberty .lib     timing and power, per standard cell
+  │
   ▼
-  the design          DEF                 placed, routed design
+  gate netlist
+  │
   ▼
-  the mask            GDSII ──▶ OASIS     what actually goes to the fab
+  place & route  ◀── LEF          abstract cell geometry
+  │
+  ▼
+  DEF ──▶ GDSII ──▶ OASIS         what actually goes to the fab
 
-  Two more families sit beside that chain rather than in it:
+  Liberty and LEF enter from the side because they are *inputs* to those two
+  stages, not output by the stage above — each tool reads both the design
+  and the library it is mapping onto.
+
+  Two families of real wire protocol sit beside that chain rather than in it:
 
   getting inside a finished chip   1149.1 JTAG ─┬─ .4 mixed-signal
                                                 ├─ .6 AC-coupled

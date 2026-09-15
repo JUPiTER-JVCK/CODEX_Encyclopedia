@@ -6,21 +6,25 @@ Hardware enumeration & inspection tools — mostly Linux, with macOS equivalents
 
 ```text
   Every command here answers the same question at a different level of the
-  board, and all of them read what firmware and the kernel already found.
+  board. Most read back what firmware and the kernel already discovered; the
+  last two go and ask the hardware themselves.
 
   the whole board        lshw · hwinfo          system_profiler   (macOS)
-  │                      dmidecode ── SMBIOS: board, BIOS, RAM SPD
+  │                      dmidecode ── SMBIOS/DMI: board, BIOS, memory
   │
   ├─ the buses           lspci   PCIe tree, and which driver claimed what
   │                      lsusb   USB topology
   │                      ioreg   the IORegistry tree          (macOS)
   │
   ├─ the parts on them   lscpu · lsmem · lsblk
-  │                      i2cdetect   scan an I²C bus for addresses
-  │                      spi-tools   talk to /dev/spidev* directly
   │
-  └─ what happened at boot
-                         dmesg   the kernel's own account of the above
+  ├─ what happened at boot
+  │                      dmesg   the kernel's own account of the above
+  │
+  └─ and two that transact rather than report:
+                         i2cdetect   drives the bus, addressing every slot
+                         spi-tools   talks to /dev/spidev* directly
+                         both can wedge a live device — read their warnings
 
   On an SBC the same job needs board-specific tools, because the pins are
   not on any standard bus: pinctrl (RPi GPIO, replacing WiringPi's gpio)
@@ -34,7 +38,7 @@ Hardware enumeration & inspection tools — mostly Linux, with macOS equivalents
 | `lspci` | 8 | List PCI/PCIe devices and their drivers |
 | `lsusb` | 8 | List USB devices and topology |
 | `lshw` | 1 | Comprehensive hardware listing (CPU, memory, buses) |
-| `dmidecode` | 8 | Dump SMBIOS/DMI tables: motherboard, RAM SPD, BIOS info |
+| `dmidecode` | 8 | Dump SMBIOS/DMI tables: motherboard, memory modules, BIOS info (firmware-reported, not read from the DIMM's SPD) |
 | `hwinfo` | 8 | openSUSE-style hardware probe |
 | `dmesg` | 1 | Kernel ring buffer — boot-time hardware messages |
 | `lsblk` | 8 | List block devices and partitions |

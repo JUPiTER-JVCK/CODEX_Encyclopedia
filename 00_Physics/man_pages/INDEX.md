@@ -18,7 +18,9 @@ you install, not commands the OS ships.
   coupled physics          comsol · elmer
     FEM — needs a mesh                    gmsh ──▶ both of these
 
-  atoms and bands          qiskit · cirq · pennylane (quantum SDKs)
+  quantum computing        qiskit · cirq · pennylane
+    circuits and algorithms, not atoms — the DFT codes that do bands
+    (Quantum ESPRESSO, VASP, ASE) are in languages/, not in this table
 
   the maths itself         sympy (symbolic) · octave (numeric)
 

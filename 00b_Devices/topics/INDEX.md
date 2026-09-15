@@ -3,8 +3,8 @@
 ## The parts, by what they do
 
 ```text
-  Eight groups. The first three store or shape energy; the next three
-  switch it; the last two convert between domains.
+  Parts grouped by what they do to a signal, then two things that are true
+  of every one of them.
 
   store and shape      passives      R · C · L · transformers · crystals
                                      no gain, no control terminal

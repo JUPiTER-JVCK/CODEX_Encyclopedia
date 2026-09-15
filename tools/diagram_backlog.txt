@@ -4,8 +4,13 @@
 # directions: a file missing a diagram that is not listed here fails the
 # build, and a listed file that has gained one fails it too. So the gap
 # cannot grow quietly, and this list cannot go stale and re-exempt work
-# already finished. Drawing a diagram means deleting its line below and
-# correcting the count on the next line.
+# already finished.
+#
+# Drawing a diagram means three edits here, not one, because the audit
+# checks all three: delete the file's line below, decrement the total on
+# the next line, and decrement the (N) on the band heading it sat under.
+# Every entry must sit under a band heading, every heading must carry a
+# count, and the band counts must sum to the total.
 #
 # 142 files remain.
 

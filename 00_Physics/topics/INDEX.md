@@ -15,7 +15,8 @@ Each topic links to what it *enables* one layer up.
   solid state ─────────┬──▶ the p-n junction                  00b Devices
                        └──▶ the MOS capacitor ──▶ MOSFET      00b → 00d gates
 
-  quantum ─────────────┬──▶ tunnelling: Zener, subthreshold   00b Devices
+  quantum ─────────────┬──▶ tunnelling: Zener, flash erase,   00b Devices
+  │                    │    gate leakage, tunnel FETs
                        ├──▶ confinement ──▶ optoelectronics   09 PHY
                        └──▶ Holevo bound, QKD                 14 Security
 
@@ -48,7 +49,8 @@ Each topic links to what it *enables* one layer up.
 ## Quantum
 - **Wave-particle duality, de Broglie**
 - **Schrödinger equation** — bound states, tunneling
-- **Tunneling** → Zener, FET subthreshold, flash erase
+- **Tunneling** → Zener, flash erase, gate leakage, tunnel FETs (ordinary
+  subthreshold conduction is diffusion, not tunnelling)
 - **Energy bands from periodic potential** (Kronig-Penney intuition)
 - **Pauli exclusion** → why bands fill
 - **Quantum dots / wells / wires** — confinement → optoelectronics

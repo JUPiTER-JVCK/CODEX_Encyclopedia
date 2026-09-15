@@ -167,8 +167,14 @@ READMEs. Most do not yet: `tools/diagram_backlog.txt` lists the ones still to
 draw, and the audit reads it as a contract in both directions. A file missing
 a diagram that is not on the list fails the build, so the gap cannot grow. A
 listed file that has gained one fails it too, so the list cannot go stale and
-quietly re-exempt work already done. Drawing a diagram means deleting its line
-there and correcting the count in that file's header.
+quietly re-exempt work already done.
+
+Drawing a diagram therefore means three edits to that file, because the audit
+checks all three: delete the file's line, decrement the `N files remain`
+total, and decrement the `(N)` on the band heading it sat under. Every entry
+must sit under a band heading, every heading must carry a count, and the band
+counts must sum to the total — the band count was added after a PR
+description claimed it was enforced when it was not.
 
 ## Sub-sections
 

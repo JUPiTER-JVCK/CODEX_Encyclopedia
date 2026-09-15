@@ -25,7 +25,7 @@ you install, not commands the OS ships.
 
   the maths itself         sympy (symbolic) · octave (numeric)
 
-  and one that is neither  units — `echo "1 eV" | units -t J`
+  and one that is neither  units — `units -t "1 eV" J` → 1.602e-19
 
   Numeric values for the constants below are in this file's second table;
   the laws they appear in are in protocols/INDEX.md.
@@ -61,4 +61,5 @@ you install, not commands the OS ships.
 | `μ₀` | Vacuum permeability | 1.257 × 10⁻⁶ H/m |
 | `Z₀ = √(μ₀/ε₀)` | Free-space impedance | 376.7 Ω |
 
-Reference for `units` command: `echo "1 eV" | units -t "J"` → `1.602e-19`.
+Reference for `units`: `units -t "1 eV" J` → `1.602e-19`. Both the source
+and the target unit are arguments; one alone asks for its definition.

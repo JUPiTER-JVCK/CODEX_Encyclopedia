@@ -130,11 +130,11 @@ CLAIMS = [
     ("README.md", "diagrams", "files carrying a diagram (whole tree)",
      r"^- (\d+) files carry a diagram across the repository"),
     ("README.md", "drawn", "files carrying a diagram (audited scope)",
-     r"^  (\d+) of the \d+ the diagram audit holds to it"),
+     r"requires one of \d+ files, and (\d+) of those carry it"),
     ("README.md", "scoped", "files the diagram audit holds to a diagram",
-     r"^  \d+ of the (\d+) the diagram audit holds to it"),
+     r"requires one of (\d+) files, and \d+ of those carry it"),
     ("README.md", "backlog", "files still to draw",
-     r"^  the remaining (\d+) are listed in"),
+     r"the remaining (\d+) are listed in"),
 ]
 
 

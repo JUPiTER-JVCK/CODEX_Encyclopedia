@@ -26,7 +26,7 @@
   10  SBC project               boot Linux on a Pi or BeagleBone, attach a
                                 sensor, write the driver    ──▶ 04, 05
 
-  Lab: pcb_labs.md covers 5, 3 and 7.
+  Lab: pcb_labs.md — a KiCad schematic and layout (#5), soldering (#3).
 ```
 
 ## Dedicated lesson modules

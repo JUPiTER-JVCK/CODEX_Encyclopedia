@@ -109,9 +109,10 @@ struct BreadcrumbBar: View {
                 Image(systemName: "books.vertical.fill")
                     .font(.system(size: 11))
                     .foregroundColor(Theme.lavender)
-                Text("Codex")
-                    .font(Theme.FontStyle.subhead)
-                    .foregroundColor(Theme.subtext)
+                // The root was the one crumb left as plain text while every
+                // deeper one became clickable — and the project root does have
+                // a README, so it has the same destination as any other crumb.
+                Crumb(label: "Codex", isLast: false, target: rootTarget)
                 ForEach(0..<parts.count, id: \.self) { i in
                     Image(systemName: "chevron.right")
                         .font(.system(size: 9, weight: .bold))
@@ -129,6 +130,15 @@ struct BreadcrumbBar: View {
                 Text("Welcome").font(Theme.FontStyle.headline).foregroundColor(Theme.text)
             }
         }
+    }
+
+    /// The project's own entry point, for the leading "Codex" crumb.
+    private var rootTarget: URL? {
+        for candidate in ["README.md", "INDEX.md"] {
+            let u = state.projectRoot.appendingPathComponent(candidate)
+            if FileManager.default.fileExists(atPath: u.path) { return u }
+        }
+        return nil
     }
 
     /// The index or README a crumb should open, or nil if there isn't one.
@@ -177,16 +187,28 @@ private struct Crumb: View {
     @State private var hovered = false
 
     var body: some View {
+        // A Button only when there is somewhere to go. An onTapGesture is not
+        // focusable and does not answer Return, so the first version of this
+        // was pointer-only; and a Button with no action would advertise a
+        // destination that does not exist. Targetless crumbs stay plain text.
+        if let target {
+            Button { state.openFile(target) } label: { text }
+                .buttonStyle(.plain)
+                .onHover { hovered = $0 }
+                .help("Open \(label)")
+        } else {
+            text.help(label)
+        }
+    }
+
+    private var text: some View {
         Text(label)
             .font(isLast ? Theme.FontStyle.headline : Theme.FontStyle.subhead)
             .foregroundColor(isLast ? Theme.text
-                                    : (hovered && target != nil ? Theme.blue : Theme.subtext))
-            .underline(hovered && target != nil)
+                                    : (hovered ? Theme.blue : Theme.subtext))
+            .underline(hovered)
             .lineLimit(1)
             .contentShape(Rectangle())
-            .onHover { hovered = $0 && target != nil }
-            .onTapGesture { if let t = target { state.openFile(t) } }
-            .help(target != nil ? "Open \(label)" : label)
     }
 }
 

@@ -80,6 +80,19 @@ enum Theme {
         static let h6 = Font.system(size: 12, weight: .semibold, design: .default)
     }
 
+    // MARK: Page geometry
+    //
+    // The document pane and the Welcome screen each carried their own numbers
+    // — 920pt wide with 48pt gutters against 980pt with 40pt — so the two
+    // screens never lined up with each other. One source now; the width
+    // itself is a user preference (Preferences.ColumnWidth).
+    enum Layout {
+        /// Space between the column edge and the text inside it.
+        static let gutter: CGFloat = 48
+        /// Space above and below the column's content.
+        static let vertical: CGFloat = 32
+    }
+
     // MARK: Radii
     enum Radius {
         static let small:  CGFloat = 6

@@ -18,6 +18,7 @@ enum CodexInfo {
 @main
 struct CodexApp: App {
     @StateObject private var state = AppState.shared
+    @ObservedObject private var prefs = Preferences.shared
 
     var body: some Scene {
         WindowGroup("Codex v\(CodexInfo.version)") {
@@ -43,6 +44,18 @@ struct CodexApp: App {
                     .keyboardShortcut("1", modifiers: [.command])
                 Button("Toggle Inspector") { withAnimation { state.inspectorVisible.toggle() } }
                     .keyboardShortcut("0", modifiers: [.command])
+                Divider()
+                // How much of a wide window the reading column should use.
+                // "Utilize the unused space" cuts both ways — a centred 920pt
+                // column on a 27" display leaves large calm sides, which is
+                // either restful or wasteful depending on the reader. This
+                // makes it their call rather than a number baked into the
+                // renderer.
+                Picker("Reading Width", selection: $prefs.columnWidth) {
+                    ForEach(Preferences.ColumnWidth.allCases) { width in
+                        Text(width.label).tag(width)
+                    }
+                }
             }
             CommandMenu("Navigation") {
                 // ⌘H is Hide and ⌘⌥H is Hide Others, both reserved by macOS;
@@ -199,8 +212,11 @@ final class AppState: ObservableObject {
     /// Route a markdown link click through the right behavior.
     func handleLink(_ target: LinkResolver.Target) {
         switch target {
-        case .file(let url):
+        case .file(let url, let anchor):
             openFile(url)
+            // Set after the open, so it survives the dismissPalette/reset that
+            // openFile performs and is waiting when the new document renders.
+            if let anchor, !anchor.isEmpty { pendingAnchor = anchor }
         case .external(let url):
             LinkResolver.openExternal(url)
         case .anchor(let a):

@@ -252,6 +252,7 @@ struct MarkdownView: View {
     let projectRoot: URL
     let onLink: (LinkResolver.Target) -> Void
     @EnvironmentObject private var state: AppState
+    @ObservedObject private var prefs = Preferences.shared
 
     private var frontmatter: PageFrontmatter? { document.frontmatter }
     private var blocks: [MDBlock] { document.blocks }
@@ -263,10 +264,17 @@ struct MarkdownView: View {
                     if let fm = frontmatter {
                         PageHero(fm: fm)
                             .padding(.bottom, 28)
+                            // The hero renders the first H1 in place of the
+                            // body, so it has to be the thing that H1's
+                            // outline row scrolls to. Without this the first
+                            // row asked for an id nothing carried, and
+                            // clicking it did nothing at all.
+                            .id(heroID ?? "hero")
                     }
+                    let ids = headingIDs
                     VStack(alignment: .leading, spacing: 16) {
                         ForEach(0..<blocks.count, id: \.self) { idx in
-                            blockView(blocks[idx]).id(scrollID(blocks[idx], idx))
+                            blockView(blocks[idx]).id(scrollID(ids, idx))
                         }
                     }
                     if let fm = frontmatter {
@@ -274,10 +282,21 @@ struct MarkdownView: View {
                             .padding(.top, 36)
                     }
                 }
-                .padding(.horizontal, 48)
-                .padding(.vertical, 32)
-                .frame(maxWidth: 920, alignment: .topLeading)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .padding(.horizontal, Theme.Layout.gutter)
+                .padding(.vertical, Theme.Layout.vertical)
+                // Inner frame caps the measure; text stays left-aligned inside
+                // it. Outer frame takes the rest of the pane and — with no
+                // alignment argument, so it defaults to centre — puts the
+                // surplus on *both* sides.
+                //
+                // This used to read `.frame(maxWidth: .infinity, alignment:
+                // .topLeading)`, which pinned the capped column against the
+                // left edge and collected every spare pixel into one dead gap
+                // on the right. The Welcome screen has always centred; the two
+                // panes simply disagreed.
+                .frame(maxWidth: prefs.columnWidth.points ?? .infinity,
+                       alignment: .topLeading)
+                .frame(maxWidth: .infinity)
             }
             .background(Theme.base)
             .onChange(of: state.pendingAnchor) { requested in
@@ -293,15 +312,33 @@ struct MarkdownView: View {
         }
     }
 
-    /// Scroll identity for a block.
+    /// Block index → the scroll id that block answers to.
     ///
-    /// Headings answer to their own anchor so `proxy.scrollTo(anchor)` — from
-    /// an outline row or a `[text](#anchor)` link — lands on them. Everything
-    /// else keeps a positional id, which nothing scrolls to but which keeps
-    /// identities distinct and stable across re-renders.
-    private func scrollID(_ block: MDBlock, _ idx: Int) -> String {
-        if case .heading(_, _, let anchor) = block, !anchor.isEmpty { return anchor }
-        return "block-\(idx)"
+    /// Taken from `document.outline`, which `DocumentStore` resolved once, so
+    /// the renderer and the inspector's outline agree by construction rather
+    /// than by both applying the same rule correctly. They previously derived
+    /// ids independently from heading text, which is not unique — 48 files in
+    /// this codex have colliding heading anchors.
+    private var headingIDs: [Int: String] {
+        var map: [Int: String] = [:]
+        var bodyEntries = document.outline.lazy.filter { !$0.isHero }.makeIterator()
+        for (i, block) in blocks.enumerated() {
+            guard case .heading = block else { continue }
+            guard let entry = bodyEntries.next() else { break }
+            map[i] = entry.id
+        }
+        return map
+    }
+
+    /// The id the hero card answers to, when it is standing in for the first H1.
+    private var heroID: String? {
+        document.outline.first(where: { $0.isHero })?.id
+    }
+
+    /// Scroll identity for a block. Non-headings keep a positional id: nothing
+    /// scrolls to them, but identities stay distinct and stable across renders.
+    private func scrollID(_ ids: [Int: String], _ idx: Int) -> String {
+        ids[idx] ?? "block-\(idx)"
     }
 
     @ViewBuilder
@@ -522,8 +559,18 @@ private struct CodeBlock: View {
                     .foregroundColor(Theme.text)
                     .textSelection(.enabled)
                     .padding(14)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    // `.frame(maxWidth: .infinity)` inside a horizontal
+                    // ScrollView asks SwiftUI to resolve .infinity against an
+                    // unbounded width proposal, and whether that wraps the
+                    // text or lets it run was never settled. `fixedSize` says
+                    // it outright: take the ideal width, never wrap — so a
+                    // long line scrolls, which is the point of the ScrollView.
+                    //
+                    // The crust background sits on the ScrollView rather than
+                    // the Text, so short blocks still fill the column width.
+                    .fixedSize(horizontal: true, vertical: false)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .background(Theme.crust)
         }
         .clipShape(RoundedRectangle(cornerRadius: Theme.Radius.medium, style: .continuous))
@@ -1017,7 +1064,9 @@ private struct ImageBlock: View {
     private var resolvedURL: URL? {
         guard let src = sourceFile else { return URL(string: href) }
         let r = LinkResolver.resolve(href, sourceFile: src, projectRoot: projectRoot)
-        if case .file(let u) = r { return u }
+        // Two associated values now; the fragment is meaningless for an image
+        // href, so it is discarded explicitly rather than by tuple-matching.
+        if case .file(let u, _) = r { return u }
         if case .external(let u) = r { return u }
         return nil
     }

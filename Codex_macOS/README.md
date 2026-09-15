@@ -28,8 +28,13 @@ SwiftUI rendering the markdown tree straight on the GPU.
 - **Parsed once per revision** — `DocumentStore` caches read-and-parsed
   documents on path + modification date, so scrolling, switching tabs, and
   toggling panels don't re-read or re-parse anything
+- **Adjustable reading width** — Narrow / Comfortable / Wide / Full Width,
+  centred, shared by the document pane and the Welcome screen
 - **Bookmarks + recents** persisted to
-  `~/Library/Application Support/Codex/state.json`
+  `~/Library/Application Support/Codex/state.json`, with appearance
+  preferences in `preferences.json` beside it — deliberately a separate file,
+  since `Bookmarks` decoding is all-or-nothing and a new key in it would wipe
+  existing pins
 - **Portable bundle** — records the project path at build time, so the `.app`
   keeps working after you move it to `/Applications`
 
@@ -89,6 +94,7 @@ Codex_macOS/
     │   ├── Inspector.swift    ← Outline / Info / Recents tabs
     │   ├── Welcome.swift      ← hero + quick-action / recent / band grids
     │   ├── Palette.swift      ← command palette with badges and footer hint
+    │   ├── Preferences.swift  ← reading width, persisted to preferences.json
     │   └── Util.swift         ← fuzzy match, bookmarks, history, links
     └── RenderIcon/        ← separate product, built only by package_app.sh
         └── main.swift         ← draws AppIcon.icns at build time
@@ -171,9 +177,43 @@ perfectly and simply does nothing:
 | Palette placeholder | Promised headings, which are not indexed |
 | Palette arrow keys | `min(count - 1, …)` selected index −1 when nothing matched |
 
+And three of the repairs were themselves pointer-only on the first attempt —
+outline rows, breadcrumb crumbs and pinned rows all used `onTapGesture` on a
+plain view, which cannot be focused or activated with Return. In `PinnedRow`
+that was a straight trade: a `Button` was removed to fix the nested-button bug
+and the keyboard went with it. All three are plain-styled `Button`s now,
+siblings rather than nested, matching what the sidebar rows already did.
+
 All eleven are now fixed, along with the vibrancy defeat below. **None of the
 fixes have been seen running.** They are reasoned and they compile; that is
 exactly the standard the eleven defects above also met.
+
+**What fixing them exposed.** Making the outline rows clickable was the first
+time anything in this app consumed a heading anchor — and it immediately
+showed that the anchors were never unique. `MarkdownParser` derives them from
+heading text, and heading text repeats: **48 files carry 469 colliding
+anchors**, worst `06_System_Libraries/man_pages/linker_commands.md` with 26,
+because the man-page notes repeat `Synopsis`, `Description` and `Examples`
+once per documented command. Twenty-six of that file's outline rows would have
+jumped to the wrong heading.
+
+Two related mismatches surfaced with it. `DocumentStore` drops the first H1
+from the body because the hero card renders it, while the outline pane
+re-parsed the raw file and listed it anyway — so the first row addressed an id
+nothing carried. And `LinkResolver` had been parsing the fragment out of
+`file.md#section` and discarding it for as long as it has existed, so every
+cross-file section link opened at the top of its target.
+
+The fix is one thing rather than three: `DocumentStore` resolves the outline
+once, assigning occurrence-suffixed ids (`examples`, `examples-2`, …) the way
+GitHub does, gives the hero the first H1's id, and both the renderer and the
+outline read that one list. The inspector stops being a second, disagreeing
+parse of the same document — which also retires the three-reads-per-redraw
+cost it carried. Verified by mirroring the resolver against all 277 documents:
+469 collisions before, 0 after.
+
+A control that works for the first time is the first real test of everything
+beneath it.
 
 **Vibrancy.** The sidebar and inspector use `.behindWindow` blending, which
 samples what is behind the *window*. `RootView` painted an opaque `Theme.base`
@@ -188,6 +228,17 @@ first H1 in the command palette, tab strip, recents and inspector, and read
 `Overview` in the sidebar. That the result reads well — and that a long title
 like `Industrial & Automotive Protocols — Protocols` does not overflow a 200pt
 tab — has only been reasoned about, not seen.
+
+**Reading column.** It was capped at 920pt and pinned to the leading edge by
+`.frame(maxWidth: .infinity, alignment: .topLeading)`, so every spare pixel
+collected in one dead gap on the right — while the Welcome screen, which
+passes no alignment and therefore centres, used different numbers again (980pt
+with 40pt gutters against 920/48). Both now share `Theme.Layout` and one width
+preference, and both centre. Code blocks use `.fixedSize(horizontal: true)`
+rather than resolving `.infinity` against an unbounded proposal, so a wide
+fenced line scrolls instead of maybe-wrapping; the widest in the codex is 116
+characters, in `08_User_Applications/man_pages/network_tools.md`. Unverified on
+a Mac, like everything else here.
 
 **Still open.**
 
@@ -208,12 +259,5 @@ tab — has only been reasoned about, not seen.
 - A `Tools` band tint survives in `Theme.swift` with no corresponding
   directory.
 - The palette does not search headings, only file paths.
-- Code blocks put `.frame(maxWidth: .infinity)` on `Text` inside a horizontal
-  `ScrollView`. Whether that wraps or scrolls depends on how SwiftUI resolves
-  `.infinity` against a nil width proposal. The widest fenced line in the
-  codex is 116 characters, in
-  `08_User_Applications/man_pages/network_tools.md` — check there first.
-- The reading column is capped at 920pt but pinned to the leading edge, so the
-  slack collects on the right rather than as even margins.
 - The last shipped binary was host-arch-only, with no universal slice, so it
   ran under Rosetta on Apple Silicon.

@@ -12,10 +12,7 @@
 # Every entry must sit under a band heading, every heading must carry a
 # count, and the band counts must sum to the total.
 #
-# 78 files remain.
-
-# Compute — 02 CPU through 08 User Applications (1)
-03_Firmware_BIOS/man_pages/firmware_tools.md
+# 77 files remain.
 
 # Network — 09 Physical through 13 Application (33)
 Network/09_Network_Physical/languages/INDEX.md

@@ -6,7 +6,7 @@
   Vulnerability reporting and scope for this documentation repository.
 
   ┌─── scope ─────────────────────────────────────────────────────────────┐
-  │  no server · no accounts · no network service · no user data stored  │
+  │  no server · no accounts · no network service · no server-side data  │
   │  Codex_LMS: static SPA — progress in localStorage, never transmitted │
   │  Codex_macOS: local reader — no network calls from the app itself    │
   └──────────────────────────────────────────────────────────────────────┘
@@ -24,7 +24,7 @@ concept helps but is not required.
 ## Scope — what could actually go wrong here
 
 This is a documentation repository with two local reader applications. It has
-no server, no accounts, no network service, and stores nothing about anyone.
+no server, no accounts, no network service, and stores nothing server-side.
 That rules out most of what a security policy usually covers, so it is worth
 being specific about what is left:
 

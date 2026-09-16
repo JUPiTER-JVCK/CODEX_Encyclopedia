@@ -1,5 +1,23 @@
 # Algorithms & DSA — Languages
 
+## What is in this section
+
+```text
+  Language picks for interview and competitive programming.
+
+  ┌─── language choice by goal ───────────────────────────────────────────┐
+  │  most companies → Python  ·  competitive → C++ (STL)                 │
+  │  FAANG systems  → Go/C++  ·  personal     → whichever you type blind  │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── what you actually need per language ───────────────────────────────┐
+  │  Python: collections · heapq · bisect · functools · itertools         │
+  │  C++: bits/stdc++.h · map/set/unordered · priority_queue (min-heap)  │
+  │  Java: ArrayList · HashMap · PriorityQueue · int[] vs Integer[]       │
+  │  Go: container/heap · sort.Slice · map zero-value awareness           │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 Pick one and stay with it — fluency in a single language beats breadth once
 the clock is running.
 

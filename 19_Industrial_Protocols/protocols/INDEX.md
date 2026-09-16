@@ -1,5 +1,27 @@
 # Industrial & Automotive Protocols — Protocols
 
+## What is in this section
+
+```text
+  Fieldbus, industrial Ethernet, automotive buses, and OT protocols.
+
+  ┌─── fieldbus (serial) ─────────────────────────────────────────────────┐
+  │  Modbus RTU/ASCII/TCP · PROFIBUS DP/PA · AS-i · DeviceNet            │
+  │  Foundation Fieldbus H1 · CC-Link                                    │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── industrial Ethernet ───────────────────────────────────────────────┐
+  │  PROFINET (RT/IRT/TSN) · EtherNet/IP (CIP) · EtherCAT               │
+  │  POWERLINK · Sercos III · Modbus TCP · OPC UA (TSN/FieldX)           │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── automotive & SCADA ────────────────────────────────────────────────┐
+  │  CAN 2.0 / CAN-FD / CAN-XL · LIN · FlexRay · MOST                   │
+  │  SOME/IP · UDS (ISO 14229) · J1939 · AUTOSAR PDU                    │
+  │  DNP3 · IEC 61850 · IEC 60870-5 · KNX · BACnet · DALI / DMX        │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > Fieldbus, SCADA, and OT-network protocols: Modbus, OPC UA, PROFINET, DNP3.
 
 ## Dedicated Protocol References

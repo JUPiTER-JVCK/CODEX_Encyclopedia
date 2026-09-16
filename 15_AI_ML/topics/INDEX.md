@@ -1,5 +1,30 @@
 # AI / ML — Topics
 
+## What is in this section
+
+```text
+  AI/ML topics: from classical methods to LLM training and production.
+
+  ┌─── classical ML ──────────────────────────────────────────────────────┐
+  │  regression · trees (XGBoost/LightGBM) · SVM · clustering · PCA      │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── deep learning & architectures ────────────────────────────────────┐
+  │  activations · optimizers · CNN · Transformer · Mamba (SSM)           │
+  │  diffusion (DDPM/SD) · multimodal (CLIP · VLMs · Whisper)             │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── LLM training ──────────────────────────────────────────────────────┐
+  │  pretraining · SFT · RLHF / DPO · LoRA / QLoRA · scaling laws        │
+  │  distributed: FSDP / ZeRO / pipeline / tensor parallelism             │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── inference & production ────────────────────────────────────────────┐
+  │  quantization (AWQ/GPTQ/GGUF) · vLLM · RAG · agents · evals          │
+  │  safety · alignment (Constitutional AI / RLHF) · MLOps               │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Topic Deep Dives
 
 | File | Covers |

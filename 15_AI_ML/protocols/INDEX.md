@@ -1,5 +1,28 @@
 # AI / ML — Protocols
 
+## What is in this section
+
+```text
+  AI/ML protocols: tool-use, inference APIs, model exchange, and training.
+
+  ┌─── model context / tool-use ──────────────────────────────────────────┐
+  │  MCP · OpenAI Tool Calling · Anthropic Tool Use · Gemini Fn Calling   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── inference / serving APIs ──────────────────────────────────────────┐
+  │  OpenAI Chat Completions / Embeddings · Anthropic Messages            │
+  │  HuggingFace TGI · vLLM OpenAI-compatible · OpenAI Responses API     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── model & tensor exchange ───────────────────────────────────────────┐
+  │  ONNX · SafeTensors · GGUF · PyTorch .pt/.pth · HuggingFace Hub      │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── training / communication ──────────────────────────────────────────┐
+  │  NCCL (all-reduce) · Gloo · MPI (horovod) · RDMA/InfiniBand          │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Model context / tool-use protocols
 | Spec | Owner | Purpose |
 |------|-------|---------|

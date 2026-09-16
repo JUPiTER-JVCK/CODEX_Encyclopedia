@@ -1,5 +1,26 @@
 # RF / Wireless — Topics
 
+## What is in this section
+
+```text
+  RF topics: fundamentals → modulation → antennas → wireless protocols.
+
+  ┌─── physics & propagation ─────────────────────────────────────────────┐
+  │  wavelength/frequency · bands (VLF–EHF) · dB/dBm/dBi · link budget  │
+  │  path loss (Friis/Okumura) · fading (Rayleigh/Rician) · Doppler      │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── modulation, coding & antennas ────────────────────────────────────┐
+  │  AM/FM/SSB · ASK/FSK/PSK/QAM/OFDM/DSSS · LDPC/Polar/Turbo codes    │
+  │  dipole/Yagi/patch/phased-array · MIMO · receiver architectures       │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── protocol topics ───────────────────────────────────────────────────┐
+  │  Wi-Fi bands/security · BLE/GATT/attacks · cellular (2G→5G)          │
+  │  GNSS · LoRa/NB-IoT/Zigbee/Matter · RFID/NFC · amateur/broadcast    │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## RF fundamentals
 - **Wavelength, frequency, period** — λ = c/f
 - **Bands & propagation** — VLF, LF, MF, HF, VHF, UHF, SHF, EHF; ground wave, sky wave, line of sight

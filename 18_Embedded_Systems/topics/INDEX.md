@@ -1,5 +1,27 @@
 # Embedded Systems — Topics
 
+## What is in this section
+
+```text
+  Embedded topics indexed against the Embedded Systems Engineering Roadmap.
+
+  ┌─── OS & RTOS ─────────────────────────────────────────────────────────┐
+  │  Embedded Linux (U-Boot/Buildroot/Yocto) · FreeRTOS · Zephyr         │
+  │  tasks/ISR/mutex/queue · schedulers · memory/MPU · tickless idle      │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── MCU peripherals & build ───────────────────────────────────────────┐
+  │  GPIO/ADC/DAC/timers/PWM/watchdog/interrupts/DMA/clocks/power        │
+  │  bootloader/DFU · linker scripts · GCC sections · JTAG/GDB/OpenOCD   │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── advanced topics ───────────────────────────────────────────────────┐
+  │  standards: MISRA C · IEC 61508 · ISO 26262 · DO-178C · IEC 62304   │
+  │  embedded security · LVGL/GUI · IoT (OTA) · Edge AI · AUTOSAR        │
+  │  sensors/actuators · DSP (FIR/IIR/FFT) · PID control theory          │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 Indexed against the *Embedded Systems Engineering Roadmap*, the same source
 the lessons ladder follows.
 

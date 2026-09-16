@@ -1,5 +1,26 @@
 # Algorithms & DSA — References
 
+## What is in this section
+
+```text
+  Books, problem sets, and canonical study lists for DSA prep.
+
+  ┌─── foundational books ────────────────────────────────────────────────┐
+  │  CLRS (reference) · Skiena (approachable) · Sedgewick (Java)         │
+  │  Competitive Programming Handbook (free PDF)                          │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── interview books ───────────────────────────────────────────────────┐
+  │  Cracking the Coding Interview (CTCI) · EPI (Python/Java/C++)        │
+  │  Grokking Algorithms · Grokking the Coding Interview                  │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online & canonical lists ──────────────────────────────────────────┐
+  │  LeetCode · Codeforces · AtCoder · CSES · Advent of Code             │
+  │  Blind 75 · NeetCode 150 · Grind 75 · Striver SDE Sheet              │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Anchor (user-provided)
 - **`100_leetcode_problems.pdf`** — *100 LeetCode Problems Must Do*. This is the authoritative
   list to work through. Pair with [topics/canonical_lists.md](../topics/canonical_lists.md).

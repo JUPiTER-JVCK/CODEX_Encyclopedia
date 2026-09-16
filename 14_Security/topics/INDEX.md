@@ -1,5 +1,26 @@
 # Security — Topics
 
+## What is in this section
+
+```text
+  Attack surface organised by the stack layer a technique targets.
+
+  ┌─── hardware & CPU (layers 00–02) ────────────────────────────────────┐
+  │  glitching · side channels · JTAG abuse · Rowhammer                 │
+  │  Spectre/Meltdown/MDS · SGX/SEV attacks · pointer auth/CET           │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── firmware, drivers & OS (layers 03–05) ────────────────────────────┐
+  │  bootkits (LoJax · BlackLotus) · UEFI implants · BYOVD              │
+  │  kernel exploits · container escapes · privilege escalation           │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── network & application (layers 09–13) ─────────────────────────────┐
+  │  MITM · TLS attacks · DNS hijacking · OWASP Top 10 web vulns         │
+  │  OAuth/JWT abuse · supply chain · cloud misconfigs · AI/LLM risks   │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 Organised by the layer each topic attacks, so an entry sits beside the layer
 that owns it in the rest of the codex.
 

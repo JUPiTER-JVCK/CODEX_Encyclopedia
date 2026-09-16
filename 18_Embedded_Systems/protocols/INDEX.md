@@ -1,5 +1,28 @@
 # Embedded Systems — Protocols
 
+## What is in this section
+
+```text
+  Protocol map for embedded — where each one lives in the codex.
+
+  ┌─── on-chip / on-board buses → [01_Circuit_Board] ────────────────────┐
+  │  UART (RS-232/422/485) · I²C · SPI · USB · PCIe                     │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── wireless → [16_RF_Wireless] ──────────────────────────────────────┐
+  │  BT/BLE · Wi-Fi · LoRa/LoRaWAN · Zigbee · Thread · Matter · UWB     │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── industrial & automotive → [19_Industrial_Protocols] ──────────────┐
+  │  Modbus RTU/TCP · PROFINET · EtherCAT · CAN/CAN-FD · LIN · FlexRay  │
+  │  OPC UA · SOME/IP · UDS (ISO 14229) · J1939 · AUTOSAR PDU           │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── debug → [01_Circuit_Board] + [02_CPU] ─────────────────────────────┐
+  │  JTAG (IEEE 1149.1) · SWD · SWO/ITM · ETM/ETB                       │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > On-chip and on-board buses: I²C, SPI, UART, CAN.
 
 ## Dedicated Protocol References

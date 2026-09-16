@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## What is in this section
+
+```text
+  Version history for the CODEX Encyclopedia repository.
+
+  ┌─── release history ───────────────────────────────────────────────────┐
+  │  v3.6 (2026-09-09) — first tagged release; licensing; audit tools    │
+  │  v3.5 and earlier  — untagged history (licensing gaps documented)     │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## v3.6 — 2026-09-09
 
 First tagged release. The version history below describes v1 through v3.5,

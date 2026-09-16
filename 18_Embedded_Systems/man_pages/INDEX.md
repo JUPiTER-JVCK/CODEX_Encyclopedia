@@ -1,5 +1,26 @@
 # Embedded Systems — Manual Pages
 
+## What is in this section
+
+```text
+  Embedded tooling: compilers, flashers, debuggers, RTOS, sim, testing.
+
+  ┌─── dedicated subfile ─────────────────────────────────────────────────┐
+  │  embedded_tools.md (openocd · probe-rs · esptool · mpremote · minicom)│
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── cross-compile & flash ─────────────────────────────────────────────┐
+  │  arm-none-eabi-gcc · riscv64-unknown-elf-gcc · xtensa-esp32-elf-gcc  │
+  │  st-flash · openocd · pyocd · esptool.py · dfu-util · picotool       │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── debug, RTOS, sim & test ───────────────────────────────────────────┐
+  │  gdb / arm-none-eabi-gdb · minicom / picocom / tio · PulseView       │
+  │  west (Zephyr) · idf.py (ESP) · qemu-system-* · Renode · Wokwi      │
+  │  Unity/CMock · GoogleTest · cppcheck · clang-tidy                    │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

@@ -1,5 +1,17 @@
 # Security
 
+## What is in this section
+
+```text
+  Vulnerability reporting and scope for this documentation repository.
+
+  ┌─── scope ─────────────────────────────────────────────────────────────┐
+  │  no server · no accounts · no network service · no user data stored  │
+  │  Codex_LMS: static SPA — progress in localStorage, never transmitted │
+  │  Codex_macOS: local reader — no network calls from the app itself    │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Reporting a vulnerability
 
 Report privately through GitHub's

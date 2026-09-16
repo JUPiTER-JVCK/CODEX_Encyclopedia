@@ -1,5 +1,27 @@
 # AI / ML — Manual Pages
 
+## What is in this section
+
+```text
+  ML tooling, from GPU monitoring to training and serving CLIs.
+
+  ┌─── dedicated subfile ─────────────────────────────────────────────────┐
+  │  ml_tools.md (nvidia-smi · nvtop · tensorboard · huggingface-cli)    │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── GPU / hardware monitoring ─────────────────────────────────────────┐
+  │  nvidia-smi · nvtop · rocm-smi · intel_gpu_top · tegrastats           │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── CUDA & training ───────────────────────────────────────────────────┐
+  │  nvcc · nsys · ncu · torchrun · accelerate · deepspeed                │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── model management & serving ────────────────────────────────────────┐
+  │  huggingface-cli · ollama · vllm · tensorboard · wandb / mlflow      │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

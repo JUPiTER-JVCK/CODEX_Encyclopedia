@@ -1,5 +1,28 @@
 # AI / ML — Lessons
 
+## What is in this section
+
+```text
+  Lesson ladder: math foundations → deep learning → LLMs → agents.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  ml_labs.md (PyTorch MNIST · attention visualization · ONNX export)  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── foundations (1–4) ─────────────────────────────────────────────────┐
+  │  linear algebra · calc + probability · ML from scratch · Karpathy    │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── deep learning (5–9) ───────────────────────────────────────────────┐
+  │  PyTorch · CNN · RNN/LSTM · Transformer from scratch · diffusion     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── LLMs & agents (10–15) ─────────────────────────────────────────────┐
+  │  tokenization · local model · fine-tune (LoRA/QLoRA) · evaluation   │
+  │  RAG · agent frameworks · production serving                          │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

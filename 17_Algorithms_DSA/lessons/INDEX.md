@@ -1,5 +1,25 @@
 # Algorithms & DSA — Lessons
 
+## What is in this section
+
+```text
+  Lesson ladder: pre-flight → patterns → mocks → system design.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  dsa_labs.md (Big-O measurement · binary search · graph BFS/DFS · DP)│
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── pattern ladder (3–20) ─────────────────────────────────────────────┐
+  │  arrays/hashing · two pointers · sliding window · stack · binary search│
+  │  linked list · trees · tries · heap · backtracking · graphs           │
+  │  Dijkstra/MST/Union-Find · 1-D DP · 2-D DP · greedy · intervals      │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── beyond the 100 (21–24) ────────────────────────────────────────────┐
+  │  mock interviews · system design · OOP design · behavioral (STAR)     │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

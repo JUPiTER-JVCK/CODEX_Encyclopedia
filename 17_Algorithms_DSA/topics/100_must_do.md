@@ -10,6 +10,21 @@ source: Bosscoder Academy — "100 Must Do LeetCode Problems"
 
 # 100 Must Do LeetCode Problems
 
+## What is in this section
+
+```text
+  100 problems from the Bosscoder PDF, organised by topic.
+
+  ┌─── arrays & hashing (largest bucket) ─────────────────────────────────┐
+  │  Two Sum · Product of Array · Longest Consecutive · Top K Frequent    │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── core patterns covered ─────────────────────────────────────────────┐
+  │  two-pointer · sliding window · stack · binary search · linked list   │
+  │  trees · tries · heap · backtracking · graphs · DP (1-D and 2-D)     │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > Authoritative transcription from `references/100_leetcode_problems.pdf`
 > (Bosscoder Academy, 36 pages, image-rendered problem statements extracted
 > via `pdftoppm` + multimodal Read).

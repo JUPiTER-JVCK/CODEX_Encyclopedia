@@ -1,5 +1,27 @@
 # Industrial & Automotive Protocols — Languages
 
+## What is in this section
+
+```text
+  Languages for industrial and automotive protocol work.
+
+  ┌─── implementation languages ──────────────────────────────────────────┐
+  │  C — fieldbus stacks (SOEM/FreeMODBUS/libsocketcan)                  │
+  │  C++ — OPC UA / CANoe APIs                                           │
+  │  Python — pymodbus · python-can · cantools · asyncua · bacpypes3     │
+  │  Rust — socketcan crate · OPC UA efforts                              │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── PLC languages (IEC 61131-3) ──────────────────────────────────────┐
+  │  Ladder Diagram · Function Block Diagram · Structured Text (ST)       │
+  │  Sequential Function Chart · IDEs: CODESYS / TIA Portal / TwinCAT    │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── automotive DSLs ───────────────────────────────────────────────────┐
+  │  CAPL (CANoe/CANalyzer) · DBC files · ARXML (AUTOSAR) · ODX (UDS)   │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Implementation languages
 | Language | Use |
 |----------|-----|

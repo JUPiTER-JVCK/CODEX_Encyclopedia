@@ -12,7 +12,7 @@
   └─────────────────────────────────────────────────────────────────────┘
 
   ┌───────────────── driver frameworks ─────────────────────────────────┐
-  │  Windows: WDM (legacy) → KMDF → UMDF                               │
+  │  Windows: WDM (legacy) → WDF [ KMDF (kernel) | UMDF (user) ]       │
   │  macOS: IOKit (deprecated) → DriverKit                             │
   │  BSD: newbus (FreeBSD) · autoconf (NetBSD/OpenBSD)                 │
   └─────────────────────────────────────────────────────────────────────┘

@@ -48,8 +48,8 @@ updated: 2026-05-20
   │   CSRs        mstatus · mtvec · mcause · mepc · mhartid · …            │
   └────────────────────────────────────────────────────────────────────────┘
 
-  x0 being hardwired is what lets the pseudo-instructions work: a move is an
-  add of zero, and a branch-if-zero needs no immediate to compare against.
+  x0 being hardwired lets branch pseudo-instructions drop the comparator:
+  beqz rs → beq rs, x0. mv rd, rs expands to addi rd, rs, 0 — not x0.
 ```
 
 ## Registers

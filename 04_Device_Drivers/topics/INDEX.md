@@ -16,7 +16,7 @@
   └──────────────────────────────────────────────────────────────────────┘
 
   ┌─── frameworks ───────────────────────────────────────────────────────┐
-  │  Linux: struct device/bus/driver  │  Windows: WDM → KMDF → UMDF     │
+  │  Linux: struct device/bus/driver  │  Windows: WDM → WDF (KMDF|UMDF) │
   │  macOS: IOKit (legacy) → DriverKit│  userspace: VFIO · UIO · DPDK  │
   └──────────────────────────────────────────────────────────────────────┘
 

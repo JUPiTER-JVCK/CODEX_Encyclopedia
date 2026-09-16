@@ -27,7 +27,7 @@
   └───────────────────────────────────────────────────────────────────────────┘
 
   ┌─── WebAssembly & embedding  (9–10) ───────────────────────────────────────┐
-  │  9 Wasm sandbox — compile Rust → wasm32-wasi; run under wasmtime         │
+  │  9 Wasm sandbox — compile Rust → wasm32-wasip1; run under wasmtime       │
   │  10 embed a runtime — V8 in C++, or wasmtime in Rust                     │
   └───────────────────────────────────────────────────────────────────────────┘
 ```

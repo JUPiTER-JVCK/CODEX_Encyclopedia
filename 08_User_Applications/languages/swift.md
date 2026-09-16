@@ -21,8 +21,8 @@ updated: 2026-05-20
   ┌─── reference sections ────────────────────────────────────────────────┐
   │  Toolchain (swift build · test · run · xcodebuild · xcrun)             │
   │  SwiftPM Package.swift  │  Tooling (Xcode · SwiftLint · swift-format) │
-  │  Stdlib (Optional · Result · Codable · URLSession · Task · Combine)   │
-  │  Frameworks (SwiftUI · UIKit · SwiftData · Vapor)  │  Idioms  │  Swift 6 │
+  │  Stdlib (Optional · Result · Codable · Task)                          │
+  │  Frameworks (Foundation · Combine · SwiftUI · UIKit · SwiftData · Vapor) │
   └───────────────────────────────────────────────────────────────────────┘
 ```
 

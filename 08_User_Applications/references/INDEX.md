@@ -22,6 +22,10 @@
   ┌─── app development books ─────────────────────────────────────────────┐
   │  Programming Windows · Cocoa Programming  │  iOS & Android Big Nerd    │
   └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online ────────────────────────────────────────────────────────────┐
+  │  web.dev  │  MDN (developer.mozilla.org)  │  Stack Overflow Survey    │
+  └───────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Platform HIGs (Human Interface Guidelines)

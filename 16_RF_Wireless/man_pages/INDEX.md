@@ -9,7 +9,7 @@
   │  rf_tools.md (gnuradio · hackrf · rtl_sdr · kismet · bluetoothctl)   │
   └──────────────────────────────────────────────────────────────────────┘
 
-  ┌─── SDR hardware CLIs ─────────────────────────────────────────────────┐
+  ┌─── SDR hardware tools ────────────────────────────────────────────────┐
   │  gqrx / SDR++ (GUI) · rtl_fm / rtl_power / rtl_433 / dump1090       │
   │  hackrf_transfer / hackrf_sweep · bladeRF-cli · uhd_usrp_probe       │
   └──────────────────────────────────────────────────────────────────────┘

@@ -5,7 +5,7 @@
 ```text
   CLI and GUI clients for industrial and automotive protocols.
 
-  ┌─── industrial CLIs ───────────────────────────────────────────────────┐
+  ┌─── industrial clients ────────────────────────────────────────────────┐
   │  modpoll / mbpoll (Modbus) · UaExpert (OPC UA) · Yabe (BACnet)      │
   │  SOEM / IgH EtherCAT master · ENTTEC DMX / ola (DMX/RDM)            │
   └──────────────────────────────────────────────────────────────────────┘

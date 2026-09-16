@@ -3,7 +3,7 @@
 ## What is in this section
 
 ```text
-  68-step roadmap: hardware → programming → MCU hands-on → RTOS → quality.
+  74-step roadmap: hardware → programming → MCU hands-on → RTOS → quality.
 
   ┌─── dedicated module ──────────────────────────────────────────────────┐
   │  embedded_labs.md (bare-metal blink · FreeRTOS tasks · UART · I2C)   │

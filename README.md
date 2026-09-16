@@ -345,7 +345,7 @@ Currently:
 - Every file carries an H1, every pipe table well-formed
 - All 138 section indexes titled `<Layer> — <Section>`
 - 275 files carry a diagram across the repository. The diagram audit
-  requires one of 272 files, and 272 of those carry it; the other three
+  requires a diagram in 272 files, and 272 of those carry it; the other three
   drawings are in the apps' own documentation (both READMEs and
   `Codex_LMS/roadmap-draft.md`), which the audit does not hold to anything;
   the remaining 0 are listed in `tools/diagram_backlog.txt`, checked in both

@@ -6,7 +6,7 @@
   Fieldbus, industrial Ethernet, automotive buses, and OT protocols.
 
   ┌─── fieldbus (serial) ─────────────────────────────────────────────────┐
-  │  Modbus RTU/ASCII/TCP · PROFIBUS DP/PA · AS-i · DeviceNet            │
+  │  Modbus RTU/ASCII · PROFIBUS DP/PA · AS-i · DeviceNet               │
   │  Foundation Fieldbus H1 · CC-Link                                    │
   └──────────────────────────────────────────────────────────────────────┘
 

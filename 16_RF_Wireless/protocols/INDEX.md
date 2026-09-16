@@ -7,7 +7,7 @@
 
   ┌─── WLAN & WPAN ───────────────────────────────────────────────────────┐
   │  Wi-Fi 4/5/6/6E/7 (802.11n/ac/ax/be) · WPA3 / SAE · WiGig (60 GHz) │
-  │  Bluetooth Classic/BLE 4.x–6.0 · LE Audio / Auracast · BT Mesh      │
+  │  Bluetooth Classic/BLE 4.x–6.x · LE Audio / Auracast · BT Mesh      │
   └──────────────────────────────────────────────────────────────────────┘
 
   ┌─── cellular & LPWAN ──────────────────────────────────────────────────┐

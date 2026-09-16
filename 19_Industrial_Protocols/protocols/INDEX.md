@@ -12,7 +12,7 @@
 
   ┌─── industrial Ethernet ───────────────────────────────────────────────┐
   │  PROFINET (RT/IRT/TSN) · EtherNet/IP (CIP) · EtherCAT               │
-  │  POWERLINK · Sercos III · Modbus TCP · OPC UA (TSN/FieldX)           │
+  │  POWERLINK · Sercos III · Modbus TCP · OPC UA (TSN/FX)               │
   └──────────────────────────────────────────────────────────────────────┘
 
   ┌─── automotive & SCADA ────────────────────────────────────────────────┐
@@ -57,7 +57,7 @@
 | Sercos III | IGS | Motion-control |
 | CC-Link IE | CLPA | Mitsubishi-led |
 | Modbus TCP | Modbus Org | Simple TCP/502 |
-| OPC UA (TSN / FieldX) | OPC Foundation | Field-level OPC UA |
+| OPC UA (TSN / FX) | OPC Foundation | Field-level OPC UA (UAFX) |
 
 ## CANopen / CAN-based
 | Protocol | Notes |

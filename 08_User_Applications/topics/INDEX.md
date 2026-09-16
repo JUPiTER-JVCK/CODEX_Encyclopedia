@@ -26,6 +26,11 @@
   │  defaults (macOS) · Registry (Win) · XDG ~/.config                    │
   │  VoiceOver · NVDA · JAWS · TalkBack  │  AX · ARIA · UI Automation     │
   └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── cross-cutting platform features ───────────────────────────────────┐
+  │  Notifications · background tasks · widgets / live activities         │
+  │  Lifecycle: fg/bg · cold/warm start · state restoration               │
+  └───────────────────────────────────────────────────────────────────────┘
 ```
 
 ## UI paradigms

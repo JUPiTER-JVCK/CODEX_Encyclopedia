@@ -14,7 +14,7 @@
   └───────────────────────────────────────────────────────────────────────────┘
 
   ┌─── JavaScript engines (V8 · SpiderMonkey · JSC · Hermes) ────────────────┐
-  │  JavaScript (ECMAScript) · TypeScript · Dart · ClojureScript · Elm       │
+  │  JavaScript (ECMAScript) · TypeScript · ClojureScript · Elm              │
   └───────────────────────────────────────────────────────────────────────────┘
 
   ┌─── CPython / PyPy ────────────────────────────────────────────────────────┐

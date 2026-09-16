@@ -18,7 +18,7 @@ updated: 2026-05-20
   │  thumbv8m.main-none-eabihf (M33/M55) · aarch64-unknown-none-softfloat│
   └──────────────────────────────────────────────────────────────────────┘
 
-  ┌─── key crates ────────────────────────────────────────────────────────┐
+  ┌─── key crates & OS ───────────────────────────────────────────────────┐
   │  embedded-hal (portable HAL traits) · cortex-m / cortex-m-rt         │
   │  Embassy (async runtime) · RTIC (interrupt-driven) · probe-rs / defmt│
   │  smoltcp (TCP/IP) · embedded-hal-async · Tock OS                     │

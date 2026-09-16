@@ -11,7 +11,7 @@ updated: 2026-05-21
 ## What is in this section
 
 ```text
-  Nine tools for the Unix text-processing pipeline: find, search, transform.
+  Ten tools for the Unix text-processing pipeline: find, search, transform.
 
   ┌─── file search ───────────────────────────────────────────────────────┐
   │  find (recursive walk · -name/-type/-size/-mtime · -exec actions)     │

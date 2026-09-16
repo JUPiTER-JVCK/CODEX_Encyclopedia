@@ -7,7 +7,7 @@
 
   ┌─── TCP fundamentals & reliability ────────────────────────────────────┐
   │  3WHS · state machine · seq/ACK · retransmit (RTO/fast) · SACK       │
-  │  window scaling (rwnd/cwnd) · Nagle · delayed ACK · TIME-WAIT        │
+  │  window scaling (rwnd) · Nagle · delayed ACK · TIME-WAIT             │
   └───────────────────────────────────────────────────────────────────────┘
 
   ┌─── congestion control & fast features ────────────────────────────────┐

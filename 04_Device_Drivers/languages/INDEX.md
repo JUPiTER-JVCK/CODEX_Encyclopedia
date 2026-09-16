@@ -12,7 +12,7 @@
   └────────────────────────────────────────────────────────────────────┘
 
   ┌────────────────────────── user space ────────────────────────────────┐
-  │  Swift (macOS/iOS DriverKit — *.dext bundles)                       │
+  │  C++ (macOS/iOS DriverKit — *.dext bundles; Swift has thin wrappers) │
   │  Python (libusb · pyudev — prototyping; not production drivers)     │
   └────────────────────────────────────────────────────────────────────┘
 ```
@@ -22,7 +22,7 @@
 | C (kernel dialect) | Linux, BSD, Windows (with KMDF/WDM), macOS (XNU) | The default — strict subset, no libc |
 | C++ (restricted) | Windows KMDF, macOS IOKit (legacy) | No exceptions, no STL in many contexts |
 | Rust | Linux (Rust-for-Linux), Windows (experimental) | `no_std`, async limited; growing fast |
-| Swift | macOS / iOS (DriverKit) | User-space drivers via `*.dext` bundles |
+| C++ (DriverKit API) | macOS / iOS (DriverKit) | User-space drivers via `*.dext` bundles; Swift has thin wrappers only |
 | Objective-C / C++ | macOS IOKit (legacy kexts) | Mostly being replaced by DriverKit |
 | Python | Userspace via libusb, pyudev | Prototyping, not actual kernel drivers |
 

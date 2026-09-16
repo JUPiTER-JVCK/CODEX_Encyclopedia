@@ -11,7 +11,7 @@ updated: 2026-05-20
 ## What is in this section
 
 ```text
-  C# / .NET profile — single dotnet SDK for all targets (cross-platform since .NET 6).
+  C# / .NET profile — single dotnet SDK for all targets (cross-platform since .NET Core).
 
   ┌─── toolchain ─────────────────────────────────────────────────────────┐
   │  dotnet CLI: new · build · test · publish · run · watch · ef          │

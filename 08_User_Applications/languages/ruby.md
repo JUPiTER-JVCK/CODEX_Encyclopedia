@@ -14,7 +14,8 @@ updated: 2026-05-20
   Ruby profile — MRI + YJIT, Rails ecosystem, toolchain, and idioms.
 
   ┌─── implementations ───────────────────────────────────────────────────┐
-  │  MRI (CRuby) 3.x + YJIT (default 3.3+)  │  JRuby  │  TruffleRuby   │
+  │  MRI (CRuby) 3.x + YJIT (opt-in; Rails 7.2+ enables by default)      │
+  │  JRuby  │  TruffleRuby                                               │
   │  Version managers: rbenv · chruby · rvm · asdf · mise                 │
   └───────────────────────────────────────────────────────────────────────┘
 

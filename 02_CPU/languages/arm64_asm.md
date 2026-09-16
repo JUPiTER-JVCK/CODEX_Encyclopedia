@@ -26,14 +26,17 @@ updated: 2026-05-20
   ┌─ caller-saved ────────────────────┐ ┌─ callee-saved ───────────────────┐
   │   x9 … x15   temporaries          │ │   x19 … x28                      │
   │   x16 (ip0)  intra-procedure      │ │   x29  fp   frame pointer        │
-  │   x17 (ip1)  call scratch         │ │   x30  lr   return address       │
-  └───────────────────────────────────┘ └──────────────────────────────────┘
+  │   x17 (ip1)  call scratch         │ └──────────────────────────────────┘
+  └───────────────────────────────────┘
 
   ┌─ special ──────────────────────────────────────────────────────────────┐
   │   x8    indirect result location — and the syscall number on Linux     │
   │   x18   platform register, reserved on macOS, iOS and Windows          │
+  │   x30   lr   link register — non-leaf callers must save it themselves  │
   │   pc    program counter, not writable as a GPR                         │
-  │   v0 … v31   SIMD and floating point — NEON, SVE, SVE2                 │
+  │   v0 … v31   NEON / Advanced SIMD floating-point registers             │
+  │   z0 … z31   SVE / SVE2 scalable vector registers                      │
+  │   p0 … p15   SVE predicate registers                                   │
   └────────────────────────────────────────────────────────────────────────┘
 
   Register 31 is two registers, and which one you get is decided by the
@@ -67,7 +70,9 @@ updated: 2026-05-20
 | 30 | `x30` (`lr`) | | Link register (return address) |
 | 31 | `sp` / `xzr` (zero) | `wsp` / `wzr` | Stack pointer **or** zero register depending on instr |
 | — | `pc` | | Program counter (not directly writable as a GPR) |
-| — | `v0`–`v31` | | SIMD/FP (NEON / SVE / SVE2) |
+| — | `v0`–`v31` | | NEON / Advanced SIMD floating-point |
+| — | `z0`–`z31` | | SVE / SVE2 scalable vector registers |
+| — | `p0`–`p15` | | SVE predicate registers |
 
 ## Key instructions
 
@@ -112,7 +117,8 @@ updated: 2026-05-20
 - **Args (FP/SIMD)**: `v0`–`v7`
 - **Return**: `x0` (and `x1` for 128-bit); `v0` for FP
 - **Caller-saved**: `x0`–`x18`, `v0`–`v7`, `v16`–`v31`
-- **Callee-saved**: `x19`–`x28`, `x29` (fp), `x30` (lr) **must** be saved, `v8`–`v15` (low 64 bits only)
+- **Callee-saved**: `x19`–`x28`, `x29` (fp), `v8`–`v15` (low 64 bits only)
+- **x30 (lr)**: link register — NOT callee-saved; non-leaf callers must push it before any `bl`
 - **Stack** 16-byte aligned on entry
 - **Apple ARM64 ABI** subset differs (variadic args entirely on stack; `x18` reserved)
 

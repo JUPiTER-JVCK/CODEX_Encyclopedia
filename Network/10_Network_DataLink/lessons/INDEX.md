@@ -6,7 +6,7 @@
   Data link hands-on: bridging, VLANs, STP, overlays, and L2 attacks.
 
   ┌─── dedicated module ──────────────────────────────────────────────────┐
-  │  datalink_labs.md (VLAN config · ARP cache observation · STP)        │
+  │  datalink_labs.md (VLAN config · ARP cache observation)              │
   └───────────────────────────────────────────────────────────────────────┘
 
   ┌─── lesson ladder ─────────────────────────────────────────────────────┐

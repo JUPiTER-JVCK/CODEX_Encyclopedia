@@ -3,7 +3,7 @@
 ## What is in this section
 
 ```text
-  Four reference groups for this layer.
+  Three reference groups for this layer.
 
   ┌─── general OS theory ────────────────────────────────────────────────┐
   │  OSTEP (Arpaci-Dusseau, free)  │  Tanenbaum Modern OS               │

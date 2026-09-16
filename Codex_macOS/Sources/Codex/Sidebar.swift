@@ -6,7 +6,6 @@ struct SidebarView: View {
     /// Redraw on a palette or text-scale change — see `Preferences.revision`.
     @ObservedObject private var appearance = Preferences.shared
     @EnvironmentObject var state: AppState
-    @State private var hoveredId: UUID? = nil
 
     var body: some View {
         VStack(spacing: 0) {
@@ -18,7 +17,7 @@ struct SidebarView: View {
                         PinnedSection().padding(.top, 14)
                     }
                     ForEach(state.root.children) { band in
-                        BandSection(band: band, hoveredId: $hoveredId)
+                        BandSection(band: band)
                     }
                 }
                 .padding(.horizontal, 10)
@@ -67,7 +66,6 @@ private struct BandSection: View {
     /// Redraw on a palette or text-scale change — see `Preferences.revision`.
     @ObservedObject private var appearance = Preferences.shared
     let band: CodexNode
-    @Binding var hoveredId: UUID?
     @State private var expanded: Bool = true
 
     var body: some View {
@@ -95,7 +93,7 @@ private struct BandSection: View {
             if expanded {
                 VStack(alignment: .leading, spacing: 1) {
                     ForEach(band.children) { layer in
-                        LayerRow(node: layer, depth: 0, accent: Theme.bandTint(band.label), hoveredId: $hoveredId)
+                        LayerRow(node: layer, depth: 0, accent: Theme.bandTint(band.label))
                     }
                 }
             }
@@ -111,12 +109,11 @@ private struct LayerRow: View {
     let node: CodexNode
     let depth: Int
     let accent: Color
-    @Binding var hoveredId: UUID?
     @State private var expanded: Bool = false
+    @State private var isHovered: Bool = false
     @EnvironmentObject var state: AppState
 
     private var isSelected: Bool { node.isFile && node.url == state.selectedTab }
-    private var isHovered: Bool { hoveredId == node.id }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 1) {
@@ -157,12 +154,12 @@ private struct LayerRow: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .onHover { hovering in hoveredId = hovering ? node.id : (hoveredId == node.id ? nil : hoveredId) }
+            .onHover { isHovered = $0 }
             .contextMenu { contextMenuItems }
 
             if expanded {
                 ForEach(node.children) { child in
-                    LayerRow(node: child, depth: depth + 1, accent: accent, hoveredId: $hoveredId)
+                    LayerRow(node: child, depth: depth + 1, accent: accent)
                 }
             }
         }

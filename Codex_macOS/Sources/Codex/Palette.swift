@@ -9,14 +9,17 @@ struct CommandPaletteView: View {
     @EnvironmentObject var state: AppState
     @State private var selectedIdx: Int = 0
     @FocusState private var focused: Bool
+    /// Cached ranking — recomputed exactly once per query change instead of
+    /// once per `body` evaluation (which was 6× per keystroke via computed var).
+    @State private var cachedResults: [FuzzyMatch.Ranked] = []
 
     /// Bound to AppState so the toolbar field and this field are one field.
     private var query: Binding<String> { $state.paletteQuery }
 
-    private var results: [FuzzyMatch.Ranked] {
-        FuzzyMatch.rank(query: state.paletteQuery,
-                        files: state.allFiles,
-                        projectRoot: state.projectRoot)
+    private func rerank() {
+        cachedResults = FuzzyMatch.rank(query: state.paletteQuery,
+                                        files: state.allFiles,
+                                        projectRoot: state.projectRoot)
     }
 
     var body: some View {
@@ -35,12 +38,12 @@ struct CommandPaletteView: View {
                 .strokeBorder(Theme.hairline, lineWidth: 0.5)
         )
         .shadow(color: .black.opacity(0.5), radius: 28, y: 12)
-        .onAppear { focused = true; selectedIdx = 0 }
-        // `min(results.count - 1, …)` yields -1 when nothing matches, which no
-        // row can equal and which `scrollTo` cannot resolve. Clamp to the last
-        // valid row, or stay at 0 when the list is empty.
+        .onAppear { focused = true; selectedIdx = 0; rerank() }
+        // `min(cachedResults.count - 1, …)` yields -1 when nothing matches,
+        // which no row can equal and which `scrollTo` cannot resolve. Clamp to
+        // the last valid row, or stay at 0 when the list is empty.
         .background(KeyHandler(onUp:    { selectedIdx = max(0, selectedIdx - 1) },
-                               onDown:  { selectedIdx = min(max(0, results.count - 1),
+                               onDown:  { selectedIdx = min(max(0, cachedResults.count - 1),
                                                             selectedIdx + 1) },
                                onEnter: open,
                                onEsc:   state.dismissPalette))
@@ -61,12 +64,12 @@ struct CommandPaletteView: View {
                 .foregroundColor(Theme.text)
                 .focused($focused)
                 .onSubmit(open)
-                .onChange(of: state.paletteQuery) { _ in selectedIdx = 0 }
+                .onChange(of: state.paletteQuery) { _ in selectedIdx = 0; rerank() }
             HStack(spacing: 4) {
-                Text("\(results.count)")
+                Text("\(cachedResults.count)")
                     .font(.system(size: Theme.size(10), weight: .semibold, design: .monospaced))
                     .foregroundColor(Theme.overlay1)
-                Text(results.count == 1 ? "result" : "results")
+                Text(cachedResults.count == 1 ? "result" : "results")
                     .font(.system(size: Theme.size(10))).foregroundColor(Theme.overlay1)
             }
             .padding(.horizontal, 8).padding(.vertical, 3)
@@ -79,7 +82,7 @@ struct CommandPaletteView: View {
         ScrollViewReader { proxy in
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    if results.isEmpty && !state.paletteQuery.isEmpty {
+                    if cachedResults.isEmpty && !state.paletteQuery.isEmpty {
                         VStack(spacing: 6) {
                             Image(systemName: "doc.text.magnifyingglass")
                                 .font(.system(size: 28, weight: .light))
@@ -91,7 +94,7 @@ struct CommandPaletteView: View {
                         .padding(40)
                         .frame(maxWidth: .infinity)
                     } else {
-                        ForEach(Array(results.enumerated()), id: \.element.id) { idx, r in
+                        ForEach(Array(cachedResults.enumerated()), id: \.element.id) { idx, r in
                             ResultRow(rank: r, isSelected: idx == selectedIdx)
                                 .id(idx)
                                 .onTapGesture { selectedIdx = idx; open() }
@@ -122,8 +125,8 @@ struct CommandPaletteView: View {
     }
 
     private func open() {
-        guard !results.isEmpty, selectedIdx < results.count else { return }
-        state.openFile(results[selectedIdx].url)
+        guard !cachedResults.isEmpty, selectedIdx < cachedResults.count else { return }
+        state.openFile(cachedResults[selectedIdx].url)
     }
 }
 

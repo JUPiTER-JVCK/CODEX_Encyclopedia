@@ -25,21 +25,36 @@ CONFIG="release"
 DO_INSTALL=false
 DO_RUN=false
 REBUILD_ICON=false
+DO_UNIVERSAL=true   # build arm64 + x86_64 and lipo; pass --no-universal to skip
 for arg in "$@"; do
     case "$arg" in
-        --debug)   CONFIG="debug" ;;
-        --install) DO_INSTALL=true ;;
-        --run)     DO_RUN=true ;;
-        --icon)    REBUILD_ICON=true ;;
+        --debug)        CONFIG="debug" ;;
+        --install)      DO_INSTALL=true ;;
+        --run)          DO_RUN=true ;;
+        --icon)         REBUILD_ICON=true ;;
+        --no-universal) DO_UNIVERSAL=false ;;
         -h|--help)
             grep -E '^# ' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     esac
 done
 
 # ── 1. Compile ─────────────────────────────────────────────────────────────
-echo "→ swift build -c $CONFIG"
-swift build -c "$CONFIG"
 EXE="$PKG_DIR/.build/$CONFIG/Codex"
+if [ "$DO_UNIVERSAL" = true ]; then
+    echo "→ swift build -c $CONFIG --arch arm64"
+    swift build -c "$CONFIG" --arch arm64
+    echo "→ swift build -c $CONFIG --arch x86_64"
+    swift build -c "$CONFIG" --arch x86_64
+    echo "→ lipo: creating universal binary"
+    mkdir -p "$(dirname "$EXE")"
+    lipo -create \
+        "$PKG_DIR/.build/arm64-apple-macosx/$CONFIG/Codex" \
+        "$PKG_DIR/.build/x86_64-apple-macosx/$CONFIG/Codex" \
+        -output "$EXE"
+else
+    echo "→ swift build -c $CONFIG"
+    swift build -c "$CONFIG"
+fi
 if [ ! -x "$EXE" ]; then
     echo "✘ Build did not produce executable at $EXE" >&2
     exit 1

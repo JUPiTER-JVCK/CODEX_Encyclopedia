@@ -171,13 +171,14 @@ private struct InfoPane: View {
                             InfoRow(icon: "clock", label: "Modified", value: HumanDate.describe(modified))
                         }
                     }
+                    let info = readInfo(url)
                     InfoRow(icon: "number", label: "Lines",
-                            value: lineCount(url).map { "\($0)" } ?? "—")
+                            value: info.lines > 0 ? "\(info.lines)" : "—")
 
-                    if let tags = frontmatterTags(url), !tags.isEmpty {
+                    if !info.tags.isEmpty {
                         SectionHeader(label: "Tags").padding(.top, 8)
                         FlowLayout(spacing: 6) {
-                            ForEach(tags, id: \.self) { tag in
+                            ForEach(info.tags, id: \.self) { tag in
                                 Text(tag)
                                     .font(.system(size: Theme.size(11), weight: .medium))
                                     .foregroundColor(Theme.accent)
@@ -213,25 +214,25 @@ private struct InfoPane: View {
         ByteCountFormatter.string(fromByteCount: Int64(b), countStyle: .file)
     }
 
-    private func lineCount(_ url: URL) -> Int? {
-        guard let s = try? String(contentsOf: url, encoding: .utf8) else { return nil }
-        return s.components(separatedBy: "\n").count
-    }
+    private struct FileInfo { var lines: Int = 0; var tags: [String] = [] }
 
-    private func frontmatterTags(_ url: URL) -> [String]? {
-        guard let s = try? String(contentsOf: url, encoding: .utf8) else { return nil }
+    private func readInfo(_ url: URL) -> FileInfo {
+        guard let s = try? String(contentsOf: url, encoding: .utf8) else { return FileInfo() }
         let lines = s.components(separatedBy: "\n")
-        guard lines.first == "---" else { return nil }
+        var info = FileInfo(lines: lines.count)
+        guard lines.first == "---" else { return info }
         for line in lines.dropFirst() {
             if line == "---" { break }
             if line.hasPrefix("tags:") {
                 let raw = line.dropFirst("tags:".count).trimmingCharacters(in: .whitespaces)
                 let inner = raw.trimmingCharacters(in: CharacterSet(charactersIn: "[]"))
-                return inner.split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+                info.tags = inner.split(separator: ",")
+                    .map { $0.trimmingCharacters(in: .whitespaces) }
                     .filter { !$0.isEmpty }
+                break
             }
         }
-        return nil
+        return info
     }
 }
 

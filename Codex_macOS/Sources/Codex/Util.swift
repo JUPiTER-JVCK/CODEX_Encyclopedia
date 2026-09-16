@@ -135,6 +135,8 @@ struct Bookmarks: Codable {
 // MARK: - Navigation history (back/forward like a browser)
 
 final class NavigationHistory: ObservableObject {
+    static let maxHistory = 100
+
     @Published private(set) var stack: [URL] = []
     @Published private(set) var index: Int = -1
 
@@ -146,6 +148,9 @@ final class NavigationHistory: ObservableObject {
         if let c = current, c == url { return }
         if index < stack.count - 1 { stack.removeLast(stack.count - 1 - index) }
         stack.append(url)
+        if stack.count > NavigationHistory.maxHistory {
+            stack.removeFirst(stack.count - NavigationHistory.maxHistory)
+        }
         index = stack.count - 1
     }
 

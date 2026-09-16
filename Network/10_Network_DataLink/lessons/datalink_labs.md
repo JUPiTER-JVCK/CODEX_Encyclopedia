@@ -8,6 +8,17 @@ updated: 2026-05-21
 
 # Network Data Link — Interactive Labs
 
+## What is in this section
+
+```text
+  Interactive labs for the data link layer.
+
+  ┌─── lab modules ───────────────────────────────────────────────────────┐
+  │  Module 1: VLAN Configuration (bridge · veth pairs · isolation)      │
+  │  Module 2: ARP Cache Observation (arping · ip neigh · gratuitous)    │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## Module 1: VLAN Configuration

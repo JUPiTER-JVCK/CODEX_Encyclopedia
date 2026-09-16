@@ -1,5 +1,21 @@
 # Network Transport — Lessons
 
+## What is in this section
+
+```text
+  Transport layer hands-on: sockets, I/O models, TCP internals, and QUIC.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  transport_labs.md (TCP handshake · congestion window · UDP load test)│
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── lesson ladder ─────────────────────────────────────────────────────┐
+  │  1–4: BSD sockets (C/Go/Rust) · non-blocking I/O · io_uring          │
+  │  5–9: handshake · teardown · CUBIC/BBR · Nagle · TFO                 │
+  │  10–12: QUIC/HTTP3 server · UDP reliability · SCTP basics            │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

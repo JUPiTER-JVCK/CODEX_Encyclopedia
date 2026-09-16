@@ -1,5 +1,26 @@
 # Network Data Link — Topics
 
+## What is in this section
+
+```text
+  Data link layer topics: framing, switching, VLANs, STP, MACsec, and Wi-Fi.
+
+  ┌─── framing & addressing ──────────────────────────────────────────────┐
+  │  Ethernet frame (preamble/SFD/MAC/EtherType/payload/FCS)             │
+  │  MAC: unicast/multicast/broadcast · OUI · I/G · U/L bits · randomized│
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── switching, VLANs & overlays ───────────────────────────────────────┐
+  │  MAC learning · flooding · storm control · port security              │
+  │  802.1Q VLAN · QinQ · VXLAN · Geneve · EVPN/MP-BGP                  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── loop prevention, auth & Wi-Fi ─────────────────────────────────────┐
+  │  STP/RSTP/MSTP · LACP · MLAG · ARP/NDP spoofing defenses            │
+  │  802.1X/EAPOL · MACsec · Wi-Fi frames (mgmt/control/data) · PMF     │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Ethernet frame
 - **Preamble + SFD** (7 + 1 bytes)
 - **Dest MAC (6) + Src MAC (6)**

@@ -1,5 +1,25 @@
 # Network Data Link — References
 
+## What is in this section
+
+```text
+  Data link reference sources: books, IEEE standards, and online resources.
+
+  ┌─── books ─────────────────────────────────────────────────────────────┐
+  │  Computer Networks (Tanenbaum) · Top-Down Approach (Kurose & Ross)   │
+  │  Interconnections (Perlman) · Network Warrior · Routing TCP/IP       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── standards ─────────────────────────────────────────────────────────┐
+  │  IEEE 802.1D/Q/X/AX (STP · VLANs · NAC · LACP) · 802.11 (Wi-Fi)    │
+  │  RFC 826 ARP · RFC 4861 NDP · RFC 7348 VXLAN · RFC 8926 Geneve       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online ────────────────────────────────────────────────────────────┐
+  │  networklessons.com · Packet Pushers podcast · IETF I-Ds             │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Books
 - *Computer Networks* — Andrew Tanenbaum & David Wetherall. Comprehensive.
 - *Computer Networking: A Top-Down Approach* — Kurose & Ross.

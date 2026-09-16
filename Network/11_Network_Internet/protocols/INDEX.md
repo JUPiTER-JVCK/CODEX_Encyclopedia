@@ -1,5 +1,30 @@
 # Network Internet — Protocols
 
+## What is in this section
+
+```text
+  Internet-layer protocols: IP family, routing, security, tunneling, and multicast.
+
+  ┌─── dedicated protocol references ─────────────────────────────────────┐
+  │  ipv4_ipv6.md (headers · addressing · ICMP · PMTUD)                  │
+  │  bgp.md (path attributes · best-path selection · MP-BGP · security)  │
+  │  ospf.md (packet types · neighbor FSM · area design · SPF algorithm) │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── routing protocols & security ──────────────────────────────────────┐
+  │  IGPs: OSPFv2/v3 · IS-IS · EIGRP · RIP (legacy)                      │
+  │  EGP: BGP-4 · eBGP/iBGP · route reflectors · confederations          │
+  │  RPKI · ROA · BGPsec · ASPA (BGP route origin/path security)         │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── tunneling, VPN, NAT & multicast ───────────────────────────────────┐
+  │  tunneling: GRE · IP-in-IP · 6in4 · L2TPv3                           │
+  │  VPN: IPsec (AH/ESP/IKEv2) · WireGuard · OpenVPN                    │
+  │  NAT: SNAT/DNAT/masquerade · NAT64/DNS64 · CGN · 464XLAT            │
+  │  multicast: IGMPv2/v3 · MLDv1/v2 · PIM-SM/DM/SSM · MSDP            │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated protocol references
 
 | Protocol | File |

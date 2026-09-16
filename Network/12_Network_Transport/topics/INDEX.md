@@ -1,5 +1,27 @@
 # Network Transport — Topics
 
+## What is in this section
+
+```text
+  TCP internals, congestion control, fast features, UDP, QUIC, and SCTP.
+
+  ┌─── TCP fundamentals & reliability ────────────────────────────────────┐
+  │  3WHS · state machine · seq/ACK · retransmit (RTO/fast) · SACK       │
+  │  window scaling (rwnd/cwnd) · Nagle · delayed ACK · TIME-WAIT        │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── congestion control & fast features ────────────────────────────────┐
+  │  CUBIC (Linux default) · BBR/BBRv3 · Reno/NewReno · Vegas · DCTCP   │
+  │  TFO · ECN/L4S · MPTCP · pacing (fq+BBR) · zero-copy/offloads       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── UDP, QUIC, SCTP & I/O models ──────────────────────────────────────┐
+  │  UDP: connectionless · datagram boundaries · GRO/GSO offloads         │
+  │  QUIC: streams/migration/TLS1.3 built-in · 0-RTT · RFC 9000–9002     │
+  │  SCTP: multi-stream/multi-home · I/O: epoll/kqueue/io_uring/IOCP     │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## TCP fundamentals
 - **Three-way handshake** — SYN → SYN-ACK → ACK; SYN cookies under flood.
 - **State machine** — LISTEN, SYN-SENT, ESTABLISHED, FIN-WAIT, TIME-WAIT, etc.

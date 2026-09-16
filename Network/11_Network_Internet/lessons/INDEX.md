@@ -1,5 +1,21 @@
 # Network Internet — Lessons
 
+## What is in this section
+
+```text
+  Internet layer hands-on: subnetting, routing, VPNs, NAT, and multicast.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  internet_labs.md (subnetting drill · traceroute analysis · BGP sim)  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── lesson ladder ─────────────────────────────────────────────────────┐
+  │  1–4: subnetting · IPv6 fluency · routing table · static routes/PBR  │
+  │  5–8: OSPF lab · BGP lab · GRE tunnel · IPsec site-to-site           │
+  │  9–12: WireGuard VPN · NAT/nftables · PMTUD · multicast/PIM          │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

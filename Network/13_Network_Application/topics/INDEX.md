@@ -1,5 +1,32 @@
 # Network Application — Topics
 
+## What is in this section
+
+```text
+  Application layer topics: HTTP, RPC, DNS, TLS, auth, mail, and IoT.
+
+  ┌─── HTTP & REST/RPC ───────────────────────────────────────────────────┐
+  │  HTTP/1.1/2/3 · caching · CORS · cookies · WebSocket · SSE           │
+  │  REST/HATEOAS · gRPC · GraphQL · tRPC · OpenAPI · JSON-RPC           │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── DNS & TLS ─────────────────────────────────────────────────────────┐
+  │  DNS records (A/AAAA/MX/SRV/HTTPS) · resolution flow · DNSSEC        │
+  │  DoH/DoT/DoQ · TLS 1.2/1.3 · ciphers · cert chain · SNI/ECH · ACME  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── auth & mail ───────────────────────────────────────────────────────┐
+  │  OAuth 2.0/2.1+PKCE · OIDC · JWT/JOSE · SAML · WebAuthn/passkeys    │
+  │  SMTP/IMAP/JMAP · SPF/DKIM/DMARC · ARC · MTA-STS                    │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── real-time, IoT & management ───────────────────────────────────────┐
+  │  RTP/RTCP · SIP · WebRTC (ICE/DTLS-SRTP/SCTP) · HLS/DASH            │
+  │  MQTT 5.0 · CoAP · AMQP · NATS · Kafka                              │
+  │  SNMP v3 · NETCONF/YANG · gNMI · syslog · NTP v4 · PTPv2            │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## HTTP
 - **HTTP/1.1** — text framing, headers, methods, status codes, keep-alive.
 - **HTTP/2** — binary framing, multiplexing, HPACK, server push (deprecated).

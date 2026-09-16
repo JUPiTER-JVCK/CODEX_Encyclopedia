@@ -1,5 +1,21 @@
 # Network Data Link — Lessons
 
+## What is in this section
+
+```text
+  Data link hands-on: bridging, VLANs, STP, overlays, and L2 attacks.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  datalink_labs.md (VLAN config · ARP cache observation · STP)        │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── lesson ladder ─────────────────────────────────────────────────────┐
+  │  1–4: Ethernet frames · ARP trace · Linux bridge · VLAN lab          │
+  │  5–8: STP convergence · LACP bond · Wi-Fi mgmt frames · VXLAN       │
+  │  9–10: EVPN/MP-BGP · L2 attack lab (ARP spoof/MAC flood/VLAN hop)   │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

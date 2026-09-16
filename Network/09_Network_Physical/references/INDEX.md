@@ -1,5 +1,27 @@
 # Network Physical — References
 
+## What is in this section
+
+```text
+  Physical layer reference sources: specs, books, and vendor guides.
+
+  ┌─── standards ─────────────────────────────────────────────────────────┐
+  │  IEEE 802.3 (Ethernet) · IEEE 802.11 (Wi-Fi HT/VHT/HE/EHT)          │
+  │  ITU-T G.984/G.987/G.9807 · G.707/G.709 · DOCSIS 3.x                │
+  │  3GPP TS 38.2xx (5G NR PHY) · TIA/EIA-568 (structured cabling)       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── books ─────────────────────────────────────────────────────────────┐
+  │  Ethernet: The Definitive Guide (Spurgeon, Zimmerman)                 │
+  │  Optical Networks: A Practical Perspective (Ramaswami et al.)         │
+  │  Fiber Optic Communications (Palais) · Wi-Fi 6/7 in Depth            │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online ────────────────────────────────────────────────────────────┐
+  │  ieee802.org · cabling-installation.com · flukenetworks.com          │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Standards
 - **IEEE 802.3** — Ethernet (the whole multi-thousand-page family)
 - **IEEE 802.11** — Wi-Fi PHY (HT/VHT/HE/EHT for n/ac/ax/be)

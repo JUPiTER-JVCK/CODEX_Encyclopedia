@@ -1,5 +1,28 @@
 # Network Application — Languages
 
+## What is in this section
+
+```text
+  Web frameworks, HTTP clients, RPC stacks, and protocol-specific libraries.
+
+  ┌─── server-side web frameworks ────────────────────────────────────────┐
+  │  Node.js: Express/Fastify/Hono · TS full-stack: Next.js/SvelteKit    │
+  │  Python: Django/FastAPI/Flask · Go: Gin/Echo/Fiber                   │
+  │  Rust: Axum/Actix-web · JVM: Spring Boot/Quarkus · .NET: ASP.NET Core│
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── HTTP clients & RPC ────────────────────────────────────────────────┐
+  │  HTTP clients: curl/libcurl · requests/httpx · reqwest · okhttp      │
+  │  RPC: gRPC+Protobuf · GraphQL · JSON-RPC · Thrift · tRPC (TS)        │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── DNS, mail, SSH & real-time ────────────────────────────────────────┐
+  │  DNS: getdns/c-ares/unbound/Knot/BIND                                │
+  │  mail: Postfix/Exim/OpenSMTPD · IMAP: Dovecot · SMTP libs            │
+  │  SSH: OpenSSH/libssh · real-time: WebRTC/RTP/SIP · MQTT/AMQP/Kafka  │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Server-side web frameworks
 | Framework | Language |
 |-----------|----------|

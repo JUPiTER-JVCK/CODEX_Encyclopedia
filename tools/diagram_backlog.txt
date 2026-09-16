@@ -12,42 +12,7 @@
 # Every entry must sit under a band heading, every heading must carry a
 # count, and the band counts must sum to the total.
 #
-# 77 files remain.
-
-# Network — 09 Physical through 13 Application (33)
-Network/09_Network_Physical/languages/INDEX.md
-Network/09_Network_Physical/lessons/INDEX.md
-Network/09_Network_Physical/man_pages/INDEX.md
-Network/09_Network_Physical/protocols/INDEX.md
-Network/09_Network_Physical/references/INDEX.md
-Network/09_Network_Physical/topics/INDEX.md
-Network/10_Network_DataLink/languages/INDEX.md
-Network/10_Network_DataLink/lessons/INDEX.md
-Network/10_Network_DataLink/lessons/datalink_labs.md
-Network/10_Network_DataLink/man_pages/INDEX.md
-Network/10_Network_DataLink/protocols/INDEX.md
-Network/10_Network_DataLink/references/INDEX.md
-Network/10_Network_DataLink/topics/INDEX.md
-Network/11_Network_Internet/languages/INDEX.md
-Network/11_Network_Internet/lessons/INDEX.md
-Network/11_Network_Internet/lessons/internet_labs.md
-Network/11_Network_Internet/man_pages/INDEX.md
-Network/11_Network_Internet/protocols/INDEX.md
-Network/11_Network_Internet/references/INDEX.md
-Network/11_Network_Internet/topics/INDEX.md
-Network/12_Network_Transport/languages/INDEX.md
-Network/12_Network_Transport/lessons/INDEX.md
-Network/12_Network_Transport/man_pages/INDEX.md
-Network/12_Network_Transport/protocols/INDEX.md
-Network/12_Network_Transport/references/INDEX.md
-Network/12_Network_Transport/topics/INDEX.md
-Network/13_Network_Application/languages/INDEX.md
-Network/13_Network_Application/lessons/INDEX.md
-Network/13_Network_Application/lessons/application_labs.md
-Network/13_Network_Application/man_pages/INDEX.md
-Network/13_Network_Application/protocols/INDEX.md
-Network/13_Network_Application/references/INDEX.md
-Network/13_Network_Application/topics/INDEX.md
+# 44 files remain.
 
 # Cross-cutting — 14 Security through 19 Industrial Protocols (41)
 14_Security/languages/INDEX.md

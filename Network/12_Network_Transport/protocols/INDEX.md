@@ -1,5 +1,29 @@
 # Network Transport — Protocols
 
+## What is in this section
+
+```text
+  Transport protocols: TCP, UDP, QUIC, SCTP; extensions, NAT traversal.
+
+  ┌─── dedicated protocol references ─────────────────────────────────────┐
+  │  tcp.md (segment header · state machine · congestion control)         │
+  │  udp.md (datagram format · offloads · amplification attacks)          │
+  │  quic.md (packet structure · handshake · streams · migration)         │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── core protocols & extensions ───────────────────────────────────────┐
+  │  TCP (RFC 9293) · UDP (RFC 768) · SCTP (RFC 4960) · DCCP (RFC 4340)  │
+  │  QUIC (RFC 9000–9002) over UDP · MPTCP (RFC 8684)                    │
+  │  TCP extensions: SACK · WSCALE · ECN · TFO · BBR/CUBIC · RACK        │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── QUIC ecosystem & NAT traversal ────────────────────────────────────┐
+  │  HTTP/3 (RFC 9114) · QUIC datagram · MASQUE · QUIC v2                │
+  │  NAT traversal: STUN (RFC 8489) · TURN (RFC 8656) · ICE (RFC 8445)   │
+  │  sockets: Berkeley · SOCKS5 · PROXY proto (HAProxy)                  │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated protocol references
 
 | Protocol | File |

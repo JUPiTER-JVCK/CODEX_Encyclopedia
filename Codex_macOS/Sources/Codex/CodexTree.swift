@@ -2,8 +2,14 @@ import Foundation
 import SwiftUI
 
 /// One node in the navigation tree.
+///
+/// `id` is the node's URL path, or its label for nodes without a URL (bands,
+/// root). A stable, content-derived ID lets SwiftUI reuse row views — and their
+/// `@State` expansion flags — across `reloadTree()` calls. UUID()-per-build
+/// caused ForEach to treat every rebuild as an entirely new set of rows and
+/// discard all expansion state.
 final class CodexNode: Identifiable, Hashable {
-    let id = UUID()
+    let id: String
     let label: String
     let url: URL?
     let isFile: Bool
@@ -12,6 +18,7 @@ final class CodexNode: Identifiable, Hashable {
 
     init(label: String, url: URL? = nil, isFile: Bool = false,
          kind: NodeKind = .group, children: [CodexNode] = []) {
+        self.id = url?.path ?? label
         self.label = label
         self.url = url
         self.isFile = isFile
@@ -190,7 +197,7 @@ enum CodexTree {
             .replacingOccurrences(of: "Http", with: "HTTP")
             .replacingOccurrences(of: "Tcp", with: "TCP")
             .replacingOccurrences(of: "Udp", with: "UDP")
-            .replacingOccurrences(of: "Ip", with: "IP")
+            .replacingOccurrences(of: "\\bIp\\b", with: "IP", options: .regularExpression)
             .replacingOccurrences(of: "Os ", with: "OS ")
             .replacingOccurrences(of: "Bios", with: "BIOS")
             .replacingOccurrences(of: "Uart", with: "UART")

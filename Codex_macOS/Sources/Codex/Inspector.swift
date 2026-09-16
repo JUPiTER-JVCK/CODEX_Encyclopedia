@@ -178,7 +178,7 @@ private struct InfoPane: View {
                     if !info.tags.isEmpty {
                         SectionHeader(label: "Tags").padding(.top, 8)
                         FlowLayout(spacing: 6) {
-                            ForEach(tags, id: \.self) { tag in
+                            ForEach(info.tags, id: \.self) { tag in
                                 Text(tag)
                                     .font(.system(size: Theme.size(11), weight: .medium))
                                     .foregroundColor(Theme.accent)

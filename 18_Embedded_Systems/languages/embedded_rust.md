@@ -8,6 +8,23 @@ updated: 2026-05-20
 
 # Embedded Rust — language profile
 
+## What is in this section
+
+```text
+  Embedded Rust delta: no_std · Embassy (async) · RTIC · embedded-hal.
+
+  ┌─── targets (rustup) ──────────────────────────────────────────────────┐
+  │  thumbv7em-none-eabihf (Cortex-M4F) · riscv32imac-unknown-none-elf  │
+  │  thumbv8m.main-none-eabihf (M33/M55) · aarch64-unknown-none-softfloat│
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── key crates & OS ───────────────────────────────────────────────────┐
+  │  embedded-hal (portable HAL traits) · cortex-m / cortex-m-rt         │
+  │  Embassy (async runtime) · RTIC (interrupt-driven) · probe-rs / defmt│
+  │  smoltcp (TCP/IP) · embedded-hal-async · Tock OS                     │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > Memory-safe firmware: `no_std`, async-friendly via Embassy, interrupt-driven
 > via RTIC. Single toolchain (`rustup` + cross-compile target) and Cargo for
 > dependencies. See [rust.md](../../08_User_Applications/languages/rust.md) for

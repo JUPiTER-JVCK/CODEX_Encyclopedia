@@ -1,5 +1,28 @@
 # Device Drivers — Protocols
 
+## What is in this section
+
+```text
+  Three groups: Linux kernel ABIs, cross-OS frameworks, userspace I/O.
+
+  ┌───────────────── Linux subsystem ABIs ──────────────────────────────┐
+  │  char: /dev/* + ioctl  │  block: /dev/sd*  │  net: sockets+netlink │
+  │  USB: /dev/bus/usb     │  PCI: sysfs       │  platform: DT/ACPI    │
+  │  input: /dev/input     │  DRM/KMS: /dev/dri│  V4L2 · ALSA          │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  ┌───────────────── driver frameworks ─────────────────────────────────┐
+  │  Windows: WDM (legacy) → WDF [ KMDF (kernel) | UMDF (user) ]       │
+  │  macOS: IOKit (deprecated) → DriverKit                             │
+  │  BSD: newbus (FreeBSD) · autoconf (NetBSD/OpenBSD)                 │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  ┌───────────────── userspace I/O ─────────────────────────────────────┐
+  │  VFIO (IOMMU passthrough)  │  UIO (memory-mapped)  │  libusb        │
+  │  DPDK PMD (NIC poll-mode)  │  SPDK (NVMe poll-mode)                │
+  └─────────────────────────────────────────────────────────────────────┘
+```
+
 Not wire protocols — driver↔OS contracts and stable userspace ABIs.
 
 ## Linux subsystem APIs

@@ -1,5 +1,26 @@
 # RF / Wireless — Protocols
 
+## What is in this section
+
+```text
+  Wi-Fi, Bluetooth, cellular, LPWAN, GNSS, broadcast, amateur digital.
+
+  ┌─── WLAN & WPAN ───────────────────────────────────────────────────────┐
+  │  Wi-Fi 4/5/6/6E/7 (802.11n/ac/ax/be) · WPA3 / SAE · WiGig (60 GHz) │
+  │  Bluetooth Classic/BLE 4.x–6.x · LE Audio / Auracast · BT Mesh      │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── cellular & LPWAN ──────────────────────────────────────────────────┐
+  │  3GPP: 2G GSM → 3G UMTS → 4G LTE → 5G NR → 5G-Advanced             │
+  │  LoRaWAN · Sigfox · NB-IoT · LTE-M · Zigbee · Z-Wave · Thread/Matter│
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── positioning, broadcast & amateur ─────────────────────────────────┐
+  │  GNSS: GPS/GLONASS/Galileo/BeiDou · RFID/NFC (HF/UHF)               │
+  │  AM/FM/DAB/DVB-T · FT8/PSK31/APRS/DMR/D-STAR (amateur digital)      │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > Wi-Fi, Bluetooth, cellular, LPWAN, GNSS, broadcast, amateur digital.
 
 ## Dedicated Protocol References

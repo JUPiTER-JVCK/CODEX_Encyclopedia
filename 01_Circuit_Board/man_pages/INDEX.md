@@ -29,8 +29,9 @@ Hardware enumeration & inspection tools — mostly Linux, with macOS equivalents
   On an SBC the same job needs board-specific tools — not because the
   header lacks standard buses (it multiplexes I²C, SPI and UART onto those
   pins) but because deciding *which* function a pin carries, and reading the
-  SoC's own firmware, is vendor territory: pinctrl (RPi GPIO, replacing
-  WiringPi's gpio) and vcgencmd (VideoCore temperature, voltage, clocks).
+  SoC's own firmware, is vendor territory: pinctrl (RPi GPIO and pin-mux,
+  the supported replacement for raspi-gpio — WiringPi's gpio was a separate
+  third-party tool) and vcgencmd (VideoCore temperature, voltage, clocks).
 
   Who is driving each of these devices is 04 Device Drivers.
 ```
@@ -54,6 +55,6 @@ Hardware enumeration & inspection tools — mostly Linux, with macOS equivalents
 ## SBC / embedded
 | Command | Purpose |
 |---------|---------|
-| `gpio` (WiringPi) | Raspberry Pi GPIO control (deprecated; use `pinctrl`) |
-| `pinctrl` | RPi GPIO control (modern) |
+| `gpio` (WiringPi) | Raspberry Pi GPIO control — third-party, deprecated |
+| `pinctrl` | RPi GPIO and pin-mux — the supported tool, replacing `raspi-gpio` |
 | `vcgencmd` | Raspberry Pi VideoCore GPU/temp/voltage queries |

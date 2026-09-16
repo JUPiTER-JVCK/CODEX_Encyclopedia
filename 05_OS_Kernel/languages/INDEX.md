@@ -1,5 +1,22 @@
 # OS Kernel — Languages
 
+## What is in this section
+
+```text
+  Seven languages; C and Assembly are production-universal, the rest niche.
+
+  ┌──────────────────────────── production ──────────────────────────────┐
+  │  C — dominant; kernel dialect, no libc (Linux · BSD · NT · XNU)     │
+  │  Assembly — entry stubs, context switch, mode transitions (all)     │
+  │  Rust (Linux drivers · Redox)  │  C++ (XNU IOKit · NT · Zircon)    │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌──────────────────────────── niche / formal ──────────────────────────┐
+  │  Swift (Apple SEPOS — internal)  │  Ada/SPARK (Muen, defense)       │
+  │  Haskell (House, seL4 formal spec — research)                       │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 | Language | Use in kernel | Examples |
 |----------|--------------|----------|
 | C | Dominant. Kernel-specific dialect, no libc. | Linux, XNU (BSD half), NT, BSDs |

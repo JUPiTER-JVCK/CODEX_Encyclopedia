@@ -1,5 +1,32 @@
 # System Libraries — References
 
+## What is in this section
+
+```text
+  Four reference groups: libc implementations, specifications, books,
+  and online resources.
+
+  ┌─── libc implementations ──────────────────────────────────────────────────┐
+  │  glibc (Linux default)  │  musl (Alpine, embedded)                        │
+  │  Bionic (Android)  │  Microsoft UCRT (Windows)  │  Apple libSystem       │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── specifications ────────────────────────────────────────────────────────┐
+  │  ISO C (C11/C17/C23)  │  ISO C++ (C++17/20/23)  │  POSIX.1-2017         │
+  │  System V ABI  │  DWARF debug format                                     │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── books ─────────────────────────────────────────────────────────────────┐
+  │  K&R · Modern C · Stroustrup · Effective Modern C++                      │
+  │  Linkers and Loaders (Levine)  │  CSAPP (Bryant & O'Hallaron)            │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online ────────────────────────────────────────────────────────────────┐
+  │  cppreference.com — C/C++ stdlib reference                                │
+  │  man7.org  │  Drepper "How To Write Shared Libraries"                    │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 ## libc
 - **glibc manual** — `https://www.gnu.org/software/libc/manual/`
 - **musl libc** — `https://musl.libc.org/` (tiny, MIT-licensed, used by Alpine)

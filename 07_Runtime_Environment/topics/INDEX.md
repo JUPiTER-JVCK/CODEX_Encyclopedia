@@ -1,5 +1,47 @@
 # Runtime Environment — Topics
 
+## What is in this section
+
+```text
+  Seven topic groups: execution, GC, concurrency, containers, orchestration,
+  hypervisors, and WebAssembly.
+
+  ┌─── execution models ──────────────────────────────────────────────────────┐
+  │  interpretation (CPython, MRI Ruby)  │  JIT (tiered, tracing)            │
+  │  AOT (GraalVM, NativeAOT, Dart, Go)  │  hybrid (V8 Ignition→TurboFan)   │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── garbage collection ────────────────────────────────────────────────────┐
+  │  tracing: mark-sweep · generational · G1 · ZGC · Shenandoah · Go        │
+  │  reference counting (CPython, Swift ARC)  │  manual / RAII (C++, Rust)  │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── concurrency / parallelism ─────────────────────────────────────────────┐
+  │  OS threads (JVM, .NET)  │  GIL + asyncio (CPython)                      │
+  │  goroutines / Loom / Kotlin coroutines  │  actor model (BEAM/Akka)       │
+  │  event loops (libuv · asyncio · Tokio)                                   │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── containers & images ───────────────────────────────────────────────────┐
+  │  OCI image spec (layers, manifests)  │  runc/crun (OCI runtime spec)     │
+  │  namespaces · cgroups · seccomp  │  overlay2 storage  │  rootless        │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── Kubernetes / orchestration ────────────────────────────────────────────┐
+  │  Pod · Deployment · StatefulSet · DaemonSet · Job · CronJob              │
+  │  service mesh (Istio/Linkerd)  │  PV/PVC · CSI  │  CRD Operators        │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── VMs / hypervisors ─────────────────────────────────────────────────────┐
+  │  Type 1 / Type 2  │  paravirtualization + virtio  │  microVMs            │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── WebAssembly ───────────────────────────────────────────────────────────┐
+  │  module (sections · imports/exports · memory · tables)                   │
+  │  WASI 0.2 (component model)  │  embedding (wasmtime, V8, JVM/Chicory)   │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Topic Deep Dives
 
 | File | Covers |

@@ -1,5 +1,26 @@
 # Embedded Systems — References
 
+## What is in this section
+
+```text
+  Books and online resources for embedded systems study.
+
+  ┌─── foundational books ────────────────────────────────────────────────┐
+  │  Making Embedded Systems (White) · Embedded Software: The Works      │
+  │  Art of Designing Embedded Systems (Ganssle) · Barr (C/C++)          │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── language & OS books ───────────────────────────────────────────────┐
+  │  Rust Embedded Book (free) · FreeRTOS Mastering (free)               │
+  │  Zephyr docs · Mastering Embedded Linux (Simmonds)                   │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online ────────────────────────────────────────────────────────────┐
+  │  Memfault / Interrupt blog · Beningo Embedded · Embedded Artistry     │
+  │  Phil's Lab (YouTube) · Embedded.fm podcast · vendor app notes       │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Anchor (user-supplied)
 - **`embedded_systems_full_roadmap_book.pdf`** — currently a generated
   placeholder, not the real book. Obtain the original from the authorized

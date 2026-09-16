@@ -19,6 +19,7 @@ what a physical device must conform to.
   │  7351       land patterns ──▶ the footprint in languages/
   │  J-STD-001  soldering
   │  J-STD-020  moisture sensitivity ──▶ MSL 1 (unlimited) … 6 (bake first)
+  │             — jointly IPC and JEDEC, the one row that is not either/or
   │  A-610      assembly acceptability
   │
   └─ AEC ── the part in a car
@@ -39,7 +40,7 @@ what a physical device must conform to.
 | IPC-A-610 | IPC | Acceptability of electronic assemblies |
 | IPC-7351 | IPC | Land pattern naming |
 | IPC J-STD-001 | IPC | Soldering requirements |
-| IPC J-STD-020 | IPC | Moisture Sensitivity Level (MSL) |
+| IPC/JEDEC J-STD-020 | IPC + JEDEC (joint) | Moisture Sensitivity Level (MSL) |
 | AEC-Q100/101/200 | AEC | Automotive qualification (IC / discrete / passive) |
 
 ## Compact device models

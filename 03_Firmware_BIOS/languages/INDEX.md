@@ -1,5 +1,38 @@
 # Firmware / BIOS — Languages
 
+## What is in this section
+
+```text
+  Two groups, and they answer different questions. The first is what the
+  firmware itself is written in; the second is what runs on a
+  microcontroller once the firmware hands over.
+
+  ┌─ writing the firmware ─────────────────────────────────────────────┐
+  │                                                                    │
+  │   C (freestanding)        UEFI · coreboot · U-Boot                 │
+  │     └─ EDK II's dialect   Tianocore                                │
+  │   Assembly                reset vector, mode switches, early init  │
+  │   Rust (no_std)           oreboot · RTIC · Embassy                 │
+  │   Forth                   Open Firmware — SPARC, PPC Macs, OLPC    │
+  │                                                                    │
+  │   and two that describe hardware rather than drive it:             │
+  │   ASL  ──▶ iasl           ACPI table source                        │
+  │   DTS  ──▶ dtc            ARM and RISC-V hardware description      │
+  │                                                                    │
+  │   Python runs on the host, not the target: build glue, signing,    │
+  │   flashing helpers                                                 │
+  └────────────────────────────────────────────────────────────────────┘
+
+  ┌─ running on the microcontroller ───────────────────────────────────┐
+  │   C / C++      Zephyr · FreeRTOS · ThreadX · NuttX                 │
+  │   Rust         Embassy · RTIC · Tock OS                            │
+  │   Ada / SPARK  high-assurance                                      │
+  │   MicroPython · CircuitPython · TinyGo                             │
+  └────────────────────────────────────────────────────────────────────┘
+
+  Assembly below this layer is 02 CPU; kernel C above it is 05.
+```
+
 | Language | Type | Use at this layer | Toolchain |
 |----------|------|-------------------|-----------|
 | C (freestanding) | Systems | The dominant language: UEFI, coreboot, U-Boot | `gcc -ffreestanding`, Clang |

@@ -1,5 +1,29 @@
 # Security — Lessons
 
+## What is in this section
+
+```text
+  Lesson ladder: foundations, then offensive and defensive tracks.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  security_labs.md (Nmap scanning · hashcat · seccomp sandbox)         │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── foundations (1–5) ─────────────────────────────────────────────────┐
+  │  threat model · Linux hardening · Windows hardening · crypto · PKI   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── offensive (6–13) ──────────────────────────────────────────────────┐
+  │  recon · web labs · Active Directory · Linux/Windows privesc          │
+  │  Wi-Fi attacks · cloud attack paths · container escapes               │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── defensive (14–20) ─────────────────────────────────────────────────┐
+  │  detection engineering · SIEM · EDR · network IDS · malware analysis │
+  │  supply-chain security · red/blue team capstone                       │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

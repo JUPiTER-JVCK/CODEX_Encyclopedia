@@ -8,6 +8,18 @@ updated: 2026-05-21
 
 # Network Internet Layer — Interactive Labs
 
+## What is in this section
+
+```text
+  Interactive labs for the internet layer.
+
+  ┌─── lab modules ───────────────────────────────────────────────────────┐
+  │  Module 1: Subnetting Drill (IPv4/CIDR · VLSM · by-hand calculation) │
+  │  Module 2: Traceroute Analysis (mtr · hop latency · asymmetric paths) │
+  │  Module 3: BGP Simulation (FRR namespaces · eBGP peering · AS_PATH)  │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## Module 1: Subnetting Drill

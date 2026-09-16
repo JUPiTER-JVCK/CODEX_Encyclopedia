@@ -1,5 +1,37 @@
 # System Libraries — Manual Pages
 
+## What is in this section
+
+```text
+  Two dedicated subfiles plus four command groups for linking and debugging.
+
+  ┌─── dedicated files ───────────────────────────────────────────────────────┐
+  │  linker_commands.md — ld, ldd, ldconfig, nm, objdump, readelf, strings   │
+  │  debug_commands.md  — gdb, lldb, valgrind, addr2line                     │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── linker / loader ───────────────────────────────────────────────────────┐
+  │  ld · lld · mold · gold  │  link.exe (MSVC)                              │
+  │  ld.so / ld-linux.so (Linux)  │  dyld (macOS)                            │
+  │  ldd · otool -L · dumpbin /dependents  │  ldconfig · pkg-config          │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── inspection ────────────────────────────────────────────────────────────┐
+  │  nm  │  objdump -T/-t  │  readelf -d/-s/-h  │  otool -hv/-tv            │
+  │  dumpbin /headers//exports  │  c++filt  │  strings                       │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── trace / debug ─────────────────────────────────────────────────────────┐
+  │  ltrace  │  strace -e %file  │  valgrind  │  gdb / lldb                  │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── loader knobs (env vars) ───────────────────────────────────────────────┐
+  │  LD_LIBRARY_PATH · LD_PRELOAD · LD_DEBUG · LD_BIND_NOW  (Linux)          │
+  │  DYLD_LIBRARY_PATH · DYLD_INSERT_LIBRARIES  (macOS, SIP-limited)         │
+  │  _NT_SYMBOL_PATH  (Windows)                                               │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

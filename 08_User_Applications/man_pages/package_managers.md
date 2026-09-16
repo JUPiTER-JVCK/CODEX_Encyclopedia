@@ -8,6 +8,23 @@ updated: 2026-05-21
 
 # Package Manager Commands
 
+## What is in this section
+
+```text
+  Five system package managers across Linux distro families, macOS, and Nix.
+
+  ┌─── Linux distro families ─────────────────────────────────────────────┐
+  │  apt (Debian · Ubuntu · .deb packages · PPAs)                         │
+  │  dnf (Fedora · RHEL · .rpm · module streams · transaction history)    │
+  │  pacman (Arch Linux · AUR community PKGBUILDs · paccache)             │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── cross-platform / declarative ──────────────────────────────────────┐
+  │  brew (macOS + Linux · formulae + casks · Brewfile · services)        │
+  │  nix (purely functional · /nix/store · flakes · dev shells · NixOS)   │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > System-level package managers for installing, updating, and removing software.
 
 ---

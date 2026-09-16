@@ -1,5 +1,23 @@
 # Network Data Link — Manual Pages
 
+## What is in this section
+
+```text
+  Data link commands: bridging, VLAN, ARP, capture, and aggregation.
+
+  ┌─── dedicated subfile ─────────────────────────────────────────────────┐
+  │  datalink_commands.md (ip link · bridge · tc · arp · arping)         │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── inline command groups ─────────────────────────────────────────────┐
+  │  Interface/bridge/VLAN: ip link · bridge · vlan/vxlan subinterfaces  │
+  │  ARP/NDP: ip neigh · arping · arp · ndisc6                            │
+  │  Capture: tcpdump -e · tshark · tcpreplay · ettercap · bettercap     │
+  │  Bonding: ip link add bond0 type bond · teamdctl                      │
+  │  macOS: ifconfig · networksetup · Windows: Get-NetAdapter             │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

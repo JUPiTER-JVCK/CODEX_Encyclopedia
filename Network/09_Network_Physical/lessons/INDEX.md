@@ -1,5 +1,21 @@
 # Network Physical — Lessons
 
+## What is in this section
+
+```text
+  Physical layer hands-on: cable testing, diagnostics, and spectrum.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  physical_labs.md (cable testing · ethtool · Wi-Fi signal survey)    │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── lesson ladder ─────────────────────────────────────────────────────┐
+  │  1–4: Cat6 termination · cable testing · fiber inspection · SFP EEPROM │
+  │  5–8: spectrum sweep · autoneg tuning · fiber link budget · 802.3 PCS │
+  │  9–10: WAN circuit terminology · 5G NR primer                        │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

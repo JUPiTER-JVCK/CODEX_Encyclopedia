@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # C — language profile
 
+## What is in this section
+
+```text
+  C profile — compilers, build systems, debugging, sanitizers, stdlib map.
+
+  ┌─── compilers & standards ─────────────────────────────────────────────┐
+  │  gcc / clang  │  MSVC (cl.exe)  │  tcc  │  cc (system symlink)       │
+  │  Standards: C89/90 · C99 · C11 · C17 · C23                           │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Compilers & flags  │  Build systems (make · cmake · meson · ninja)   │
+  │  Linker / static / shared libs  │  Debuggers (gdb · lldb · rr)        │
+  │  Sanitizers (ASan · UBSan · TSan · MSan)  │  Static analysis          │
+  │  Standard library headers  │  Patterns  │  Gotchas (UB, strict alias) │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > The portable assembly. Used everywhere from kernels (cross-link
 > [05_OS_Kernel](../../05_OS_Kernel/)) to embedded firmware
 > ([03_Firmware_BIOS](../../03_Firmware_BIOS/)) to scripting glue. C standard

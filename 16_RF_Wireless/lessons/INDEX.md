@@ -1,5 +1,30 @@
 # RF / Wireless — Lessons
 
+## What is in this section
+
+```text
+  Lesson ladder: SDR fundamentals → Wi-Fi → BLE → LoRa → GNSS → amateur.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  rf_labs.md (SDR FM · Wi-Fi capture · BLE scan · LoRa hello)         │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── SDR & demodulation (1–7) ──────────────────────────────────────────┐
+  │  RTL-SDR setup · GNU Radio flowgraph · IQ basics · modulation tour   │
+  │  ADS-B · POCSAG paging · AIS ship transponders                        │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── wireless protocols (8–20) ─────────────────────────────────────────┐
+  │  Wi-Fi monitor mode · WPA handshake · BLE scan · GATT explore        │
+  │  LoRa P2P · TTN join · NFC/RFID · GNSS · amateur HF/FT8              │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── advanced (21–28) ──────────────────────────────────────────────────┐
+  │  amateur radio licensing · homebrew dipole · APRS                     │
+  │  private 4G/5G lab (lawful + shielded) · RF safety / regs             │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

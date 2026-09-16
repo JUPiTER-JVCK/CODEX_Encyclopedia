@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # Python — language profile
 
+## What is in this section
+
+```text
+  Python profile — CPython 3.x ecosystem from interpreter to deployment.
+
+  ┌─── interpreters & runtimes ───────────────────────────────────────────┐
+  │  CPython 3.x (reference)  │  PyPy (JIT)  │  GraalPy  │  MicroPython │
+  │  Version managers: pyenv · uv · mise · conda                          │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Package management (pip · uv · poetry · pdm)  │  venv / virtualenv   │
+  │  Linting / formatting / typing (ruff · mypy · pyright · black)        │
+  │  Testing (pytest · unittest)  │  Debugging  │  Build / distribution   │
+  │  Stdlib map  │  Async / web  │  Patterns  │  Gotchas  │  Performance  │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > CPython 3.x is on every Mac and most Linux distros by default. The ecosystem
 > spans web apps, ML, automation, DevOps, scientific compute. **The 80/20 of
 > day-to-day Python is `python3`, `pip`, `venv`, a linter, a formatter, and a

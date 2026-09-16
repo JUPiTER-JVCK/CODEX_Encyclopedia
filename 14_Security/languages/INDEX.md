@@ -1,5 +1,21 @@
 # Security — Languages
 
+## What is in this section
+
+```text
+  Languages split by role in security work.
+
+  ┌─── offensive / tooling ───────────────────────────────────────────────┐
+  │  Python · Bash · PowerShell · C/C++ · Rust · Go · Assembly           │
+  │  JavaScript/TypeScript · Ruby · Lua (NSE scripts)                     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── detection / data analysis ─────────────────────────────────────────┐
+  │  YARA · Sigma · KQL (Sentinel) · SPL (Splunk) · EQL/EsQL (Elastic)  │
+  │  Suricata/Snort rules · Falco rules · osquery SQL · OSSEC rules       │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 Security work is polyglot — choose by tool / domain.
 
 ## Tooling languages (most common)

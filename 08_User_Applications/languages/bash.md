@@ -8,6 +8,22 @@ updated: 2026-05-20
 
 # Bash / Shell — language profile
 
+## What is in this section
+
+```text
+  Bash / shell profile — from POSIX basics to production-safe idioms.
+
+  ┌─── shell families ────────────────────────────────────────────────────┐
+  │  bash 3–5  │  zsh (macOS default)  │  POSIX sh (portable)             │
+  │  fish  │  nushell  │  ksh  │  busybox sh (embedded)                   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Safety preamble (set -euo pipefail)  │  Quoting rules  │  Built-ins  │
+  │  Common idioms  │  Text processing  │  Networking  │  Gotchas         │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > The Unix lingua franca for automation. Bash is the universal default; zsh
 > ships as the macOS interactive default; POSIX `sh` is the lowest-common
 > denominator. **Write Bash like you'd write any other language**: with

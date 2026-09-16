@@ -1,5 +1,41 @@
 # CPU — Manual Pages
 
+## What is in this section
+
+```text
+  Every tool here points at one of three things. The file's own words for
+  what they do are inspection, disassembly and profiling — which is this,
+  read top to bottom.
+
+                      ┌────────────────────────────┐
+                      │  the machine               │◀── lscpu · cpuid
+                      │  model · cache · flags     │    rdmsr · wrmsr
+                      └─────────────┬──────────────┘
+                                    │  executes
+                      ┌─────────────▼──────────────┐
+                      │  the binary on disk        │◀── objdump · readelf
+                      │  sections · symbols · ELF  │    nm · strings · ar
+                      └─────────────┬──────────────┘    addr2line · as · ld
+                                    │  becomes
+                      ┌─────────────▼──────────────┐
+                      │  the running process       │◀── perf stat
+                      │  cycles · misses · stalls  │    perf record/report
+                      └─────────────┬──────────────┘    cachegrind (simulated
+                                    │                   rather than measured)
+                    ┌───────────────┴───────────────┐
+                    ▼                               ▼
+              gdb · lldb                   strace · dtrace
+              stop it and look             watch it cross into the
+              at the registers             kernel            ──▶ 05
+
+  taskset and numactl are the exception: they do not observe anything, they
+  decide which core and which memory the process gets.
+
+  Reverse engineering — radare2 · rizin · Binary Ninja · IDA · Ghidra — sits
+  at the end of the file as its own workflow. Detail on the inspection
+  tools: cpu_inspection.md.
+```
+
 ## Dedicated man page references
 
 | Topic | File |

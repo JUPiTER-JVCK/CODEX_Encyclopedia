@@ -1,5 +1,21 @@
 # User Applications — Manual Pages
 
+## What is in this section
+
+```text
+  Four dedicated subfiles plus inline command tables by category.
+
+  ┌─── dedicated subfiles ────────────────────────────────────────────────┐
+  │  shell_commands.md  │  text_processing.md  │  network_tools.md        │
+  │  package_managers.md                                                   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── inline command groups ─────────────────────────────────────────────┐
+  │  Shells & terminals  │  Power-user tools  │  Package managers          │
+  │  App build / package  │  App-level inspection  │  macOS · Windows      │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

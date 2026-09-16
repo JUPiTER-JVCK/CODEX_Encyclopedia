@@ -1,5 +1,32 @@
 # OS Kernel — Manual Pages
 
+## What is in this section
+
+```text
+  Four dedicated subfiles plus inline tables by subsystem.
+
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │  Dedicated files: process_commands · memory_commands                │
+  │                   filesystem_commands · tracing_commands            │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── process / scheduling ─────────────────────────────────────────────┐
+  │  ps · top/htop/btop · pidstat · pstree · nice · chrt · taskset     │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── memory ───────────────────────────────────────────────────────────┐
+  │  free · vmstat · slabtop · smem · numastat · pmap                  │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── filesystem / VFS ─────────────────────────────────────────────────┐
+  │  mount · df · du · stat · lsof · fuser · inotifywait               │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── tracing & debugging ──────────────────────────────────────────────┐
+  │  strace · perf · bpftrace · bcc-tools · ftrace · dmesg · sysctl   │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

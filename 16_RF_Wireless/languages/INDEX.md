@@ -1,5 +1,27 @@
 # RF / Wireless — Languages
 
+## What is in this section
+
+```text
+  RF tooling from GNU Radio flowgraphs to cellular and FPGA kernels.
+
+  ┌─── SDR / DSP frameworks ──────────────────────────────────────────────┐
+  │  GNU Radio (C++/Python/GRC) · MATLAB/Simulink · LiquidSDR (C)         │
+  │  PySDR · Volk · SoapySDR · Redhawk · SDRangel/SDR++                   │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── protocol stacks & tooling ─────────────────────────────────────────┐
+  │  cellular: srsRAN / OAI / Open5GS (C/C++)                             │
+  │  Wi-Fi: hostapd / wpa_supplicant / aircrack-ng (C)                    │
+  │  BLE: BlueZ / bleak / CoreBluetooth / nRF Connect SDK                 │
+  │  LoRa: LMIC / RadioLib / ChirpStack (Go)                              │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── FPGA & simulation ─────────────────────────────────────────────────┐
+  │  Verilog / VHDL / Chisel · Sionna (TF) · NumPy/SciPy · Octave        │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 The "language" of RF is **signal processing**. Software tooling clusters around
 a few ecosystems.
 

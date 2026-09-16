@@ -1,5 +1,30 @@
 # Device Drivers — Manual Pages
 
+## What is in this section
+
+```text
+  Commands in this section, grouped by OS.
+
+  ┌────────────────────────────────── Linux ──────────────────────────────┐
+  │  modules: lsmod · modinfo · modprobe · insmod · rmmod · depmod · dkms │
+  │  events:  udevadm · dmesg  │  config: modules-load.d               │
+  │  hardware: ethtool · nvidia-smi · rocm-smi                           │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌──────── macOS ─────────────────────────┐  ┌──── Windows ──────────────────────┐
+  │  kextstat · kmutil                     │  │  pnputil · driverquery            │
+  │  systemextensionsctl · pluginkit       │  │  sc query type=driver · verifier  │
+  └────────────────────────────────────────┘  └───────────────────────────────────┘
+
+  ┌──────── Linux (additional) ───────────────────────────────────────────┐
+  │  pyudev (Python bindings for Linux udev — Linux-only)                 │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌──────────────────────── cross-platform ───────────────────────────────┐
+  │  libusb (userspace USB access, wraps each OS's USB stack)             │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |
@@ -42,6 +67,8 @@
 | `sc query type=driver` | Service Control Manager view of drivers |
 | `verifier` | Driver Verifier — runtime checks |
 
+## Linux (additional)
+- `pyudev` — Python bindings for Linux udev (Linux-only; wraps the udev C library)
+
 ## Cross-platform
-- `libusb` — userspace USB access
-- `pyudev` — Python udev bindings
+- `libusb` — userspace USB access (wraps each OS's USB stack)

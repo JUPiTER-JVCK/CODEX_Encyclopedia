@@ -16,7 +16,7 @@ commands with a man page.
   │  vendor SPICE / IBIS libs    │        │  programmable PSU (DP832)    │
   │                              │        │  LCR meter · curve tracer    │
   │  KiCad · kicad-cli           │        │  component tester (Mega328)  │
-  │  skidl (schematic in Python) │        │  hot air · scope · iron      │
+  │  skidl (schematic in Python) │        │  semiconductor analyzer      │
   └──────────────┬───────────────┘        └───────────────┬──────────────┘
                  │                                        │
                  └──────────────▶  disagree?  ◀───────────┘

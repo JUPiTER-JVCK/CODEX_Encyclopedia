@@ -1,5 +1,31 @@
 # User Applications — Protocols
 
+## What is in this section
+
+```text
+  Four groups: inter-app conventions, data interchange formats, signing, identity.
+
+  ┌─── inter-app & integration ───────────────────────────────────────────┐
+  │  Clipboard formats  │  Drag-and-drop (UTI/MIME/CF_*)                  │
+  │  MIME types (RFC 6838)  │  URL schemes · deep links  │  Web Share     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── document & data interchange ───────────────────────────────────────┐
+  │  PDF · OOXML (docx/xlsx) · ODF · EPUB · Markdown/CommonMark           │
+  │  CSV (RFC 4180)  │  iCalendar (RFC 5545)  │  vCard (RFC 6350)         │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── app-bundle signing ────────────────────────────────────────────────┐
+  │  Apple notarization/Gatekeeper  │  Authenticode (Windows)              │
+  │  Android Signing Scheme v1–v4  │  Sigstore / cosign                   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── app identity / auth ───────────────────────────────────────────────┐
+  │  OAuth 2.0/2.1 · OIDC · PKCE  │  SAML 2.0                            │
+  │  WebAuthn / FIDO2 (passkeys)  │  App Attest / Play Integrity           │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 Application-level conventions — clipboard, drag-and-drop, MIME and URL schemes
 — rather than anything that travels on the wire.
 

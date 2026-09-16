@@ -1,5 +1,29 @@
 # Security — Protocols
 
+## What is in this section
+
+```text
+  Security-specific protocols and data formats, by category.
+
+  ┌─── dedicated subfile ─────────────────────────────────────────────────┐
+  │  tls_ipsec.md (IPsec ESP/AH/IKEv2 · modes · vs WireGuard)            │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── auth / identity ───────────────────────────────────────────────────┐
+  │  OAuth 2.0 · OIDC · SAML 2.0 · Kerberos · WebAuthn/FIDO2            │
+  │  TOTP/HOTP · SCIM 2.0 · SPIFFE/SPIRE workload identity               │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── crypto transport ──────────────────────────────────────────────────┐
+  │  TLS 1.3 · DTLS · IPsec ESP/AH · WireGuard · SSH · QUIC (TLS 1.3)  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── PKI, network & app-layer security ─────────────────────────────────┐
+  │  ACME · Certificate Transparency · DNSSEC · DoH/DoT                  │
+  │  HSTS · CSP · JWT/JOSE · PKCS#11 · FIDO CTAP2                        │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 Security-specific protocols & data formats. Protocols are listed here only when
 their primary purpose is security; otherwise they live in their owning layer's
 folder.

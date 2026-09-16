@@ -1,5 +1,21 @@
 # Network Physical — Languages
 
+## What is in this section
+
+```text
+  Encoding and modulation — the "language" of the physical layer.
+
+  ┌─── line codes (digital) ──────────────────────────────────────────────┐
+  │  NRZ/NRZI · Manchester · 4B/5B+MLT-3 · 8B/10B · 64B/66B             │
+  │  128B/130B · 256B/257B · PAM4 (50G+/GDDR6X) · 4D-PAM5 (1000BASE-T)  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── modulation (RF & fiber) ───────────────────────────────────────────┐
+  │  OOK · BPSK/QPSK (satellite/802.11) · QAM-16/64/256/1024/4096       │
+  │  OFDM/OFDMA (802.11ax/be · LTE · 5G NR) · GMSK (GSM) · FM/FSK      │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 Not a software-language layer. The "language" here is **encoding and modulation**.
 
 ## Line codes (digital)
@@ -12,7 +28,7 @@ Not a software-language layer. The "language" here is **encoding and modulation*
 | 64B/66B | 10G/40G/100G Ethernet PCS |
 | 128B/130B | PCIe Gen3 |
 | 256B/257B (RS-FEC) | 100G/400G |
-| PAM4 | 25G/50G/100G per-lane, DDR5 |
+| PAM4 | 50G/100G per-lane (Ethernet, GDDR6X) |
 | 4D-PAM5 | 1000BASE-T |
 
 ## Modulation (RF / fiber)

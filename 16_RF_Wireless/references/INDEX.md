@@ -1,5 +1,26 @@
 # RF / Wireless — References
 
+## What is in this section
+
+```text
+  Books, standards, online resources, and regulatory bodies for RF/wireless.
+
+  ┌─── books ─────────────────────────────────────────────────────────────┐
+  │  ARRL Handbook · SDR for Engineers (free PDF) · Lyons DSP             │
+  │  Wireless Comms (Goldsmith) · RF Microelectronics (Razavi)            │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── standards & specs ─────────────────────────────────────────────────┐
+  │  IEEE 802.11 · Bluetooth Core · 3GPP TS (LTE 36.x / 5G NR 38.x)     │
+  │  ITU-R Radio Regs · ETSI EN 300 · FCC Part 15 · LoRa Alliance        │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online & regulatory ───────────────────────────────────────────────┐
+  │  GNU Radio Wiki · RTL-SDR.com · PySDR (free textbook) · DSP Guide    │
+  │  FCC · Ofcom · ISED · ACMA · ITU-R · ETSI/CEPT · ARRL/RSGB/IARU     │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Books
 - *The ARRL Handbook for Radio Communications* — annual; the bible.
 - *The ARRL Antenna Book* — antenna theory & build guides.

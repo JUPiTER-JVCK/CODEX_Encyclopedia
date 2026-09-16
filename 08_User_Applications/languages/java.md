@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # Java — language profile
 
+## What is in this section
+
+```text
+  Java profile — LTS versions 11/17/21/25, multiple JVM distributions, build tools.
+
+  ┌─── JVM distributions ─────────────────────────────────────────────────┐
+  │  Eclipse Temurin  │  Amazon Corretto  │  Azul Zulu  │  Oracle OpenJDK │
+  │  GraalVM (native image + polyglot)  │  IBM Semeru (OpenJ9)            │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  JDK toolchain (java · javac · jshell · jcmd · jlink · jpackage)      │
+  │  Build tools (mvn · gradle)  │  Standard library packages              │
+  │  Frameworks (Spring Boot · Quarkus · Micronaut · Vert.x)              │
+  │  Testing & quality  │  Modern features (Java 8–25)  │  Gotchas        │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > Multi-platform JVM language. Long-term-support releases: 8 (legacy), 11, 17,
 > 21, 25. Modern Java (17+) is concise, capable, and worth using.
 

@@ -8,6 +8,25 @@ updated: 2026-05-21
 
 # Network Tools
 
+## What is in this section
+
+```text
+  Seven tools for data transfer, remote access, and file sync over the network.
+
+  ┌─── file transfer ─────────────────────────────────────────────────────┐
+  │  curl (HTTP · FTP · SFTP · 25+ protocols · auth · cookies · TLS)      │
+  │  wget (HTTP/HTTPS/FTP · recursive mirror · resume · bandwidth limit)   │
+  │  httpie (human-friendly · colorized · JSON-first alternative to curl)  │
+  │  rsync (delta transfer · SSH transport · backup/deploy/mirror)         │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── remote shell & file access ────────────────────────────────────────┐
+  │  ssh (encrypted shell · port forwarding · SOCKS proxy · jump hosts)   │
+  │  scp (file copy over SSH — simple; prefer sftp for new code)          │
+  │  sftp (interactive + batch file transfer over SSH)                     │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > Command-line tools for transferring data, remote access, and file sync.
 
 ---

@@ -1,5 +1,21 @@
 # User Applications — Lessons
 
+## What is in this section
+
+```text
+  One dedicated lab module plus eleven numbered lessons across all app types.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  app_labs.md: CLI build · TUI file picker · package & distribute       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── numbered lessons ──────────────────────────────────────────────────┐
+  │  1 CLI · 2 TUI · 3 Desktop GUI native · 4 Cross-platform GUI          │
+  │  5 Web SPA · 6 PWA · 7 iOS · 8 Android · 9 Game prototype             │
+  │  10 Packaging & signing · 11 Accessibility audit                       │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

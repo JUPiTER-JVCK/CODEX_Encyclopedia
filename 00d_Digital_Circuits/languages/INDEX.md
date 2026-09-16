@@ -11,7 +11,10 @@
   describe      Verilog · SystemVerilog · VHDL        the industry three
                 Chisel · SpinalHDL (Scala)            embedded in a host
                 Amaranth · Migen · MyHDL (Python)     language, so the
-                Bluespec (rules) · Clash (Haskell)    elaborator is a program
+                Clash (Haskell)                       elaborator is a program
+
+                Bluespec SystemVerilog                its own .bsv language
+                                                      and compiler, not a DSL
                    │
      ┌─────────────┴─────────────┐   two consumers of the same source,
      ▼                           ▼   not one after the other

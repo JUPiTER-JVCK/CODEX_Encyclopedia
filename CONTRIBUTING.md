@@ -1,5 +1,16 @@
 # Contributing
 
+## What is in this section
+
+```text
+  How to check conventions and open a pull request for the codex.
+
+  ┌─── before opening a PR ───────────────────────────────────────────────┐
+  │  link_audit · table_audit · title_audit · diagram_audit              │
+  │  stats_audit · palette_audit — all run in CI on every PR             │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 [STRUCTURE.md](STRUCTURE.md) says what the conventions are. This says how to
 check you have followed them before opening a pull request.
 

@@ -1,5 +1,30 @@
 # Embedded Systems — Lessons
 
+## What is in this section
+
+```text
+  74-step roadmap: hardware → programming → MCU hands-on → RTOS → quality.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  embedded_labs.md (bare-metal blink · FreeRTOS tasks · UART · I2C)   │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── phases 1–2: hardware & programming (1–16) ─────────────────────────┐
+  │  circuits → electronics → digital design → CPU architecture           │
+  │  C/Assembly (required) · C++ / Python / Rust (recommended)           │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── phases 3–5: MCU & RTOS (17–40) ───────────────────────────────────┐
+  │  GPIO/ADC/PWM/DMA/clocks/power/bootloader · JTAG/GDB/OpenOCD         │
+  │  FreeRTOS · Zephyr · Embedded Linux (U-Boot / Buildroot / Yocto)     │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── phases 6–9: interfaces, quality & advanced (41–74) ────────────────┐
+  │  UART/I2C/SPI/USB/CAN → [19] · TDD/CI/SIL/HIL · IEC 61508/ISO 26262│
+  │  IoT / Edge AI / AUTOSAR / DSP / control theory / soft skills         │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

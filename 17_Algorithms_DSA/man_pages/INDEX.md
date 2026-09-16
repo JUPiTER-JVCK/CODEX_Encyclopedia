@@ -1,5 +1,21 @@
 # Algorithms & DSA — Manual Pages
 
+## What is in this section
+
+```text
+  Practice tooling: local runners, visualizers, and interview rehearsal.
+
+  ┌─── local practice ────────────────────────────────────────────────────┐
+  │  leetcode-cli · vscode-leetcode · competitive-companion               │
+  │  pytest/cargo test/go test · hyperfine · valgrind/py-spy/pprof       │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── visualization & rehearsal ─────────────────────────────────────────┐
+  │  VisuAlgo · Algorithm Visualizer · Graphviz (dot)                    │
+  │  Pramp / Interviewing.io · CoderPad · rubber-duck the approach aloud  │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 Practice tooling rather than system utilities — CLIs and editor extensions for
 working problems locally.
 

@@ -1,5 +1,23 @@
 # Algorithms & DSA — Topics
 
+## What is in this section
+
+```text
+  Pattern cheatsheet: complexity → data structures → algorithms.
+
+  ┌─── complexity & data structures ──────────────────────────────────────┐
+  │  O(1)/O(log n)/O(n)/O(n log n)/O(n²)/O(2ⁿ)/O(n!) · amortized       │
+  │  array · linked list · stack/queue/deque · hash map/set               │
+  │  heap · tree (BST/AVL/seg tree/Fenwick) · trie · union-find · graph  │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── algorithm patterns ────────────────────────────────────────────────┐
+  │  sorting · binary search · two-pointer · sliding window               │
+  │  recursion/backtracking · DP (top-down/bottom-up) · greedy           │
+  │  graph (BFS/DFS/Dijkstra/MST/topo) · bit manipulation · strings      │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > Companion to [canonical_lists.md](canonical_lists.md). Pattern cheatsheet.
 
 ## Complexity (Big-O)

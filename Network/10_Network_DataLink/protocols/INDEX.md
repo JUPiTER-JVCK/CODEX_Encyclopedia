@@ -1,5 +1,29 @@
 # Network Data Link — Protocols
 
+## What is in this section
+
+```text
+  Data link protocols: framing, VLANs, overlays, spanning tree, and 802.1X.
+
+  ┌─── dedicated protocol reference ──────────────────────────────────────┐
+  │  ethernet.md (frame · VLANs · MAC · ARP · STP · speed evolution)     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── framing & addressing ──────────────────────────────────────────────┐
+  │  Ethernet II/802.3 · ARP/RARP · NDP · LLDP · CDP                    │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── VLAN, overlay & loop prevention ───────────────────────────────────┐
+  │  802.1Q · 802.1ad (QinQ) · VXLAN · Geneve · EVPN                    │
+  │  STP/RSTP/MSTP · LACP · TRILL · SPB                                  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── auth, Wi-Fi MAC & WAN ─────────────────────────────────────────────┐
+  │  802.1X (EAPOL) · EAP · MACsec · Wi-Fi mgmt/control frames          │
+  │  PPP/PPPoE · L2TP · MPLS/LDP/RSVP-TE/Segment Routing                │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated protocol references
 
 | Protocol | File |

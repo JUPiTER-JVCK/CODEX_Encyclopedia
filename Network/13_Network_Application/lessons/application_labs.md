@@ -8,6 +8,18 @@ updated: 2026-05-21
 
 # Network Application Layer — Interactive Labs
 
+## What is in this section
+
+```text
+  Interactive labs for the application layer.
+
+  ┌─── lab modules ───────────────────────────────────────────────────────┐
+  │  Module 1: DNS Resolution Trace (dig +trace · delegation hierarchy)   │
+  │  Module 2: TLS Handshake Decode (openssl s_client · cert chain)      │
+  │  Module 3: HTTP/2 Framing (h2load · binary frames · HPACK headers)   │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## Module 1: DNS Resolution Trace

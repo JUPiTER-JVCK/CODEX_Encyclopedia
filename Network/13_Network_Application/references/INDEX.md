@@ -1,5 +1,26 @@
 # Network Application — References
 
+## What is in this section
+
+```text
+  Books, critical RFCs, and online indexes for application layer protocols.
+
+  ┌─── books ─────────────────────────────────────────────────────────────┐
+  │  HTTP: The Definitive Guide · High Performance Browser Networking     │
+  │  Bulletproof SSL and TLS · DNS and BIND · gRPC: Up and Running       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── critical RFCs ─────────────────────────────────────────────────────┐
+  │  HTTP: 9110/9111/9112/9113/9114 · TLS: 8446/5246/9325               │
+  │  DNS: 1034/1035/8484(DoH)/7858(DoT)/9250(DoQ)                        │
+  │  Auth: 6749/9700(OAuth) · Mail: 5321/5322 · SSH: 4251                │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online ────────────────────────────────────────────────────────────┐
+  │  IETF RFC index (rfc-editor.org) · IANA port/media-type registries   │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Books
 - *HTTP: The Definitive Guide* — Gourley, Totty.
 - *High Performance Browser Networking* — Ilya Grigorik.

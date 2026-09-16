@@ -1,5 +1,28 @@
 # OS Kernel — Protocols
 
+## What is in this section
+
+```text
+  Three groups: portability standards, arch-specific ABIs, pseudo-FS
+  and messaging interfaces that cross the kernel/userspace boundary.
+
+  ┌──────────────── portability standards ──────────────────────────────┐
+  │  POSIX (IEEE 1003.1)  │  SUSv4/v5 (Open Group)  │  FHS (LF)       │
+  │  LSB (historical)     │  systemd DBus / unit-file interfaces       │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  ┌──────────────── Linux syscall ABIs (arch-specific) ─────────────────┐
+  │  x86-64: syscall insn  │  i386: int 0x80 / sysenter               │
+  │  AArch64: svc #0       │  RISC-V: ecall                           │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  ┌──────────────── kernel ↔ userspace interfaces ──────────────────────┐
+  │  /proc · /sys · /dev · debugfs · configfs                          │
+  │  netlink (RTNL · NFNL · GENL)  │  ioctl  │  sysctl               │
+  │  eventfd · signalfd · timerfd (fd-based event signaling)           │
+  └─────────────────────────────────────────────────────────────────────┘
+```
+
 > POSIX & syscall ABI standards governing the kernel/user-space boundary.
 
 ## Dedicated Protocol References

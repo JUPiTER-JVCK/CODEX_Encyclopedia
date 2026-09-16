@@ -1,5 +1,42 @@
 # Runtime Environment — Manual Pages
 
+## What is in this section
+
+```text
+  Two dedicated subfiles plus five command groups.
+
+  ┌─── dedicated files ───────────────────────────────────────────────────────┐
+  │  container_commands.md — docker, podman, systemd-nspawn, crictl          │
+  │  vm_commands.md — qemu-system, virsh, VBoxManage                         │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── language runtime CLIs ─────────────────────────────────────────────────┐
+  │  JVM: java · javac · jar · jcmd · jstack · jmap · jstat                  │
+  │  .NET: dotnet  │  Node: node / npx / deno / bun                          │
+  │  Python: python3 · pip · uv  │  Ruby: ruby · gem · bundle                │
+  │  Go: go / go test / pprof  │  Rust: cargo · rustc  │  Swift: swift       │
+  │  BEAM: erl · iex · mix  │  PHP: php / composer  │  Perl: perl / cpan    │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── WebAssembly ───────────────────────────────────────────────────────────┐
+  │  wasmtime  │  wasmer  │  wasm-tools (validate, dump, component)           │
+  │  wasm-pack (Rust → npm packaging)                                         │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── containers ────────────────────────────────────────────────────────────┐
+  │  docker · podman · nerdctl · ctr  │  runc · crun (OCI executors)         │
+  │  buildah · buildkit · kaniko  │  skopeo · dive · slim                    │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── orchestrators ─────────────────────────────────────────────────────────┐
+  │  kubectl · helm · kustomize  │  kind · minikube · k3s/k3d  │  nomad      │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── hypervisors ───────────────────────────────────────────────────────────┐
+  │  qemu-system-*  │  virsh / virt-install  │  firecracker  │  bhyve        │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

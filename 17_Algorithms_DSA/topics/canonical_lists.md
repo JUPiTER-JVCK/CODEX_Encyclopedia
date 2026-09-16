@@ -9,6 +9,24 @@ authoritative_source: ../references/100_leetcode_problems.pdf
 
 # Canonical 100-problem study list (pattern-first companion)
 
+## What is in this section
+
+```text
+  Pattern-first companion to 100_must_do.md (Blind 75 / NeetCode ordering).
+
+  ┌─── how to use ────────────────────────────────────────────────────────┐
+  │  1. anchor PDF order is authoritative  2. tick each pattern bucket   │
+  │  3. write a paragraph on the recurring trick — that's how it sticks  │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── pattern buckets (~95 % of medium interview problems) ─────────────┐
+  │  Arrays & Hashing · Two Pointers · Sliding Window · Stack            │
+  │  Binary Search · Linked List · Trees · Tries · Heap/PQ               │
+  │  Backtracking · Graphs · Advanced Graphs · 1-D DP · 2-D DP           │
+  │  Greedy · Intervals · Math/Geometry · Bit Manipulation               │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > The **authoritative PDF-derived list** now lives in [100_must_do.md](100_must_do.md)
 > — extracted from `references/100_leetcode_problems.pdf` with all 100 problems
 > mapped to their LeetCode numbers and titles.

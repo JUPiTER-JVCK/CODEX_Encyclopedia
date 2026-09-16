@@ -1,5 +1,27 @@
 # Network Internet — Topics
 
+## What is in this section
+
+```text
+  IP addressing, routing protocols, NAT, QoS, VPN tunnels, and multicast.
+
+  ┌─── dedicated topic file ──────────────────────────────────────────────┐
+  │  osi_model.md (7 layers · TCP/IP mapping · encapsulation · PDUs)     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── IP addressing & routing ───────────────────────────────────────────┐
+  │  IPv4: CIDR/VLSM · private RFC 1918 · fragmentation                  │
+  │  IPv6: GUA/ULA/link-local · SLAAC/DHCPv6 · EUI-64 · privacy addrs   │
+  │  ICMP/ICMPv6 · routing: LPM/FIB/RIB · BGP/OSPF/IS-IS/EIGRP          │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── NAT, QoS, VPN & multicast ─────────────────────────────────────────┐
+  │  NAT: SNAT/DNAT · CGN · NAT64/DNS64 · hairpinning                    │
+  │  QoS: DSCP/ECN · AQM (fq_codel/CAKE/PIE) · PMTUD · TCP MSS clamp    │
+  │  VPN: IPsec · WireGuard · OpenVPN · multicast: PIM-SM/DM/SSM         │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated topic files
 
 | Topic | File |

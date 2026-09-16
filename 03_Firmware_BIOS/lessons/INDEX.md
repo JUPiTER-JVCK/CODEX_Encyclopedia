@@ -1,5 +1,41 @@
 # Firmware / BIOS — Lessons
 
+## What is in this section
+
+```text
+  Ten exercises. The file states no prerequisites between them; the
+  grouping is editorial, by which end of the machine you are working on.
+
+  ┌─ the smallest thing that runs ─────────────────────────────────────┐
+  │   1  Bare-metal "hello"      Cortex-M blink, no RTOS               │
+  └────────────────────────────────────────────────────────────────────┘
+
+  ┌─ what is already on the board ─────────────────────────────────────┐
+  │   2  Read your firmware      flashrom -r, then binwalk / UEFITool  │
+  │   7  ACPI table walk         acpidump, then iasl -d               │
+  └────────────────────────────────────────────────────────────────────┘
+
+  ┌─ replace or extend it ─────────────────────────────────────────────┐
+  │   3  Build coreboot          build, flash, watch the console       │
+  │   4  Write a UEFI app        EDK II HelloWorld.efi from the shell  │
+  │   6  U-Boot on QEMU          boot a Linux kernel under emulation   │
+  └────────────────────────────────────────────────────────────────────┘
+
+  ┌─ follow the whole chain ───────────────────────────────────────────┐
+  │   5  Boot flow study         reset vector ─▶ firmware ─▶ loader    │
+  │                              ─▶ kernel, on x86-64 and ARM          │
+  │   8  Measured boot lab       tpm2_pcrread, and what fills a PCR    │
+  │   9  Secure Boot / MOK       enrol a key, sign a kernel, boot it   │
+  └────────────────────────────────────────────────────────────────────┘
+
+  ┌─ the computer inside the computer ─────────────────────────────────┐
+  │   10  BMC exploration        OpenBMC source, Redfish endpoints     │
+  └────────────────────────────────────────────────────────────────────┘
+
+  Lab: firmware_labs.md — three modules: UEFI shell exploration, firmware
+  updates with fwupdmgr, and Secure Boot key enrolment.
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

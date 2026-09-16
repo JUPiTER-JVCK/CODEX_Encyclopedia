@@ -1,5 +1,27 @@
 # Device Drivers — Lessons
 
+## What is in this section
+
+```text
+  Twelve exercises plus a lab file (driver_labs.md); grouped by focus.
+
+  ┌─── module basics ────────────────────────────────────────────────────┐
+  │  1 hello-world (load/unload)  2 char driver (cdev)  3 ioctl design  │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  ┌─── kernel interfaces ────────────────────────────────────────────────┐
+  │  4 sysfs / debugfs  │  5 interrupt handler  │  6 DMA basics         │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  ┌─── bus-specific drivers ─────────────────────────────────────────────┐
+  │  7 PCI driver  │  8 USB driver  │  9 network driver (NAPI)          │
+  └─────────────────────────────────────────────────────────────────────┘
+
+  ┌─── beyond the standard Linux model ──────────────────────────────────┐
+  │  10 userspace driver (UIO / VFIO)  │  11 Rust-for-Linux  │  12 KMDF │
+  └─────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

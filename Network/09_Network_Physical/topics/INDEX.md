@@ -1,5 +1,27 @@
 # Network Physical — Topics
 
+## What is in this section
+
+```text
+  Physical layer topics: media, optical, PHY sublayers, power, and access tech.
+
+  ┌─── physical media ────────────────────────────────────────────────────┐
+  │  Twisted pair (Cat5e–Cat8 UTP/STP) · Coax (RG-6/LMR)                │
+  │  Fiber: OS1/OS2 SMF · OM1–OM5 MMF · LC/SC/MPO · Twinax/DAC/AOC     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── optical & transceivers ────────────────────────────────────────────┐
+  │  SFP–OSFP families · SR/LR/ER/ZR reach types · DWDM backbone        │
+  │  PCS/PMA/PMD sublayers · MII/SGMII/XGMII MAC↔PHY interfaces         │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── link bring-up, power & access ─────────────────────────────────────┐
+  │  Autoneg (802.3 Cl.28) · FEC negotiation · duplex mismatch           │
+  │  PoE/PoE+/PoE++ (802.3af/at/bt) · EEE (802.3az)                     │
+  │  DOCSIS · xDSL · GPON/XGS-PON/25G-PON · 5G NR radio access         │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Wired media
 - **Twisted pair** — Cat5e, Cat6, Cat6a, Cat7, Cat8; lengths, shielding (UTP/FTP/STP).
 - **Coax** — RG-6, RG-59 (HFC); RG-58, LMR-400 (RF).

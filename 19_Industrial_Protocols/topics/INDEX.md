@@ -1,5 +1,27 @@
 # Industrial & Automotive Protocols — Topics
 
+## What is in this section
+
+```text
+  Protocol internals: Modbus → PROFINET → EtherCAT → CAN → OPC UA.
+
+  ┌─── fieldbus internals ────────────────────────────────────────────────┐
+  │  Modbus function codes · PROFIBUS DP/PA · PROFINET (RT/IRT/TSN/MRP)  │
+  │  EtherCAT DC sync / CoE / ESI · EtherNet/IP CIP · CANopen SDO/PDO   │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── automotive protocols ──────────────────────────────────────────────┐
+  │  CAN 2.0 / CAN-FD arbitration · LIN master/slave schedule            │
+  │  FlexRay static+dynamic · SOME/IP service discovery                  │
+  │  UDS (ISO 14229) diagnostic services · J1939 PGNs · AUTOSAR Classic  │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── SCADA & building ──────────────────────────────────────────────────┐
+  │  DNP3 · IEC 61850 (GOOSE/MMS/SV) · IEC 60870-5-101/104              │
+  │  BACnet/IP · KNX · DALI · HART · OPC UA (address space / PubSub)    │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Modbus
 - **Variants** — Modbus RTU (RS-485/232), Modbus ASCII, Modbus TCP (port 502), Modbus over UDP
 - **Function codes** — 01 Read Coils, 03 Read Holding Regs, 06 Write Single Reg, 16 Write Multiple, etc.

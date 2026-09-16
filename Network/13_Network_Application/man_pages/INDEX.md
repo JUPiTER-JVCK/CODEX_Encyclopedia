@@ -1,5 +1,24 @@
 # Network Application — Manual Pages
 
+## What is in this section
+
+```text
+  Application layer commands: HTTP, TLS, DNS, SSH, mail, and inspection.
+
+  ┌─── dedicated subfile ─────────────────────────────────────────────────┐
+  │  app_protocol_tools.md (curl · openssl s_client · dig · mosquitto)   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── inline command groups ─────────────────────────────────────────────┐
+  │  HTTP: curl · wget · httpie · xh · nghttp/h2load · caddy/nginx       │
+  │  TLS/certs: openssl s_client · certbot · mkcert · testssl.sh         │
+  │  DNS: dig +trace · drill · kdig · dnscrypt-proxy · cloudflared       │
+  │  SSH/SCP: ssh · scp · sftp · ssh-keygen · mosh · port forwards       │
+  │  mail/IoT: swaks · mosquitto_pub/_sub · kcat · amqp-tools            │
+  │  inspect: mitmproxy · wireshark · tshark · burp · mtr · nmap         │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

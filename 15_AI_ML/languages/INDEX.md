@@ -1,5 +1,22 @@
 # AI / ML — Languages
 
+## What is in this section
+
+```text
+  Languages for AI/ML work, from training to deployment.
+
+  ┌─── core / compute ────────────────────────────────────────────────────┐
+  │  Python (dominant) · C++ (kernels, inference engines)                 │
+  │  CUDA C++ · HIP/ROCm · Metal Shading Language · Triton · Mojo        │
+  │  Rust (serving infra) · Julia (scientific ML) · JS/TS (browser)       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── Python frameworks ─────────────────────────────────────────────────┐
+  │  PyTorch · JAX (XLA) · TensorFlow/Keras · scikit-learn               │
+  │  XGBoost/LightGBM/CatBoost · HuggingFace ecosystem                   │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Core
 | Language | Where |
 |----------|-------|

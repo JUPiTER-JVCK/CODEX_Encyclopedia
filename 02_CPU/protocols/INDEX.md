@@ -2,6 +2,50 @@
 
 Not wire protocols — these are the *software contracts* the CPU layer enforces.
 
+## What is in this section
+
+```text
+  Nothing here is a wire protocol. These are the four contracts that let a
+  binary built by one toolchain run under another's kernel, on silicon
+  neither of them chose.
+
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │  your code, compiled                                                 │
+  └─────────────────────────────────┬────────────────────────────────────┘
+                                    │
+      ┌─────────────────────────────┴──────────────────────────────┐
+      │  what a binary file looks like                             │
+      │  ELF · Mach-O · PE/COFF · RISC-V psABI tag sections        │
+      │  — the one contract set by the OS, not by the ISA          │
+      └─────────────────────────────┬──────────────────────────────┘
+                                    │
+      ┌─────────────────────────────┴──────────────────────────────┐
+      │  where a call puts its arguments                           │
+      │  x86-64  SysV AMD64 · MS x64 · i386 SVR4 · fastcall,       │
+      │          stdcall, cdecl                                    │
+      │  ARM     AAPCS64  x0…x7    ·  AAPCS (32)  r0…r3            │
+      │  RISC-V  psABI    a0…a7                        ──▶ 06      │
+      └─────────────────────────────┬──────────────────────────────┘
+                                    │
+      ┌─────────────────────────────┴──────────────────────────────┐
+      │  what happens on a trap                                    │
+      │  x86-64  IDT, vectors 0–31 reserved · IST · MCE · NMI      │
+      │  ARM     EL0–EL3 · VBAR · synchronous vs asynchronous      │
+      │  RISC-V  mtvec / stvec · mcause / scause · delegation      │
+      │                                                ──▶ 05      │
+      └─────────────────────────────┬──────────────────────────────┘
+                                    │
+      ┌─────────────────────────────┴──────────────────────────────┐
+      │  what ordering you may assume                              │
+      │  x86-64  TSO — store buffers only                          │
+      │  ARM     weak — dmb, dsb, isb                              │
+      │  RISC-V  WMO, or TSO with the Ztso extension               │
+      └────────────────────────────────────────────────────────────┘
+                                    │
+                                    ▼
+                              the hardware
+```
+
 ## Application Binary Interfaces (ABIs)
 | ABI | Platforms | Notes |
 |-----|-----------|-------|

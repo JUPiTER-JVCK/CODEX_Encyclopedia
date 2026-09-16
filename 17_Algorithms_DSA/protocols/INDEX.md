@@ -1,5 +1,22 @@
 # Algorithms & DSA — Protocols
 
+## What is in this section
+
+```text
+  Conventions of the interview and competitive programming process.
+
+  ┌─── interview process ─────────────────────────────────────────────────┐
+  │  recruiter screen → phone/OA → onsite (coding + design + behavioral) │
+  │  rubric: communication · problem-solving · coding · verification      │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── competitive programming ───────────────────────────────────────────┐
+  │  Codeforces / AtCoder / ICPC · Elo/band rating systems                │
+  │  verdicts: AC · WA · TLE · MLE · RE · CE                             │
+  │  constraint → algorithm: n≤20 bitmask · n≤1e5 n log n · n≤1e9 log  │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 Not network protocols — these are the *conventions* of the algorithmic
 interview / competition process.
 

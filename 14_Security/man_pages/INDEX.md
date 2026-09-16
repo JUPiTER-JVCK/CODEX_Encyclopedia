@@ -1,5 +1,27 @@
 # Security — Manual Pages
 
+## What is in this section
+
+```text
+  Security tooling, grouped by task category.
+
+  ┌─── dedicated subfile ─────────────────────────────────────────────────┐
+  │  security_tools.md (nmap · nikto · gobuster · hashcat · aircrack-ng) │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── recon & enumeration ───────────────────────────────────────────────┐
+  │  nmap · masscan · rustscan · subfinder · amass · nuclei · shodan     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── exploitation & web ────────────────────────────────────────────────┐
+  │  sqlmap · burp suite · nikto · gobuster · ffuf · msfconsole          │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── passwords, crypto & forensics ─────────────────────────────────────┐
+  │  hashcat · john · hydra · volatility · binwalk · strings · gdb       │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

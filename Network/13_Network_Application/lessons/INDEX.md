@@ -1,5 +1,21 @@
 # Network Application — Lessons
 
+## What is in this section
+
+```text
+  Application layer hands-on: HTTP, TLS, DNS, auth, WebRTC, and messaging.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  application_labs.md (DNS trace · TLS decode · HTTP/2 framing)       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── lesson ladder ─────────────────────────────────────────────────────┐
+  │  1–5: HTTP/1.1 by hand · HTTP/2 · HTTP/3 · TLS handshake · ACME     │
+  │  6–10: mTLS · DNS/DNSSEC/DoH · OAuth2+PKCE · WebSocket · gRPC       │
+  │  11–15: MQTT · SMTP+SPF/DKIM/DMARC · SSH tricks · WebRTC data       │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

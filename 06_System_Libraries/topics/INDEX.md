@@ -1,5 +1,42 @@
 # System Libraries — Topics
 
+## What is in this section
+
+```text
+  Six topic groups covering the libc anatomy, linking, ABIs, threading,
+  cryptography, and networking helpers.
+
+  ┌─── libc anatomy ──────────────────────────────────────────────────────────┐
+  │  headers · syscall wrappers · FILE streams · malloc impls · locale/ICU   │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── linking & loading ─────────────────────────────────────────────────────┐
+  │  static vs dynamic  │  ld.so / dyld / NT loader  │  PLT · GOT           │
+  │  lazy binding  │  RPATH / RUNPATH  │  symbol versioning  │  visibility   │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── ABIs ──────────────────────────────────────────────────────────────────┐
+  │  C ABI (calling conventions)  │  Itanium C++ ABI (Linux/macOS/Clang)     │
+  │  MSVC C++ ABI  │  symbol versioning as ABI stability tool                │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── threading ─────────────────────────────────────────────────────────────┐
+  │  pthreads (attributes, cancellation)  │  C11 <threads.h>                 │
+  │  C++11 <thread>/<atomic>/<mutex>  │  futexes (Linux) · WaitOnAddress     │
+  │  TLS — thread-local storage                                               │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── crypto libraries ──────────────────────────────────────────────────────┐
+  │  OpenSSL / LibreSSL / BoringSSL  │  libsodium  │  mbedTLS               │
+  │  CommonCrypto (Apple)  │  Schannel / CNG (Windows)                       │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── networking helpers & compression ──────────────────────────────────────┐
+  │  getaddrinfo / NSS  │  libcurl  │  libuv / libevent / libev              │
+  │  zlib (deflate) · zstd · lz4 · xz/lzma · brotli                         │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Topic Deep Dives
 
 | File | Covers |

@@ -8,6 +8,29 @@ updated: 2026-05-21
 
 # Text Processing & File Search Commands
 
+## What is in this section
+
+```text
+  Ten tools for the Unix text-processing pipeline: find, search, transform.
+
+  ┌─── file search ───────────────────────────────────────────────────────┐
+  │  find (recursive walk · -name/-type/-size/-mtime · -exec actions)     │
+  │  fd (Rust-based · .gitignore-aware · regex · parallel -x execution)   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── content search ────────────────────────────────────────────────────┐
+  │  grep (BRE/ERE/PCRE · -r -i -n -l · context -A/-B/-C · --include)    │
+  │  rg / ripgrep (parallel · .gitignore · PCRE2 · type filters · JSON)   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── text transformation & processing ──────────────────────────────────┐
+  │  awk (fields $1…$NF · NR/NF · BEGIN/END · printf · custom FS/OFS)    │
+  │  sed (s/old/new/g · d · a/i/c · in-place -i · multi-command -e)      │
+  │  cut / tr  │  jq (JSON queries · select · map · @csv output)          │
+  │  xargs (-0 · -I {} · -P N parallel execution)                         │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > The Unix text-processing pipeline: find files, search content, transform data.
 
 ---

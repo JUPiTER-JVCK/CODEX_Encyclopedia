@@ -1,5 +1,26 @@
 # AI / ML — References
 
+## What is in this section
+
+```text
+  Textbooks, seminal papers, and online resources for AI/ML study.
+
+  ┌─── foundations textbooks ─────────────────────────────────────────────┐
+  │  Goodfellow et al. · Bishop PRML · Murphy Prob. ML · d2l.ai           │
+  │  ESL/ISL · Sutton & Barto (RL) · Géron hands-on                       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── seminal papers ────────────────────────────────────────────────────┐
+  │  "Attention Is All You Need" · BERT · GPT series · LLaMA              │
+  │  InstructGPT (RLHF) · Constitutional AI · LoRA · Flash Attention      │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online resources ──────────────────────────────────────────────────┐
+  │  fast.ai · cs231n · cs224n · Andrej Karpathy's YT                     │
+  │  HuggingFace docs · Papers With Code · ArXiv (cs.LG / cs.CL)         │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Books — foundations
 - *Deep Learning* — Goodfellow, Bengio, Courville. The textbook.
 - *Pattern Recognition and Machine Learning* — Bishop.

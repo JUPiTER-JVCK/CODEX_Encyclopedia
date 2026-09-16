@@ -1,5 +1,26 @@
 # Industrial & Automotive Protocols — Manual Pages
 
+## What is in this section
+
+```text
+  CLI and GUI clients for industrial and automotive protocols.
+
+  ┌─── industrial clients ────────────────────────────────────────────────┐
+  │  modpoll / mbpoll (Modbus) · UaExpert (OPC UA) · Yabe (BACnet)      │
+  │  SOEM / IgH EtherCAT master · ENTTEC DMX / ola (DMX/RDM)            │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── automotive / CAN ──────────────────────────────────────────────────┐
+  │  candump · cansend · cangen · cantools · caringcaribou (security)    │
+  │  ELM327 / obd (OBD-II) · Vector CANalyzer/CANoe / PEAK PCAN         │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── analysis ──────────────────────────────────────────────────────────┐
+  │  Wireshark dissectors: Modbus · EtherCAT · PROFINET · CAN · J1939   │
+  │  CANable / PEAK PCAN-USB · industrial Ethernet TAPs                  │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 Grouped by protocol rather than by command — each section lists the CLI and
 GUI clients that speak it.
 

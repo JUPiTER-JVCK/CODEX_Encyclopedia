@@ -3,11 +3,13 @@
 ## What is built from what
 
 ```text
-  Read downward. The first group is a *convention* — what a bit pattern is
-  taken to mean — and the two after it really are assembled from what
-  precedes them. The datapath an ALU and a register file make is where 02
-  CPU picks up. Everything below RTL is not a further assembly but the set
-  of problems that appear once the design has to exist in silicon.
+  Read downward, but only two of these edges are composition. Number systems
+  are a *convention* — what a bit pattern is taken to mean — and gates, not
+  that convention, are what combinational blocks are built from.
+  Combinational logic plus state is what makes a sequential circuit, and
+  that is the one real assembly here. The datapath an ALU and a register
+  file make is where 02 CPU picks up; RTL and below are how any of it is
+  described and made real, not further layers of parts.
 
   number systems      binary · hex · two's complement · BCD · gray
   │                   IEEE 754 · fixed-point · posits

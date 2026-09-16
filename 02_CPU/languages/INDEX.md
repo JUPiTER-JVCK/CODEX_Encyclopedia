@@ -1,5 +1,37 @@
 # CPU — Languages
 
+## What is in this section
+
+```text
+  Three ISAs have a profile of their own in this folder. Each box is one of
+  them: the syntaxes it is written in, and where a call puts its arguments.
+
+  ┌──────────────────────────┐ ┌────────────────────┐ ┌───────────────────┐
+  │  x86-64                  │ │  AArch64           │ │  RISC-V           │
+  │  x86_64_asm.md           │ │  arm64_asm.md      │ │  riscv_asm.md     │
+  ├──────────────────────────┤ ├────────────────────┤ ├───────────────────┤
+  │  Intel syntax            │ │  as · LLVM         │ │  GNU · LLVM       │
+  │    NASM · MASM           │ │                    │ │  RV32 / RV64      │
+  │  AT&T syntax             │ │                    │ │                   │
+  │    gas · as              │ │                    │ │                   │
+  ├──────────────────────────┤ ├────────────────────┤ ├───────────────────┤
+  │  SysV AMD64              │ │  AAPCS64           │ │  psABI            │
+  │    rdi rsi rdx rcx r8 r9 │ │    x0 … x7         │ │    a0 … a7        │
+  │    ──▶ rax               │ │    ──▶ x0          │ │    ──▶ a0 / a1    │
+  │  Microsoft x64           │ │                    │ │                   │
+  │    rcx rdx r8 r9         │ │                    │ │                   │
+  │    + 32B shadow space    │ │                    │ │                   │
+  └──────────────────────────┘ └────────────────────┘ └───────────────────┘
+
+  The comparison table below adds the ones with no profile here: 32-bit ARM
+  (Thumb/Thumb-2, AAPCS r0…r3), PowerPC, MIPS — and two rows that nobody
+  writes by hand. Machine code is what the assemblers above produce, and
+  microcode arrives as a vendor-signed update.
+
+  C and Rust are in that table because both can embed assembly rather than
+  replace it — `__asm__` and `asm!`.
+```
+
 ## Per-architecture assembly profiles
 
 | ISA | Profile |

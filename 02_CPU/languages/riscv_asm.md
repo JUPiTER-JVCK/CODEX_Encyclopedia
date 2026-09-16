@@ -14,6 +14,44 @@ updated: 2026-05-20
 > 16-bit insns), `V` (vector), `B` (bitmanip), `H` (hypervisor), etc. A common
 > "general purpose" target is `RV64GC` = `IMAFDC`.
 
+## The register file at a glance
+
+```text
+  Thirty-two registers, x0–x31, each with an ABI name that says what it is
+  for. The split below is the psABI's, and it is the thing to memorise:
+  whose job it is to preserve each one across a call.
+
+  ┌─ neither side's job — fixed by the platform ───────────────────────────┐
+  │   x0   zero   hardwired zero: reads 0, discards writes                 │
+  │   x3   gp     global pointer, set up by the linker                     │
+  │   x4   tp     thread pointer                                           │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  ┌─ caller-saved — a call may destroy these ──────────────────────────────┐
+  │   x1        ra        return address                                   │
+  │   x10–x17   a0–a7     arguments; a0 and a1 also carry the return       │
+  │   x5–x7     t0–t2     temporaries                                      │
+  │   x28–x31   t3–t6     temporaries                                      │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  ┌─ callee-saved — a function must restore these before returning ────────┐
+  │   x2        sp        stack pointer                                    │
+  │   x8        s0 / fp   frame pointer                                    │
+  │   x9        s1        saved                                            │
+  │   x18–x27   s2–s11    saved                                            │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  ┌─ not general-purpose ──────────────────────────────────────────────────┐
+  │   pc          program counter                                          │
+  │   f0–f31      floating point, with the F or D extension                │
+  │               (ft0–ft11 · fs0–fs11 · fa0–fa7 by ABI name)              │
+  │   CSRs        mstatus · mtvec · mcause · mepc · mhartid · …            │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  x0 being hardwired lets branch pseudo-instructions drop the comparator:
+  beqz rs → beq rs, x0. mv rd, rs expands to addi rd, rs, 0 — not x0.
+```
+
 ## Registers
 
 | ABI name | Reg | Role |

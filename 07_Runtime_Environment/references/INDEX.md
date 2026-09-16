@@ -1,5 +1,28 @@
 # Runtime Environment — References
 
+## What is in this section
+
+```text
+  Three reference groups: specifications, books, and online resources.
+
+  ┌─── specifications ────────────────────────────────────────────────────────┐
+  │  JVMS · JLS (Java)  │  ECMA-262 (JS)  │  WebAssembly Core (W3C)         │
+  │  ISO/IEC 23271 (.NET)  │  CPython C-API docs  │  OCI specs  │  K8s API  │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── books ─────────────────────────────────────────────────────────────────┐
+  │  Crafting Interpreters (Nystrom, free)  │  Writing an Interpreter in Go  │
+  │  GC Handbook (Jones/Hosking/Moss)  │  CPython Internals (Shaw)           │
+  │  Java Performance (Oaks)  │  CLR via C# (Richter)                        │
+  │  Programming Erlang (Armstrong)  │  Kubernetes in Action (Lukša)         │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online ────────────────────────────────────────────────────────────────┐
+  │  JVM Anatomy Park (Shipilëv)  │  v8.dev/blog  │  runtime/HACKING.md (Go) │
+  │  Wasmtime book (docs.wasmtime.dev)                                        │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 ## Specs
 - **Java Virtual Machine Specification (JVMS)** — Oracle.
 - **The Java Language Specification (JLS)** — Oracle.

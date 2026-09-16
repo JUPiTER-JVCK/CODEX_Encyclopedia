@@ -1,5 +1,23 @@
 # Network Internet — Manual Pages
 
+## What is in this section
+
+```text
+  Internet layer commands: IP addresses, routes, diagnostics, firewall, and VPN.
+
+  ┌─── dedicated subfile ─────────────────────────────────────────────────┐
+  │  ip_commands.md (ip addr/route · traceroute · mtr · ping · nmap)     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── inline command groups ─────────────────────────────────────────────┐
+  │  addresses/routes: ip addr · ip route · ip rule · ipcalc/sipcalc     │
+  │  diagnostics: ping · traceroute · mtr · hping3 · nmap · conntrack    │
+  │  firewall/NAT: iptables · nft · ipset · pf · firewalld · ufw         │
+  │  routing daemons: vtysh (FRR) · birdc (BIRD) · gobgp · bgpq4        │
+  │  VPN: wg/wg-quick (WireGuard) · swanctl (strongSwan) · openvpn      │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

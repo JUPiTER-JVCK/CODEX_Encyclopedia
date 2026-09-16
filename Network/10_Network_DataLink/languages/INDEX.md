@@ -1,5 +1,21 @@
 # Network Data Link — Languages
 
+## What is in this section
+
+```text
+  Packet-crafting libraries, switching dataplanes, and config languages.
+
+  ┌─── packet libraries ──────────────────────────────────────────────────┐
+  │  Scapy (Python) · dpkt · pyshark · gopacket (Go) · libpcap (C)      │
+  │  libpnet (Rust) · PF_PACKET · AF_XDP · eBPF/XDP (in-kernel)         │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── switching dataplanes & config ─────────────────────────────────────┐
+  │  Linux bridge/nftables/tc · Open vSwitch · DPDK · VPP (FD.io)       │
+  │  P4 (programmable dataplanes) · IOS/NX-OS/Junos/SONiC CLI           │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 L2 is about frame formats, not programming languages. The relevant "languages"
 are the **packet libraries** that let code parse / craft L2 frames.
 

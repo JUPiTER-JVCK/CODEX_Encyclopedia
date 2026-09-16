@@ -1,5 +1,28 @@
 # Embedded Systems — Languages
 
+## What is in this section
+
+```text
+  Languages for embedded: required → recommended → niche + toolchains.
+
+  ┌─── dedicated profiles ────────────────────────────────────────────────┐
+  │  embedded_c.md · embedded_rust.md · embedded_python.md               │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── required / recommended ────────────────────────────────────────────┐
+  │  C (required) — kernels, RTOS, drivers, vendor HALs                  │
+  │  Assembly — boot code, ISRs, context switch                           │
+  │  C++ — embedded subset (RAII/templates, no exceptions)               │
+  │  Python ★ — MicroPython/CircuitPython on chip; host tooling           │
+  │  Rust ★  — no_std · Embassy (async) · RTIC · embedded-hal            │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── toolchains & build systems ────────────────────────────────────────┐
+  │  arm-none-eabi-gcc · riscv64-unknown-elf-gcc · xtensa-esp32-elf-gcc  │
+  │  Make / CMake / PlatformIO / Cargo + cargo-binutils                   │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 The roadmap calls out **C** and **Assembly** as required; the user circled
 **Python** and **Rust** on the printed image. Below grouped accordingly.
 

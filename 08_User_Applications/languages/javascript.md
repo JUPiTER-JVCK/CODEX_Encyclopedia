@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # JavaScript — language profile
 
+## What is in this section
+
+```text
+  JavaScript profile — runtimes, package managers, build tooling, frameworks.
+
+  ┌─── runtimes ──────────────────────────────────────────────────────────┐
+  │  Browser (V8 · SpiderMonkey · JavaScriptCore)                          │
+  │  Node.js  │  Deno  │  Bun  │  Cloudflare Workers (V8 isolates)        │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  Package managers (npm · pnpm · yarn · bun)  │  CLI tools              │
+  │  Build / bundling (Vite · esbuild · webpack · Rollup · Turbopack)     │
+  │  Test runners (Vitest · Jest · Playwright · Bun test)                 │
+  │  Web platform globals  │  Framework families  │  Idioms  │  Gotchas   │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > ECMAScript-the-spec runs in browsers, Node.js, Deno, Bun, Cloudflare Workers,
 > embedded engines, and beyond. Modern JS = ES2015+. For statically-typed JS see
 > [typescript.md](typescript.md).

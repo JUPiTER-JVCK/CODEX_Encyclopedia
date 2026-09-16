@@ -1,5 +1,31 @@
 # Device Drivers — Topics
 
+## What is in this section
+
+```text
+  Four groups: what a driver IS, how it talks to hardware, which
+  framework it runs in, and how to debug it when it goes wrong.
+
+  ┌─── driver classes ───────────────────────────────────────────────────┐
+  │  char · block · network · USB · PCI/PCIe · platform · GPU (DRM/KMS) │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── hardware access mechanics ────────────────────────────────────────┐
+  │  MMIO (ioremap)  │  PIO (inb/outb, x86)  │  DMA (coherent+streaming)│
+  │  IOMMU (VT-d · AMD-Vi · SMMU)  │  IRQ (top-half · NAPI · threaded) │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── frameworks ───────────────────────────────────────────────────────┐
+  │  Linux: struct device/bus/driver  │  Windows: WDM → WDF (KMDF|UMDF) │
+  │  macOS: IOKit (legacy) → DriverKit│  userspace: VFIO · UIO · DPDK  │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── debugging & reliability ──────────────────────────────────────────┐
+  │  Linux: lockdep · KASAN · KCSAN · kgdb/kdb                          │
+  │  Windows: Driver Verifier · WinDbg (KD)                             │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Topic Deep Dives
 
 | File | Covers |

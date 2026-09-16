@@ -1,5 +1,28 @@
 # OS Kernel — Lessons
 
+## What is in this section
+
+```text
+  Twelve exercises + a labs file (kernel_labs.md); grouped by focus.
+
+  ┌─── build & observe ──────────────────────────────────────────────────┐
+  │  1 build + boot (QEMU)  │  2 custom syscall  │  3 trace boot       │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── kernel subsystems ────────────────────────────────────────────────┐
+  │  4 scheduler probe (bpftrace)  │  5 memory (page tables · OOM)     │
+  │  6 VFS / FUSE  │  7 network path (NIC → softirq → socket)         │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── isolation & security ─────────────────────────────────────────────┐
+  │  8 namespaces + cgroups  │  9 seccomp + capabilities                │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── advanced ─────────────────────────────────────────────────────────┐
+  │  10 eBPF (XDP + kprobe)  │  11 hypervisor (KVM/QEMU)  │  12 seL4  │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

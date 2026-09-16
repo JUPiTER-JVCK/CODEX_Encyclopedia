@@ -1,5 +1,21 @@
 # Network Internet — Languages
 
+## What is in this section
+
+```text
+  IP-layer libraries, routing daemons, SDN tools, and config APIs.
+
+  ┌─── packet & routing libraries ────────────────────────────────────────┐
+  │  Scapy · dpkt · gopacket · pnet (Rust) · netaddr/ipaddress (Python)  │
+  │  iproute2 (Linux) · libnl · NETCONF/YANG · gNMI · RESTCONF          │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── routing daemons & SDN ─────────────────────────────────────────────┐
+  │  FRRouting (OSPF/IS-IS/BGP) · BIRD · GoBGP · ExaBGP · OpenBGPD      │
+  │  ONOS/OpenDaylight · Faucet (Python) · P4 programs · eBPF/XDP       │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Packet / routing libraries
 | Library | Language | Notes |
 |---------|----------|-------|

@@ -12,6 +12,50 @@ updated: 2026-05-20
 > AWS Graviton, Ampere Altra, Raspberry Pi 4/5. Clean RISC ISA with
 > three-operand form.
 
+## The register file at a glance
+
+```text
+  Thirty-one general-purpose registers, x0–x30, each also usable as a 32-bit
+  w-register. Roles below are AAPCS64.
+
+  ┌─ arguments and return ─────────────────────────────────────────────────┐
+  │   x0   x1   x2   x3   x4   x5   x6   x7        ──▶ x0 carries the      │
+  │                                                    return value        │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  ┌─ caller-saved ────────────────────┐ ┌─ callee-saved ───────────────────┐
+  │   x9 … x15   temporaries          │ │   x19 … x28                      │
+  │   x16 (ip0)  intra-procedure      │ │   x29  fp   frame pointer        │
+  │   x17 (ip1)  call scratch         │ └──────────────────────────────────┘
+  └───────────────────────────────────┘
+
+  ┌─ special ──────────────────────────────────────────────────────────────┐
+  │   x8    indirect result location — and the syscall number on Linux     │
+  │   x18   platform register, reserved on macOS, iOS and Windows          │
+  │   x30   lr   link register — non-leaf callers must save it themselves  │
+  │   pc    program counter, not writable as a GPR                         │
+  │   v0 … v31   NEON / Advanced SIMD floating-point registers             │
+  │   z0 … z31   SVE / SVE2 scalable vector registers                      │
+  │   p0 … p15   SVE predicate registers                                   │
+  └────────────────────────────────────────────────────────────────────────┘
+
+  Register 31 is two registers, and which one you get is decided by the
+  instruction, not by a mode bit:
+
+                        ┌──────────────────────┐
+              encoding  │   register number 31 │
+                31      └───────────┬──────────┘
+                            ┌───────┴────────┐
+                            ▼                ▼
+                     sp  (wsp)        xzr  (wzr)
+                     stack pointer    reads as zero,
+                     in the address   discards writes,
+                     forms            in most data ops
+
+  There is no dedicated slot for the return address: lr is an ordinary
+  register, so any non-leaf function has to save it itself.
+```
+
 ## Registers
 
 | Reg | 64-bit | 32-bit | Role (AAPCS64) |
@@ -26,7 +70,9 @@ updated: 2026-05-20
 | 30 | `x30` (`lr`) | | Link register (return address) |
 | 31 | `sp` / `xzr` (zero) | `wsp` / `wzr` | Stack pointer **or** zero register depending on instr |
 | — | `pc` | | Program counter (not directly writable as a GPR) |
-| — | `v0`–`v31` | | SIMD/FP (NEON / SVE / SVE2) |
+| — | `v0`–`v31` | | NEON / Advanced SIMD floating-point |
+| — | `z0`–`z31` | | SVE / SVE2 scalable vector registers |
+| — | `p0`–`p15` | | SVE predicate registers |
 
 ## Key instructions
 
@@ -71,7 +117,8 @@ updated: 2026-05-20
 - **Args (FP/SIMD)**: `v0`–`v7`
 - **Return**: `x0` (and `x1` for 128-bit); `v0` for FP
 - **Caller-saved**: `x0`–`x18`, `v0`–`v7`, `v16`–`v31`
-- **Callee-saved**: `x19`–`x28`, `x29` (fp), `x30` (lr) **must** be saved, `v8`–`v15` (low 64 bits only)
+- **Callee-saved**: `x19`–`x28`, `x29` (fp), `v8`–`v15` (low 64 bits only)
+- **x30 (lr)**: link register — NOT callee-saved; non-leaf callers must push it before any `bl`
 - **Stack** 16-byte aligned on entry
 - **Apple ARM64 ABI** subset differs (variadic args entirely on stack; `x18` reserved)
 

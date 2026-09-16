@@ -20,7 +20,9 @@
   │     6  Doping & the p-n junction
   │     7  Diode physics
   │     8  BJT & MOSFET                       → 00b Devices · 00c Analog
-  │     9  Quantum tunnelling — what is happening inside 7 and 8
+  │     9  Quantum tunnelling — Zener breakdown and flash erase, not
+  │        ordinary junction or channel conduction, which is drift,
+  │        diffusion and thermionic emission
   │
   ├─ 10  Photonics primer     draws on both strands above
   │
@@ -29,7 +31,8 @@
         12  Landauer's principle    kT ln 2 per irreversibly erased bit
         13  Information theory      entropy · capacity → 12 Transport
 
-  Lab: physics_labs.md exercises 2, 6 and 7 (Ohm, RC, diode I-V).
+  Lab: physics_labs.md — Ohm's law, an RC time constant, a diode I-V curve.
+  Only the last of those corresponds to a numbered exercise above (#7).
 ```
 
 ## Dedicated lesson modules

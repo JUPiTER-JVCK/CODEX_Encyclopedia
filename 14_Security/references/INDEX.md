@@ -1,5 +1,27 @@
 # Security — References
 
+## What is in this section
+
+```text
+  Frameworks, books, and online platforms for security study and work.
+
+  ┌─── frameworks & standards ────────────────────────────────────────────┐
+  │  MITRE ATT&CK · D3FEND · NIST CSF/800-53/ZT · CIS Controls          │
+  │  ISO 27001/27002 · OWASP Top 10/ASVS · PCI DSS · SLSA               │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── books ─────────────────────────────────────────────────────────────┐
+  │  Web App Hacker's Handbook · Practical Malware Analysis               │
+  │  Art of Memory Forensics · Shellcoder's Handbook                      │
+  │  Cryptography Engineering · Real-World Cryptography                   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online platforms ──────────────────────────────────────────────────┐
+  │  HackTheBox · TryHackMe · Portswigger Academy · PentesterLab         │
+  │  Pwn.college · SANS courses · bug bounty programs                    │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Frameworks & standards
 - **MITRE ATT&CK** — adversary TTP knowledge base; ATT&CK Navigator
 - **MITRE D3FEND** — defensive countermeasures

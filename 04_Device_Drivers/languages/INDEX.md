@@ -1,11 +1,28 @@
 # Device Drivers — Languages
 
+## What is in this section
+
+```text
+  Six languages in this section; split by where the driver code runs.
+
+  ┌────────────────────────── kernel space ──────────────────────────────┐
+  │  C (Linux · BSD · Windows · macOS) — strict subset, no libc         │
+  │  C++ restricted (Windows KMDF, macOS IOKit)                         │
+  │  Rust (Linux · Windows experimental)  │  Obj-C/C++ (macOS IOKit)   │
+  └────────────────────────────────────────────────────────────────────┘
+
+  ┌────────────────────────── user space ────────────────────────────────┐
+  │  C++ (macOS/iOS DriverKit — *.dext bundles; Swift has thin wrappers) │
+  │  Python (libusb · pyudev — prototyping; not production drivers)     │
+  └────────────────────────────────────────────────────────────────────┘
+```
+
 | Language | OS | Notes |
 |----------|----|----|
 | C (kernel dialect) | Linux, BSD, Windows (with KMDF/WDM), macOS (XNU) | The default — strict subset, no libc |
 | C++ (restricted) | Windows KMDF, macOS IOKit (legacy) | No exceptions, no STL in many contexts |
 | Rust | Linux (Rust-for-Linux), Windows (experimental) | `no_std`, async limited; growing fast |
-| Swift | macOS / iOS (DriverKit) | User-space drivers via `*.dext` bundles |
+| C++ (DriverKit API) | macOS / iOS (DriverKit) | User-space drivers via `*.dext` bundles; Swift has thin wrappers only |
 | Objective-C / C++ | macOS IOKit (legacy kexts) | Mostly being replaced by DriverKit |
 | Python | Userspace via libusb, pyudev | Prototyping, not actual kernel drivers |
 

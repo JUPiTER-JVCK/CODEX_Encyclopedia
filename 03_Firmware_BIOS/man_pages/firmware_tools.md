@@ -8,6 +8,22 @@ updated: 2026-05-21
 
 # Firmware Management Commands
 
+## What is in this section
+
+```text
+  Four tools for firmware management, boot configuration, and Secure Boot.
+
+  ┌─── Linux firmware updates ────────────────────────────────────────────┐
+  │  fwupdmgr (LVFS · BIOS/SSD/TPM/Thunderbolt · HSI security levels)     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── boot entry & Secure Boot management ───────────────────────────────┐
+  │  efibootmgr (UEFI NVRAM entries · boot order · one-time boot)         │
+  │  mokutil (MOK keys · shim · sign kernel modules · Secure Boot state)  │
+  │  nvram (macOS PRAM · boot-args · SIP config · startup settings)       │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > Tools for managing UEFI firmware, boot entries, Secure Boot, and firmware
 > updates on Linux and macOS.
 

@@ -1,5 +1,25 @@
 # Network Physical — Protocols
 
+## What is in this section
+
+```text
+  PHY-layer standards: Ethernet, Wi-Fi, WAN/cellular, and transceiver MSAs.
+
+  ┌─── Ethernet PHY (IEEE 802.3) ─────────────────────────────────────────┐
+  │  10BASE-T through 800GBASE-DR8 · copper/MMF/SMF · DAC/AOC            │
+  │  FEC: Firecode (25G) · RS-FEC (100G+) · PAM4 per-lane signalling     │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── wireless & WAN PHY ────────────────────────────────────────────────┐
+  │  Wi-Fi 4/5/6/7 (802.11n/ac/ax/be) · 2.4 / 5 / 6 GHz · OFDMA       │
+  │  5G NR · LTE · DOCSIS 3.x · GPON/XGS-PON · SDH/OTN · xDSL          │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── transceiver MSAs ──────────────────────────────────────────────────┐
+  │  SFP/SFP+/SFP28/SFP56 · QSFP+/QSFP28/QSFP56/QSFP-DD · OSFP/CFP    │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Ethernet PHY standards (IEEE 802.3, selected)
 | Speed | Standard | Medium | Reach |
 |-------|----------|--------|-------|

@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # SQL — language profile
 
+## What is in this section
+
+```text
+  SQL profile — ANSI baseline plus PostgreSQL, MySQL/MariaDB, SQLite, MSSQL dialects.
+
+  ┌─── engines & CLIs ────────────────────────────────────────────────────┐
+  │  PostgreSQL (psql)  │  MySQL/MariaDB (mysql)  │  SQLite (sqlite3)     │
+  │  MSSQL (sqlcmd)  │  DuckDB (OLAP)  │  ClickHouse  │  Snowflake / BQ  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── language sections ─────────────────────────────────────────────────┐
+  │  DDL (CREATE · ALTER · INDEX)  │  DML (INSERT · UPDATE · DELETE)      │
+  │  SELECT (JOIN · GROUP BY · HAVING · window functions · CTEs)          │
+  │  Transactions & isolation  │  Index types  │  EXPLAIN / query plan    │
+  │  Dialect cheatsheet  │  Schema migration tools  │  Common gotchas     │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > Declarative query language. ANSI SQL is a baseline; every engine adds its own
 > dialect. Big four to know: **PostgreSQL**, **MySQL/MariaDB**, **SQLite**,
 > **Microsoft SQL Server**.

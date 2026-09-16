@@ -1,5 +1,36 @@
 # System Libraries — Lessons
 
+## What is in this section
+
+```text
+  Dedicated module plus eleven numbered lessons across four topic groups.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────────┐
+  │  library_labs.md — shared library, dlopen, symbol visibility, ABI        │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── linking fundamentals  (1–5) ───────────────────────────────────────────┐
+  │  1 Hello libc + strace  │  2 static vs dynamic  │  3 LD_PRELOAD hook     │
+  │  4 musl static build  │  5 linker scripts                                │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── ABI & symbols  (6–7) ──────────────────────────────────────────────────┐
+  │  6 symbol visibility (-fvisibility, version scripts)                      │
+  │  7 C++ name mangling (nm, c++filt, vtable layout)                        │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── threading, i18n & crypto  (8–10) ──────────────────────────────────────┐
+  │  8 pthreads — mutex/cond, std::atomic, false sharing                      │
+  │  9 locale & i18n — setlocale, iconv, UTF-8 pitfalls                      │
+  │  10 crypto API — OpenSSL EVP, AES-GCM, ChaCha20-Poly1305                 │
+  └───────────────────────────────────────────────────────────────────────────┘
+
+  ┌─── FFI & external resources  (11+) ───────────────────────────────────────┐
+  │  11 call C from Python (ctypes/cffi), Rust, Go                           │
+  │  CppCon ABI talks  │  Drepper "What Every Programmer Should Know"        │
+  └───────────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated lesson modules
 
 | Topic | File |

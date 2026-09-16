@@ -1,5 +1,22 @@
 # Network Physical — Manual Pages
 
+## What is in this section
+
+```text
+  Commands for wired and wireless physical-layer diagnostics.
+
+  ┌─── wired diagnostics ─────────────────────────────────────────────────┐
+  │  ethtool (link status · SFP EEPROM · NIC stats · FEC mode)           │
+  │  ip link · mii-tool · iperf3 · mtr · ping · tcpdump                  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── wireless & cross-platform ─────────────────────────────────────────┐
+  │  iw · iwconfig (legacy) · iwlist · wpa_supplicant · nmcli             │
+  │  macOS: ifconfig · networksetup · airport                             │
+  │  Windows: Get-NetAdapter · netsh wlan show interfaces                 │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 | Command | Purpose |
 |---------|---------|
 | `ethtool eth0` | Link status, speed, duplex, autoneg |

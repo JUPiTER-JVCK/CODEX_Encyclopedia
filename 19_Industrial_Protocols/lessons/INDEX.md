@@ -1,5 +1,29 @@
 # Industrial & Automotive Protocols — Lessons
 
+## What is in this section
+
+```text
+  Lesson ladder: industrial OT → automotive → ICS/SCADA security.
+
+  ┌─── dedicated module ──────────────────────────────────────────────────┐
+  │  industrial_labs.md (Modbus TCP · OPC UA browse · CAN monitor · MQTT)│
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── industrial / OT (1–10) ────────────────────────────────────────────┐
+  │  Modbus RTU/TCP · PROFINET · EtherCAT · OPC UA · BACnet              │
+  │  DALI · DMX512 · HART · IEC 61850 substation                         │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── automotive (11–18) ────────────────────────────────────────────────┐
+  │  CAN basics/FD · UDS over CAN · OBD-II · J1939 · LIN · FlexRay      │
+  │  SOME/IP                                                              │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── ICS / SCADA security (19–21) ─────────────────────────────────────┐
+  │  Modbus security (TLS) · Modbus fuzzing (lab) · CAN intrusion        │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated Lesson Modules
 
 | File | Covers |

@@ -8,6 +8,24 @@ updated: 2026-05-20
 
 # TypeScript — language profile
 
+## What is in this section
+
+```text
+  TypeScript profile — structural types, compiler options, tooling, type patterns.
+
+  ┌─── compilers & runners ───────────────────────────────────────────────┐
+  │  tsc (TypeScript compiler)  │  ts-node  │  tsx  │  esbuild  │  swc   │
+  │  Bundlers that strip types: Vite · Rollup · Webpack · Turbopack       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── reference sections ────────────────────────────────────────────────┐
+  │  tsconfig.json essentials (strict · paths · moduleResolution · target) │
+  │  Tooling (ESLint + @typescript-eslint · Prettier · tsup)              │
+  │  Type system (structural · mapped · conditional · template literal)    │
+  │  Common patterns (discriminated unions · generics)  │  Gotchas        │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 > Strict superset of JavaScript with structural types. Compile-time only — the
 > runtime is JS. Pair with [javascript.md](javascript.md) for the runtime side.
 

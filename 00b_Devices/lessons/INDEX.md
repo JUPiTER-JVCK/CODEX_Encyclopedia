@@ -30,7 +30,7 @@
      11  SPICE a circuit     half-wave rectifier in ngspice — bench to model
      12  Power MOSFET thermal   R_θJA, R_θJC ─▶ junction temp ─▶ heatsink
 
-  Lab: device_labs.md covers 5, 6 and 12 (switching, biasing, LED drive).
+  Lab: device_labs.md — a MOSFET switch (#5) and a BJT LED driver (#4).
 ```
 
 ## Dedicated lesson modules

@@ -8,6 +8,22 @@ updated: 2026-05-20
 
 # Embedded Python — language profile
 
+## What is in this section
+
+```text
+  MicroPython and CircuitPython on microcontrollers.
+
+  ┌─── distributions ─────────────────────────────────────────────────────┐
+  │  MicroPython — ESP32/RP2040/STM32/nRF52/Unix; fastest evolving       │
+  │  CircuitPython — RP2040/SAMD/ESP32-S2/S3; USB-drive UX; ~480 libs   │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── workflow ──────────────────────────────────────────────────────────┐
+  │  flash firmware → edit main.py → mpremote / Thonny REPL              │
+  │  host libs: pyserial · pyOCD · paho-mqtt · pymodbus · python-can     │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > Python 3 subset on microcontrollers. **MicroPython** (Damien George, since
 > 2013) is the original; **CircuitPython** (Adafruit) is a friendly fork
 > focused on beginners and large hardware-driver library. Boards: RP2040,

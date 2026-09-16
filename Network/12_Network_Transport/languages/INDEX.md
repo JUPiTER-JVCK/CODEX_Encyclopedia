@@ -1,5 +1,23 @@
 # Network Transport — Languages
 
+## What is in this section
+
+```text
+  Socket APIs and async I/O across languages; QUIC library ecosystem.
+
+  ┌─── socket APIs by language ───────────────────────────────────────────┐
+  │  C/C++: <sys/socket.h> · Boost.Asio · epoll/kqueue/io_uring          │
+  │  Python/Go/Rust: asyncio · goroutines+netpoller · tokio/async-std    │
+  │  Java/Kotlin: NIO Selector · Loom · Netty                            │
+  │  Node.js/Ruby/.NET: libuv · IOCP · async/await                       │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── QUIC libraries ────────────────────────────────────────────────────┐
+  │  quiche (Rust/C · Cloudflare) · msquic (C · Microsoft)               │
+  │  quic-go (Go · pure) · ngtcp2+nghttp3 (C) · aioquic (Python)         │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 The BSD sockets API has been ported into every mainstream language. The
 interesting comparisons are the *async / event loop* models on top.
 

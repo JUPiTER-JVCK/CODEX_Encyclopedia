@@ -1,5 +1,22 @@
 # Industrial & Automotive Protocols — References
 
+## What is in this section
+
+```text
+  Books, standards bodies, and online resources for industrial protocols.
+
+  ┌─── books ─────────────────────────────────────────────────────────────┐
+  │  industrial: Industrial Comm Systems · Industrial Network Security    │
+  │  automotive: CAN guide (Voss) · J1939 guide · Automotive Ethernet    │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── standards bodies ──────────────────────────────────────────────────┐
+  │  Modbus Org · PI (PROFIBUS/PROFINET) · ODVA (CIP) · ETG (EtherCAT)  │
+  │  OPC Foundation · ASHRAE (BACnet) · CiA (CANopen) · AUTOSAR · SAE   │
+  │  IEC (61850/60870/61131) · FieldComm Group (HART) · KNX · DALI/DiiA │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Industrial / OT
 - *Industrial Communication Systems* — Bogdan M. Wilamowski (CRC).
 - *Industrial Network Security* — Knapp & Langill (ICS/SCADA security focus).

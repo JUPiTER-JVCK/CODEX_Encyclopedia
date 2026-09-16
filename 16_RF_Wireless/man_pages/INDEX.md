@@ -1,5 +1,26 @@
 # RF / Wireless — Manual Pages
 
+## What is in this section
+
+```text
+  RF tooling: SDR receivers, RTL-SDR, HackRF, Wi-Fi, BT, LoRa, GNSS.
+
+  ┌─── dedicated subfile ─────────────────────────────────────────────────┐
+  │  rf_tools.md (gnuradio · hackrf · rtl_sdr · kismet · bluetoothctl)   │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── SDR hardware tools ────────────────────────────────────────────────┐
+  │  gqrx / SDR++ (GUI) · rtl_fm / rtl_power / rtl_433 / dump1090       │
+  │  hackrf_transfer / hackrf_sweep · bladeRF-cli · uhd_usrp_probe       │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── wireless protocol tools ───────────────────────────────────────────┐
+  │  iw / hostapd / aircrack-ng / kismet / hcxdumptool (Wi-Fi)           │
+  │  bluetoothctl / btmon · ChirpStack · pm3 / Flipper Zero (NFC)        │
+  │  gpsd / cgps (GNSS) · srsenb / osmo-bts (cellular lab)               │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

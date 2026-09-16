@@ -1,5 +1,26 @@
 # OS Kernel — References
 
+## What is in this section
+
+```text
+  Three reference groups for this layer.
+
+  ┌─── general OS theory ────────────────────────────────────────────────┐
+  │  OSTEP (Arpaci-Dusseau, free)  │  Tanenbaum Modern OS               │
+  │  Silberschatz (dinosaur book)  │  Tanenbaum & Woodhull (MINIX)      │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── platform books ───────────────────────────────────────────────────┐
+  │  Linux: Bovet&Cesati · Love (2) · Mauerer                          │
+  │  macOS/iOS: Levin (3 vols) · Singh  │  Windows: Russinovich (2 vols)│
+  │  FreeBSD: McKusick (2 eds)  │  Microkernel/formal: seL4 manual+papers│
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── online / official ────────────────────────────────────────────────┐
+  │  kernel.org Documentation/  │  LWN.net  │  Phoronix  │  xnu source │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 ## Books — general OS theory
 - *Operating Systems: Three Easy Pieces* (OSTEP) — Arpaci-Dusseau. Free, excellent.
 - *Modern Operating Systems* — Tanenbaum.

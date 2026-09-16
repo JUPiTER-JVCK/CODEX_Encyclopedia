@@ -1,5 +1,33 @@
 # Network Application — Protocols
 
+## What is in this section
+
+```text
+  Application layer protocols: web, RPC, TLS, DNS, auth, mail, and IoT.
+
+  ┌─── dedicated protocol refs ───────────────────────────────────────────┐
+  │  http.md · tls.md · dns.md · ssh.md · dhcp.md · mqtt.md · oauth2.md  │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── web & RPC ─────────────────────────────────────────────────────────┐
+  │  HTTP/1.1 (text) → HTTP/2 (binary/HPACK) → HTTP/3 (QUIC/QPACK)      │
+  │  WebSocket · WebTransport · SSE · gRPC+Protobuf · GraphQL            │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── TLS, DNS & auth ───────────────────────────────────────────────────┐
+  │  TLS 1.3/1.2 · DTLS · ALPN · ECH · ACME · Certificate Transparency  │
+  │  DNS/DNSSEC · DoH/DoT/DoQ · EDNS(0) · SVCB/HTTPS records            │
+  │  OAuth 2.0/2.1 · OIDC · JWT/JOSE · WebAuthn/FIDO2 · Kerberos        │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── mail, file, real-time & IoT ───────────────────────────────────────┐
+  │  SMTP/IMAP/JMAP · SPF/DKIM/DMARC · ARC · MTA-STS                    │
+  │  FTP/FTPS/SFTP · WebDAV · NFS v4 · SMB 3 · rsync                    │
+  │  RTP/RTCP · SIP · WebRTC (ICE+DTLS-SRTP+SCTP) · HLS · DASH          │
+  │  MQTT 5.0 · CoAP · AMQP · NATS · Kafka · SNMP v3 · NTP/PTP          │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated protocol references
 
 | Protocol | File |

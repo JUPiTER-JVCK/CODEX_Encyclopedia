@@ -1,5 +1,22 @@
 # Network Transport — Manual Pages
 
+## What is in this section
+
+```text
+  Transport commands: socket inspection, load testing, capture, and tuning.
+
+  ┌─── dedicated subfile ─────────────────────────────────────────────────┐
+  │  transport_tools.md (ss · netstat · nc · socat · iperf3 · tcpdump)   │
+  └───────────────────────────────────────────────────────────────────────┘
+
+  ┌─── inline command groups ─────────────────────────────────────────────┐
+  │  socket inspection: ss -tnp/unp · netstat -tunap · lsof -i · fuser   │
+  │  active testing: nc · socat · iperf3 · tcpkali · wrk/vegeta          │
+  │  capture: tcpdump · tshark · tcptrace · mtr --tcp                    │
+  │  tuning: sysctl tcp_cc · socket buffers · TFO · ethtool offloads     │
+  └───────────────────────────────────────────────────────────────────────┘
+```
+
 ## Dedicated man page references
 
 | Topic | File |

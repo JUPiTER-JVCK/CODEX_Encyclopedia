@@ -8,6 +8,23 @@ updated: 2026-05-20
 
 # Embedded C — language profile
 
+## What is in this section
+
+```text
+  Embedded C delta: freestanding compile flags, linker scripts, ISRs, MISRA.
+
+  ┌─── build ─────────────────────────────────────────────────────────────┐
+  │  -ffreestanding -fno-builtin -nostdlib · -T linker.ld · -Os          │
+  │  -ffunction-sections / -fdata-sections + --gc-sections               │
+  └──────────────────────────────────────────────────────────────────────┘
+
+  ┌─── runtime & idioms ──────────────────────────────────────────────────┐
+  │  startup / reset vector · volatile registers · ISR attributes        │
+  │  linker symbols (__bss_start / __data_load) · stack sizing / MPU     │
+  │  MISRA C 2012 rules · safe integer types (stdint.h / stddef.h)       │
+  └──────────────────────────────────────────────────────────────────────┘
+```
+
 > C as used in firmware, kernels, and bare-metal: **freestanding**, often
 > `nostdlib`, with linker scripts, register peeks/pokes, ISRs, and a tight
 > control over allocation, alignment, and ABI. See [c.md](../../08_User_Applications/languages/c.md)

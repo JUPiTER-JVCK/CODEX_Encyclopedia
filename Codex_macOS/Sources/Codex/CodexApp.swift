@@ -1,27 +1,7 @@
 import SwiftUI
 import AppKit
 
-// MARK: - Version
-
-/// One place for the version the app shows itself as.
-///
-/// It was previously spelled "v3" in the window title and the Welcome
-/// subtitle, "3.2" in Info.plist, and "Computing Stack v3" in the sidebar —
-/// four literals, none agreeing, all stale against the released 3.6.
-///
-/// Collapsing those four to one constant left two, which is not one: this
-/// enum and `CFBundleShortVersionString` still had to be edited together, and
-/// by v3.6.25 both had been forgotten. So read the bundle, which `agvtool`
-/// and every release script already know how to set, and let Info.plist be
-/// the single source it was always closest to being.
-///
-/// The fallback is for unit tests and previews, where `Bundle.main` is the
-/// test runner rather than the app.
-enum CodexInfo {
-    static let version: String =
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
-        ?? "0.0-dev"
-}
+// Version string: CodexInfo.version in Version.swift (single source of truth).
 
 // MARK: - App entry
 

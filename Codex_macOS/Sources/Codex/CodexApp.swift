@@ -166,10 +166,11 @@ final class AppState: ObservableObject {
 
     /// Bumped by `reloadTree()`. `allFiles` is a plain `lazy var` and `root`
     /// compares equal across a rebuild (`CodexNode ==` is by id, and the root's
-    /// id is the constant "Codex v3"), so neither can be observed with
-    /// `.onChange` — an open command palette kept ranking the pre-⌘R file list
-    /// and could open a path that had since been deleted. This is the signal
-    /// views watch to know the tree changed underneath them.
+    /// id is its label — `Codex v\(CodexInfo.version)` — which is stable within
+    /// a release), so neither can be observed with `.onChange` — an open
+    /// command palette kept ranking the pre-⌘R file list and could open a path
+    /// that had since been deleted. This is the signal views watch to know the
+    /// tree changed underneath them.
     @Published private(set) var treeRevision: Int = 0
 
     let projectRoot: URL

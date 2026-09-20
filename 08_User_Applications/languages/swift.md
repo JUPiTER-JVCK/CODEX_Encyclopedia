@@ -116,7 +116,6 @@ invisible on macOS and decides whether your code builds on Linux.
 | `URLSession` | HTTP |
 | `FileManager`, `Data`, `URL` | Files |
 | `DateComponents`, `Calendar`, `Locale`, `TimeZone`, `ISO8601DateFormatter` | Time |
-| `OSLog` / `Logger` | Logging — `import os`, Apple platforms only |
 
 ## Frameworks
 
@@ -131,6 +130,15 @@ invisible on macOS and decides whether your code builds on Linux.
 | RealityKit / ARKit / SceneKit | 3D / AR |
 | CryptoKit | Modern crypto |
 | Charts (iOS 16+) | Native charting |
+
+### Apple system
+
+Frameworks that are neither the stdlib nor Foundation — they need their own
+import and are Apple-platforms-only unless noted otherwise.
+
+| API | Use |
+|-----|-----|
+| `OSLog` / `Logger` | Logging — `import os`, Apple platforms only |
 
 ## Modern syntax map
 

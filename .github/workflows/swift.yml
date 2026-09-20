@@ -55,3 +55,41 @@ jobs:
       - name: Build (release)
         working-directory: Codex_macOS
         run: swift build -c release
+
+      # Version.swift is the marketing-version SSOT; the committed Info.plist
+      # must agree so a hand edit of only one side cannot ship again.
+      - name: Version.swift matches Info.plist
+        working-directory: Codex_macOS
+        run: |
+          set -euo pipefail
+          V=$(sed -n 's/^[[:space:]]*static let version = "\([^"]*\)".*/\1/p' Sources/Codex/Version.swift | head -n 1)
+          P=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' Info.plist)
+          echo "Version.swift=$V Info.plist=$P"
+          test -n "$V"
+          test "$V" = "$P"
+
+      # Stage 10 wrote lipo -output onto .build/$CONFIG/Codex (a SwiftPM
+      # symlink to an input slice). Guard the script text so that regression
+      # fails CI even when we skip the dual-arch build below.
+      - name: Guard lipo output path
+        working-directory: Codex_macOS
+        run: |
+          set -euo pipefail
+          univ=$(awk '/if \[ "\$DO_UNIVERSAL" = true \]; then/,/^else$/' package_app.sh)
+          echo "$univ" | grep -q 'EXE=.*universal-\$CONFIG'
+          if echo "$univ" | grep -qE 'EXE="\$PKG_DIR/\.build/\$CONFIG/Codex"'; then
+            echo "✘ lipo -output must not be .build/\$CONFIG/Codex (SwiftPM symlink)" >&2
+            exit 1
+          fi
+
+      # Cheapest packaging exercise on hosted runners: host-arch only, debug,
+      # no secrets. Still copies Info.plist, stamps the version, codesigns,
+      # and would have caught a broken package_app.sh entrypoint. Full
+      # universal lipo stays a local/release concern; the guard above covers
+      # the symlink failure mode in the script itself.
+      #
+      # bash, not ./ — package_app.sh is tracked without the executable bit
+      # (100644), so ./ fails with Permission denied on hosted runners.
+      - name: Package app (single-arch)
+        working-directory: Codex_macOS
+        run: bash package_app.sh --no-universal --debug

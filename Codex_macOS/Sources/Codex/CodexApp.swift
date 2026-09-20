@@ -1,17 +1,7 @@
 import SwiftUI
 import AppKit
 
-// MARK: - Version
-
-/// One place for the version the app shows itself as.
-///
-/// It was previously spelled "v3" in the window title and the Welcome
-/// subtitle, "3.2" in Info.plist, and "Computing Stack v3" in the sidebar —
-/// four literals, none agreeing, all stale against the released 3.6. Keep
-/// this in step with CHANGELOG.md's top entry.
-enum CodexInfo {
-    static let version = "3.6"
-}
+// Version string: CodexInfo.version in Version.swift (single source of truth).
 
 // MARK: - App entry
 
@@ -75,10 +65,13 @@ struct CodexApp: App {
                     .keyboardShortcut("]", modifiers: [.command])
                     .disabled(!state.history.canGoForward)
                 Divider()
+                // ⌘⇧O, not ⌘H. macOS reserves ⌘H for Hide Application and wins
+                // the binding, so this item never fired — a dead control of
+                // exactly the kind Stage 1 existed to remove.
                 Button("Open README") {
                     let u = state.projectRoot.appendingPathComponent("README.md")
                     if FileManager.default.fileExists(atPath: u.path) { state.openFile(u) }
-                }.keyboardShortcut("h", modifiers: [.command])
+                }.keyboardShortcut("o", modifiers: [.command, .shift])
                 Button("Reload Tree") { state.reloadTree() }
                     .keyboardShortcut("r", modifiers: [.command])
                 Divider()
@@ -170,6 +163,15 @@ final class AppState: ObservableObject {
     /// renderer clears it once consumed, making this a one-shot signal rather
     /// than a mode.
     @Published var pendingAnchor: String? = nil
+
+    /// Bumped by `reloadTree()`. `allFiles` is a plain `lazy var` and `root`
+    /// compares equal across a rebuild (`CodexNode ==` is by id, and the root's
+    /// id is its label — `Codex v\(CodexInfo.version)` — which is stable within
+    /// a release), so neither can be observed with `.onChange` — an open
+    /// command palette kept ranking the pre-⌘R file list and could open a path
+    /// that had since been deleted. This is the signal views watch to know the
+    /// tree changed underneath them.
+    @Published private(set) var treeRevision: Int = 0
 
     let projectRoot: URL
     let history = NavigationHistory()
@@ -333,6 +335,7 @@ final class AppState: ObservableObject {
         DocumentStore.invalidateAll()
         root = CodexTree.build(root: projectRoot)
         allFiles = CodexTree.allFiles(under: projectRoot)
+        treeRevision &+= 1
         reconcileSelection()
     }
 

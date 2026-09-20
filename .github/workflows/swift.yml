@@ -87,6 +87,9 @@ jobs:
       # and would have caught a broken package_app.sh entrypoint. Full
       # universal lipo stays a local/release concern; the guard above covers
       # the symlink failure mode in the script itself.
+      #
+      # bash, not ./ — package_app.sh is tracked without the executable bit
+      # (100644), so ./ fails with Permission denied on hosted runners.
       - name: Package app (single-arch)
         working-directory: Codex_macOS
-        run: ./package_app.sh --no-universal --debug
+        run: bash package_app.sh --no-universal --debug

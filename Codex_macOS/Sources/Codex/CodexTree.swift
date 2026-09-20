@@ -101,7 +101,9 @@ enum CodexTree {
     ]
 
     static func build(root: URL) -> CodexNode {
-        let rootNode = CodexNode(label: "Codex v3", kind: .root)
+        // Version.swift SSOT — was a hard-coded "Codex v3" left behind when
+        // window title / Welcome moved to CodexInfo.version.
+        let rootNode = CodexNode(label: "Codex v\(CodexInfo.version)", kind: .root)
 
         var topDocs: [CodexNode] = []
         for name in ["README.md", "LAYERS.md", "STRUCTURE.md", "CHANGELOG.md"] {

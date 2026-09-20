@@ -2,7 +2,7 @@ name: Swift
 
 # The compile gate. Without this, "does the macOS app build?" can only be
 # answered by hand on a Mac — which means in practice it goes unanswered and
-# unbuildable code reaches main. Public repos get free macOS runners, so
+# unbuildable code reaches v1. Public repos get free macOS runners, so
 # there is no reason for this to be a manual step.
 
 # No path filters. A required status check that never runs leaves a pull
@@ -12,7 +12,7 @@ name: Swift
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [v1]
   workflow_dispatch:
 
 permissions:

@@ -11,7 +11,7 @@ name: LMS
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [v1]
   workflow_dispatch:
 
 permissions:

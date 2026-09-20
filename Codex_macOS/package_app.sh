@@ -10,10 +10,15 @@
 #   ./package_app.sh --debug        # debug build (faster, no optimisation)
 #   ./package_app.sh --icon         # regenerate the AppIcon.icns
 #   ./package_app.sh --run          # build then `open` the resulting .app
+#   ./package_app.sh --no-universal # host-arch only (skip arm64+x86_64 lipo)
 #
 # Builds with SwiftPM, copies the executable into Contents/MacOS/, copies
 # Info.plist + AppIcon into Resources, ad-hoc codesigns, and refreshes
 # Launch Services so Spotlight & Launchpad find it immediately.
+#
+# Marketing version comes from Sources/Codex/Version.swift (CodexInfo.version).
+# This script stamps CFBundleShortVersionString / CFBundleVersion from that
+# file when assembling the .app — bump Version.swift, not a second literal.
 
 set -e
 cd "$(dirname "$0")"
@@ -38,6 +43,15 @@ for arg in "$@"; do
     esac
 done
 
+# ── 0. Version from Version.swift (single source of truth) ─────────────────
+VERSION_SWIFT="$PKG_DIR/Sources/Codex/Version.swift"
+VERSION="$(sed -n 's/^[[:space:]]*static let version = "\([^"]*\)".*/\1/p' "$VERSION_SWIFT" | head -n 1)"
+if [ -z "$VERSION" ]; then
+    echo "✘ Could not read CodexInfo.version from $VERSION_SWIFT" >&2
+    exit 1
+fi
+echo "→ Version $VERSION (from Version.swift)"
+
 # ── 1. Compile ─────────────────────────────────────────────────────────────
 EXE="$PKG_DIR/.build/$CONFIG/Codex"
 if [ "$DO_UNIVERSAL" = true ]; then
@@ -52,9 +66,26 @@ if [ "$DO_UNIVERSAL" = true ]; then
     # reading. Somewhere of its own, outside the symlinked tree.
     EXE="$PKG_DIR/.build/universal-$CONFIG/Codex"
     mkdir -p "$(dirname "$EXE")"
+    ARM_SLICE="$PKG_DIR/.build/arm64-apple-macosx/$CONFIG/Codex"
+    X86_SLICE="$PKG_DIR/.build/x86_64-apple-macosx/$CONFIG/Codex"
+    # Refuse to lipo onto a path that aliases an input (Stage 10 regression).
+    if [ "$EXE" = "$PKG_DIR/.build/$CONFIG/Codex" ]; then
+        echo "✘ lipo -output must not be the SwiftPM symlink .build/$CONFIG/Codex" >&2
+        exit 1
+    fi
+    for slice in "$ARM_SLICE" "$X86_SLICE"; do
+        if [ -e "$EXE" ] && [ -e "$slice" ]; then
+            exe_id="$(stat -f '%d:%i' "$EXE" 2>/dev/null || true)"
+            slice_id="$(stat -f '%d:%i' "$slice" 2>/dev/null || true)"
+            if [ -n "$exe_id" ] && [ "$exe_id" = "$slice_id" ]; then
+                echo "✘ lipo -output '$EXE' resolves to input '$slice'" >&2
+                exit 1
+            fi
+        fi
+    done
     lipo -create \
-        "$PKG_DIR/.build/arm64-apple-macosx/$CONFIG/Codex" \
-        "$PKG_DIR/.build/x86_64-apple-macosx/$CONFIG/Codex" \
+        "$ARM_SLICE" \
+        "$X86_SLICE" \
         -output "$EXE"
     lipo -info "$EXE"
 else
@@ -73,6 +104,10 @@ mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$EXE" "$APP/Contents/MacOS/Codex"
 chmod +x "$APP/Contents/MacOS/Codex"
 cp "$PKG_DIR/Info.plist" "$APP/Contents/Info.plist"
+# Stamp marketing/build version from Version.swift so the committed plist
+# cannot drift from what the binary displays.
+/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" "$APP/Contents/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $VERSION" "$APP/Contents/Info.plist"
 
 # Record absolute project path so the bundle stays portable
 echo "$ROOT" > "$APP/Contents/Resources/project_path"

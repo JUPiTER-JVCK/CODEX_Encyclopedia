@@ -7,7 +7,9 @@ name: Docs
 on:
   pull_request:
   push:
-    branches: [v1]
+    # Both names while the default branch rename (v1 -> main) is in flight.
+    # See swift.yml for why this is literal and why `v1` comes out after.
+    branches: [main, v1]
   workflow_dispatch:
 
 permissions:

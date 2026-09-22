@@ -1,0 +1,208 @@
+name: Release
+
+# Cuts a tag and a GitHub release from the default branch, on demand.
+#
+# Every guard below is a mistake this repository has actually made. That is the
+# entry requirement — none of them are hypothetical:
+#
+#   `Main` and `v1` as tag names            -> the format guard
+#   `v3.8` and `v4` tagged on 3.6.25 code   -> the Version.swift guard
+#   three tags landing on one commit        -> the "tag is new" guard
+#   v3.6.25 released with no CHANGELOG entry-> the CHANGELOG guard
+#
+# It is also the only workflow here with `contents: write`; the other three
+# read. That asymmetry is deliberate. This is the one that can change what the
+# repository claims about itself, so it is the one worth reading closely.
+#
+# Deliberately absent: deleting or moving a release. Publishing is reversible
+# by publishing again; deletion is not, and it is the operation least often
+# needed. It stays a human action on the Releases page.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to create, e.g. v3.6.26 — must not already exist, and must match CodexInfo.version"
+        required: true
+        type: string
+      title:
+        description: "Release title (defaults to the tag)"
+        required: false
+        type: string
+      notes:
+        description: "Release notes. Left blank, GitHub generates them from merged PRs."
+        required: false
+        type: string
+      prerelease:
+        description: "Mark as a pre-release"
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+# Never cancel a release in flight: a run interrupted between the tag push and
+# `gh release create` leaves a tag with no release attached.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: cut release
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Tags and full history, so "does this tag already exist" is a real
+          # question rather than one asked of a shallow clone that has no tags.
+          fetch-depth: 0
+
+      # ── Guards ─────────────────────────────────────────────────────────
+      #
+      # Every input is read through `env:` rather than interpolated into the
+      # shell with ${{ }}. A tag name is attacker-controlled text as far as
+      # bash is concerned, and `${{ inputs.tag }}` inlined into a script is a
+      # command-injection hole, not a variable.
+
+      # Asks the API which branch is default rather than hardcoding a name.
+      # This repository's default branch was renamed once by accident; a
+      # workflow that has to be edited to match is a workflow that will be
+      # wrong for a while before anyone notices.
+      - name: Releases come from the default branch
+        env:
+          REF: ${{ github.ref_name }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          if [ "$REF" != "$DEFAULT_BRANCH" ]; then
+            echo "::error::Releases are cut from the default branch ($DEFAULT_BRANCH). This ran on '$REF'."
+            exit 1
+          fi
+          echo "On $REF, which is the default branch."
+
+      - name: The tag is a version
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          if ! printf '%s' "$TAG" | grep -Eq '^v[0-9]+\.[0-9]+(\.[0-9]+)?$'; then
+            echo "::error::'$TAG' is not a version tag. Expected vMAJOR.MINOR[.PATCH], e.g. v3.6.26."
+            echo "Tags named 'Main', 'v1' and 'v' are why this check exists."
+            exit 1
+          fi
+
+      - name: The tag is new
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "::error::Tag $TAG already exists."
+            echo "Moving a published tag rewrites history that others may already have fetched."
+            echo "Cut the next version instead."
+            exit 1
+          fi
+          # A tag that duplicates one already on this commit is how v, v3.8 and
+          # v4 ended up stacked on a single merge.
+          existing="$(git tag --points-at HEAD | tr '\n' ' ' | sed 's/ *$//')"
+          if [ -n "$existing" ]; then
+            echo "::error::HEAD is already tagged: $existing"
+            echo "Releasing the same commit again would stack another tag on it."
+            exit 1
+          fi
+
+      - name: The tag matches CodexInfo.version
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          SRC="Codex_macOS/Sources/Codex/Version.swift"
+          WANT="${TAG#v}"
+          GOT="$(sed -n 's/^[[:space:]]*static let version = "\([^"]*\)".*/\1/p' "$SRC" | head -n 1)"
+          if [ -z "$GOT" ]; then
+            echo "::error::Could not read CodexInfo.version from $SRC."
+            exit 1
+          fi
+          if [ "$GOT" != "$WANT" ]; then
+            echo "::error::Tag says $WANT, CodexInfo.version says $GOT."
+            echo "$SRC is the single source of truth: package_app.sh stamps the"
+            echo "bundle from it, so a release tagged $TAG would ship an app that"
+            echo "calls itself $GOT. Bump $SRC first."
+            echo "(Tags v3.8 and v4 were cut on 3.6.25 code. This is that check.)"
+            exit 1
+          fi
+          echo "$SRC and the tag both say $WANT."
+
+      - name: The CHANGELOG mentions this version
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          WANT="${TAG#v}"
+          if ! grep -Eq "^## v${WANT}( |$|[^0-9])" CHANGELOG.md; then
+            echo "::error::CHANGELOG.md has no '## v${WANT}' entry."
+            echo "v3.6.25 was released without one and the history simply lost a week."
+            echo "GitHub's generated notes are a list of PR titles; they are not the"
+            echo "curated history this repository keeps."
+            exit 1
+          fi
+          echo "CHANGELOG.md carries a v${WANT} entry."
+
+      # The default branch is already gated on push by Swift, Docs and LMS, so
+      # anything here has been built and audited once. These run again because
+      # they cost ten seconds and make the release run self-contained evidence
+      # rather than a claim about some earlier run. The self-tests come along
+      # because an audit that cannot fail is not a check.
+      - name: The audits pass on what is being tagged
+        run: |
+          python3 tools/diagram_audit.py --self-test
+          python3 tools/palette_audit.py --self-test
+          python3 tools/link_audit.py --self-test
+          for t in diagram link palette stats table title; do
+            echo "--- ${t}_audit ---"
+            python3 "tools/${t}_audit.py"
+          done
+
+      # ── Write ──────────────────────────────────────────────────────────
+
+      - name: Tag
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          # Annotated, not lightweight: a release tag should carry who made it
+          # and when, which `git tag $NAME` alone does not record.
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "refs/tags/$TAG"
+
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+          TITLE: ${{ inputs.title }}
+          NOTES: ${{ inputs.notes }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          args=( "$TAG" --title "${TITLE:-$TAG}" )
+          if [ -n "$NOTES" ]; then
+            args+=( --notes "$NOTES" )
+          else
+            args+=( --generate-notes )
+          fi
+          if [ "$PRERELEASE" = "true" ]; then
+            args+=( --prerelease )
+          fi
+          gh release create "${args[@]}"
+
+      - name: Say what happened
+        env:
+          TAG: ${{ inputs.tag }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: |
+          {
+            echo "### Released \`$TAG\`"
+            echo
+            echo "- Commit: \`$SHA\`"
+            echo "- <https://github.com/$REPO/releases/tag/$TAG>"
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -12,7 +12,13 @@ name: Swift
 on:
   pull_request:
   push:
-    branches: [v1]
+    # Both names, because the default branch is mid-rename: `main` was renamed
+    # to `v1` by accident and is going back. A push trigger cannot read the
+    # default branch the way a step can, so it has to name it literally, and a
+    # literal that is briefly wrong means push CI goes silent without failing
+    # anything — the quietest way for a gate to stop being a gate. Drop `v1`
+    # once the rename has landed.
+    branches: [main, v1]
   workflow_dispatch:
 
 permissions:
@@ -37,14 +43,29 @@ jobs:
           xcodebuild -version
 
       # SwiftPM's build directory is the expensive part of a cold run.
+      #
+      # `github.repository` is in the key because `.build` is not relocatable:
+      # SwiftPM bakes absolute paths into its precompiled headers, and the
+      # workspace path is /Users/runner/work/<repo>/<repo>. Renaming this
+      # repository (CODEX_Encyclopedia- -> CODEX_Encyclopedia) therefore made
+      # every restored cache poison:
+      #
+      #   error: PCH was compiled with module cache path '.../CODEX_Encyclopedia-/...'
+      #          but the path is currently '.../CODEX_Encyclopedia/...'
+      #   error: missing required module 'SwiftShims'
+      #
+      # Keying the *prefix* on the repository is what fixes it. Bumping only
+      # the exact key would not: `restore-keys` would still fall back to a
+      # stale entry and fail the same way. Any future rename now lands in a
+      # fresh namespace on its own.
       - name: Cache .build
         uses: actions/cache@v4
         with:
           path: Codex_macOS/.build
-          key: swiftpm-${{ runner.os }}-${{ hashFiles('Codex_macOS/Package.swift') }}-${{ hashFiles('Codex_macOS/Sources/**/*.swift') }}
+          key: swiftpm-${{ github.repository }}-${{ runner.os }}-${{ hashFiles('Codex_macOS/Package.swift') }}-${{ hashFiles('Codex_macOS/Sources/**/*.swift') }}
           restore-keys: |
-            swiftpm-${{ runner.os }}-${{ hashFiles('Codex_macOS/Package.swift') }}-
-            swiftpm-${{ runner.os }}-
+            swiftpm-${{ github.repository }}-${{ runner.os }}-${{ hashFiles('Codex_macOS/Package.swift') }}-
+            swiftpm-${{ github.repository }}-${{ runner.os }}-
 
       - name: Build (debug)
         working-directory: Codex_macOS

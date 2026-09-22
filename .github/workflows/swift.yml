@@ -43,14 +43,29 @@ jobs:
           xcodebuild -version
 
       # SwiftPM's build directory is the expensive part of a cold run.
+      #
+      # `github.repository` is in the key because `.build` is not relocatable:
+      # SwiftPM bakes absolute paths into its precompiled headers, and the
+      # workspace path is /Users/runner/work/<repo>/<repo>. Renaming this
+      # repository (CODEX_Encyclopedia- -> CODEX_Encyclopedia) therefore made
+      # every restored cache poison:
+      #
+      #   error: PCH was compiled with module cache path '.../CODEX_Encyclopedia-/...'
+      #          but the path is currently '.../CODEX_Encyclopedia/...'
+      #   error: missing required module 'SwiftShims'
+      #
+      # Keying the *prefix* on the repository is what fixes it. Bumping only
+      # the exact key would not: `restore-keys` would still fall back to a
+      # stale entry and fail the same way. Any future rename now lands in a
+      # fresh namespace on its own.
       - name: Cache .build
         uses: actions/cache@v4
         with:
           path: Codex_macOS/.build
-          key: swiftpm-${{ runner.os }}-${{ hashFiles('Codex_macOS/Package.swift') }}-${{ hashFiles('Codex_macOS/Sources/**/*.swift') }}
+          key: swiftpm-${{ github.repository }}-${{ runner.os }}-${{ hashFiles('Codex_macOS/Package.swift') }}-${{ hashFiles('Codex_macOS/Sources/**/*.swift') }}
           restore-keys: |
-            swiftpm-${{ runner.os }}-${{ hashFiles('Codex_macOS/Package.swift') }}-
-            swiftpm-${{ runner.os }}-
+            swiftpm-${{ github.repository }}-${{ runner.os }}-${{ hashFiles('Codex_macOS/Package.swift') }}-
+            swiftpm-${{ github.repository }}-${{ runner.os }}-
 
       - name: Build (debug)
         working-directory: Codex_macOS

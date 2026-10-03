@@ -2,7 +2,7 @@ name: Swift
 
 # The compile gate. Without this, "does the macOS app build?" can only be
 # answered by hand on a Mac — which means in practice it goes unanswered and
-# unbuildable code reaches v1. Public repos get free macOS runners, so
+# unbuildable code reaches main. Public repos get free macOS runners, so
 # there is no reason for this to be a manual step.
 
 # No path filters. A required status check that never runs leaves a pull
@@ -12,13 +12,7 @@ name: Swift
 on:
   pull_request:
   push:
-    # Both names, because the default branch is mid-rename: `main` was renamed
-    # to `v1` by accident and is going back. A push trigger cannot read the
-    # default branch the way a step can, so it has to name it literally, and a
-    # literal that is briefly wrong means push CI goes silent without failing
-    # anything — the quietest way for a gate to stop being a gate. Drop `v1`
-    # once the rename has landed.
-    branches: [main, v1]
+    branches: [main]
   workflow_dispatch:
 
 permissions:

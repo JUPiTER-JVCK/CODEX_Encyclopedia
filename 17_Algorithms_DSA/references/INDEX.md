@@ -21,9 +21,11 @@
   └──────────────────────────────────────────────────────────────────────┘
 ```
 
-## Anchor (user-provided)
-- **`100_leetcode_problems.pdf`** — *100 LeetCode Problems Must Do*. This is the authoritative
-  list to work through. Pair with [topics/canonical_lists.md](../topics/canonical_lists.md).
+## Anchor list
+- **[topics/100_must_do.md](../topics/100_must_do.md)** — the 100 problems to work through,
+  mapped to LeetCode numbers. Pair with [topics/canonical_lists.md](../topics/canonical_lists.md).
+  Source: Bosscoder Academy's *100 Must Do LeetCode Problems*. Their PDF is not kept
+  here; it carried no licence, so this repository could not redistribute it.
 
 ## Books — foundational
 - *Introduction to Algorithms* (CLRS) — Cormen, Leiserson, Rivest, Stein. The reference.

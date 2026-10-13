@@ -4,7 +4,7 @@ layer: 17_Algorithms_DSA
 section: topics
 tags: [leetcode, blind75, neetcode, study-plan]
 updated: 2026-05-20
-authoritative_source: ../references/100_leetcode_problems.pdf
+authoritative_source: 100_must_do.md
 ---
 
 # Canonical 100-problem study list (pattern-first companion)
@@ -14,8 +14,8 @@ authoritative_source: ../references/100_leetcode_problems.pdf
 ```text
   Pattern-first companion to 100_must_do.md (Blind 75 / NeetCode ordering).
 
-  ┌─── how to use ────────────────────────────────────────────────────────┐
-  │  1. anchor PDF order is authoritative  2. tick each pattern bucket   │
+  ┌─── how to use ───────────────────────────────────────────────────────┐
+  │  1. 100_must_do order is authoritative  2. tick each pattern bucket  │
   │  3. write a paragraph on the recurring trick — that's how it sticks  │
   └──────────────────────────────────────────────────────────────────────┘
 
@@ -27,18 +27,18 @@ authoritative_source: ../references/100_leetcode_problems.pdf
   └──────────────────────────────────────────────────────────────────────┘
 ```
 
-> The **authoritative PDF-derived list** now lives in [100_must_do.md](100_must_do.md)
-> — extracted from `references/100_leetcode_problems.pdf` with all 100 problems
-> mapped to their LeetCode numbers and titles.
+> The **authoritative list** lives in [100_must_do.md](100_must_do.md) — all
+> 100 problems mapped to their LeetCode numbers and titles, transcribed from
+> Bosscoder Academy's PDF (not kept here; it carried no licence).
 >
 > This file is the **pattern-first companion**. Use it to walk through the
 > same problem space organized by *recurring solution patterns* (Blind 75 /
 > NeetCode 150 progression) rather than by topic. Many of the buckets below
-> overlap with the PDF's sections — the two views reinforce each other.
+> overlap with that list's sections — the two views reinforce each other.
 
 ## How to use
 
-1. Open the anchor PDF and treat its order as authoritative.
+1. Open [100_must_do.md](100_must_do.md) and treat its order as authoritative.
 2. Tick off each problem in the matching pattern bucket below.
 3. After each bucket, write one paragraph in `lessons/notes_<bucket>.md` about
    what the bucket's recurring trick is — that's how patterns stick.
@@ -229,12 +229,6 @@ authoritative_source: ../references/100_leetcode_problems.pdf
 - Missing Number (268)
 - Sum of Two Integers (371)
 - Reverse Integer (7)
-
-## Recovery: when the PDF is decoded
-- Install poppler (`brew install poppler` — needs `sudo chown -R mb_pro /usr/local/share/man/man8` first)
-- Re-read the PDF with the Read tool
-- Reconcile against this list; mark any that aren't in the PDF and any in the PDF not above
-- Promote each *that is in the user's PDF* to a `solutions/<id>_<slug>.md` file with explanation + code
 
 ## Cross-link
 - Pattern-by-pattern study path → [lessons/INDEX.md](../lessons/INDEX.md)

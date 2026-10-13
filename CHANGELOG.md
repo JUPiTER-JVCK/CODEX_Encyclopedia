@@ -12,6 +12,32 @@
   └────────────────────────────────────────────────────────────────────┘
 ```
 
+## Unreleased
+
+### Removed — the LeetCode PDF
+
+`17_Algorithms_DSA/references/100_leetcode_problems.pdf`, Bosscoder Academy's
+*100 Must Do LeetCode Problems*, is gone. Since v3.6 the README had flagged it
+as "the one to check first": a 4.9 MB compilation with no stated licence, which
+this repository could not relicense under CC BY-SA and so had no terms under
+which to redistribute at all. Flagging it was a description of the problem,
+not a fix.
+
+Nothing that depended on it is lost.
+[`topics/100_must_do.md`](17_Algorithms_DSA/topics/100_must_do.md) already
+carried all 100 problems, each keyed by its LeetCode number and title, which
+are facts, with descriptions paraphrased rather than copied. The pointers that
+told readers to "open the PDF side-by-side" now send them to LeetCode by number
+instead.
+
+`canonical_lists.md` also loses its *Recovery: when the PDF is decoded*
+section. It had been obsolete since the PDF was transcribed, and it carried a
+machine-specific `sudo chown -R mb_pro …` line that the v3.2 portability pass
+missed.
+
+Removal is from the tree only. The file remains in git history and in the
+source archives of every release cut before this one.
+
 ## v3.6.25 — 2026-09-16
 
 A ten-stage pass over the macOS reader and the codex's diagram coverage,

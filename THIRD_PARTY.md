@@ -91,13 +91,16 @@ repositories linked above.
 
 ## Reference material
 
-Two PDFs are vendored as reference material rather than authored here:
+One PDF is vendored as reference material rather than authored here:
 
-- `17_Algorithms_DSA/references/100_leetcode_problems.pdf`
 - `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf`
 
-These are third-party documents retained for study. They are not covered by
-this repository's licences, and their own terms apply.
+It is retained for study, is not covered by this repository's licences, and
+its own terms apply.
+
+`17_Algorithms_DSA/references/100_leetcode_problems.pdf` was removed: it
+carried no licence at all, so there were no terms under which it could be
+redistributed.
 
 ## Fonts
 

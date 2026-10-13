@@ -196,8 +196,8 @@ Anything added at the root that isn't a layer must also be registered in
 
 ## Anchor materials
 
-- `17_Algorithms_DSA/references/100_leetcode_problems.pdf` — the source for
-  [`topics/100_must_do.md`](17_Algorithms_DSA/topics/100_must_do.md)
+- [`17_Algorithms_DSA/topics/100_must_do.md`](17_Algorithms_DSA/topics/100_must_do.md) —
+  100 interview problems mapped to LeetCode numbers
 - `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf` —
   see *Known gaps* below
 - `00d_Digital_Circuits/topics/logic_gates.md` — full truth-table reference
@@ -238,18 +238,19 @@ material requires of anything derived from it, not a preference.
 
 ### Third-party material — covered by neither
 
-**Two files** are redistributed here for study and are not licensed by this
-repository. They retain their original authors' rights:
+**One file** is redistributed here for study and is not licensed by this
+repository. It retains its original authors' rights:
 
-- `17_Algorithms_DSA/references/100_leetcode_problems.pdf` — *100 LeetCode
-  Problems Must Do*, a third-party compilation carrying no stated license.
-  It is **not** covered by CC BY-SA 4.0 and cannot be, since this repository
-  does not hold the rights to relicense someone else's compilation. If you
-  redistribute this repo, that file is the one to check first.
 - `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf` — a
   generated placeholder stub, not Parvizi's book. See *Known gaps*.
 
-This is a list of two files, not a rule about `references/` folders. An
+There used to be two. *100 LeetCode Problems Must Do*, a third-party PDF
+compilation, carried no stated licence, so this repository could neither
+relicense it nor safely redistribute it — and it has been removed. Its content
+survives as [`topics/100_must_do.md`](17_Algorithms_DSA/topics/100_must_do.md):
+problem numbers and titles are facts, and the descriptions are paraphrased.
+
+This is a list of files, not a rule about `references/` folders. An
 earlier draft said everything under any `references/` folder was third-party,
 which would have swept the 23 `references/INDEX.md` entry points — written
 for this codex, describing its own sources — out of the CC BY-SA grant.
@@ -341,7 +342,7 @@ section turns the build red rather than quietly retiring the check.
 Currently:
 
 - 278 markdown files
-- 1022 internal links, 0 broken
+- 1026 internal links, 0 broken
 - Every file carries an H1, every pipe table well-formed
 - All 138 section indexes titled `<Layer> — <Section>`
 - 275 files carry a diagram across the repository. The diagram audit

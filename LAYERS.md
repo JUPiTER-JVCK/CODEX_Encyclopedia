@@ -114,8 +114,6 @@ that holds no images.
 
 ## Anchor PDFs
 
-- `17_Algorithms_DSA/references/100_leetcode_problems.pdf` — the source
-  behind [`topics/100_must_do.md`](17_Algorithms_DSA/topics/100_must_do.md)
 - `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf` —
   currently a generated placeholder, not the real roadmap book. Original at
   [github.com/m3y54m/Embedded-Engineering-Roadmap](https://github.com/m3y54m/Embedded-Engineering-Roadmap)

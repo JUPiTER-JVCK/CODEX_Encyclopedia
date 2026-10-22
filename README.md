@@ -244,8 +244,8 @@ repository. It retains its original authors' rights:
 - `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf` — a
   generated placeholder stub, not Parvizi's book. See *Known gaps*.
 
-There used to be two. *100 LeetCode Problems Must Do*, a third-party PDF
-compilation, carried no stated licence, so this repository could neither
+There used to be two. Bosscoder Academy's *100 Must Do LeetCode Problems*, a
+third-party PDF compilation, carried no stated licence, so this repository could neither
 relicense it nor safely redistribute it — and it has been removed. Its content
 survives as [`topics/100_must_do.md`](17_Algorithms_DSA/topics/100_must_do.md):
 problem numbers and titles are facts, and the descriptions are paraphrased.

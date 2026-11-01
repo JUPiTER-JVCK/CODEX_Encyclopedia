@@ -4,8 +4,7 @@ layer: 17_Algorithms_DSA
 section: topics
 tags: [leetcode, must-do-100, bosscoder, interview-prep]
 updated: 2026-05-20
-source_pdf: ../references/100_leetcode_problems.pdf
-source: Bosscoder Academy — "100 Must Do LeetCode Problems"
+source: Bosscoder Academy — "100 Must Do LeetCode Problems" (PDF, not redistributed)
 ---
 
 # 100 Must Do LeetCode Problems
@@ -25,9 +24,11 @@ source: Bosscoder Academy — "100 Must Do LeetCode Problems"
   └──────────────────────────────────────────────────────────────────────┘
 ```
 
-> Authoritative transcription from `references/100_leetcode_problems.pdf`
-> (Bosscoder Academy, 36 pages, image-rendered problem statements extracted
-> via `pdftoppm` + multimodal Read).
+> Transcribed from Bosscoder Academy's *100 Must Do LeetCode Problems* PDF
+> (36 pages, image-rendered problem statements extracted via `pdftoppm` +
+> multimodal Read). The PDF itself is not kept in this repository: it
+> carried no licence, so it could not be redistributed. This list stands on
+> its own — every problem is identified by its LeetCode number.
 >
 > Each entry below carries:
 > - The PDF's section + position
@@ -248,8 +249,8 @@ source: Bosscoder Academy — "100 Must Do LeetCode Problems"
 
 ## How to use this list
 
-1. Open the PDF (`references/100_leetcode_problems.pdf`) side-by-side with
-   this file. Click the "Practice" link in the PDF to open the LeetCode page.
+1. Open each problem on LeetCode by its number —
+   `https://leetcode.com/problemset/?search=<number>` finds it directly.
 2. Solve in your preferred language (see [languages/INDEX.md](../languages/INDEX.md)).
 3. Track your status however you like — a `solutions/` folder with one file
    per problem is the natural next step (queued for v2.3 per the plan).

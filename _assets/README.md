@@ -51,6 +51,5 @@ four above went unnoticed for a year because nothing checked; a fifth cannot.
 ## Not here
 
 PDFs live in the relevant layer's `references/` folder, not in this one —
-`17_Algorithms_DSA/references/100_leetcode_problems.pdf` and
-`18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf`. See
-[`THIRD_PARTY.md`](../THIRD_PARTY.md) for their terms.
+currently just `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf`.
+See [`THIRD_PARTY.md`](../THIRD_PARTY.md) for its terms.

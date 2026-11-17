@@ -14,6 +14,12 @@
 
 ## Unreleased
 
+### Fixed — macOS installer "Permission denied"
+
+`Codex_macOS/package_app.sh` was committed without its executable bit, so
+`Install Codex.command` failed at `./package_app.sh`. The bit is now set, and the
+installer runs the script via `bash` so a zip download that strips the bit still works.
+
 ### Removed — the LeetCode PDF
 
 `17_Algorithms_DSA/references/100_leetcode_problems.pdf`, Bosscoder Academy's

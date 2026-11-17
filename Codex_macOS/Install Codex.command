@@ -15,6 +15,9 @@
 
 set -euo pipefail
 cd "$(dirname "$0")"
+# Zip downloads and some copies drop the executable bit; restore it so the
+# README's ./package_app.sh works too. Harmless if it fails.
+chmod +x package_app.sh 2>/dev/null || true
 
 BOLD=$(printf '\033[1m'); OFF=$(printf '\033[0m')
 
@@ -104,7 +107,7 @@ NOTICE
 # reuse a cached Codex.app.icon-backup/AppIcon.icns, and on any machine that
 # built a version from before the renderer was rewritten, that cache holds
 # the old blank square.
-./package_app.sh --icon --install
+bash ./package_app.sh --icon --install
 
 cat <<'DONE'
 

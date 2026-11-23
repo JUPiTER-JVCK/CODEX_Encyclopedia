@@ -10,6 +10,15 @@ struct CodexApp: App {
     @StateObject private var state = AppState.shared
     @ObservedObject private var prefs = Preferences.shared
 
+    init() {
+        // Running from Xcode (or `swift run`) there is no .app bundle, and
+        // AppKit starts such a process as a background tool: no Dock icon, and
+        // the window can open behind Xcode. A bundled launch is already
+        // regular, so this is a no-op there.
+        NSApplication.shared.setActivationPolicy(.regular)
+        DispatchQueue.main.async { NSApplication.shared.activate(ignoringOtherApps: true) }
+    }
+
     var body: some Scene {
         WindowGroup("Codex v\(CodexInfo.version)") {
             RootView()
@@ -249,6 +258,13 @@ final class AppState: ObservableObject {
            isCodexRoot(URL(fileURLWithPath: s)) {
             return URL(fileURLWithPath: s)
         }
+        // Built from a checkout (Xcode ⌘R, `swift run`): this file's own path
+        // is baked in at compile time, and the codex is three folders above
+        // it — Codex_macOS/Sources/Codex/CodexApp.swift. Xcode puts the build
+        // in DerivedData, so the walk up from the bundle below never finds it.
+        var checkout = URL(fileURLWithPath: #filePath)
+        for _ in 0..<4 { checkout.deleteLastPathComponent() }
+        if isCodexRoot(checkout) { return checkout }
         let exe = Bundle.main.bundleURL
         var candidate = exe.deletingLastPathComponent()
         for _ in 0..<6 {

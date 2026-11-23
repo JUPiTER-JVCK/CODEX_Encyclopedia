@@ -32,6 +32,13 @@ Folder…** button (also in the Navigation menu), validates a folder by both
 `README.md` and `STRUCTURE.md`, and remembers the choice in
 `~/Library/Application Support/Codex/project_root`.
 
+### Added — open `Codex_macOS/Package.swift` in Xcode and run
+
+A build from Xcode or `swift run` now finds the codex folder from its own
+source path (`#filePath`) instead of walking up from DerivedData, and sets
+itself to a regular app so the window comes to the front. The macOS README
+gains an "Open it in Xcode" section.
+
 ### Changed — installer refuses to run under `sudo`
 
 `Install Codex.command` and `package_app.sh` now stop with an explanation when

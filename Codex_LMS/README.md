@@ -77,18 +77,12 @@ Codex_LMS/
 ├── test/smoke.mjs          ← Playwright end-to-end check
 │
 ├── anatomy-of-a-program.html   ← standalone companion page
-├── roadmap-draft.md            ← curriculum plan (phase order, what's built)
-├── merge-architecture-draft.mermaid  ← how the 8 modules became one file
-│
-└── *.jsx                   ← the pre-merge module sources, superseded by
-                              CoreApp.jsx and kept for reference
+└── roadmap-draft.md            ← curriculum plan (phase order, what's built)
 ```
 
-The eight `*-module.jsx` files at the top level plus `toolkit.jsx`,
-`knowledge-map.jsx`, `cs-encyclopedia.jsx`, and `ethload-guide.jsx` are the
-originals CoreApp.jsx was assembled from. They are **not** part of the build —
-nothing imports them. They are kept because they are the only record of the
-pre-merge structure.
+CoreApp.jsx was assembled from eleven standalone module files (`logic-module.jsx`,
+`toolkit.jsx`, and so on). Nothing imported them, so they have been removed from
+the tree; they remain in git history before this change.
 
 ## Progress persistence
 

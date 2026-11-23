@@ -14,6 +14,21 @@
 
 ## Unreleased
 
+### Removed — dead weight
+
+- `Codex_LMS/`'s eleven pre-merge `*.jsx` module files (~660 KB) and
+  `merge-architecture-draft.mermaid`. Nothing imported them; `src/CoreApp.jsx`
+  is the single source. They remain in git history.
+- `requirements.txt` (`textual`, `rich`). The Python TUI it served is not in
+  the repository, and the audit scripts in `tools/` use only the standard library.
+
+### Changed — installer refuses to run under `sudo`
+
+`Install Codex.command` and `package_app.sh` now stop with an explanation when
+run as root. `sudo ./Install\ Codex.command` built everything as root, leaving
+root-owned `.build/` and `Codex.app` in the checkout, and the script already
+asks for your password itself when it needs it.
+
 ### Fixed — macOS installer "Permission denied"
 
 `Codex_macOS/package_app.sh` was committed without its executable bit, so

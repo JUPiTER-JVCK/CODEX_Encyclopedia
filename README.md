@@ -263,9 +263,9 @@ issue and it will be taken down.
 
 Honest inventory of what isn't here yet:
 
-- **The Python TUI is not in this repository.** `requirements.txt` remains at
-  the root and older changelog entries describe a Textual-based browser, but
-  no `codex_tui/` source is present. Use the macOS app, or any markdown
+- **The Python TUI is not in this repository.** Older changelog entries
+  describe a Textual-based browser, but no `codex_tui/` source is present
+  (its `requirements.txt` has been removed). Use the macOS app, or any markdown
   reader, until it lands.
 - **The four reference images are missing** from `_assets/` — see
   [`_assets/README.md`](_assets/README.md) for the expected filenames. Every

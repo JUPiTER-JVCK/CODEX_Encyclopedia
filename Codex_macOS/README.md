@@ -49,6 +49,8 @@ SwiftUI rendering the markdown tree straight on the GPU.
   pin. (Extra keys were never the problem — a keyed decoder ignores those.)
 - **Portable bundle** — records the project path at build time, so the `.app`
   keeps working after you move it to `/Applications`
+  If that folder later moves, the app says so and offers **Choose Codex Folder…**
+  (Navigation menu) rather than opening empty
 
 ## Install it
 

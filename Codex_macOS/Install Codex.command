@@ -57,6 +57,22 @@ trap fail ERR
 echo "${BOLD}Installing Codex${OFF}"
 echo
 
+# ── Not as root ────────────────────────────────────────────────────────────
+#
+# `sudo ./Install\ Codex.command` builds everything as root, which leaves
+# root-owned .build/ and Codex.app in your checkout. The script asks for
+# your password itself, at the one step that needs it.
+if [ "$(id -u)" -eq 0 ]; then
+    echo "${BOLD}Run this without sudo.${OFF}"
+    echo
+    echo "It asks for your password itself, only when it copies into"
+    echo "/Applications. If an earlier sudo run left root-owned files here:"
+    echo
+    echo "    ${BOLD}sudo chown -R \"\$USER\" \"$(cd .. && pwd)\"${OFF}"
+    pause
+    exit 1
+fi
+
 # ── Is this even a Mac ─────────────────────────────────────────────────────
 if [ "$(uname -s)" != "Darwin" ]; then
     echo "This installer builds a macOS application and only runs on macOS."

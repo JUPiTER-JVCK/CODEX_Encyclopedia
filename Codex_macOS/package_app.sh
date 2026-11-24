@@ -21,6 +21,11 @@
 # file when assembling the .app — bump Version.swift, not a second literal.
 
 set -e
+if [ "$(id -u)" -eq 0 ]; then
+    echo "✘ Don't run this with sudo — it asks for your password itself under --install." >&2
+    echo "  (root-owned build output in this checkout breaks later runs)" >&2
+    exit 1
+fi
 cd "$(dirname "$0")"
 PKG_DIR="$(pwd)"
 ROOT="$(cd .. && pwd)"

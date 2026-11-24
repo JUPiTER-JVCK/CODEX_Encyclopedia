@@ -10,6 +10,15 @@ struct CodexApp: App {
     @StateObject private var state = AppState.shared
     @ObservedObject private var prefs = Preferences.shared
 
+    init() {
+        // Running from Xcode (or `swift run`) there is no .app bundle, and
+        // AppKit starts such a process as a background tool: no Dock icon, and
+        // the window can open behind Xcode. A bundled launch is already
+        // regular, so this is a no-op there.
+        NSApplication.shared.setActivationPolicy(.regular)
+        DispatchQueue.main.async { NSApplication.shared.activate(ignoringOtherApps: true) }
+    }
+
     var body: some Scene {
         WindowGroup("Codex v\(CodexInfo.version)") {
             RootView()
@@ -74,6 +83,7 @@ struct CodexApp: App {
                 }.keyboardShortcut("o", modifiers: [.command, .shift])
                 Button("Reload Tree") { state.reloadTree() }
                     .keyboardShortcut("r", modifiers: [.command])
+                Button("Choose Codex Folder…") { state.chooseProjectRoot() }
                 Divider()
                 // Pinning is how a tab stops being the transient one, so this
                 // is now the main way to keep a document in the strip.
@@ -173,9 +183,16 @@ final class AppState: ObservableObject {
     /// tree changed underneath them.
     @Published private(set) var treeRevision: Int = 0
 
-    let projectRoot: URL
+    /// Where the codex lives. Changes only through `chooseProjectRoot()`.
+    @Published private(set) var projectRoot: URL
     let history = NavigationHistory()
     private(set) lazy var allFiles: [URL] = CodexTree.allFiles(under: projectRoot)
+
+    /// False when `projectRoot` is not a codex checkout — the recorded folder
+    /// was moved or deleted, or macOS withheld access to it. The app used to
+    /// fall through to the working directory (`/` from Finder) and open empty,
+    /// with no hint why.
+    var rootIsValid: Bool { AppState.isCodexRoot(projectRoot) }
 
     var selectedTabIsPinned: Bool {
         guard let u = selectedTab else { return false }
@@ -190,6 +207,42 @@ final class AppState: ObservableObject {
         // Don't auto-open anything — show the Welcome screen first
     }
 
+    /// A codex checkout has both of these at its top level.
+    static func isCodexRoot(_ url: URL) -> Bool {
+        let fm = FileManager.default
+        return fm.fileExists(atPath: url.appendingPathComponent("README.md").path)
+            && fm.fileExists(atPath: url.appendingPathComponent("STRUCTURE.md").path)
+    }
+
+    /// Where the reader's chosen folder is remembered.
+    private static var rootChoiceURL: URL {
+        let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
+            ?? URL(fileURLWithPath: NSHomeDirectory())
+        let dir = base.appendingPathComponent("Codex", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir.appendingPathComponent("project_root")
+    }
+
+    /// Ask for the codex folder, remember it, and reload from it.
+    func chooseProjectRoot() {
+        let panel = NSOpenPanel()
+        panel.canChooseFiles = false
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = false
+        panel.prompt = "Choose"
+        panel.message = "Choose the CODEX_Encyclopedia folder (the one containing README.md and STRUCTURE.md)."
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        guard AppState.isCodexRoot(url) else {
+            NSSound.beep()
+            return
+        }
+        try? url.path.write(to: AppState.rootChoiceURL, atomically: true, encoding: .utf8)
+        projectRoot = url
+        selectedTab = nil
+        transientTab = nil
+        reloadTree()
+    }
+
     static func findProjectRoot() -> URL {
         if let override = ProcessInfo.processInfo.environment["CODEX_ROOT"],
            !override.isEmpty {
@@ -197,9 +250,21 @@ final class AppState: ObservableObject {
         }
         if let recorded = Bundle.main.url(forResource: "project_path", withExtension: nil),
            let s = try? String(contentsOf: recorded).trimmingCharacters(in: .whitespacesAndNewlines),
-           FileManager.default.fileExists(atPath: s + "/README.md") {
+           isCodexRoot(URL(fileURLWithPath: s)) {
             return URL(fileURLWithPath: s)
         }
+        // A folder the reader picked after the recorded one went missing.
+        if let s = try? String(contentsOf: rootChoiceURL).trimmingCharacters(in: .whitespacesAndNewlines),
+           isCodexRoot(URL(fileURLWithPath: s)) {
+            return URL(fileURLWithPath: s)
+        }
+        // Built from a checkout (Xcode ⌘R, `swift run`): this file's own path
+        // is baked in at compile time, and the codex is three folders above
+        // it — Codex_macOS/Sources/Codex/CodexApp.swift. Xcode puts the build
+        // in DerivedData, so the walk up from the bundle below never finds it.
+        var checkout = URL(fileURLWithPath: #filePath)
+        for _ in 0..<4 { checkout.deleteLastPathComponent() }
+        if isCodexRoot(checkout) { return checkout }
         let exe = Bundle.main.bundleURL
         var candidate = exe.deletingLastPathComponent()
         for _ in 0..<6 {
@@ -403,6 +468,8 @@ struct RootView: View {
                     } else {
                         ErrorView(message: "Couldn't read \(url.lastPathComponent)")
                     }
+                } else if !state.rootIsValid {
+                    MissingRootView()
                 } else {
                     WelcomeView()
                 }
@@ -425,6 +492,30 @@ struct RootView: View {
             }
             .animation(.easeOut(duration: 0.18), value: state.paletteVisible)
         }
+    }
+}
+
+private struct MissingRootView: View {
+    @EnvironmentObject var state: AppState
+    /// Redraw on a palette or text-scale change — see `Preferences.revision`.
+    @ObservedObject private var appearance = Preferences.shared
+
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: "folder.badge.questionmark")
+                .font(.system(size: 36)).foregroundColor(Theme.red)
+            Text("Codex can't find its folder")
+                .font(Theme.FontStyle.title).foregroundColor(Theme.text)
+            Text("It looked in \(state.projectRoot.path), which has no README.md and STRUCTURE.md. The folder may have been moved or deleted, or macOS may be blocking access to it.")
+                .foregroundColor(Theme.subtext)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: 460)
+            Button("Choose Codex Folder…") { state.chooseProjectRoot() }
+                .padding(.top, 4)
+        }
+        .padding(32)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Theme.base)
     }
 }
 

@@ -14,6 +14,38 @@
 
 ## Unreleased
 
+### Removed — dead weight
+
+- `Codex_LMS/`'s eleven pre-merge `*.jsx` module files (~660 KB) and
+  `merge-architecture-draft.mermaid`. Nothing imported them; `src/CoreApp.jsx`
+  is the single source. They remain in git history.
+- `requirements.txt` (`textual`, `rich`). The Python TUI it served is not in
+  the repository, and the audit scripts in `tools/` use only the standard library.
+
+### Fixed — Codex.app opening empty when its folder is gone
+
+`findProjectRoot()` fell back to the working directory (`/` when launched from
+Finder) if the recorded project folder had been moved, deleted, or blocked by
+macOS privacy protection, so the app opened with an empty sidebar and no
+explanation. It now shows "Codex can't find its folder" with a **Choose Codex
+Folder…** button (also in the Navigation menu), validates a folder by both
+`README.md` and `STRUCTURE.md`, and remembers the choice in
+`~/Library/Application Support/Codex/project_root`.
+
+### Added — open `Codex_macOS/Package.swift` in Xcode and run
+
+A build from Xcode or `swift run` now finds the codex folder from its own
+source path (`#filePath`) instead of walking up from DerivedData, and sets
+itself to a regular app so the window comes to the front. The macOS README
+gains an "Open it in Xcode" section.
+
+### Changed — installer refuses to run under `sudo`
+
+`Install Codex.command` and `package_app.sh` now stop with an explanation when
+run as root. `sudo ./Install\ Codex.command` built everything as root, leaving
+root-owned `.build/` and `Codex.app` in the checkout, and the script already
+asks for your password itself when it needs it.
+
 ### Fixed — macOS installer "Permission denied"
 
 `Codex_macOS/package_app.sh` was committed without its executable bit, so

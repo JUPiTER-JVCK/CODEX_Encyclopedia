@@ -19,8 +19,8 @@ whole of it: each of the four is drawn.
 | What it showed | Where it lives now |
 |---|---|
 | A 9-layer hardware ladder | [`00_Physics/README.md`](../00_Physics/README.md) — *Layer ladder* |
-| The 8 logic gates with truth tables | [`00d_Digital_Circuits/topics/logic_gates.md`](../00d_Digital_Circuits/topics/logic_gates.md) |
-| A DSLogic/sigrok decoder catalog | [`01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md`](../01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md) |
+| The 8 logic gates with truth tables | [`00d_Digital_Circuits/logic_gates.md`](../00d_Digital_Circuits/logic_gates.md) |
+| A DSLogic/sigrok decoder catalog | [`01_Circuit_Board/embedded_bus_protocols_lookup.md`](../01_Circuit_Board/embedded_bus_protocols_lookup.md) |
 | The Embedded Systems Roadmap v1.2.3 | [`18_Embedded_Systems/README.md`](../18_Embedded_Systems/README.md) |
 
 Two of the four were third-party works in any case — the roadmap poster is
@@ -35,10 +35,10 @@ shot, an oscilloscope capture. Those belong here.
 
 1. Save the file here as `lowercase_with_underscores.ext`. PNG, JPG and SVG
    are all fine.
-2. Reference it relatively, from a sub-section note:
+2. Reference it relatively, from a note in a layer folder:
 
    ```markdown
-   ![Alt text](../../_assets/your_file.png)
+   ![Alt text](../_assets/your_file.png)
    ```
 
 3. Pair it with a text equivalent — an ASCII diagram or a markdown table —
@@ -50,6 +50,6 @@ four above went unnoticed for a year because nothing checked; a fifth cannot.
 
 ## Not here
 
-PDFs live in the relevant layer's `references/` folder, not in this one —
-currently just `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf`.
+PDFs live in the folder of the layer they belong to, not in this one —
+currently just `18_Embedded_Systems/embedded_systems_full_roadmap_book.pdf`.
 See [`THIRD_PARTY.md`](../THIRD_PARTY.md) for its terms.

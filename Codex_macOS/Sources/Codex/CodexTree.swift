@@ -86,18 +86,8 @@ enum CodexTree {
     static let bands: [(String, [String])] = [
         ("Foundations",    ["00_", "00b_", "00c_", "00d_"]),
         ("Compute",        ["01_", "02_", "03_", "04_", "05_", "06_", "07_", "08_"]),
-        ("Network",        ["Network"]),
+        ("Network",        ["09_", "10_", "11_", "12_", "13_"]),
         ("Cross-cutting",  ["14_", "15_", "16_", "17_", "18_", "19_"]),
-    ]
-
-    static let subsectionOrder = ["references", "lessons", "languages", "man_pages", "topics", "protocols"]
-    static let pretty: [String: String] = [
-        "references": "References",
-        "lessons":    "Lessons",
-        "languages":  "Languages",
-        "man_pages":  "Manual Pages",
-        "topics":     "Topics",
-        "protocols":  "Protocols",
     ]
 
     static func build(root: URL) -> CodexNode {
@@ -117,21 +107,16 @@ enum CodexTree {
                                                kind: .band, children: topDocs))
         }
 
+        // Every layer is one folder at the root; bands are a grouping by
+        // numeric prefix, not directories.
         var allLayers: [String: URL] = [:]
         for d in topLevelLayerDirs(root: root) { allLayers[d.lastPathComponent] = d }
-        for d in networkLayerDirs(root: root)  { allLayers[d.lastPathComponent] = d }
 
         for (bandLabel, prefixes) in bands {
             let bandNode = CodexNode(label: bandLabel, kind: .band)
-            if bandLabel == "Network" {
-                for d in networkLayerDirs(root: root) {
-                    bandNode.children.append(layerNode(d))
-                }
-            } else {
-                for prefix in prefixes {
-                    for name in allLayers.keys.sorted() where name.hasPrefix(prefix) {
-                        bandNode.children.append(layerNode(allLayers[name]!))
-                    }
+            for prefix in prefixes {
+                for name in allLayers.keys.sorted() where name.hasPrefix(prefix) {
+                    bandNode.children.append(layerNode(allLayers[name]!))
                 }
             }
             if !bandNode.children.isEmpty {
@@ -147,25 +132,14 @@ enum CodexTree {
                   children: subsectionNodes(layerDir: dir))
     }
 
+    /// A layer is one folder: its page (README.md, shown as "Overview" and
+    /// holding all six sections) and its notes beside it. No sub-folders, so
+    /// every note is one row under its layer rather than two levels down.
     private static func subsectionNodes(layerDir: URL) -> [CodexNode] {
         var out: [CodexNode] = []
         let readme = layerDir.appendingPathComponent("README.md")
         if FileManager.default.fileExists(atPath: readme.path) {
             out.append(CodexNode(label: "Overview", url: readme, isFile: true, kind: .readme))
-        }
-        for sub in subsectionOrder {
-            let subDir = layerDir.appendingPathComponent(sub)
-            guard FileManager.default.fileExists(atPath: subDir.path) else { continue }
-            let files = listMd(in: subDir)
-            guard !files.isEmpty else { continue }
-            let children = files.map { f -> CodexNode in
-                let isIndex = f.lastPathComponent == "INDEX.md"
-                return CodexNode(label: prettyFilename(f.lastPathComponent),
-                                 url: f, isFile: true,
-                                 kind: isIndex ? .readme : .file)
-            }
-            out.append(CodexNode(label: pretty[sub] ?? sub,
-                                 url: subDir, kind: .section, children: children))
         }
         for f in listMd(in: layerDir) where f.lastPathComponent != "README.md" {
             out.append(CodexNode(label: prettyFilename(f.lastPathComponent),
@@ -176,8 +150,8 @@ enum CodexTree {
 
     /// The name to show where there is no surrounding context — the command
     /// palette, the tab strip, recents. Prefers the file's first H1, which for
-    /// a section index reads "Circuit Board — Languages" rather than the
-    /// "Overview" the sidebar wants, since 138 rows of "Overview" name nothing.
+    /// a layer page reads "02 — CPU" rather than the "Overview" the sidebar
+    /// wants, since 23 rows of "Overview" name nothing.
     ///
     /// Goes through `DocumentStore`'s title cache (keyed on path, mtime and
     /// size), so a palette redrawing on every keystroke is not re-reading files.
@@ -229,19 +203,7 @@ enum CodexTree {
             (try? $0.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true
                 && !$0.lastPathComponent.hasPrefix(".")
                 && !$0.lastPathComponent.hasPrefix("_")
-                // Network holds real content but is banded separately below,
-                // so it is not a top-level layer.
-                && $0.lastPathComponent != "Network"
                 && !nonContentDirs.contains($0.lastPathComponent)
-        }.sorted { $0.lastPathComponent < $1.lastPathComponent }
-    }
-
-    private static func networkLayerDirs(root: URL) -> [URL] {
-        let net = root.appendingPathComponent("Network")
-        guard let items = try? FileManager.default.contentsOfDirectory(at: net, includingPropertiesForKeys: [.isDirectoryKey]) else { return [] }
-        return items.filter {
-            (try? $0.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) == true
-                && !$0.lastPathComponent.hasPrefix(".")
         }.sorted { $0.lastPathComponent < $1.lastPathComponent }
     }
 

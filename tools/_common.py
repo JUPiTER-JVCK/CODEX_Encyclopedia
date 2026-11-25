@@ -17,7 +17,26 @@ One definition, five consumers.
 from __future__ import annotations
 
 import os
+import re
 from typing import Iterator
+
+# A layer folder: a directory at the repository root named with the codex's
+# numeric prefix (`02_CPU`, `00b_Devices`, `13_Network_Application`) and
+# holding a README.md, which is the layer's single page. Every layer sits at
+# this one depth -- there are no band directories and no sub-section folders
+# -- so a name test at the root is the whole definition.
+LAYER_RE = re.compile(r"^\d\d[b-d]?_[A-Za-z]")
+
+
+def layer_dirs(root: str) -> list[str]:
+    """Absolute paths of every layer folder, sorted by name."""
+    found = []
+    for name in sorted(os.listdir(root)):
+        path = os.path.join(root, name)
+        if (LAYER_RE.match(name) and os.path.isdir(path)
+                and os.path.isfile(os.path.join(path, "README.md"))):
+            found.append(path)
+    return found
 
 # Dependencies, build output, and version control: everything here either is
 # not ours or is regenerated, and both would swamp the real counts —
@@ -50,10 +69,8 @@ def walk_markdown(root: str) -> Iterator[tuple[str, str]]:
 def walk_dirs(root: str) -> Iterator[tuple[str, list[str], list[str]]]:
     """Yield (dirpath, subdirectory names, filenames) for each kept directory.
 
-    The same prune as walk_markdown, for the one audit that asks a question
-    about directories rather than files: diagram_audit finds layer folders by
-    shape, testing whether a directory holding a README.md also holds the
-    six codex sub-sections.
+    The same prune as walk_markdown, for callers that ask a question about
+    directories rather than files.
     """
     for dirpath, dirnames, filenames in os.walk(root):
         dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]

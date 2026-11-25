@@ -1,17 +1,18 @@
 # STRUCTURE — Conventions
 
 How this repository is organized and what a new note has to look like to fit.
-Current as of v3.2.
+Current as of the one-page-per-layer layout (see CHANGELOG, Unreleased).
 
 ## Repository layout
 
-The repository root **is** the codex root. Layer folders sit directly at the
-top level; the two apps live in their own directories beside them.
+The repository root **is** the codex root. Every layer — all 23, network
+layers included — is one folder directly at the top level; the two apps live
+in their own directories beside them. Bands (Foundations, Compute, Network,
+Cross-cutting) are a grouping by number, not directories.
 
 | Path | Contents | Convention |
 |------|----------|-----------|
-| `NN_Layer_Name/` | A codex layer | Numeric prefix, then `Title_Case` |
-| `Network/` | Layers 09–13, banded | Content, but not itself a layer |
+| `NN_Layer_Name/` | A codex layer: its page and its notes | Numeric prefix, then `Title_Case` |
 | `_assets/` | Reference images | Underscore prefix keeps it out of the layer list |
 | `Codex_macOS/` | SwiftUI reader source | Not codex content |
 | `Codex_LMS/` | React curriculum source | Not codex content |
@@ -31,29 +32,30 @@ Words are joined with underscores everywhere — `system_calls.md`, never
 | Kind | Case | Example |
 |------|------|---------|
 | Content notes | lowercase | `virtual_memory.md`, `logic_gates.md` |
-| Sub-section folders | lowercase | `topics/`, `man_pages/` |
 | Layer folders | numeric prefix + `Title_Case` | `05_OS_Kernel/`, `00b_Devices/` |
-| Entry-point files | `SCREAMING_CASE` | `INDEX.md`, `README.md` |
+| Layer pages | `SCREAMING_CASE` | `README.md` |
 | Root documents | `SCREAMING_CASE` | `LAYERS.md`, `STRUCTURE.md` |
-| Band and app folders | `Title_Case` | `Network/`, `Codex_macOS/` |
+| App folders | `Title_Case` | `Codex_macOS/`, `Codex_LMS/` |
 
 Layer folders take a two-digit prefix for sort order; the foundational layers
-below 01 use a letter suffix (`00b_`, `00c_`, `00d_`). Every sub-section
-folder has an `INDEX.md` as its entry point.
+below 01 use a letter suffix (`00b_`, `00c_`, `00d_`). A layer folder holds
+no sub-folders.
 
 ## Frontmatter
 
-**Content notes** carry YAML frontmatter. **Entry points do not** — `INDEX.md`
-and `README.md` are navigation, and their heading plus intro line already say
-what they are. Root documents (`LAYERS.md`, `STRUCTURE.md`, `CHANGELOG.md`)
+**Content notes** carry YAML frontmatter. **Layer pages do not** — a layer's
+`README.md` is navigation, and its heading plus intro line already say what
+it is. Root documents (`LAYERS.md`, `STRUCTURE.md`, `CHANGELOG.md`)
 are likewise exempt.
 
-That split is what the tree actually looks like: 105 notes carry frontmatter,
-and the 169 files without it are entry points and root documents. A note that
-teaches something needs the metadata; a file that lists links does not.
+A note that teaches something needs the metadata; a page that lists links
+does not. `tools/layer_audit.py` enforces the exemption for layer pages —
+five of the old section index pages had picked up frontmatter from a bulk
+edit before anything checked.
 
-`tools/title_audit.py` enforces the exemption — five `protocols/INDEX.md`
-files had picked up frontmatter from a bulk edit before it existed.
+The `section:` key still matters with the folders gone: it is what says a
+note is a topic, a man page or a lesson, and it decides which row of the
+layer page's *In this layer* table links it.
 
 A content note opens like this:
 
@@ -65,8 +67,8 @@ section: topics
 tags: [kernel, syscall, ABI, linux, posix]
 updated: 2026-05-19
 related:
-  - ../../06_System_Libraries/topics/libc.md
-  - ../protocols/posix.md
+  - ../06_System_Libraries/libc.md
+  - posix.md
 ---
 ```
 
@@ -79,35 +81,42 @@ without surrounding context — the command palette, the tab strip, recents and
 the inspector — so a heading buried under a prepended block leaves the file
 effectively unnamed in all four.
 
-## Section index titles
+## Layer pages
 
-Every `INDEX.md` in a sub-section folder is titled:
+Each layer folder has exactly one page, its `README.md`, and every note sits
+beside it. A reader is never more than one click from any note in the layer,
+and never more than two from the front page. The page is laid out:
 
+```text
+  # NN — Layer name                    H1 first, no frontmatter
+  > one-paragraph summary
+  ## In the stack / Across the stack   the diagram showing where it sits
+  ## At a glance                       description, languages, interfaces
+  ## What lives here
+  ## In this layer                     table: section → notes → gloss
+  ## Cross-references
+  ---
+  ## References                        the six sections, always all six,
+  ## Lessons                           always in this order, each `##`
+  ## Languages
+  ## Manual Pages
+  ## Topics
+  ## Protocols
 ```
-# <Layer> — <Section>
-```
 
-with an em dash, and `<Section>` taken from this fixed set:
+The six section headings are load-bearing: their anchors (`#references`,
+`#lessons`, `#languages`, `#manual-pages`, `#topics`, `#protocols`) are what
+every cross-link to a section targets — `../05_OS_Kernel/README.md#topics`.
+A section with nothing in it yet still keeps its heading, and says so.
+Sub-headings within a section start at `###`.
 
-| Folder | Section name |
-|--------|--------------|
-| `references/` | References |
-| `lessons/` | Lessons |
-| `languages/` | Languages |
-| `man_pages/` | Manual Pages |
-| `topics/` | Topics |
-| `protocols/` | Protocols |
+The *In this layer* table has one row per section, and links every note in
+the folder from the row matching its `section:` frontmatter. The front-page
+contents in the root `README.md` repeats those links, grouped by band.
 
-The layer name is spelled the same way across all six of a layer's indexes.
-
-The pattern exists because these 138 headings are what the palette lists: a
-qualifier like *(the big table)* or a synonym like *Tools* for `man_pages/`
-makes the set unsearchable by section. **Qualifiers belong in the intro line
-below the heading, not in it** — several carried real information (`Physics —
-Laws, Units, Constants` meant the layer has laws, not protocols), and that
-sentence moved down rather than being dropped.
-
-`tools/title_audit.py` checks all of this and gates in CI.
+`tools/layer_audit.py` checks all of this and gates in CI: the H1, the
+absent frontmatter, all six headings in order, every note linked from the
+table, and no sub-folder other than `_archive/`.
 
 ## Diagrams
 
@@ -144,7 +153,7 @@ Three rules, all enforced by `tools/diagram_audit.py`:
   wrapping it would break the command.
 
 A second style counts as a drawing: the RFC-style header layouts in
-`Network/*/protocols/`, ruled with `+-+-+-+-+`. They contain no box character
+the network layers' protocol notes, ruled with `+-+-+-+-+`. They contain no box character
 at all, and until the audit learned to see them, seven files of real diagrams
 scored as having none.
 
@@ -176,29 +185,34 @@ must sit under a band heading, every heading must carry a count, and the band
 counts must sum to the total — the band count was added after a PR
 description claimed it was enforced when it was not.
 
-## Sub-sections
+## Sections
 
-Each layer folder holds the same six, in this order:
+What each of a layer page's six sections holds:
 
-| Sub-section | `INDEX.md` format |
-|-------------|-------------------|
-| `references/` | Bulleted list grouped by Books / Papers / Datasheets / Online |
-| `lessons/` | Numbered ladder, beginner → advanced, with prerequisites |
-| `languages/` | Table: language · use at this layer · canonical toolchain |
-| `man_pages/` | Table: command · section · one-line purpose |
-| `topics/` | Bulleted list with a one-line gloss, each linking to a note |
-| `protocols/` | Table: protocol · spec/RFC · layer · status |
+| Section | Format |
+|---------|--------|
+| References | Bulleted list grouped by Books / Papers / Datasheets / Online |
+| Lessons | Numbered ladder, beginner → advanced, with prerequisites |
+| Languages | Table: language · use at this layer · canonical toolchain |
+| Manual Pages | Table: command · section · one-line purpose |
+| Topics | Bulleted list with a one-line gloss, each linking to a note |
+| Protocols | Table: protocol · spec/RFC · layer · status |
 
 ## Cross-links
 
-- Relative markdown links only: `../../05_OS_Kernel/topics/syscalls.md`.
+- Relative markdown links only: `../05_OS_Kernel/virtual_memory.md` for a
+  note, `../05_OS_Kernel/README.md#topics` for a section of a layer page,
+  `#lessons` within the same page.
 - **Link, don't duplicate.** Each subject has one canonical home.
 - A protocol lives in the layer that owns it *on the wire* — TCP in
-  `Network/12_Network_Transport/protocols/`, not in `05_OS_Kernel/`.
-- A link to a directory resolves to its `README.md`, then `INDEX.md`.
+  `12_Network_Transport/`, not in `05_OS_Kernel/`.
+- A link to a directory resolves to its `README.md`.
+- Label a link with what it opens — `[OS Kernel › Topics](…)`, or the
+  note's title — not with its path.
 
-Run `python3 tools/link_audit.py` after moving or renaming files — it
-resolves every relative link and exits non-zero on a breakage.
+Run `python3 tools/link_audit.py` after moving or renaming files or headings
+— it resolves every relative link and every `#anchor` (slugged as GitHub
+slugs headings), and exits non-zero on a breakage.
 
 ## Tags
 
@@ -216,7 +230,8 @@ Reserved prefixes:
 ## Status and lifecycle
 
 - `draft` → `stable` → `archived`, via the optional `status:` frontmatter key.
-- Archived notes move to `_archive/` inside their sub-section folder.
+- Archived notes move to `_archive/` inside their layer folder — the one
+  sub-folder a layer may hold, and the one the layer audit does not list.
 - Never overwrite a substantial rewrite — version it as `.v2.md`.
 
 ## Timestamps
@@ -262,8 +277,8 @@ and `ISSUE_TEMPLATE-old.md`. If you widen the exemption, add the case.
 
 ## Numbers in README.md
 
-README.md quotes counts about itself — markdown files, internal links,
-section indexes, files carrying a diagram. `stats_audit.py` checks each one
+README.md quotes counts about itself — notes, layer pages, markdown files,
+internal links, files carrying a diagram. `stats_audit.py` checks each one
 against the tree, so adding a note or a link means updating the number in the
 same commit.
 
@@ -283,6 +298,6 @@ which govern markdown. Each carries its own README:
 - [`Codex_LMS/README.md`](Codex_LMS/README.md) — Vite harness, storage adapter, smoke test
 
 One rule does cross the boundary: **anything either app hardcodes about the
-codex's shape** — directory exclusions, band groupings, sub-section ordering —
+codex's shape** — directory exclusions, band groupings by layer prefix —
 is a convention, and changing the tree means updating it. `CodexTree.swift`
 holds the macOS app's copy.

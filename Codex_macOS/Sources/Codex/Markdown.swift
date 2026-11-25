@@ -937,8 +937,7 @@ struct PageHero: View {
     }
 
     private func prettifyCrumb(_ s: String) -> String {
-        let mapped = CodexTree.pretty[s] ?? s
-        return mapped.split(separator: "_").map { piece -> String in
+        return s.split(separator: "_").map { piece -> String in
             piece.first?.isNumber == true ? String(piece) : piece.capitalized
         }.joined(separator: " ")
     }

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Check that the numbers README.md quotes about itself are still true.
 
-README.md ends with a "Currently:" block — 274 markdown files, 1011 internal
-links, 138 section indexes, 102 files carrying a diagram — and opens by
-describing the codex as 266 notes across 23 layer folders. Those are load
+README.md ends with a "Currently:" block — markdown files, internal links,
+files carrying a diagram — and opens by describing the codex as so many
+notes on 23 layer pages. Those are load
 bearing: they are the first thing a reader uses to decide whether the project
 is what it claims to be.
 
@@ -53,7 +53,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import _common  # noqa: E402
 import diagram_audit  # noqa: E402
 import link_audit  # noqa: E402
-import title_audit  # noqa: E402
 
 
 def measure(root: str) -> dict[str, int]:
@@ -69,18 +68,14 @@ def measure(root: str) -> dict[str, int]:
     layer_readmes = diagram_audit.layer_readmes(root)
     layer_dirs = [os.path.dirname(p) for p in layer_readmes]
 
-    # A "note" is markdown that lives inside a layer folder. That excludes the
-    # root documents (README, LAYERS, STRUCTURE, CHANGELOG), _assets/, tools/,
-    # and both applications — none of which is the reference.
+    # A "note" is markdown that lives inside a layer folder, other than the
+    # layer page itself. That excludes the 23 layer READMEs (counted as
+    # pages), the root documents, _assets/, tools/, and both applications.
     notes = sum(1 for path, _ in files
-                if any(path.startswith(d + os.sep) for d in layer_dirs))
+                if os.path.dirname(path) in layer_dirs
+                and os.path.basename(path) != "README.md")
 
     stats, broken, _ = link_audit.audit(root)
-
-    indexes = sum(1 for path, _ in files
-                  if os.path.basename(path) == "INDEX.md"
-                  and os.path.basename(os.path.dirname(path))
-                  in title_audit.CANONICAL)
 
     # Two diagram counts, because there are two scopes and conflating them
     # was itself a review finding. `diagrams` is every file in the tree that
@@ -102,7 +97,6 @@ def measure(root: str) -> dict[str, int]:
         "layers": len(layer_readmes),
         "links": stats["links"],
         "broken": len(broken),
-        "indexes": indexes,
         "diagrams": diagrams,
         "drawn": drawn,
         "scoped": scoped,
@@ -113,20 +107,18 @@ def measure(root: str) -> dict[str, int]:
 # (file, key, human label, pattern). The pattern must capture exactly one
 # number and must match exactly one place in the file.
 CLAIMS = [
-    ("README.md", "notes", "markdown notes",
-     r"(\d+) markdown notes across \d+ layer folders"),
-    ("README.md", "layers", "layer folders (in the codex row)",
-     r"\d+ markdown notes across (\d+) layer folders"),
-    ("README.md", "layers", "layer folders (in the layer model)",
-     r"^(\d+) layers in four bands"),
+    ("README.md", "notes", "notes",
+     r"(\d+) notes on \d+ layer pages"),
+    ("README.md", "layers", "layer pages (in the codex row)",
+     r"\d+ notes on (\d+) layer pages"),
+    ("README.md", "layers", "layers (in How it is organized)",
+     r"(\d+) layers in four bands"),
     ("README.md", "files", "markdown files",
      r"^- (\d+) markdown files$"),
     ("README.md", "links", "internal links",
      r"^- ([\d]+) internal links, \d+ broken$"),
     ("README.md", "broken", "broken links",
      r"^- [\d]+ internal links, (\d+) broken$"),
-    ("README.md", "indexes", "section indexes",
-     r"^- All (\d+) section indexes titled"),
     ("README.md", "diagrams", "files carrying a diagram (whole tree)",
      r"^- (\d+) files carry a diagram across the repository"),
     ("README.md", "drawn", "files carrying a diagram (audited scope)",

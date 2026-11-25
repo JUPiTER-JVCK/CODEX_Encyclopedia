@@ -144,7 +144,7 @@ private struct ResultRow: View {
                 RoundedRectangle(cornerRadius: 6, style: .continuous)
                     .fill(isSelected ? Theme.accent.opacity(0.22) : Theme.surface0)
                     .frame(width: 30, height: 30)
-                Image(systemName: rank.url.lastPathComponent == "INDEX.md" ? "list.bullet.rectangle" : "doc.text.fill")
+                Image(systemName: rank.url.lastPathComponent == "README.md" ? "list.bullet.rectangle" : "doc.text.fill")
                     .font(.system(size: 13, weight: .medium))
                     .foregroundColor(isSelected ? Theme.accent : Theme.overlay1)
             }

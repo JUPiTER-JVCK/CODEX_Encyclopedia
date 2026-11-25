@@ -6,7 +6,7 @@
   How to check conventions and open a pull request for the codex.
 
   ┌─── before opening a PR ───────────────────────────────────────────────┐
-  │  link_audit · table_audit · title_audit · diagram_audit              │
+  │  link_audit · table_audit · layer_audit · diagram_audit              │
   │  stats_audit · palette_audit — all run in CI on every PR             │
   └──────────────────────────────────────────────────────────────────────┘
 ```
@@ -29,10 +29,10 @@ knowing are the frontmatter block on content notes (`title`, `layer`,
 ### If you touched markdown
 
 ```sh
-python3 tools/link_audit.py --self-test   # H1 exemption covers templates only
-python3 tools/link_audit.py      # relative links resolve; every file has an H1
+python3 tools/link_audit.py --self-test   # H1 exemption; GitHub heading slugs
+python3 tools/link_audit.py      # links and #anchors resolve; every file has an H1
 python3 tools/table_audit.py     # pipe tables well-formed
-python3 tools/title_audit.py     # section indexes titled "<Layer> — <Section>"
+python3 tools/layer_audit.py     # one page per layer: six sections, every note linked
 python3 tools/diagram_audit.py --self-test && python3 tools/diagram_audit.py
 python3 tools/stats_audit.py     # README's own numbers still true
 python3 tools/palette_audit.py   # palettes match the schemes they name
@@ -41,7 +41,7 @@ python3 tools/palette_audit.py   # palettes match the schemes they name
 Each exits non-zero and names the file at fault. Where the fault has a line —
 a malformed table row, an over-wide diagram — you get the line too; where it
 does not, you get what identifies it instead: a broken link and its target, a
-section index and the section it should name, a README claim and the number
+layer page and the section or note it is missing, a README claim and the number
 the tree actually holds. No arguments needed — they find the repository root
 themselves.
 
@@ -94,14 +94,19 @@ swift build && swift build -c release
 ```
 
 Needs a Mac with the Xcode command-line tools. CI builds both configurations
-on `macos-14`, so a Linux contributor can let CI answer this one.
+on `macos-15`, so a Linux contributor can let CI answer this one.
 
 ## Adding to the codex
 
 - One note per concept, in the layer that owns the thing on the wire. Link
   rather than duplicate.
+- A new note goes **directly in its layer folder**, beside the layer's
+  `README.md` — no sub-folders — and gets a link in that page's *In this
+  layer* table, in the row for its section. `layer_audit.py` fails until it
+  does, and the front-page contents in the root `README.md` want the same
+  link added.
 - Content notes open with YAML frontmatter (`title`, `layer`, `section`,
-  `tags`, `updated`). Entry points — `INDEX.md`, `README.md` — carry none.
+  `tags`, `updated`). Layer pages and other `README.md` files carry none.
 - Diagrams are fenced ASCII, at most 90 columns. Not images: fenced text
   diffs, renders identically on GitHub and in the macOS reader, and survives
   a terminal. Every layer README needs one showing where its layer sits.

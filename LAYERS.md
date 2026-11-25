@@ -35,16 +35,16 @@ the foundational layers beneath the original "Circuit Board" row:
 
 ## Network Stack (OSI-aligned)
 
-> **Layout:** these five layers live inside [`Network/`](Network/) as a
-> named band. The other 18 layers sit flat at the repository root.
+> **Layout:** every layer, these five included, is one folder at the
+> repository root. The network band is a grouping, not a directory.
 
 | # | Layer | OSI | Description | Protocols | Example |
 |---|-------|-----|-------------|-----------|---------|
-| 09 | [Network Physical](Network/09_Network_Physical/) | L1 | Bits over a medium — copper, fiber, RF | 802.3 PHY, 802.11 PHY, DOCSIS | NIC encodes bits onto Cat6 |
-| 10 | [Network Data Link](Network/10_Network_DataLink/) | L2 | Frames between adjacent nodes | Ethernet, Wi-Fi MAC, ARP, VLAN, STP | Switch forwards frame by MAC |
-| 11 | [Network Internet](Network/11_Network_Internet/) | L3 | Packet routing between networks | IPv4, IPv6, ICMP, OSPF, BGP | Router selects path to dest IP |
-| 12 | [Network Transport](Network/12_Network_Transport/) | L4 | End-to-end delivery, reliability, flow | TCP, UDP, QUIC, SCTP | TCP three-way handshake |
-| 13 | [Network Application](Network/13_Network_Application/) | L5-7 | App-level protocols, sessions, data | HTTP, DNS, TLS, SSH, SMTP, IMAP | Browser issues `GET / HTTP/2` |
+| 09 | [Network Physical](09_Network_Physical/) | L1 | Bits over a medium — copper, fiber, RF | 802.3 PHY, 802.11 PHY, DOCSIS | NIC encodes bits onto Cat6 |
+| 10 | [Network Data Link](10_Network_DataLink/) | L2 | Frames between adjacent nodes | Ethernet, Wi-Fi MAC, ARP, VLAN, STP | Switch forwards frame by MAC |
+| 11 | [Network Internet](11_Network_Internet/) | L3 | Packet routing between networks | IPv4, IPv6, ICMP, OSPF, BGP | Router selects path to dest IP |
+| 12 | [Network Transport](12_Network_Transport/) | L4 | End-to-end delivery, reliability, flow | TCP, UDP, QUIC, SCTP | TCP three-way handshake |
+| 13 | [Network Application](13_Network_Application/) | L5-7 | App-level protocols, sessions, data | HTTP, DNS, TLS, SSH, SMTP, IMAP | Browser issues `GET / HTTP/2` |
 
 ## Cross-Cutting Layers
 
@@ -103,10 +103,10 @@ to promise was coming and what `_assets/README.md` already claimed was true.
 
 | What it showed | Where it lives now |
 |---|---|
-| A 9-layer hardware ladder | [00_Physics/README.md](00_Physics/README.md) — *Layer ladder*, in this codex's own layer names |
-| The 8 logic gates with truth tables | [00d/topics/logic_gates.md](00d_Digital_Circuits/topics/logic_gates.md) — symbols, per-gate tables, and all eight side by side |
-| A DSLogic/sigrok decoder catalog | [01/protocols/embedded_bus_protocols_lookup.md](01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md) — ~150 decoders in two tables |
-| The Embedded Systems Roadmap v1.2.3 | [18/README.md](18_Embedded_Systems/README.md) — four columns, transcribed in full |
+| A 9-layer hardware ladder | [Physics](00_Physics/README.md) — *Layer ladder*, in this codex's own layer names |
+| The 8 logic gates with truth tables | [Logic Gates Explained](00d_Digital_Circuits/logic_gates.md) — symbols, per-gate tables, and all eight side by side |
+| A DSLogic/sigrok decoder catalog | [Embedded Bus Protocols](01_Circuit_Board/embedded_bus_protocols_lookup.md) — ~150 decoders in two tables |
+| The Embedded Systems Roadmap v1.2.3 | [Embedded Systems](18_Embedded_Systems/README.md) — four columns, transcribed in full |
 
 See [`STRUCTURE.md`](STRUCTURE.md) on why a drawing in the source beats a
 picture of one, and [`_assets/README.md`](_assets/README.md) for the folder
@@ -114,7 +114,7 @@ that holds no images.
 
 ## Anchor PDFs
 
-- `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf` —
+- `18_Embedded_Systems/embedded_systems_full_roadmap_book.pdf` —
   currently a generated placeholder, not the real roadmap book. Original at
   [github.com/m3y54m/Embedded-Engineering-Roadmap](https://github.com/m3y54m/Embedded-Engineering-Roadmap)
   (Meysam Parvizi, CC BY-SA 4.0).

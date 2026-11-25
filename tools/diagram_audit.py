@@ -95,16 +95,12 @@ MAX_WIDTH = 90
 # a diagram fence carries *some* tag, not that it carries that one.
 #
 # The narrower rule would be wrong here, and measurably so:
-# `04_Device_Drivers/man_pages/device_commands.md:198` is a ```bash block of
+# `04_Device_Drivers/device_commands.md:198` is a ```bash block of
 # real shell whose comments quote `lsblk` tree output, box characters and
 # all. Retagging it ```text would be a lie about the block. A tag someone
 # chose is a decision; an absent tag is the omission this check is for.
 
 CODE_SPAN_RE = re.compile(r"`[^`\n]*`")
-
-# A layer folder is one holding a README plus at least one sub-section.
-SUBSECTIONS = {"references", "lessons", "languages", "man_pages", "topics",
-               "protocols"}
 
 # Directories that are not the codex: the two applications, the audit scripts
 # themselves, GitHub templates, and the asset folder. Their markdown is
@@ -270,12 +266,8 @@ def audit_file(path: str,
 
 
 def layer_readmes(root: str) -> list[str]:
-    """Every layer folder's README.md, found by shape rather than by name."""
-    found = []
-    for dirpath, dirnames, filenames in _common.walk_dirs(root):
-        if "README.md" in filenames and SUBSECTIONS & set(dirnames):
-            found.append(os.path.join(dirpath, "README.md"))
-    return sorted(found)
+    """Every layer folder's README.md -- the one page each layer has."""
+    return [os.path.join(d, "README.md") for d in _common.layer_dirs(root)]
 
 
 def wants_diagram(rel: str) -> bool:
@@ -562,71 +554,71 @@ PLAIN = "# Heading\n\nProse only.\n"
 COVERAGE_CASES = [
     (
         "a layer README with no diagram faults once, not twice",
-        {"L/README.md": PLAIN, "L/topics/INDEX.md": DIAGRAM},
+        {"01_L/README.md": PLAIN, "01_L/note.md": DIAGRAM},
         "# 0 files remain.\n",
-        ["NO DIAGRAM | L/README.md a layer overview should show"],
+        ["NO DIAGRAM | 01_L/README.md a layer overview should show"],
     ),
     (
         "a layer README cannot be backlogged out of that",
-        {"L/README.md": PLAIN, "L/topics/INDEX.md": DIAGRAM},
-        "# 0 files remain.\n\n# Band (1)\nL/README.md\n",
-        ["BACKLOG STALE | L/README.md is a layer README and cannot be backlogged",
-         "NO DIAGRAM | L/README.md a layer overview should show"],
+        {"01_L/README.md": PLAIN, "01_L/note.md": DIAGRAM},
+        "# 0 files remain.\n\n# Band (1)\n01_L/README.md\n",
+        ["BACKLOG STALE | 01_L/README.md is a layer README and cannot be backlogged",
+         "NO DIAGRAM | 01_L/README.md a layer overview should show"],
     ),
     (
         "an ordinary file's gap is excused by a backlog line",
-        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
-        "# 1 files remain.\n\n# Band (1)\nL/topics/INDEX.md\n",
+        {"01_L/README.md": DIAGRAM, "01_L/note.md": PLAIN},
+        "# 1 files remain.\n\n# Band (1)\n01_L/note.md\n",
         [],
     ),
     (
         "an unlisted gap is not",
-        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
+        {"01_L/README.md": DIAGRAM, "01_L/note.md": PLAIN},
         "# 1 files remain.\n",
-        ["NO DIAGRAM | L/topics/INDEX.md no diagram, and not listed in"],
+        ["NO DIAGRAM | 01_L/note.md no diagram, and not listed in"],
     ),
     (
         "and the header count is checked against it",
-        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
-        "# 0 files remain.\n\n# Band (1)\nL/topics/INDEX.md\n",
+        {"01_L/README.md": DIAGRAM, "01_L/note.md": PLAIN},
+        "# 0 files remain.\n\n# Band (1)\n01_L/note.md\n",
         ["BACKLOG STALE | header claims 0 files remain, really 1"],
     ),
     (
         "a backlog line for a file that has one is stale",
-        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": DIAGRAM},
-        "# 1 files remain.\n\n# Band (1)\nL/topics/INDEX.md\n",
-        ["BACKLOG STALE | L/topics/INDEX.md has a diagram now",
+        {"01_L/README.md": DIAGRAM, "01_L/note.md": DIAGRAM},
+        "# 1 files remain.\n\n# Band (1)\n01_L/note.md\n",
+        ["BACKLOG STALE | 01_L/note.md has a diagram now",
          "BACKLOG STALE | header claims 1 files remain, really 0"],
     ),
     (
         "a band heading's own count is checked too",
-        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
-        "# 1 files remain.\n\n# Band (2)\nL/topics/INDEX.md\n",
+        {"01_L/README.md": DIAGRAM, "01_L/note.md": PLAIN},
+        "# 1 files remain.\n\n# Band (2)\n01_L/note.md\n",
         ["BACKLOG STALE | band \"Band\" claims 2, lists 1"],
     ),
     (
         "and passes when it agrees",
-        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
-        "# 1 files remain.\n\n# Band (1)\nL/topics/INDEX.md\n",
+        {"01_L/README.md": DIAGRAM, "01_L/note.md": PLAIN},
+        "# 1 files remain.\n\n# Band (1)\n01_L/note.md\n",
         [],
     ),
     (
         "a band heading that lost its count is a fault, not a free pass",
-        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
-        "# 1 files remain.\n\n# Band\nL/topics/INDEX.md\n",
+        {"01_L/README.md": DIAGRAM, "01_L/note.md": PLAIN},
+        "# 1 files remain.\n\n# Band\n01_L/note.md\n",
         ["BACKLOG STALE | band \"Band\" heading carries no (N) count"],
     ),
     (
         "an entry under no heading at all is a fault too",
-        {"L/README.md": DIAGRAM, "L/topics/INDEX.md": PLAIN},
-        "# 1 files remain.\nL/topics/INDEX.md\n",
+        {"01_L/README.md": DIAGRAM, "01_L/note.md": PLAIN},
+        "# 1 files remain.\n01_L/note.md\n",
         ["BACKLOG STALE | 1 entries sit under no band heading",
          "BACKLOG STALE | bands account for 0 of 1 entries"],
     ),
     (
         "an image present under the audited root is found there",
-        {"L/README.md": DIAGRAM + "\nSee `_assets/present.png`.\n",
-         "L/topics/INDEX.md": DIAGRAM, "_assets/present.png": "not really a png"},
+        {"01_L/README.md": DIAGRAM + "\nSee `_assets/present.png`.\n",
+         "01_L/note.md": DIAGRAM, "_assets/present.png": "not really a png"},
         "# 0 files remain.\n",
         [],
     ),

@@ -6,6 +6,12 @@ contains it, and reports the ones that do not exist. Inline code spans are
 stripped first, so a syntax example like `[text](path.md)` in prose is not
 mistaken for a real link.
 
+A link carrying an anchor -- `#topics`, `../05_OS_Kernel/README.md#topics` --
+must also land on a heading that exists, slugged the way GitHub slugs it.
+Every layer keeps its six sections on one page, so cross-links target
+sections by anchor; without this check a renamed heading would leave every
+one of them silently opening the top of the page instead.
+
     python3 tools/link_audit.py            # summary + any breakages
     python3 tools/link_audit.py --verbose  # also list every external link
 
@@ -68,15 +74,20 @@ H1_EXEMPT_CASES = [
 
 
 def self_test() -> int:
-    """Assert the H1 exemption covers the templates and nothing adjacent."""
+    """Assert the H1 exemption boundary and the heading slugs."""
     bad = 0
     for rel, want in H1_EXEMPT_CASES:
         got = needs_h1(rel)
         ok = got == want
         bad += not ok
         print(f"  {'ok  ' if ok else 'FAIL'}  needs_h1={got!s:5s}  {rel}")
-    total = len(H1_EXEMPT_CASES)
-    print(f"\n{total - bad}/{total} H1 exemption cases pass")
+    for heading, want in SLUG_CASES:
+        got = slugify(heading)
+        ok = got == want
+        bad += not ok
+        print(f"  {'ok  ' if ok else 'FAIL'}  slug={got!r:32s} {heading!r}")
+    total = len(H1_EXEMPT_CASES) + len(SLUG_CASES)
+    print(f"\n{total - bad}/{total} H1 exemption and slug cases pass")
     return 1 if bad else 0
 
 
@@ -96,6 +107,65 @@ def strip_code(text: str) -> str:
             continue
         out.append("" if fenced else CODE_SPAN_RE.sub("", line))
     return "\n".join(out)
+
+
+HEADING_RE = re.compile(r"^(#{1,6})\s+(.*?)\s*#*\s*$")
+HTML_ANCHOR_RE = re.compile(r"""<a\s+(?:id|name)=["']([^"']+)["']""")
+INLINE_LINK_RE = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+
+
+def slugify(text: str) -> str:
+    """A heading's anchor, as GitHub generates it.
+
+    Link syntax keeps only its text; then lowercase, drop everything that is
+    not a letter, mark, number, connector, space or hyphen, and turn spaces
+    into hyphens. Python's \\w covers letters, numbers and the underscore.
+    """
+    text = INLINE_LINK_RE.sub(r"\1", text).lower()
+    text = "".join(c for c in text if c.isalnum() or c in "_- ")
+    return text.replace(" ", "-")
+
+
+# Headings that exist in this codex, and the anchors GitHub gives them.
+SLUG_CASES = [
+    ("Manual Pages", "manual-pages"),
+    ("In this layer", "in-this-layer"),
+    ("Firmware / BIOS — Topics", "firmware--bios--topics"),
+    ("Algorithms & Data Structures", "algorithms--data-structures"),
+    ("`perf` and [eBPF](x.md)", "perf-and-ebpf"),
+    ("I²C / SPI", "i²c--spi"),
+]
+
+
+_anchor_cache: dict[str, set[str]] = {}
+
+
+def anchors_in(path: str) -> set[str]:
+    """Every anchor a file defines: heading slugs (with GitHub's -1, -2
+    suffixes for repeats) plus explicit <a id> / <a name> targets."""
+    if path in _anchor_cache:
+        return _anchor_cache[path]
+    with open(path, encoding="utf-8") as fh:
+        raw = fh.read()
+    found: set[str] = set()
+    counts: dict[str, int] = {}
+    fenced = False
+    for line in raw.split("\n"):
+        if line.lstrip().startswith("```"):
+            fenced = not fenced
+            continue
+        if fenced:
+            continue
+        found.update(HTML_ANCHOR_RE.findall(line))
+        m = HEADING_RE.match(line)
+        if not m:
+            continue
+        slug = slugify(m.group(2))
+        n = counts.get(slug, 0)
+        counts[slug] = n + 1
+        found.add(slug if n == 0 else f"{slug}-{n}")
+    _anchor_cache[path] = found
+    return found
 
 
 def markdown_files(root: str) -> list[str]:
@@ -124,20 +194,29 @@ def audit(root: str) -> tuple[dict, list, list]:
                     continue
                 if href.startswith("#"):
                     stats["anchors"] += 1
+                    if urllib.parse.unquote(href[1:]) not in anchors_in(path):
+                        broken.append((rel, href + "  (no such heading)"))
                     continue
 
                 stats["images" if is_image else "links"] += 1
-                target = urllib.parse.unquote(href.split("#")[0])
+                target, _, anchor = href.partition("#")
+                target = urllib.parse.unquote(target)
                 if not target:
                     continue
 
                 resolved = os.path.normpath(
                     os.path.join(os.path.dirname(path), target)
                 )
-                if os.path.exists(resolved):
+                if not os.path.exists(resolved):
+                    broken.append((rel, href))
                     continue
-
-                broken.append((os.path.relpath(path, root), href))
+                if anchor:
+                    if os.path.isdir(resolved):
+                        resolved = os.path.join(resolved, "README.md")
+                    if (resolved.endswith(".md") and os.path.isfile(resolved)
+                            and urllib.parse.unquote(anchor)
+                            not in anchors_in(resolved)):
+                        broken.append((rel, href + "  (no such heading)"))
 
     return stats, broken, no_h1
 

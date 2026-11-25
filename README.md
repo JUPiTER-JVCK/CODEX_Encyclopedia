@@ -7,24 +7,14 @@
 
 **Version 3.6** · see [CHANGELOG.md](CHANGELOG.md)
 
-## What's in here
+## How it is organized
 
-Three components, each usable on its own:
-
-| Component | What it is | Language |
-|-----------|-----------|----------|
-| **The codex** | 266 markdown notes across 23 layer folders — the reference itself | Markdown |
-| **[`Codex_macOS/`](Codex_macOS/README.md)** | Native macOS reader for the codex | SwiftUI |
-| **[`Codex_LMS/`](Codex_LMS/README.md)** | CORE — a seven-phase interactive curriculum | React + Vite |
-
-The codex is a **reference**, organized by where a thing sits in the stack.
-CORE is a **course**, organized by the order you'd learn things in. They
-overlap in subject matter and are deliberately separate in structure.
-
-## The layer model
-
-23 layers in four bands. [LAYERS.md](LAYERS.md) has the full table with
-languages, interfaces, and example flows per layer.
+**One folder and one page per layer.** 23 layers in four bands, each a
+folder at the top of the repository. Open a layer and its page has
+everything: an overview, an *In this layer* table linking every note, then
+the layer's six sections (References, Lessons, Languages, Manual Pages,
+Topics, Protocols) on the same page. Every note is one click from its layer
+page, and two from here.
 
 ```text
                                           ┌─ 14 Security
@@ -42,315 +32,181 @@ languages, interfaces, and example flows per layer.
  00 Physics
 ```
 
-Every layer folder holds the same six sub-sections:
+[LAYERS.md](LAYERS.md) has the same map as one table, with the languages,
+interfaces and an example flow for each layer.
 
-| Sub-section | What lives here |
-|-------------|-----------------|
-| `references/` | Books, papers, datasheets, vendor docs |
-| `lessons/` | Tutorials, walkthroughs, lab notes |
-| `languages/` | Languages used at this layer, with a lookup table |
-| `man_pages/` | CLI tools and system utilities |
-| `topics/` | Concept notes — the "what is this and why" entries |
-| `protocols/` | Protocols, specs, standards, RFCs |
+| Component | What it is |
+|-----------|-----------|
+| **The codex** | 105 notes on 23 layer pages — the reference itself, in markdown |
+| **[Codex_macOS](Codex_macOS/README.md)** | A native SwiftUI reader for the codex |
+| **[Codex_LMS](Codex_LMS/README.md)** | CORE — a seven-phase interactive course (React + Vite) |
 
-Each has an `INDEX.md` as its entry point. Start at
-[LAYERS.md](LAYERS.md) for the map, then drill into any layer's `README.md`.
+The codex is a **reference**, organized by where a thing sits in the stack.
+CORE is a **course**, organized by the order you'd learn things in.
 
-## Running the macOS reader
+## Contents
 
-**There is no app in the download.** This repository holds source; `Codex.app`
-is a build artifact and is gitignored. Nothing here is double-clickable until
-something builds it. That something is one file:
+### Foundations
 
-> **Open `Codex_macOS/` and double-click `Install Codex.command`.**
+*The physics and circuits everything else is built on.*
 
-It compiles the reader, draws the icon, and puts `Codex.app` in
-`/Applications`. After that it is an ordinary Mac app: **double-click it in
-Applications, the Dock or Launchpad.** No terminal, and no rebuild until the
-source changes.
+| # | Layer | Notes |
+|---|-------|-------|
+| 00 | **[Physics](00_Physics/)** | [Interactive labs](00_Physics/physics_labs.md) |
+| 00b | **[Devices](00b_Devices/)** | [Interactive labs](00b_Devices/device_labs.md) · [MOSFET Cross-Section and Operation](00b_Devices/mosfet_cross_section.md) |
+| 00c | **[Analog Circuits](00c_Analog_Circuits/)** | [Interactive labs](00c_Analog_Circuits/analog_labs.md) · [Op-Amp Configurations](00c_Analog_Circuits/opamp_configurations.md) |
+| 00d | **[Digital Circuits](00d_Digital_Circuits/)** | [Interactive labs](00d_Digital_Circuits/digital_labs.md) · [Logic Gates Explained](00d_Digital_Circuits/logic_gates.md) |
 
-Two things to expect the first time, both of which the installer also warns
-about as it runs:
+### Compute stack
 
-- **Gatekeeper will probably refuse the first double-click** — "cannot be
-  opened because it is from an unidentified developer" — because macOS
-  quarantines files downloaded from the internet. Right-click the file →
-  **Open** → **Open**. Once, and it is remembered. Avoiding this entirely
-  would need a paid Developer ID and notarization, which this project does
-  not have.
-- **It asks for your password**, because copying into `/Applications` needs
-  `sudo`. That prompt comes from the install step and nothing else.
+*From the circuit board up to the application.*
 
-Requires macOS 13+ and the Xcode command-line tools; the installer stops with
-instructions rather than a cryptic `xcrun` error if the tools are missing.
+| # | Layer | Notes |
+|---|-------|-------|
+| 01 | **[Circuit Board](01_Circuit_Board/)** | [Interactive labs](01_Circuit_Board/pcb_labs.md) · [Embedded Bus Protocols](01_Circuit_Board/embedded_bus_protocols_lookup.md) |
+| 02 | **[CPU](02_CPU/)** | [Interactive labs](02_CPU/cpu_labs.md) · [AArch64 (ARM64) Assembly](02_CPU/arm64_asm.md) · [RISC-V Assembly](02_CPU/riscv_asm.md) · [x86-64 Assembly](02_CPU/x86_64_asm.md) · [CPU Inspection Commands](02_CPU/cpu_inspection.md) · [CPU Pipeline](02_CPU/cpu_pipeline.md) |
+| 03 | **[Firmware / BIOS](03_Firmware_BIOS/)** | [Interactive labs](03_Firmware_BIOS/firmware_labs.md) · [Firmware Management Commands](03_Firmware_BIOS/firmware_tools.md) · [UEFI Boot Flow](03_Firmware_BIOS/uefi_boot_flow.md) |
+| 04 | **[Device Drivers](04_Device_Drivers/)** | [Interactive labs](04_Device_Drivers/driver_labs.md) · [Device & Driver Management Commands](04_Device_Drivers/device_commands.md) · [Linux Driver Model](04_Device_Drivers/driver_model.md) |
+| 05 | **[OS Kernel](05_OS_Kernel/)** | [Interactive labs](05_OS_Kernel/kernel_labs.md) · [Filesystem Commands](05_OS_Kernel/filesystem_commands.md) · [Memory Management Commands](05_OS_Kernel/memory_commands.md) · [Process Management Commands](05_OS_Kernel/process_commands.md) · [Tracing & Debugging Commands](05_OS_Kernel/tracing_commands.md) · [Virtual Memory](05_OS_Kernel/virtual_memory.md) · [POSIX Syscalls](05_OS_Kernel/posix_syscalls.md) |
+| 06 | **[System Libraries](06_System_Libraries/)** | [Interactive labs](06_System_Libraries/library_labs.md) · [Debugging Commands](06_System_Libraries/debug_commands.md) · [Linker & Binary Inspection Commands](06_System_Libraries/linker_commands.md) · [Libc Variants](06_System_Libraries/libc_variants.md) |
+| 07 | **[Runtime Environment](07_Runtime_Environment/)** | [Interactive labs](07_Runtime_Environment/runtime_labs.md) · [Container Management Commands](07_Runtime_Environment/container_commands.md) · [Virtual Machine Management Commands](07_Runtime_Environment/vm_commands.md) · [Container Internals](07_Runtime_Environment/container_internals.md) · [OCI Runtime](07_Runtime_Environment/oci_runtime.md) |
+| 08 | **[User Applications](08_User_Applications/)** | [Interactive labs](08_User_Applications/app_labs.md) · [Bash / Shell](08_User_Applications/bash.md) · [C](08_User_Applications/c.md) · [C++](08_User_Applications/cpp.md) · [C#](08_User_Applications/csharp.md) · [Go](08_User_Applications/go.md) · [Java](08_User_Applications/java.md) · [JavaScript](08_User_Applications/javascript.md) · [Kotlin](08_User_Applications/kotlin.md) · [Lua](08_User_Applications/lua.md) · [Python](08_User_Applications/python.md) · [Ruby](08_User_Applications/ruby.md) · [Rust](08_User_Applications/rust.md) · [SQL](08_User_Applications/sql.md) · [Swift](08_User_Applications/swift.md) · [TypeScript](08_User_Applications/typescript.md) · [Network Tools](08_User_Applications/network_tools.md) · [Package Manager Commands](08_User_Applications/package_managers.md) · [Shell & Terminal Multiplexer Commands](08_User_Applications/shell_commands.md) · [Text Processing & File Search Commands](08_User_Applications/text_processing.md) |
 
-### From a terminal instead
+### Network
+
+*The OSI-aligned stack, physical medium to application protocol.*
+
+| # | Layer | Notes |
+|---|-------|-------|
+| 09 | **[Network Physical (OSI L1)](09_Network_Physical/)** | [Interactive labs](09_Network_Physical/physical_labs.md) |
+| 10 | **[Network Data Link (OSI L2)](10_Network_DataLink/)** | [Interactive labs](10_Network_DataLink/datalink_labs.md) · [Data Link Layer Commands](10_Network_DataLink/datalink_commands.md) · [Ethernet](10_Network_DataLink/ethernet.md) |
+| 11 | **[Network Internet (OSI L3)](11_Network_Internet/)** | [Interactive labs](11_Network_Internet/internet_labs.md) · [Internet Layer Commands](11_Network_Internet/ip_commands.md) · [The OSI Model](11_Network_Internet/osi_model.md) · [BGP](11_Network_Internet/bgp.md) · [IPv4 / IPv6](11_Network_Internet/ipv4_ipv6.md) · [OSPF](11_Network_Internet/ospf.md) |
+| 12 | **[Network Transport (OSI L4)](12_Network_Transport/)** | [Interactive labs](12_Network_Transport/transport_labs.md) · [Transport Layer Tools](12_Network_Transport/transport_tools.md) · [QUIC](12_Network_Transport/quic.md) · [TCP](12_Network_Transport/tcp.md) · [UDP](12_Network_Transport/udp.md) |
+| 13 | **[Network Application (OSI L5–L7)](13_Network_Application/)** | [Interactive labs](13_Network_Application/application_labs.md) · [Application Layer Protocol Tools](13_Network_Application/app_protocol_tools.md) · [DHCP](13_Network_Application/dhcp.md) · [DNS](13_Network_Application/dns.md) · [HTTP](13_Network_Application/http.md) · [MQTT](13_Network_Application/mqtt.md) · [OAuth 2.0 / 2.1](13_Network_Application/oauth2.md) · [SSH](13_Network_Application/ssh.md) · [TLS](13_Network_Application/tls.md) |
+
+### Cross-cutting
+
+*Domains that intersect many layers at once.*
+
+| # | Layer | Notes |
+|---|-------|-------|
+| 14 | **[Security](14_Security/)** | [Interactive labs](14_Security/security_labs.md) · [Security Tools Reference](14_Security/security_tools.md) · [IPsec](14_Security/tls_ipsec.md) |
+| 15 | **[AI / ML](15_AI_ML/)** | [Interactive labs](15_AI_ML/ml_labs.md) · [AI/ML Tools Reference](15_AI_ML/ml_tools.md) · [Transformer Architecture](15_AI_ML/transformer_architecture.md) |
+| 16 | **[RF / Wireless](16_RF_Wireless/)** | [Interactive labs](16_RF_Wireless/rf_labs.md) · [RF & Wireless Tools Reference](16_RF_Wireless/rf_tools.md) · [Bluetooth & BLE](16_RF_Wireless/bluetooth.md) · [LoRaWAN](16_RF_Wireless/lorawan.md) · [Wi-Fi](16_RF_Wireless/wifi.md) |
+| 17 | **[Algorithms & Data Structures](17_Algorithms_DSA/)** | [Interactive labs](17_Algorithms_DSA/dsa_labs.md) · [100 Must Do LeetCode Problems](17_Algorithms_DSA/100_must_do.md) · [Canonical 100-problem study list](17_Algorithms_DSA/canonical_lists.md) |
+| 18 | **[Embedded Systems](18_Embedded_Systems/)** | [Roadmap book (PDF placeholder)](18_Embedded_Systems/embedded_systems_full_roadmap_book.pdf) · [Interactive labs](18_Embedded_Systems/embedded_labs.md) · [Embedded C](18_Embedded_Systems/embedded_c.md) · [Embedded Python (MicroPython / CircuitPython)](18_Embedded_Systems/embedded_python.md) · [Embedded Rust](18_Embedded_Systems/embedded_rust.md) · [Embedded Systems Tools Reference](18_Embedded_Systems/embedded_tools.md) · [I2C and SPI](18_Embedded_Systems/i2c_spi.md) · [UART](18_Embedded_Systems/uart.md) |
+| 19 | **[Industrial & Automotive Protocols](19_Industrial_Protocols/)** | [Interactive labs](19_Industrial_Protocols/industrial_labs.md) · [Modbus](19_Industrial_Protocols/modbus.md) · [OPC UA](19_Industrial_Protocols/opc_ua.md) |
+
+### Good places to start
+
+- [100 must-do interview problems](17_Algorithms_DSA/100_must_do.md),
+  mapped to LeetCode numbers
+- [Logic gates](00d_Digital_Circuits/logic_gates.md) — full truth-table reference
+- [Embedded bus protocols](01_Circuit_Board/embedded_bus_protocols_lookup.md)
+  — ~150 DSLogic/sigrok decoders mapped to the layers that own them
+- [The OSI model](11_Network_Internet/osi_model.md) — how the network layers fit
+- [Virtual memory](05_OS_Kernel/virtual_memory.md) and
+  [the CPU pipeline](02_CPU/cpu_pipeline.md) — the two notes most others lean on
+
+## The apps
+
+**macOS reader.** Open `Codex_macOS/` and double-click
+`Install Codex.command`; it builds the reader and puts `Codex.app` in
+`/Applications`. Gatekeeper will refuse the first launch (right-click →
+**Open**, once) and the copy asks for your password. Requires macOS 13+ and
+the Xcode command-line tools. Terminal and Xcode routes:
+[Codex_macOS/README.md](Codex_macOS/README.md#install-it).
+
+**CORE.** Needs Node 20.19+ or 22.12+. Seven phases, 43 topics, 222
+chapters, and something to manipulate in every topic — logic gates, a subnet
+calculator, a CPU cycle stepper, the JS event loop and more. Progress
+persists to `localStorage`. Details: [Codex_LMS/README.md](Codex_LMS/README.md).
 
 ```sh
-# One-time
-sudo xcodebuild -license accept
-xcode-select --install
-
-# Build once and put Codex in /Applications
-./Codex_macOS/package_app.sh --icon --install
+cd Codex_LMS && npm install && npm run dev
 ```
-
-`Install Codex.command` is a Finder-shaped door onto exactly this command, so
-the two routes do the same work. `--install` ad-hoc signs the bundle so
-Gatekeeper allows it and refreshes Launch Services so Spotlight finds it
-immediately.
-
-`--icon` forces a fresh AppIcon. It matters on the first run after upgrading:
-the script will otherwise reuse a cached `Codex.app.icon-backup/AppIcon.icns`
-if one exists, and on machines that built an earlier version that cache holds
-the old blank icon. It says so when it reuses one.
-
-Other modes: `--run` (build, then open it), `--debug` (faster build), or no
-flag to build `./Codex.app` without launching.
-
-The icon is drawn at build time by `Codex_macOS/Sources/RenderIcon` — the same
-`books.vertical.fill` mark and gradient the app's own Welcome screen uses, so
-the Dock matches the window. It needs nothing beyond the Swift toolchain you
-already installed to build the app, and because it is a real build target
-rather than a script fragment, CI type-checks it on every pull request.
-
-The app finds the codex by checking, in order: the `$CODEX_ROOT` environment
-variable, the `project_path` resource recorded in the bundle at build time,
-a walk up from the executable looking for `README.md` + `STRUCTURE.md`, then
-the working directory. So the `.app` keeps working after you move it.
-
-Full feature list and source layout: [`Codex_macOS/README.md`](Codex_macOS/README.md).
-
-## Running CORE
-
-Requires Node 20.19+ or 22.12+ — what Vite 8 declares in its `engines`.
-`Codex_LMS/package.json` repeats that floor and `.npmrc` sets
-`engine-strict=true`, so an unsupported Node fails the install with a clear
-message instead of only warning and breaking later.
-
-```sh
-cd Codex_LMS
-npm install
-npm run dev
-```
-
-Seven phases, 43 topics, 222 chapters — and **every topic has something to
-manipulate**: logic gates, a subnet calculator, a CPU cycle stepper, a call
-stack, the JS event loop, a vim mode machine, a query builder and thirty more.
-Plus a glossary, a live code playground and spaced review. Progress persists
-to `localStorage`.
-
-Details: [`Codex_LMS/README.md`](Codex_LMS/README.md).
 
 ## Repository layout
 
 ```text
-CODEX_Encyclopedia-/
-├── README.md              ← this file
+CODEX_Encyclopedia/
+├── README.md              ← this page: contents of the whole codex
 ├── LAYERS.md              ← master layer table
 ├── STRUCTURE.md           ← conventions: naming, frontmatter, cross-links
 ├── CONTRIBUTING.md        ← how to check your change before a PR
-├── CHANGELOG.md           ← version history
-├── SECURITY.md            ← reporting a vulnerability
-├── LICENSE                ← MIT — apps and tooling
-├── LICENSE-docs           ← CC BY-SA 4.0 — the codex
-├── THIRD_PARTY.md         ← attribution: colour schemes, PDFs, fonts
+├── CHANGELOG.md · SECURITY.md · THIRD_PARTY.md
+├── LICENSE (MIT) · LICENSE-docs (CC BY-SA 4.0)
 ├── _assets/               ← images, and why there are none
 │
-├── 00_Physics/            ─┐
-├── 00b_Devices/            │  Foundations
-├── 00c_Analog_Circuits/    │
-├── 00d_Digital_Circuits/  ─┘
+├── 00_Physics/            ← one folder per layer, 00 through 19:
+│   ├── README.md          ←   the layer page — every section, every note linked
+│   └── physics_labs.md    ←   the layer's notes, side by side
+├── 00b_Devices/  …  19_Industrial_Protocols/
 │
-├── 01_Circuit_Board/      ─┐
-├── 02_CPU/                 │
-├── 03_Firmware_BIOS/       │
-├── 04_Device_Drivers/      │  Compute stack
-├── 05_OS_Kernel/           │
-├── 06_System_Libraries/    │
-├── 07_Runtime_Environment/ │
-├── 08_User_Applications/  ─┘
-│
-├── Network/               ─┐
-│   ├── 09_Network_Physical/│
-│   ├── 10_Network_DataLink/│  Network stack (OSI-aligned)
-│   ├── 11_Network_Internet/│
-│   ├── 12_Network_Transport/
-│   └── 13_Network_Application/
-│                          ─┘
-├── 14_Security/           ─┐
-├── 15_AI_ML/               │
-├── 16_RF_Wireless/         │  Cross-cutting
-├── 17_Algorithms_DSA/      │
-├── 18_Embedded_Systems/    │
-├── 19_Industrial_Protocols/
-│                          ─┘
-├── Codex_macOS/            ← SwiftUI reader source
-├── Codex_LMS/              ← React curriculum source
-└── tools/                  ← audits: link, table, title, diagram, stats, palette
+├── Codex_macOS/           ← SwiftUI reader source
+├── Codex_LMS/             ← React curriculum source
+└── tools/                 ← audits: link, table, layer, diagram, stats, palette
 ```
 
 Anything added at the root that isn't a layer must also be registered in
 `CodexTree.nonContentDirs`, or the macOS app treats it as one. See
-[STRUCTURE.md](STRUCTURE.md#repository-layout).
-
-## Anchor materials
-
-- [`17_Algorithms_DSA/topics/100_must_do.md`](17_Algorithms_DSA/topics/100_must_do.md) —
-  100 interview problems mapped to LeetCode numbers
-- `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf` —
-  see *Known gaps* below
-- `00d_Digital_Circuits/topics/logic_gates.md` — full truth-table reference
-- `01_Circuit_Board/protocols/embedded_bus_protocols_lookup.md` — the
-  DSLogic/sigrok decoder catalog, ~150 decoders mapped to owning layers
-
-## Conventions
-
-See [STRUCTURE.md](STRUCTURE.md). In brief:
-
-- Markdown only, UTF-8, LF endings
-- `lowercase_with_underscores.md` filenames; layer folders keep their numeric prefix
-- Every *content note* opens with YAML frontmatter (`title`, `layer`, `section`,
-  `tags`, `updated`); entry points (`INDEX.md`, `README.md`) carry none
-- Every section `INDEX.md` is titled `<Layer> — <Section>`, H1 first in the file
-- Link rather than duplicate — each protocol lives in the layer that owns it on the wire
-- Images live in `_assets/`, referenced relatively
+[STRUCTURE.md](STRUCTURE.md#repository-layout) for the conventions in full.
 
 ## Licensing
-
-Two licenses, split by what the file *is* rather than where it sits:
 
 | What | License | File |
 |------|---------|------|
 | Application source, tooling and configuration — `Codex_macOS/`, `Codex_LMS/`, `tools/`, `.github/` | MIT | [LICENSE](LICENSE) |
 | **Everything else authored here** — the codex, and every document around it | CC BY-SA 4.0 | [LICENSE-docs](LICENSE-docs) |
 
-The second row is a default rather than a list, deliberately. The first draft
-enumerated four root documents, and review found four *others* — including
-`CONTRIBUTING.md` and `SECURITY.md` — sitting under neither license. In a
-release whose point was to fix exactly that, the fix had a hole in it. A
-default cannot develop one.
+The second row is a default rather than a list, so a new document cannot
+fall outside both. ShareAlike because `18_Embedded_Systems/` draws on Meysam
+Parvizi's CC BY-SA 4.0 Embedded Systems Engineering Roadmap.
 
-MIT on the apps so the Swift and React are freely reusable. ShareAlike on the
-codex because `18_Embedded_Systems/` draws on Meysam Parvizi's Embedded
-Systems Engineering Roadmap, which is CC BY-SA 4.0 — share-alike is what that
-material requires of anything derived from it, not a preference.
-
-### Third-party material — covered by neither
-
-**One file** is redistributed here for study and is not licensed by this
-repository. It retains its original authors' rights:
-
-- `18_Embedded_Systems/references/embedded_systems_full_roadmap_book.pdf` — a
-  generated placeholder stub, not Parvizi's book. See *Known gaps*.
-
-There used to be two. Bosscoder Academy's *100 Must Do LeetCode Problems*, a
-third-party PDF compilation, carried no stated licence, so this repository could neither
-relicense it nor safely redistribute it — and it has been removed. Its content
-survives as [`topics/100_must_do.md`](17_Algorithms_DSA/topics/100_must_do.md):
-problem numbers and titles are facts, and the descriptions are paraphrased.
-
-This is a list of files, not a rule about `references/` folders. An
-earlier draft said everything under any `references/` folder was third-party,
-which would have swept the 23 `references/INDEX.md` entry points — written
-for this codex, describing its own sources — out of the CC BY-SA grant.
-Anything third-party added later belongs on this list.
-
-If you are the rights holder of anything here and want it removed, open an
-issue and it will be taken down.
+**One file is third-party** and licensed by neither:
+`18_Embedded_Systems/embedded_systems_full_roadmap_book.pdf`, currently a
+generated placeholder rather than Parvizi's book (see *Known gaps*).
+Anything third-party added later belongs on that list and in
+[THIRD_PARTY.md](THIRD_PARTY.md). If you hold the rights to anything here
+and want it removed, open an issue.
 
 ## Known gaps
 
-Honest inventory of what isn't here yet:
-
 - **The Python TUI is not in this repository.** Older changelog entries
-  describe a Textual-based browser, but no `codex_tui/` source is present
-  (its `requirements.txt` has been removed). Use the macOS app, or any markdown
-  reader, until it lands.
-- **The four reference images are missing** from `_assets/` — see
-  [`_assets/README.md`](_assets/README.md) for the expected filenames. Every
-  image has a markdown text equivalent, so nothing is lost but the pictures.
-  No note actually embeds one today, which is why the tree audits clean.
-- **`embedded_systems_full_roadmap_book.pdf` is a placeholder** — an 8 KB,
-  10-page generated stub, not Parvizi's actual roadmap book. The real source
-  is [github.com/m3y54m/Embedded-Engineering-Roadmap](https://github.com/m3y54m/Embedded-Engineering-Roadmap)
+  describe it; use the macOS app or any markdown reader.
+- **No images.** Every illustration is drawn in text; see
+  [`_assets/README.md`](_assets/README.md).
+- **`embedded_systems_full_roadmap_book.pdf` is a placeholder** — a 10-page
+  generated stub. The real source is
+  [github.com/m3y54m/Embedded-Engineering-Roadmap](https://github.com/m3y54m/Embedded-Engineering-Roadmap)
   (CC BY-SA 4.0).
-- **The macOS app has been launched once, and most of it is still unseen.**
-  `swift.yml` compiles it debug and release on every PR, and the Welcome
-  screen has now been looked at on a real Mac — which immediately found a
-  Quick Start card advertising 14 utilities that do not exist, a layer count
-  of 27 against the audited 23, and a blank app icon. All three are fixed.
-  Nothing *automated* exercises the UI, so the rest is still only reasoned
-  about: the behavioural questions in
-  [`Codex_macOS/README.md`](Codex_macOS/README.md#known-issues) — sidebar
-  vibrancy under an opaque parent background, whether code blocks scroll or
-  wrap, and whether the section-index titles read as intended (sidebar
-  "Overview", ⌘P "Circuit Board — Languages") — need someone to open those
-  screens and look.
+- **Most of the macOS app's UI is unverified on a real Mac.** CI compiles
+  it on every PR, but nothing automated exercises the screens; the open
+  questions are in [Codex_macOS/README.md](Codex_macOS/README.md#known-issues).
 
 ## Verification
 
-Three GitHub Actions workflows run on **every** pull request and every push
-to `main` — no path filters, so a docs-only change still builds the Swift and
-the LMS:
+Three GitHub Actions workflows run on every pull request and every push to
+`main`, with no path filters:
 
-| Workflow | Runs | Catches |
-|----------|------|---------|
-| `swift.yml` | `swift build` debug + release, on `macos-14` | The macOS app not compiling |
-| `docs.yml` | `link_audit.py`, `table_audit.py`, `title_audit.py`, `diagram_audit.py`, `stats_audit.py`, `palette_audit.py` | Broken links, missing H1s, malformed tables, uncanonical section titles, diagrams that are unfenced, untagged, over-wide or missing, references to images that are not in the repository, stale numbers in this file, and colour values the macOS reader's palettes claim came from upstream |
-| `lms.yml` | `npm ci`, build, `npm audit`, Playwright smoke test | CORE not building, or losing progress on reload |
+| Workflow | Catches |
+|----------|---------|
+| `swift.yml` | The macOS app not compiling, debug or release |
+| `docs.yml` | Broken links and anchors, missing H1s, malformed tables, layer pages missing a section or a note, unfenced or over-wide diagrams, stale numbers on this page, palette drift |
+| `lms.yml` | CORE not building, `npm audit` findings, or losing progress on reload |
 
-Running every workflow on every PR is deliberate. A *required* status check
-that never fires leaves a pull request permanently unmergeable, so path
-filters and branch protection combine badly.
-
-The same checks run locally:
-
-```sh
-# Docs — each exits non-zero on a breakage
-python3 tools/link_audit.py --self-test && python3 tools/link_audit.py
-python3 tools/table_audit.py
-python3 tools/title_audit.py
-python3 tools/diagram_audit.py --self-test && python3 tools/diagram_audit.py
-python3 tools/stats_audit.py
-python3 tools/palette_audit.py
-
-# LMS — build, then smoke-test. `smoke:local` starts the preview server,
-# waits (bounded) for it to actually listen, runs the test, and cleans up.
-cd Codex_LMS
-npm ci && npm run build
-npm run smoke:local
-cd ..
-
-# macOS app — needs a Mac with the Xcode command-line tools
-cd Codex_macOS
-swift build
-swift build -c release
-cd ..
-```
-
-The audits resolve every relative link against the file containing it,
-skipping code spans so syntax examples aren't counted, and exit non-zero on a
-breakage. They share one tree walk (`tools/_common.py`) so they cannot
-disagree about which files count.
-
-The last of them, `stats_audit.py`, checks the list below against the tree —
-these numbers drifted for exactly as long as nothing was checking them. It
-treats a claim it can no longer *find* as a fault too, so rewording this
-section turns the build red rather than quietly retiring the check.
+How to run them locally is in [CONTRIBUTING.md](CONTRIBUTING.md).
+`tools/stats_audit.py` checks the numbers below against the tree, and treats
+a claim it can no longer find as a fault, so rewording this list turns the
+build red rather than quietly retiring the check.
 
 Currently:
 
-- 278 markdown files
-- 1026 internal links, 0 broken
-- Every file carries an H1, every pipe table well-formed
-- All 138 section indexes titled `<Layer> — <Section>`
-- 275 files carry a diagram across the repository. The diagram audit
-  requires a diagram in 272 files, and 272 of those carry it; the other three
-  drawings are in the apps' own documentation (both READMEs and
-  `Codex_LMS/roadmap-draft.md`), which the audit does not hold to anything;
-  the remaining 0 are listed in `tools/diagram_backlog.txt`, checked in both
-  directions so the gap can neither grow unnoticed nor go stale. Every diagram
-  is fenced, tagged and within 90 columns (` ```text ` is the convention; a
-  fence carrying some other deliberate tag is left alone), and every layer
-  README shows where its layer sits
+- 140 markdown files
+- 1124 internal links, 0 broken
+- 137 files carry a diagram across the repository. The diagram audit
+  requires a diagram in 134 files, and 134 of those carry it; the
+  other drawings are in the apps' own documentation, which the audit does
+  not hold to anything; the remaining 0 are listed in
+  `tools/diagram_backlog.txt`. Every diagram is fenced, tagged and within 90
+  columns, and every layer page shows where its layer sits

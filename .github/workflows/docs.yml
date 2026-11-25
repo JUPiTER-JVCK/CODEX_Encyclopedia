@@ -36,21 +36,23 @@ jobs:
       - name: Link audit self-test
         run: python3 tools/link_audit.py --self-test
 
-      # Every relative link resolves, and every file carries an H1.
+      # Every relative link resolves, every #anchor lands on a heading that
+      # exists, and every file carries an H1.
       - name: Link audit
         run: python3 tools/link_audit.py
 
       # Every pipe table has a header, and header/separator/rows agree on
-      # column count. This is what caught the five protocol INDEX.md files
+      # column count. This is what caught the five protocol index pages
       # whose headers were clobbered by a bulk edit.
       - name: Table audit
         run: python3 tools/table_audit.py
 
-      # Every section INDEX.md is titled "<Layer> — <Section>" with the H1
-      # first in the file and no frontmatter. All three faults arrived via
-      # bulk edits, which is why this is a script and not a convention.
-      - name: Title audit
-        run: python3 tools/title_audit.py
+      # Every layer is one folder with one page: an "<NN> — <Layer>" H1, no
+      # frontmatter, the six section headings in order (cross-links target
+      # their anchors), and every note in the folder linked from the page's
+      # "In this layer" table, so nothing is more than one click away.
+      - name: Layer audit
+        run: python3 tools/layer_audit.py
 
       # Diagrams are the codex's only illustration, and the failure mode is
       # silent: box characters outside a fence render proportional and the

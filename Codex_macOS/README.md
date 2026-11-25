@@ -155,7 +155,8 @@ Codex_macOS/
   pins were a second, entirely disconnected list.
 
 - **`CodexTree`** turns the filesystem into a `CodexNode` tree. It knows the
-  band groupings, the sub-section ordering, and — in `nonContentDirs` — which
+  band groupings (by layer-number prefix, since every layer is one
+  folder at the root), and — in `nonContentDirs` — which
   root directories are apps rather than codex content. **Adding a non-layer
   directory to the repository root means adding it to that set**, or it shows
   up as a phantom layer and its markdown floods the palette.
@@ -167,7 +168,8 @@ Codex_macOS/
 
 - **`LinkResolver`** resolves a markdown href against the source file's
   directory, then against the project root, and resolves a directory target
-  to its `README.md` or `INDEX.md`.
+  to its `README.md`. A `#fragment` scrolls to the heading, which is how
+  cross-links reach a section of a layer page.
 
 - **Project-root discovery** tries, in order: `$CODEX_ROOT`, the bundled
   `project_path` resource, a six-level walk up looking for a directory with
@@ -223,7 +225,7 @@ exactly the standard the eleven defects above also met.
 time anything in this app consumed a heading anchor — and it immediately
 showed that the anchors were never unique. `MarkdownParser` derives them from
 heading text, and heading text repeats: **48 files carry 469 colliding
-anchors**, worst `06_System_Libraries/man_pages/linker_commands.md` with 26,
+anchors**, worst `06_System_Libraries/linker_commands.md` with 26,
 because the man-page notes repeat `Synopsis`, `Description` and `Examples`
 once per documented command. Twenty-six of that file's outline rows would have
 jumped to the wrong heading.
@@ -268,7 +270,7 @@ with 40pt gutters against 920/48). Both now share `Theme.Layout` and one width
 preference, and both centre. Code blocks use `.fixedSize(horizontal: true)`
 rather than resolving `.infinity` against an unbounded proposal, so a wide
 fenced line scrolls instead of maybe-wrapping; the widest in the codex is 116
-characters, in `08_User_Applications/man_pages/network_tools.md`. Unverified on
+characters, in `08_User_Applications/network_tools.md`. Unverified on
 a Mac, like everything else here.
 
 **Still open.**

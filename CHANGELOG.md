@@ -14,6 +14,40 @@
 
 ## Unreleased
 
+### Changed — one folder and one page per layer
+
+Reaching a note used to take four clicks — front page → layer README →
+section `INDEX.md` → note — through 138 section folders that mostly held
+one file or none. Now:
+
+- **Every layer is one folder with one page.** The six section indexes
+  (References, Lessons, Languages, Manual Pages, Topics, Protocols) are
+  folded into the layer's `README.md` as `##` sections, in that order, and
+  every note sits directly in the layer folder beside it. Each page opens
+  with an *In this layer* table linking every note.
+- **The network layers moved out of `Network/`** to the root, so all 23
+  layers sit at the same depth. The band is now a grouping, not a folder.
+- **The root `README.md` is a contents page** — every layer and every note,
+  grouped by band, one click away. Installation detail it duplicated from
+  `Codex_macOS/README.md` now lives only there.
+- **Links were rewritten, not just moved.** Every relative link and
+  frontmatter `related:` path was re-resolved against the old tree; links to
+  a section index now point at the section's anchor
+  (`../05_OS_Kernel/README.md#topics`), and labels that spelled out a path
+  (`../topics/INDEX.md`) now say what they open (`OS Kernel › Topics`).
+- **`tools/title_audit.py` is replaced by `tools/layer_audit.py`**, which
+  checks each layer page's title, its six sections in order, that every note
+  in the folder is linked from it, and that no sub-folders came back.
+- **`tools/link_audit.py` now checks `#anchors`** against GitHub's heading
+  slugs, in the same file and across files, since cross-links now depend on
+  them. Slug cases are part of `--self-test`.
+- The macOS reader's sidebar lists a layer as its Overview page plus its
+  notes, and bands the network layers by number prefix instead of reading
+  the `Network/` folder.
+
+Paths changed, so a bookmark or external link to `…/topics/x.md` or
+`Network/…` needs the folder segment removed.
+
 ### Removed — dead weight
 
 - `Codex_LMS/`'s eleven pre-merge `*.jsx` module files (~660 KB) and
@@ -62,7 +96,7 @@ which to redistribute at all. Flagging it was a description of the problem,
 not a fix.
 
 Nothing that depended on it is lost.
-[`topics/100_must_do.md`](17_Algorithms_DSA/topics/100_must_do.md) already
+[`topics/100_must_do.md`](17_Algorithms_DSA/100_must_do.md) already
 carried all 100 problems, each keyed by its LeetCode number and title, which
 are facts, with descriptions paraphrased rather than copied. The pointers that
 told readers to "open the PDF side-by-side" now send them to LeetCode by number

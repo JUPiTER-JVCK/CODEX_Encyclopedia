@@ -25,7 +25,10 @@ concurrency:
 jobs:
   build:
     name: swift build
-    runs-on: macos-14
+    # macos-14 was retired by GitHub on 2026-11-02 (actions/runner-images
+    # #13518). A job asking for a retired label is never picked up and shows
+    # as cancelled within seconds, with no logs, rather than as a failure.
+    runs-on: macos-15
     timeout-minutes: 20
 
     steps:

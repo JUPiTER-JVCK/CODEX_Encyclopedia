@@ -94,7 +94,7 @@ swift build && swift build -c release
 ```
 
 Needs a Mac with the Xcode command-line tools. CI builds both configurations
-on `macos-14`, so a Linux contributor can let CI answer this one.
+on `macos-15`, so a Linux contributor can let CI answer this one.
 
 ## Adding to the codex
 
